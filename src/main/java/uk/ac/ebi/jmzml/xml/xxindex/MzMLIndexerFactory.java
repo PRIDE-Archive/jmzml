@@ -163,6 +163,10 @@ public class MzMLIndexerFactory {
         }
 
         public Iterator<String> getXmlStringIterator(String xpathExpression) {
+            return xpathAccess.getXmlSnippetIterator(root + checkRoot(xpathExpression));
+        }
+
+        private String checkRoot(String xpathExpression) {
 
             //since we're appending the root we've already checked, make
             //sure that the xpath doesn't erroneously contain that root
@@ -175,7 +179,8 @@ public class MzMLIndexerFactory {
                 unrootedXpath = unrootedXpath.substring("/mzML".length());
                 logger.debug("removed /mzML root expression");
             }
-            return xpathAccess.getXmlSnippetIterator(root + unrootedXpath);
+            return unrootedXpath;
+
         }
 
         public String getXmlString(String ID, Constants.ReferencedType type) {
@@ -229,6 +234,15 @@ public class MzMLIndexerFactory {
                 logger.error("MzMLIndexerFactory$MzMlIndexerImpl.readXML", e);
                 throw new IllegalStateException("Could not extract XML from file: " + xmlFile);
             }
+        }
+
+        public int getCount(String xpathExpression){
+            int retval = 0;
+            List<IndexElement> tmpList = index.getElements(root + checkRoot(xpathExpression));
+            if (tmpList != null){
+                retval = tmpList.size();
+            }
+            return retval;
         }
 
     }

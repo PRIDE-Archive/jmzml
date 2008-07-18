@@ -16,4 +16,6 @@ public interface MzMLIndexer {
 
     public String getXmlString(String ID, Constants.ReferencedType type);
 
+    public int getCount(String xpathExpression);
+
 }

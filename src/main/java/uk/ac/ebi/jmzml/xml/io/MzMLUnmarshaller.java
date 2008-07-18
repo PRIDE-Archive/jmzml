@@ -44,6 +44,10 @@ public class MzMLUnmarshaller {
         return unmarshalFromXpath("", MzML.class);
     }
 
+    public int getObjectCountForXpath(String xpath) {
+        return index.getCount(xpath);
+    }
+
     public <T extends MzMLObject> T unmarshalFromXpath(String xpath, Class cls) {
 
         T retval = null;
