@@ -60,12 +60,15 @@ public class XMLTest extends TestCase {
         String mzml = mm.marshall(mz, mz.getClass());
         System.out.println("mzml = " + mzml);
 
+        int chromatogramCount = 0;
         MzMLObjectIterator<Chromatogram> iter = um.unmarshalCollectionFromXpath("/run/chromatogramList/chromatogram", Chromatogram.class);
         while (iter.hasNext()) {
             Chromatogram ch = iter.next();
             System.out.println("ch = " + ch);
+            chromatogramCount++;
         }
 
+        assertEquals("Chromatogram count not equal!", chromatogramCount, um.getObjectCountForXpath("/run/chromatogramList/chromatogram"));
 
     }
 
