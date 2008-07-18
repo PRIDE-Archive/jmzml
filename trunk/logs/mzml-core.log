@@ -1,0 +1,28 @@
+2008-07-18 11:46:48,596 INFO MzMLIndexerFactory - Creating index: 
+2008-07-18 11:46:48,699 INFO MzMLIndexerFactory - Init CV cache
+2008-07-18 11:46:48,701 INFO MzMLIndexerFactory - Init DataProcessing cache
+2008-07-18 11:46:48,702 INFO MzMLIndexerFactory - Init InstrumentConfiguration cache
+2008-07-18 11:46:48,702 INFO MzMLIndexerFactory - Init ReferenceableParamGroup cache
+2008-07-18 11:46:48,706 INFO MzMLIndexerFactory - Init Sample cache
+2008-07-18 11:46:48,707 INFO MzMLIndexerFactory - Init Software cache
+2008-07-18 11:46:48,707 INFO MzMLIndexerFactory - Init SourceFile cache
+2008-07-18 11:46:48,707 INFO MzMLIndexerFactory - Init Spectrum cache
+2008-07-18 11:46:49,339 INFO UnmarshallerFactory - Unmarshaller Initialized
+2008-07-18 11:46:49,570 INFO UnmarshallerFactory - Unmarshaller Initialized
+2008-07-18 11:46:49,738 INFO UnmarshallerFactory - Unmarshaller Initialized
+2008-07-18 11:46:49,905 INFO UnmarshallerFactory - Unmarshaller Initialized
+2008-07-18 11:46:50,122 INFO UnmarshallerFactory - Unmarshaller Initialized
+2008-07-18 11:46:50,287 INFO UnmarshallerFactory - Unmarshaller Initialized
+2008-07-18 11:46:50,437 INFO UnmarshallerFactory - Unmarshaller Initialized
+2008-07-18 11:46:50,636 INFO UnmarshallerFactory - Unmarshaller Initialized
+2008-07-18 11:46:50,774 INFO UnmarshallerFactory - Unmarshaller Initialized
+2008-07-18 11:46:50,907 INFO UnmarshallerFactory - Unmarshaller Initialized
+2008-07-18 11:46:51,109 INFO UnmarshallerFactory - Unmarshaller Initialized
+2008-07-18 11:46:51,239 INFO UnmarshallerFactory - Unmarshaller Initialized
+2008-07-18 11:46:51,448 INFO UnmarshallerFactory - Unmarshaller Initialized
+2008-07-18 11:46:51,575 INFO UnmarshallerFactory - Unmarshaller Initialized
+2008-07-18 11:46:51,734 INFO UnmarshallerFactory - Unmarshaller Initialized
+2008-07-18 11:46:51,868 INFO MarshallerFactory - Marshaller initialized
+2008-07-18 11:46:51,988 INFO MarshallerFactory - Marshaller initialized
+2008-07-18 11:46:52,139 INFO UnmarshallerFactory - Unmarshaller Initialized
+2008-07-18 11:46:52,301 INFO UnmarshallerFactory - Unmarshaller Initialized
