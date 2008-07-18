@@ -1,0 +1,93 @@
+/**
+ * User: rcote
+ * Date: 18-Jun-2008
+ * Time: 15:51:06
+ * $Id: $
+ */
+package uk.ac.ebi.jmzml.xml.jaxb.marshaller;
+
+import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
+import org.apache.log4j.Logger;
+import uk.ac.ebi.jmzml.model.mzml.ModelConstants;
+import uk.ac.ebi.jmzml.xml.Constants;
+import uk.ac.ebi.jmzml.xml.jaxb.adapters.*;
+import uk.ac.ebi.jmzml.xml.jaxb.marshaller.listeners.ObjectClassListener;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.helpers.DefaultValidationEventHandler;
+
+public class MarshallerFactory {
+
+    private static final Logger logger = Logger.getLogger(MarshallerFactory.class);
+    private static MarshallerFactory instance = new MarshallerFactory();
+
+    public static MarshallerFactory getInstance() {
+        return instance;
+    }
+
+    private MarshallerFactory() {
+    }
+
+    public Marshaller initializeMarshaller() {
+
+        try {
+
+            //create marshaller and set basic properties
+            JAXBContext jc = JAXBContext.newInstance(ModelConstants.PACKAGE);
+            Marshaller marshaller = jc.createMarshaller();
+
+            marshaller.setProperty(Constants.JAXB_ENCODING_PROPERTY, "UTF-8");
+            marshaller.setProperty(Constants.JAXB_FORMATTING_PROPERTY, true);
+            marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new MzMLNamespaceMapper());
+
+            //set adapters so that jaxb can write the proper IDREF tags in the XML
+            marshaller.setAdapter(new CVAdapter(null, null));
+            marshaller.setAdapter(new DataProcessingAdapter(null, null));
+            marshaller.setAdapter(new InstrumentConfigurationAdapter(null, null));
+            marshaller.setAdapter(new ReferenceableParamGroupAdapter(null, null));
+            marshaller.setAdapter(new SampleAdapter(null, null));
+            marshaller.setAdapter(new SoftwareAdapter(null, null));
+            marshaller.setAdapter(new SourceFileAdapter(null, null));
+            marshaller.setAdapter(new SpectrumAdapter(null, null));
+            marshaller.setEventHandler(new DefaultValidationEventHandler());
+
+            if (logger.isDebugEnabled()){
+                marshaller.setListener(new ObjectClassListener());
+            }
+
+            logger.info("Marshaller initialized");
+
+            return marshaller;
+
+        } catch (JAXBException e) {
+            logger.error("MarshallerFactory.initializeMarshaller", e);
+            throw new IllegalStateException("Can't initialize marshaller: " + e.getMessage());
+        }
+
+    }
+
+    private class MzMLNamespaceMapper extends NamespacePrefixMapper {
+
+        public String[] getPreDeclaredNamespaceUris() {
+            return new String[0];
+        }
+
+        public String[] getPreDeclaredNamespaceUris2() {
+            return new String[0];
+        }
+
+        public String[] getContextualNamespaceDecls() {
+            return new String[0];
+        }
+
+        public String getPreferredPrefix(String namespaceUri,
+                                         String suggestion,
+                                         boolean requirePrefix) {
+            logger.debug("set prefix to >< when asked for uri >" + namespaceUri + "< with requirePrefix: " + requirePrefix + "");
+            return "";
+        }
+    }
+
+}
