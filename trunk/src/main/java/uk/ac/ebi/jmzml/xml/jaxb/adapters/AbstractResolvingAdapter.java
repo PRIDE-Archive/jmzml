@@ -1,3 +1,25 @@
+/*
+ * Date: 22/7/2008
+ * Author: rcote
+ * File: uk.ac.ebi.jmzml.xml.jaxb.adapters.AbstractResolvingAdapter
+ *
+ * jmzml is Copyright 2008 The European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ *
+ */
+
 package uk.ac.ebi.jmzml.xml.jaxb.adapters;
 
 import org.apache.log4j.Logger;
@@ -16,12 +38,6 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.transform.sax.SAXSource;
 import java.io.StringReader;
 
-/**
- * User: rcote
- * Date: 11-Jun-2008
- * Time: 14:36:37
- * $Id: $
- */
 public abstract class AbstractResolvingAdapter<ValueType, BoundType> extends XmlAdapter<ValueType, BoundType> {
 
     protected static final Logger logger = Logger.getLogger(AbstractResolvingAdapter.class);
@@ -47,7 +63,7 @@ public abstract class AbstractResolvingAdapter<ValueType, BoundType> extends Xml
 
         String xml = index.getXmlString(refId, refType);
 
-        if (logger.isDebugEnabled()){
+        if (logger.isDebugEnabled()) {
             logger.debug("read xml is = " + xml);
         }
 
