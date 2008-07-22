@@ -12,6 +12,9 @@
       now have their own complexType. This will allow the unmarshaller
       to distinguish between types and generate a cleaner object model.
 
+ * Date: 22/7/2008
+ * Author: rcote
+
 -->
 <xs:schema xmlns:dx="http://psi.hupo.org/schema_revision/mzML_1.0.0"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"

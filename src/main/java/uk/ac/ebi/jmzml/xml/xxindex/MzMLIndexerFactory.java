@@ -1,3 +1,25 @@
+/*
+ * Date: 22/7/2008
+ * Author: rcote
+ * File: uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexerFactory
+ *
+ * jmzml is Copyright 2008 The European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ *
+ */
+
 package uk.ac.ebi.jmzml.xml.xxindex;
 
 import org.apache.log4j.Logger;
@@ -18,12 +40,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * User: rcote
- * Date: 11-Jun-2008
- * Time: 17:09:40
- * $Id: $
- */
 public class MzMLIndexerFactory {
 
     private static final Logger logger = Logger.getLogger(MzMLIndexerFactory.class);
@@ -236,10 +252,10 @@ public class MzMLIndexerFactory {
             }
         }
 
-        public int getCount(String xpathExpression){
+        public int getCount(String xpathExpression) {
             int retval = 0;
             List<IndexElement> tmpList = index.getElements(root + checkRoot(xpathExpression));
-            if (tmpList != null){
+            if (tmpList != null) {
                 retval = tmpList.size();
             }
             return retval;
