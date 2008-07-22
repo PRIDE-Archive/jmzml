@@ -109,7 +109,18 @@
                     <source>1.5</source>
                     <target>1.5</target>
                 </configuration>
-            </plugin>
+	    </plugin>
+
+	    <plugin>
+	 	<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-dependency-plugin</artifactId>
+		<configuration>
+		    <outputDirectory>${basedir}/lib</outputDirectory>
+		    <overWriteReleases>true</overWriteReleases>
+		    <overWriteSnapshots>true</overWriteSnapshots>
+		    <excludeTransitive>false</excludeTransitive>
+		</configuration>
+	    </plugin>
         </plugins>
     </build>
 
