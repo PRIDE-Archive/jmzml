@@ -26,6 +26,13 @@ import org.apache.log4j.Logger;
 
 import javax.xml.bind.Marshaller;
 
+import uk.ac.ebi.jmzml.model.mzml.ParamGroup;
+import uk.ac.ebi.jmzml.model.mzml.CVParam;
+import uk.ac.ebi.jmzml.model.mzml.UserParam;
+
+import java.util.List;
+import java.util.ArrayList;
+
 public class ObjectClassListener extends Marshaller.Listener {
 
     private static final Logger logger = Logger.getLogger(ObjectClassListener.class);
@@ -34,6 +41,17 @@ public class ObjectClassListener extends Marshaller.Listener {
         //this class will only be associated with a Marshaller when
         //the logging level is set to DEBUG 
         logger.debug("marshalling: " + source.getClass());
+        if(source instanceof ParamGroup) {
+            logger.debug("Calling ParamGroup specific 'beforeMarshalOperation'.");
+            ((ParamGroup)source).beforeMarshalOperation();
+        }
     }
 
+    public void afterMarshal(Object source) {
+        logger.debug("  marshalled: " + source.getClass());
+        if(source instanceof ParamGroup) {
+            logger.debug("Calling ParamGroup specific 'afterMarshalOperation'.");
+            ((ParamGroup)source).afterMarshalOperation();
+        }
+    }
 }

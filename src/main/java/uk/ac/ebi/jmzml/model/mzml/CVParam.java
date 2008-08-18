@@ -88,6 +88,16 @@ public class CVParam
     protected CV unitCV;
 
     /**
+     * Added a boolean to indicate whether this CVParam was inferred from
+     * a referenceableParamGroupRef. If so, this cvParam should not be marshalled
+     * out, as it will already be marshalled out in the referenceableParamGroupRef.
+     * Also, caution is to be used when editing!
+     */
+    @XmlTransient
+    private boolean isInferredFromReferenceableParamGroupRef = false;
+
+
+    /**
      * Gets the value of the cv property.
      *
      * @return possible object is
@@ -240,4 +250,30 @@ public class CVParam
     }
 
 
+    /**
+     * This boolean indicates whether this CVParam was inferred from
+     * a referenceableParamGroupRef. If so, this cvParam should not be marshalled
+     * out, as it will already be marshalled out in the referenceableParamGroupRef.
+     * Also, caution is to be used when editing the CVParam!
+     *
+     * @returns boolean that indicates whether this CVParam was inferred from
+     *                  a referenceableParamGroupRef.
+     */
+    public boolean isInferredFromReferenceableParamGroupRef() {
+        return isInferredFromReferenceableParamGroupRef;
+    }
+
+    /**
+     * You can set this boolean to indicate whether this CVParam was inferred from
+     * a referenceableParamGroupRef. If so, this cvParam will not be marshalled
+     * out, as it will already be marshalled out in the referenceableParamGroupRef.
+     * Also, caution is to be used when editing the CVParam!
+     *
+     * @param   inferredFromReferenceableParamGroupRef boolean to indicates whether
+     *                                                 this CVParam was inferred from
+     *                                                 a referenceableParamGroupRef.
+     */
+    public void setInferredFromReferenceableParamGroupRef(boolean inferredFromReferenceableParamGroupRef) {
+        isInferredFromReferenceableParamGroupRef = inferredFromReferenceableParamGroupRef;
+    }
 }

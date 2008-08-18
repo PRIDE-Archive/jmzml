@@ -25,9 +25,11 @@ package uk.ac.ebi.jmzml.model.mzml.utilities;
 import uk.ac.ebi.jmzml.model.mzml.CVParam;
 import uk.ac.ebi.jmzml.model.mzml.ParamGroup;
 import uk.ac.ebi.jmzml.model.mzml.UserParam;
+import uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroupRef;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 
 /**
  * User: rcote
@@ -44,17 +46,35 @@ public class ParamGroupUpdater {
             //update CVParams with instances of desired subclass
             List<CVParam> cvList = input.getCvParam();
 
+            //update UserParams with instances of desired subclass
+            List<UserParam> userList = input.getUserParam();
+
+            // Resolve referenceableParamGroupRefs into params!
+            List<ReferenceableParamGroupRef> refParams = input.getReferenceableParamGroupRef();
+            for (ReferenceableParamGroupRef refParam : refParams) {
+                List<CVParam> inferredCVParams = refParam.getReferenceableParamGroup().getCvParam();
+                for (CVParam inferredCVParam : inferredCVParams) {
+                    // Flag the inferred nature of the CVParam.
+                    inferredCVParam.setInferredFromReferenceableParamGroupRef(true);
+                    // Add it to the list.
+                    cvList.add(inferredCVParam);
+                }
+                List<UserParam> inferredUserParams = refParam.getReferenceableParamGroup().getUserParam();
+                for (UserParam inferredUserParam : inferredUserParams) {
+                    // Flag the inferred nature of the UserParam.
+                    inferredUserParam.setInferredFromReferenceableParamGroupRef(true);
+                    // Add it to the list.
+                    userList.add(inferredUserParam);
+                }
+            }
+
             if (cvList != null) {
                 updateCVParamSubclasses(input.getCvParam(), cvParamClass);
             }
 
-            //update UserParams with instances of desired subclass
-            List<UserParam> userList = input.getUserParam();
-
             if (userList != null) {
                 updateUserParamSubclasses(input.getUserParam(), userParamClass);
             }
-
         }
 
     }
@@ -76,6 +96,7 @@ public class ParamGroupUpdater {
                 newParam.setType(param.getType());
                 newParam.setName(param.getName());
                 newParam.setValue(param.getValue());
+                newParam.setInferredFromReferenceableParamGroupRef(param.isInferredFromReferenceableParamGroupRef());
                 newList.add(newParam);
             }
             //replace with new list of params
@@ -107,6 +128,7 @@ public class ParamGroupUpdater {
                 newParam.setUnitCV(param.getUnitCV());
                 newParam.setUnitName(param.getUnitName());
                 newParam.setValue(param.getValue());
+                newParam.setInferredFromReferenceableParamGroupRef(param.isInferredFromReferenceableParamGroupRef());
                 newList.add(newParam);
             }
             //replace with new list of params

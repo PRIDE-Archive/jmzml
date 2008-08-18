@@ -77,16 +77,13 @@ public class XMLTest extends TestCase {
 
         MzMLMarshaller mm = new MzMLMarshaller();
         String outFD = mm.marshall(fd, fd.getClass());
-        System.out.println("outFD = " + "\n" + outFD);
 
         String mzml = mm.marshall(mz, mz.getClass());
-        System.out.println("mzml = " + mzml);
 
         int chromatogramCount = 0;
         MzMLObjectIterator<Chromatogram> iter = um.unmarshalCollectionFromXpath("/run/chromatogramList/chromatogram", Chromatogram.class);
         while (iter.hasNext()) {
             Chromatogram ch = iter.next();
-            System.out.println("ch = " + ch);
             chromatogramCount++;
         }
 
