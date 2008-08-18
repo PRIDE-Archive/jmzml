@@ -32,11 +32,13 @@
     <referenceableParamGroupList count="2">
         <referenceableParamGroup id="CommonMS1SpectrumParams">
             <cvParam cvRef="MS" accession="MS:1000130" name="positive scan" value=""/>
-            <cvParam cvRef="MS" accession="MS:1000498" name="full scan" value=""/>
+	    <cvParam cvRef="MS" accession="MS:1000498" name="full scan" value=""/>
+	    <userParam name="testParam" value="something silly" />
         </referenceableParamGroup>
         <referenceableParamGroup id="CommonMS2SpectrumParams">
             <cvParam cvRef="MS" accession="MS:1000130" name="positive scan" value=""/>
             <cvParam cvRef="MS" accession="MS:1000498" name="full scan" value=""/>
+            <userParam name="testParam" value="something silly" />
         </referenceableParamGroup>
     </referenceableParamGroupList>
     <sampleList count="1">
@@ -124,6 +126,7 @@
                         <cvParam cvRef="MS" accession="MS:1000512" name="filter string"
                                  value="+ c NSI Full ms [ 400.00-1800.00]"/>
                         <cvParam cvRef="MS" accession="MS:1000616" name="preset scan configuration" value="3"/>
+                        <userParam name="inlined one" value="no, really - inline!" />
                         <scanWindowList count="1">
                             <scanWindow>
                                 <cvParam cvRef="MS" accession="MS:1000501" name="scan m/z lower limit" value="400"/>
@@ -185,6 +188,7 @@
                         <cvParam cvRef="MS" accession="MS:1000512" name="filter string"
                                  value="+ c d Full ms2  445.35@cid35.00 [ 110.00-905.00]"/>
                         <cvParam cvRef="MS" accession="MS:1000616" name="preset scan configuration" value="4"/>
+                        <userParam name="inlined one" value="no, really - inline!" />
                         <scanWindowList count="1">
                             <scanWindow>
                                 <cvParam cvRef="MS" accession="MS:1000501" name="scan m/z lower limit" value="110"/>

@@ -70,10 +70,9 @@ public class MarshallerFactory {
             marshaller.setAdapter(new SpectrumAdapter(null, null));
             marshaller.setEventHandler(new DefaultValidationEventHandler());
 
-            if (logger.isDebugEnabled()) {
-                marshaller.setListener(new ObjectClassListener());
-            }
 
+            marshaller.setListener(new ObjectClassListener());
+            
             logger.info("Marshaller initialized");
 
             return marshaller;

@@ -32,13 +32,13 @@ package uk.ac.ebi.jmzml.model.mzml;
 
 import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.Marshaller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.log4j.Logger;
 
 
 /**
@@ -91,10 +91,17 @@ import java.util.List;
         })
 public class ParamGroup implements Serializable, MzMLObject {
 
+    private static final Logger logger = Logger.getLogger(ParamGroup.class);
+
     private final static long serialVersionUID = 100L;
     protected List<ReferenceableParamGroupRef> referenceableParamGroupRef;
     protected List<CVParam> cvParam;
     protected List<UserParam> userParam;
+
+    @XmlTransient
+    private List<CVParam> cvParamsSkippedDuringMarshalling = new ArrayList<CVParam>();
+    @XmlTransient
+    private List<UserParam> userParamsSkippedDuringMarshalling = new ArrayList<UserParam>();
 
     /**
      * Gets the value of the referenceableParamGroupRef property.
@@ -175,6 +182,51 @@ public class ParamGroup implements Serializable, MzMLObject {
             userParam = new ArrayList<UserParam>();
         }
         return this.userParam;
+    }
+
+    public boolean beforeMarshalOperation() {
+        List<CVParam> cvParams = this.getCvParam();
+        List<CVParam> tempCV = new ArrayList<CVParam>();
+        for (CVParam cvParam : cvParams) {
+            if(cvParam.isInferredFromReferenceableParamGroupRef()) {
+                cvParamsSkippedDuringMarshalling.add(cvParam);
+                logger.debug("Skipping cvParam " + cvParam);
+            } else {
+                tempCV.add(cvParam);
+            }
+        }
+
+        // Replace original list of cvParams with only those that were not inferred
+        // (i.e., our temp list).
+        this.cvParam = tempCV;
+
+        List<UserParam> userParams = this.getUserParam();
+        List<UserParam> tempUser = new ArrayList<UserParam>();
+        for (UserParam userParam : userParams) {
+            if(userParam.isInferredFromReferenceableParamGroupRef()) {
+                userParamsSkippedDuringMarshalling.add(userParam);
+                logger.debug("Skipping cvParam " + userParam);
+            } else {
+                tempUser.add(userParam);
+            }
+        }
+
+        // Replace original list of cvParams with only those that were not inferred
+        // (i.e., our temp list).
+        this.userParam = tempUser;
+
+        return true;
+    }
+
+    public void afterMarshalOperation() {
+        // Reset the thing in its original state.
+        cvParam.addAll(cvParamsSkippedDuringMarshalling);
+        logger.debug("Re-inserting " + cvParamsSkippedDuringMarshalling.size() + " referenceable CV params into the main cv param list after marshalling.");
+        userParam.addAll(userParamsSkippedDuringMarshalling);
+        logger.debug("Re-inserting " + userParamsSkippedDuringMarshalling.size() + " referenceable user params into the main user param list after marshalling.");
+        // Reset the skipped stuff, as it should now be empty again.
+        cvParamsSkippedDuringMarshalling.clear();
+        userParamsSkippedDuringMarshalling.clear();
     }
 
 }
