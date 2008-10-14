@@ -39,6 +39,7 @@ public class MarshallerFactory {
 
     private static final Logger logger = Logger.getLogger(MarshallerFactory.class);
     private static MarshallerFactory instance = new MarshallerFactory();
+    private static JAXBContext jc = null;
 
     public static MarshallerFactory getInstance() {
         return instance;
@@ -50,9 +51,11 @@ public class MarshallerFactory {
     public Marshaller initializeMarshaller() {
 
         try {
-
+            // Lazy caching of JAXB context.
+            if(jc == null) {
+                jc = JAXBContext.newInstance(ModelConstants.PACKAGE);
+            }
             //create marshaller and set basic properties
-            JAXBContext jc = JAXBContext.newInstance(ModelConstants.PACKAGE);
             Marshaller marshaller = jc.createMarshaller();
 
             marshaller.setProperty(Constants.JAXB_ENCODING_PROPERTY, "UTF-8");
@@ -67,7 +70,7 @@ public class MarshallerFactory {
             marshaller.setAdapter(new SampleAdapter(null, null));
             marshaller.setAdapter(new SoftwareAdapter(null, null));
             marshaller.setAdapter(new SourceFileAdapter(null, null));
-            marshaller.setAdapter(new SpectrumAdapter(null, null));
+            marshaller.setAdapter(new SpectrumAdapter(null, null, false));
             marshaller.setEventHandler(new DefaultValidationEventHandler());
 
 

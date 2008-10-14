@@ -47,15 +47,22 @@ public class MzMLObjectIterator<X extends MzMLObject> implements Iterator<X> {
     private String xpath;
     private Class cls;
     private AdapterObjectCache cache;
+    private boolean useSpectrumCache = true;
 
     //package level constructor!
     MzMLObjectIterator(String xpath, Class cls, MzMLIndexer index, AdapterObjectCache cache) {
+        this(xpath, cls, index, cache, true);
+    }
+
+    MzMLObjectIterator(String xpath, Class cls, MzMLIndexer index, AdapterObjectCache cache, boolean aUseSpectrumCache) {
         innerXpathIterator = index.getXmlStringIterator(xpath);
         this.xpath = xpath;
         this.cls = cls;
         this.index = index;
         this.cache = cache;
+        this.useSpectrumCache = aUseSpectrumCache;
     }
+
 
     public boolean hasNext() {
         return innerXpathIterator.hasNext();
@@ -73,7 +80,7 @@ public class MzMLObjectIterator<X extends MzMLObject> implements Iterator<X> {
             //required for the addition of namespaces to top-level objects
             MzMLNamespaceFilter xmlFilter = new MzMLNamespaceFilter();
             //initializeUnmarshaller will assign the proper reader to the xmlFilter
-            Unmarshaller unmarshaller = UnmarshallerFactory.getInstance().initializeUnmarshaller(index, xmlFilter, cache);
+            Unmarshaller unmarshaller = UnmarshallerFactory.getInstance().initializeUnmarshaller(index, xmlFilter, cache, useSpectrumCache);
             //unmarshall the desired object
             JAXBElement<X> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(xmlSt))), cls);
 

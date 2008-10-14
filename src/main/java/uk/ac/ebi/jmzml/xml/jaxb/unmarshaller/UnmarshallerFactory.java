@@ -51,6 +51,7 @@ public class UnmarshallerFactory {
     private static final Logger logger = Logger.getLogger(UnmarshallerFactory.class);
 
     private static UnmarshallerFactory instance = new UnmarshallerFactory();
+    private static JAXBContext jc = null;
 
     public static UnmarshallerFactory getInstance() {
         return instance;
@@ -60,11 +61,18 @@ public class UnmarshallerFactory {
     }
 
     public Unmarshaller initializeUnmarshaller(MzMLIndexer index, MzMLNamespaceFilter xmlFilter, AdapterObjectCache cache) {
+        return initializeUnmarshaller(index, xmlFilter, cache, true);
+    }
+
+    public Unmarshaller initializeUnmarshaller(MzMLIndexer index, MzMLNamespaceFilter xmlFilter, AdapterObjectCache cache, boolean useCacheForSpectra) {
 
         try {
+            // Lazy caching of the JAXB Context.
+            if(jc == null) {
+                jc = JAXBContext.newInstance(ModelConstants.PACKAGE);
+            }
 
             //create unmarshaller
-            JAXBContext jc = JAXBContext.newInstance(ModelConstants.PACKAGE);
             Unmarshaller unmarshaller = jc.createUnmarshaller();
 
             /*
@@ -93,7 +101,7 @@ public class UnmarshallerFactory {
             unmarshaller.setAdapter(new SampleAdapter(index, cache));
             unmarshaller.setAdapter(new SoftwareAdapter(index, cache));
             unmarshaller.setAdapter(new SourceFileAdapter(index, cache));
-            unmarshaller.setAdapter(new SpectrumAdapter(index, cache));
+            unmarshaller.setAdapter(new SpectrumAdapter(index, cache, useCacheForSpectra));
             unmarshaller.setEventHandler(new DefaultValidationEventHandler());
             UnmarshallerHandler uh = unmarshaller.getUnmarshallerHandler();
 

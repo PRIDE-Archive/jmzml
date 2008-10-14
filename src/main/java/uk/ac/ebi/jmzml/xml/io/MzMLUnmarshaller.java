@@ -47,14 +47,26 @@ public class MzMLUnmarshaller {
 
     private MzMLIndexer index;
     private AdapterObjectCache cache = new AdapterObjectCache();
+    private boolean useSpectrumCache = true;
 
     public MzMLUnmarshaller(URL mzMLFileURL) {
-        index = MzMLIndexerFactory.getInstance().buildIndex(mzMLFileURL);
+        this(mzMLFileURL, true);
     }
 
     public MzMLUnmarshaller(File mzMLFile) {
-        index = MzMLIndexerFactory.getInstance().buildIndex(mzMLFile);
+        this(mzMLFile, true);
     }
+
+    public MzMLUnmarshaller(URL mzMLFileURL, boolean aUseSpectrumCache) {
+        index = MzMLIndexerFactory.getInstance().buildIndex(mzMLFileURL);
+        useSpectrumCache = aUseSpectrumCache;
+    }
+
+    public MzMLUnmarshaller(File mzMLFile, boolean aUseSpectrumCache) {
+        index = MzMLIndexerFactory.getInstance().buildIndex(mzMLFile);
+        useSpectrumCache = aUseSpectrumCache;
+    }
+
 
     public MzML unmarshall() {
         return unmarshalFromXpath("", MzML.class);
@@ -82,7 +94,7 @@ public class MzMLUnmarshaller {
                 //required for the addition of namespaces to top-level objects
                 MzMLNamespaceFilter xmlFilter = new MzMLNamespaceFilter();
                 //initializeUnmarshaller will assign the proper reader to the xmlFilter
-                Unmarshaller unmarshaller = UnmarshallerFactory.getInstance().initializeUnmarshaller(index, xmlFilter, cache);
+                Unmarshaller unmarshaller = UnmarshallerFactory.getInstance().initializeUnmarshaller(index, xmlFilter, cache, useSpectrumCache);
                 //unmarshall the desired object
                 JAXBElement<T> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(xmlSt))), cls);
                 retval = holder.getValue();
@@ -105,7 +117,7 @@ public class MzMLUnmarshaller {
     }
 
     public <T extends MzMLObject> MzMLObjectIterator<T> unmarshalCollectionFromXpath(String xpath, Class cls) {
-        return new MzMLObjectIterator<T>(xpath, cls, index, cache);
+        return new MzMLObjectIterator<T>(xpath, cls, index, cache, useSpectrumCache);
     }
 
 }
