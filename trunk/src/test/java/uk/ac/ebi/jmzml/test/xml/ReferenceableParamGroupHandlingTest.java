@@ -65,6 +65,35 @@ public class ReferenceableParamGroupHandlingTest extends TestCase {
         }
     }
 
+    public void testReadingOfreferenceableParamGroupWithoutSpectrumCaching() {
+        URL url = this.getClass().getClassLoader().getResource("sample_small.mzML");
+        assertNotNull(url);
+
+        MzMLUnmarshaller um = new MzMLUnmarshaller(url, false);
+
+        MzML mz = um.unmarshall();
+
+        // First pass.
+        List<Spectrum> spectra = mz.getRun().getSpectrumList().getSpectrum();
+        for (Spectrum spectrum : spectra) {
+            Scan scan = spectrum.getSpectrumDescription().getScan();
+            if(scan != null) {
+                Assert.assertEquals(5, scan.getCvParam().size());
+                Assert.assertEquals(2, scan.getUserParam().size());
+            }
+        }
+
+        // Second pass. See if it keeps adding the referenceable ones.
+        spectra = mz.getRun().getSpectrumList().getSpectrum();
+        for (Spectrum spectrum : spectra) {
+            Scan scan = spectrum.getSpectrumDescription().getScan();
+            if(scan != null) {
+                Assert.assertEquals(5, scan.getCvParam().size());
+                Assert.assertEquals(2, scan.getUserParam().size());
+            }
+        }
+    }
+
     public void testReferenceableParamGroupMarshalling() {
         URL url = this.getClass().getClassLoader().getResource("sample_small.mzML");
         assertNotNull(url);
@@ -125,6 +154,96 @@ public class ReferenceableParamGroupHandlingTest extends TestCase {
 
             // Check wether this one still makes sense.
             um = new MzMLUnmarshaller(output2);
+            mz = um.unmarshall();
+            // First pass.
+            spectra = mz.getRun().getSpectrumList().getSpectrum();
+            for (Spectrum spectrum : spectra) {
+                Scan scan = spectrum.getSpectrumDescription().getScan();
+                if(scan != null) {
+                    Assert.assertEquals(5, scan.getCvParam().size());
+                    Assert.assertEquals(2, scan.getUserParam().size());
+                    Assert.assertEquals(2, scan.getReferenceableParamGroupRef().get(0).getReferenceableParamGroup().getCvParam().size());
+                    Assert.assertEquals(1, scan.getReferenceableParamGroupRef().get(0).getReferenceableParamGroup().getUserParam().size());
+                }
+            }
+
+            // Second pass. See if it keeps adding the referenceable ones.
+            spectra = mz.getRun().getSpectrumList().getSpectrum();
+            for (Spectrum spectrum : spectra) {
+                Scan scan = spectrum.getSpectrumDescription().getScan();
+                if(scan != null) {
+                    Assert.assertEquals(5, scan.getCvParam().size());
+                    Assert.assertEquals(2, scan.getUserParam().size());
+                    Assert.assertEquals(2, scan.getReferenceableParamGroupRef().get(0).getReferenceableParamGroup().getCvParam().size());
+                    Assert.assertEquals(1, scan.getReferenceableParamGroupRef().get(0).getReferenceableParamGroup().getUserParam().size());
+                }
+            }
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+            fail("IOException when creating a temproray file to marshall to!\n" + ioe.getMessage());
+        }
+    }
+
+        public void testReferenceableParamGroupMarshallingWithoutSpectrumCaching() {
+        URL url = this.getClass().getClassLoader().getResource("sample_small.mzML");
+        assertNotNull(url);
+
+        MzMLUnmarshaller um = new MzMLUnmarshaller(url, false);
+
+        MzML mz = um.unmarshall();
+
+        MzMLMarshaller marshaller = new MzMLMarshaller();
+        try {
+            // Try a single pass.
+            File output = File.createTempFile("tempTestReferenceableParamGroupMarshalling", ".mzML");
+            output.deleteOnExit();
+            BufferedWriter bw = new BufferedWriter(new FileWriter(output));
+            marshaller.marshall(mz, MzML.class, bw);
+            bw.flush();
+            bw.close();
+            um = new MzMLUnmarshaller(output, false);
+            mz = um.unmarshall();
+            // First pass.
+            List<Spectrum> spectra = mz.getRun().getSpectrumList().getSpectrum();
+            for (Spectrum spectrum : spectra) {
+                Scan scan = spectrum.getSpectrumDescription().getScan();
+                if(scan != null) {
+                    Assert.assertEquals(5, scan.getCvParam().size());
+                    Assert.assertEquals(2, scan.getUserParam().size());
+                    Assert.assertEquals(2, scan.getReferenceableParamGroupRef().get(0).getReferenceableParamGroup().getCvParam().size());
+                    Assert.assertEquals(1, scan.getReferenceableParamGroupRef().get(0).getReferenceableParamGroup().getUserParam().size());
+                }
+            }
+
+            // Second pass. See if it keeps adding the referenceable ones.
+            spectra = mz.getRun().getSpectrumList().getSpectrum();
+            for (Spectrum spectrum : spectra) {
+                Scan scan = spectrum.getSpectrumDescription().getScan();
+                if(scan != null) {
+                    Assert.assertEquals(5, scan.getCvParam().size());
+                    Assert.assertEquals(2, scan.getUserParam().size());
+                    Assert.assertEquals(2, scan.getReferenceableParamGroupRef().get(0).getReferenceableParamGroup().getCvParam().size());
+                    Assert.assertEquals(1, scan.getReferenceableParamGroupRef().get(0).getReferenceableParamGroup().getUserParam().size());
+                }
+            }
+
+            // Try a double pass.
+            output = File.createTempFile("tempTestReferenceableParamGroupMarshalling", "mzML");
+            output.deleteOnExit();
+            bw = new BufferedWriter(new FileWriter(output));
+            marshaller.marshall(mz, MzML.class, bw);
+            bw.flush();
+            bw.close();
+
+            File output2 = File.createTempFile("tempTestReferenceableParamGroupMarshalling2", "mzML");
+            output2.deleteOnExit();
+            bw = new BufferedWriter(new FileWriter(output2));
+            marshaller.marshall(mz, MzML.class, bw);
+            bw.flush();
+            bw.close();
+
+            // Check wether this one still makes sense.
+            um = new MzMLUnmarshaller(output2, false);
             mz = um.unmarshall();
             // First pass.
             spectra = mz.getRun().getSpectrumList().getSpectrum();

@@ -44,6 +44,7 @@ public abstract class AbstractResolvingAdapter<ValueType, BoundType> extends Xml
 
     protected MzMLIndexer index = null;
     protected AdapterObjectCache cache = null;
+    protected boolean useSpectrumCache = true;
 
     /**
      * the presence of a constructor forces all subclasses to provide a valid indexer
@@ -53,9 +54,15 @@ public abstract class AbstractResolvingAdapter<ValueType, BoundType> extends Xml
      * @param index
      */
     protected AbstractResolvingAdapter(MzMLIndexer index, AdapterObjectCache cache) {
+        this(index, cache, true);
+    }
+
+    protected AbstractResolvingAdapter(MzMLIndexer index, AdapterObjectCache cache, boolean aUseSpectrumCache) {
         this.index = index;
         this.cache = cache;
+        this.useSpectrumCache = aUseSpectrumCache;
     }
+
 
     public <BoundType> BoundType unmarshal(String refId, Constants.ReferencedType refType) {
 
@@ -105,7 +112,7 @@ public abstract class AbstractResolvingAdapter<ValueType, BoundType> extends Xml
             //initializeUnmarshaller will assign the proper reader to the xmlFilter
             //this also propagates the cache so that any associated IDREF calls
             //are handled efficiently if possible
-            Unmarshaller unmarshaller = UnmarshallerFactory.getInstance().initializeUnmarshaller(index, xmlFilter, cache);
+            Unmarshaller unmarshaller = UnmarshallerFactory.getInstance().initializeUnmarshaller(index, xmlFilter, cache, useSpectrumCache);
 
             //need to do it this way because snippet does not have a XmlRootElement annotation
             JAXBElement<BoundType> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(xml))), cls);

@@ -29,19 +29,25 @@ import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
 
 public class SpectrumAdapter extends AbstractResolvingAdapter<String, Spectrum> {
 
-    public SpectrumAdapter(MzMLIndexer index, AdapterObjectCache cache) {
-        super(index, cache);
+    public SpectrumAdapter(MzMLIndexer index, AdapterObjectCache cache, boolean aUseSpectrumCache) {
+        super(index, cache, aUseSpectrumCache);
     }
 
     public Spectrum unmarshal(String refId) {
         Spectrum retval;
-        if (cache.getCachedObject(refId, Constants.ReferencedType.Spectrum) != null) {
-            retval = cache.getCachedObject(refId, Constants.ReferencedType.Spectrum);
-            logger.debug("used cached value for ID: " + refId);
+        // See if we're using cache at all.
+        if(useSpectrumCache) {
+            if (cache.getCachedObject(refId, Constants.ReferencedType.Spectrum) != null) {
+                retval = cache.getCachedObject(refId, Constants.ReferencedType.Spectrum);
+                logger.debug("used cached value for ID: " + refId);
+            } else {
+                retval = super.unmarshal(refId, Constants.ReferencedType.Spectrum);
+                cache.setCachedObject(refId, Constants.ReferencedType.Spectrum, retval);
+                logger.debug("cached object at ID: " + refId);
+            }
         } else {
             retval = super.unmarshal(refId, Constants.ReferencedType.Spectrum);
-            cache.setCachedObject(refId, Constants.ReferencedType.Spectrum, retval);
-            logger.debug("cached object at ID: " + refId);
+            logger.debug("retrieved object at ID: " + refId + " without caching.");
         }
         return retval;
     }
