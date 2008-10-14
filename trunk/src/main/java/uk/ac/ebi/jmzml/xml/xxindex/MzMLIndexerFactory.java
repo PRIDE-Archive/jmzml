@@ -156,7 +156,7 @@ public class MzMLIndexerFactory {
         private String getIdFromRawXML(String xml) {
             Matcher match = ID_PATTERN.matcher(xml);
             if (match.find()) {
-                return match.group(1);
+                return match.group(1).intern();
             } else {
                 throw new IllegalStateException("Invalid ID in xml: " + xml);
             }
