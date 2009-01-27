@@ -29,6 +29,10 @@ import java.util.HashMap;
 
 public class AdapterObjectCache {
 
+    //todo
+    //configure caching levels so that individual object classes are/aren't cached
+    //at runtime
+
     private HashMap<String, CV> cvMap = new HashMap<String, CV>();
     private HashMap<String, DataProcessing> dataProcessingMap = new HashMap<String, DataProcessing>();
     private HashMap<String, InstrumentConfiguration> instrConfigMap = new HashMap<String, InstrumentConfiguration>();
