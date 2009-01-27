@@ -25,6 +25,10 @@ package uk.ac.ebi.jmzml.xml.xxindex;
 import uk.ac.ebi.jmzml.xml.Constants;
 
 import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import psidev.psi.tools.xxindex.index.IndexElement;
 
 public interface MzMLIndexer {
 
@@ -33,5 +37,11 @@ public interface MzMLIndexer {
     public String getXmlString(String ID, Constants.ReferencedType type);
 
     public int getCount(String xpathExpression);
+
+    public String getXmlString(String xpath, long offset);
+
+    public List<IndexElement> getIndexElements(String xpathExpression);
+
+    public Set<String> getXpath();
 
 }

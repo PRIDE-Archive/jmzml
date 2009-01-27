@@ -35,12 +35,12 @@ public class ReferenceableParamGroupAdapter extends AbstractResolvingAdapter<Str
 
     public ReferenceableParamGroup unmarshal(String refId) {
         ReferenceableParamGroup retval;
-        if (cache.getCachedObject(refId, Constants.ReferencedType.ReferenceableParamGroup) != null) {
-            retval = cache.getCachedObject(refId, Constants.ReferencedType.ReferenceableParamGroup);
+        if (cache.getCachedObject(refId, ReferenceableParamGroup.class) != null) {
+            retval = (ReferenceableParamGroup) cache.getCachedObject(refId, ReferenceableParamGroup.class);
             logger.debug("used cached value for ID: " + refId);
         } else {
             retval = super.unmarshal(refId, Constants.ReferencedType.ReferenceableParamGroup);
-            cache.setCachedObject(refId, Constants.ReferencedType.ReferenceableParamGroup, retval);
+            cache.putInCache(refId, retval);
             logger.debug("cached object at ID: " + refId);
         }
         return retval;

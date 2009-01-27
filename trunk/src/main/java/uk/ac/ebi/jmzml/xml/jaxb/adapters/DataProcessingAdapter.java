@@ -35,12 +35,12 @@ public class DataProcessingAdapter extends AbstractResolvingAdapter<String, Data
 
     public DataProcessing unmarshal(String refId) {
         DataProcessing retval;
-        if (cache.getCachedObject(refId, Constants.ReferencedType.DataProcessing) != null) {
-            retval = cache.getCachedObject(refId, Constants.ReferencedType.DataProcessing);
+        if (cache.getCachedObject(refId, DataProcessing.class) != null) {
+            retval = (DataProcessing) cache.getCachedObject(refId, DataProcessing.class);
             logger.debug("used cached value for ID: " + refId);
         } else {
             retval = super.unmarshal(refId, Constants.ReferencedType.DataProcessing);
-            cache.setCachedObject(refId, Constants.ReferencedType.DataProcessing, retval);
+            cache.putInCache(refId, retval);
             logger.debug("cached object at ID: " + refId);
         }
         return retval;

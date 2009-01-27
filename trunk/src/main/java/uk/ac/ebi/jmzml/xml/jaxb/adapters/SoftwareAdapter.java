@@ -35,12 +35,12 @@ public class SoftwareAdapter extends AbstractResolvingAdapter<String, Software> 
 
     public Software unmarshal(String refId) {
         Software retval;
-        if (cache.getCachedObject(refId, Constants.ReferencedType.Software) != null) {
-            retval = cache.getCachedObject(refId, Constants.ReferencedType.Software);
+        if (cache.getCachedObject(refId, Software.class) != null) {
+            retval = (Software) cache.getCachedObject(refId, Software.class);
             logger.debug("used cached value for ID: " + refId);
         } else {
             retval = super.unmarshal(refId, Constants.ReferencedType.Software);
-            cache.setCachedObject(refId, Constants.ReferencedType.Software, retval);
+            cache.putInCache(refId, retval);
             logger.debug("cached object at ID: " + refId);
         }
         return retval;

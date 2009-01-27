@@ -35,12 +35,12 @@ public class InstrumentConfigurationAdapter extends AbstractResolvingAdapter<Str
 
     public InstrumentConfiguration unmarshal(String refId) {
         InstrumentConfiguration retval;
-        if (cache.getCachedObject(refId, Constants.ReferencedType.InstrumentConfiguration) != null) {
-            retval = cache.getCachedObject(refId, Constants.ReferencedType.InstrumentConfiguration);
+        if (cache.getCachedObject(refId, InstrumentConfiguration.class) != null) {
+            retval = (InstrumentConfiguration) cache.getCachedObject(refId, InstrumentConfiguration.class);
             logger.debug("used cached value for ID: " + refId);
         } else {
             retval = super.unmarshal(refId, Constants.ReferencedType.InstrumentConfiguration);
-            cache.setCachedObject(refId, Constants.ReferencedType.InstrumentConfiguration, retval);
+            cache.putInCache(refId, retval);
             logger.debug("cached object at ID: " + refId);
         }
         return retval;

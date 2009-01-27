@@ -35,12 +35,12 @@ public class SampleAdapter extends AbstractResolvingAdapter<String, Sample> {
 
     public Sample unmarshal(String refId) {
         Sample retval;
-        if (cache.getCachedObject(refId, Constants.ReferencedType.Sample) != null) {
-            retval = cache.getCachedObject(refId, Constants.ReferencedType.Sample);
+        if (cache.getCachedObject(refId, Sample.class) != null) {
+            retval = (Sample) cache.getCachedObject(refId, Sample.class);
             logger.debug("used cached value for ID: " + refId);
         } else {
             retval = super.unmarshal(refId, Constants.ReferencedType.Sample);
-            cache.setCachedObject(refId, Constants.ReferencedType.Sample, retval);
+            cache.putInCache(refId, retval);
             logger.debug("cached object at ID: " + refId);
         }
         return retval;

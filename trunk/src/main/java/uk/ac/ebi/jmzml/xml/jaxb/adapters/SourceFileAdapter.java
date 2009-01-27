@@ -35,12 +35,12 @@ public class SourceFileAdapter extends AbstractResolvingAdapter<String, SourceFi
 
     public SourceFile unmarshal(String refId) {
         SourceFile retval;
-        if (cache.getCachedObject(refId, Constants.ReferencedType.SourceFile) != null) {
-            retval = cache.getCachedObject(refId, Constants.ReferencedType.SourceFile);
+        if (cache.getCachedObject(refId, SourceFile.class) != null) {
+            retval = (SourceFile) cache.getCachedObject(refId, SourceFile.class);
             logger.debug("used cached value for ID: " + refId);
         } else {
             retval = super.unmarshal(refId, Constants.ReferencedType.SourceFile);
-            cache.setCachedObject(refId, Constants.ReferencedType.SourceFile, retval);
+            cache.putInCache(refId, retval);
             logger.debug("cached object at ID: " + refId);
         }
         return retval;

@@ -23,9 +23,8 @@
 
 package uk.ac.ebi.jmzml.xml.jaxb.marshaller;
 
-import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
 import org.apache.log4j.Logger;
-import uk.ac.ebi.jmzml.model.mzml.ModelConstants;
+import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
 import uk.ac.ebi.jmzml.xml.Constants;
 import uk.ac.ebi.jmzml.xml.jaxb.adapters.*;
 import uk.ac.ebi.jmzml.xml.jaxb.marshaller.listeners.ObjectClassListener;
@@ -33,7 +32,6 @@ import uk.ac.ebi.jmzml.xml.jaxb.marshaller.listeners.ObjectClassListener;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.helpers.DefaultValidationEventHandler;
 
 public class MarshallerFactory {
 
@@ -49,7 +47,7 @@ public class MarshallerFactory {
     }
 
     public Marshaller initializeMarshaller() {
-
+        logger.debug("Initializing Marshaller for mzML.");
         try {
             // Lazy caching of JAXB context.
             if(jc == null) {
@@ -57,12 +55,10 @@ public class MarshallerFactory {
             }
             //create marshaller and set basic properties
             Marshaller marshaller = jc.createMarshaller();
-
             marshaller.setProperty(Constants.JAXB_ENCODING_PROPERTY, "UTF-8");
             marshaller.setProperty(Constants.JAXB_FORMATTING_PROPERTY, true);
-            marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new MzMLNamespaceMapper());
 
-            //set adapters so that jaxb can write the proper IDREF tags in the XML
+            // set adapters so that jaxb can write the proper IDREF tags in the XML
             marshaller.setAdapter(new CVAdapter(null, null));
             marshaller.setAdapter(new DataProcessingAdapter(null, null));
             marshaller.setAdapter(new InstrumentConfigurationAdapter(null, null));
@@ -71,11 +67,18 @@ public class MarshallerFactory {
             marshaller.setAdapter(new SoftwareAdapter(null, null));
             marshaller.setAdapter(new SourceFileAdapter(null, null));
             marshaller.setAdapter(new SpectrumAdapter(null, null, false));
-            marshaller.setEventHandler(new DefaultValidationEventHandler());
+            marshaller.setAdapter(new ScanSettingsAdapter(null, null));
 
+            // ToDo: why this?
+//            marshaller.setEventHandler(new DefaultValidationEventHandler());
 
+            // Register a listener that calls before/afterMarshalOperation on ParamGroup objects.
+            // This is used to dis-entangle the referenced params (which should NOT be marshalled
+            // locally in the element) from those who are real local params and have to be locally
+            // marshalled.
+            // See: ParamGroup.beforeMarshalOperation and ParamGroup.afterMarshalOperation
             marshaller.setListener(new ObjectClassListener());
-            
+
             logger.info("Marshaller initialized");
 
             return marshaller;
@@ -85,28 +88,6 @@ public class MarshallerFactory {
             throw new IllegalStateException("Can't initialize marshaller: " + e.getMessage());
         }
 
-    }
-
-    private class MzMLNamespaceMapper extends NamespacePrefixMapper {
-
-        public String[] getPreDeclaredNamespaceUris() {
-            return new String[0];
-        }
-
-        public String[] getPreDeclaredNamespaceUris2() {
-            return new String[0];
-        }
-
-        public String[] getContextualNamespaceDecls() {
-            return new String[0];
-        }
-
-        public String getPreferredPrefix(String namespaceUri,
-                                         String suggestion,
-                                         boolean requirePrefix) {
-            logger.debug("set prefix to >< when asked for uri >" + namespaceUri + "< with requirePrefix: " + requirePrefix + "");
-            return "";
-        }
     }
 
 }

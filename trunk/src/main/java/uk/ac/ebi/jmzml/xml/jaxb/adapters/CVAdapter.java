@@ -35,12 +35,14 @@ public class CVAdapter extends AbstractResolvingAdapter<String, CV> {
 
     public CV unmarshal(String refId) {
         CV retval;
-        if (cache.getCachedObject(refId, Constants.ReferencedType.CV) != null) {
-            retval = cache.getCachedObject(refId, Constants.ReferencedType.CV);
+        if (cache.getCachedObject(refId, CV.class) != null) {
+            // ToDo: unchecked cast, may produce runtime exception! check if we can get around this
+            // ToDo: maybe check returned type (but then we would have to throw exception anyway)
+            retval = (CV) cache.getCachedObject(refId, CV.class);
             logger.debug("used cached value for ID: " + refId);
         } else {
             retval = super.unmarshal(refId, Constants.ReferencedType.CV);
-            cache.setCachedObject(refId, Constants.ReferencedType.CV, retval);
+            cache.putInCache(refId, retval);
             logger.debug("cached object at ID: " + refId);
         }
         return retval;

@@ -37,12 +37,12 @@ public class SpectrumAdapter extends AbstractResolvingAdapter<String, Spectrum> 
         Spectrum retval;
         // See if we're using cache at all.
         if(useSpectrumCache) {
-            if (cache.getCachedObject(refId, Constants.ReferencedType.Spectrum) != null) {
-                retval = cache.getCachedObject(refId, Constants.ReferencedType.Spectrum);
+            if (cache.getCachedObject(refId, Spectrum.class) != null) {
+                retval = (Spectrum) cache.getCachedObject(refId, Spectrum.class);
                 logger.debug("used cached value for ID: " + refId);
             } else {
                 retval = super.unmarshal(refId, Constants.ReferencedType.Spectrum);
-                cache.setCachedObject(refId, Constants.ReferencedType.Spectrum, retval);
+                cache.putInCache(refId, retval);
                 logger.debug("cached object at ID: " + refId);
             }
         } else {

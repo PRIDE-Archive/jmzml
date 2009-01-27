@@ -64,6 +64,7 @@ public abstract class AbstractResolvingAdapter<ValueType, BoundType> extends Xml
     }
 
 
+    // ToDo: why use reference type enum and not class ??
     public <BoundType> BoundType unmarshal(String refId, Constants.ReferencedType refType) {
 
         logger.debug("AbstractResolvingAdapter.unmarshal for id: " + refId);
@@ -71,7 +72,7 @@ public abstract class AbstractResolvingAdapter<ValueType, BoundType> extends Xml
         String xml = index.getXmlString(refId, refType);
 
         if (logger.isDebugEnabled()) {
-            logger.debug("read xml is = " + xml);
+            logger.trace("read xml is = " + xml);
         }
 
         Class cls;
@@ -101,11 +102,17 @@ public abstract class AbstractResolvingAdapter<ValueType, BoundType> extends Xml
             case Spectrum:
                 cls = Spectrum.class;
                 break;
+            case ScanSettings:
+                cls = ScanSettings.class;
+                break;
             default:
                 throw new IllegalStateException("Unkonwn cache type: " + refType);
         }
 
         try {
+
+            // ToDo: why not use the MzMLUnmarshaller ?? -> internal state conflicts if trying to use one MzMLUnmarshaller
+            // ToDo: maybe allow more instanced of MzMLUnmarshaller
 
             //required for the addition of namespaces to top-level objects
             MzMLNamespaceFilter xmlFilter = new MzMLNamespaceFilter();
