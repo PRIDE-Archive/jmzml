@@ -28,14 +28,14 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class Constants {
-
-    public static final String MZML_NAMESPACE = "http://psi.hupo.org/schema_revision/mzML_1.0.0";
+    // ToDo: ? move to ModelConstants ?
 
     public static final String JAXB_ENCODING_PROPERTY = "jaxb.encoding";
     public static final String JAXB_FORMATTING_PROPERTY = "jaxb.formatted.output";
     public static final String JAXB_SCHEMALOCATION_PROPERTY = "jaxb.schemaLocation";
     public static final String JAXB_FRAGMENT_PROPERTY = "jaxb.fragment";
 
+    // ToDo: check if all necessary types are present
     public static enum ReferencedType {
         CV,
         DataProcessing,
@@ -44,7 +44,8 @@ public class Constants {
         Sample,
         Software,
         SourceFile,
-        Spectrum
+        Spectrum,
+        ScanSettings
     }
 
     private static Set<String> xpathsToIndex = new HashSet<String>();
@@ -61,6 +62,8 @@ public class Constants {
         xpathsToIndex.add("/mzML/referenceableParamGroupList/referenceableParamGroup");
         xpathsToIndex.add("/mzML/sampleList");
         xpathsToIndex.add("/mzML/sampleList/sample");
+        xpathsToIndex.add("/mzML/scanSettingsList");
+        xpathsToIndex.add("/mzML/scanSettingsList/scanSettings");
         xpathsToIndex.add("/mzML/softwareList");
         xpathsToIndex.add("/mzML/softwareList/software");
         xpathsToIndex.add("/mzML/instrumentConfigurationList");
@@ -79,7 +82,12 @@ public class Constants {
             xpathsToIndex.add("/indexedmzML" + mzmlString);
         }
 
-        //now make set unmodifiable
+        // add indexedmzML specific xpathes
+        xpathsToIndex.add("/indexedmzML");
+        xpathsToIndex.add("/indexedmzML/indexList");
+        xpathsToIndex.add("/indexedmzML/fileChecksum");
+
+        // finally make the set unmodifiable
         xpathsToIndex = Collections.unmodifiableSet(xpathsToIndex);
     }
 

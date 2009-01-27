@@ -29,11 +29,13 @@ import org.apache.log4j.Logger;
 import uk.ac.ebi.jmzml.model.mzml.Chromatogram;
 import uk.ac.ebi.jmzml.model.mzml.FileDescription;
 import uk.ac.ebi.jmzml.model.mzml.MzML;
+import uk.ac.ebi.jmzml.model.mzml.Run;
 import uk.ac.ebi.jmzml.xml.io.MzMLMarshaller;
 import uk.ac.ebi.jmzml.xml.io.MzMLObjectIterator;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
 
 import java.net.URL;
+import java.io.File;
 
 public class XMLTest extends TestCase {
 
@@ -45,21 +47,9 @@ public class XMLTest extends TestCase {
 
     Logger logger = Logger.getLogger(XMLTest.class);
 
-    public XMLTest(String name) {
-        super(name);
-    }
-
-    public void setUp() throws Exception {
-        super.setUp();
-    }
-
-    public void tearDown() throws Exception {
-        super.tearDown();
-    }
-
     public void testXMLIndex() throws Exception {
 
-        URL url = this.getClass().getClassLoader().getResource("sample_small.mzML");
+        URL url = this.getClass().getClassLoader().getResource("tiny.pwiz.mzML");
         assertNotNull(url);
 
         MzMLUnmarshaller um = new MzMLUnmarshaller(url);
@@ -76,9 +66,9 @@ public class XMLTest extends TestCase {
         logger.debug("fd = " + fd);
 
         MzMLMarshaller mm = new MzMLMarshaller();
-        String outFD = mm.marshall(fd, fd.getClass());
+        String outFD = mm.marshall(fd);
 
-        String mzml = mm.marshall(mz, mz.getClass());
+        String mzml = mm.marshall(mz);
 
         int chromatogramCount = 0;
         MzMLObjectIterator<Chromatogram> iter = um.unmarshalCollectionFromXpath("/run/chromatogramList/chromatogram", Chromatogram.class);
@@ -91,9 +81,74 @@ public class XMLTest extends TestCase {
 
     }
 
+    public void testXMLUnmarshalling() throws Exception {
+        URL url = this.getClass().getClassLoader().getResource("tiny.pwiz.mzML");
+        assertNotNull(url);
 
-    public static Test suite() {
-        return new TestSuite(XMLTest.class);
+        MzMLUnmarshaller um = new MzMLUnmarshaller(url);
+        MzML mz = um.unmarshall();
+        assertNotNull(mz);
+
+        // the test file has:
+
+        assertEquals("1", true, true);
+        assertEquals("2", 2, 2);
+
+        // two CVs
+        assertEquals("The cvList does not have the same number of entries as stated in its counter attribute!", mz.getCvList().getCount().intValue(), mz.getCvList().getCv().size());
+        assertEquals("The cvList doen not have as many entries as expected.", 2, mz.getCvList().getCount().intValue());
+
+        // two source files
+        assertEquals("SourceFileList count does not equal real number of entries.", mz.getFileDescription().getSourceFileList().getCount().intValue(), mz.getFileDescription().getSourceFileList().getSourceFile().size());
+        assertEquals("", 2, mz.getFileDescription().getSourceFileList().getCount().intValue());
+
+        // one contact
+        assertEquals("Not expected number of contacts.", 1, mz.getFileDescription().getContact().size());
+
+        // two referencable param groups
+        assertEquals("ReferencableParamGroupList count does not equal real number of entries.", mz.getReferenceableParamGroupList().getCount().intValue(), mz.getReferenceableParamGroupList().getReferenceableParamGroup().size());
+        assertEquals("Not expected number of referencable param groups.", 2, mz.getReferenceableParamGroupList().getCount().intValue());
+
+        // one sample
+        assertEquals("SampleList count does not equal real number of entries.", mz.getSampleList().getCount().intValue(), mz.getSampleList().getSample().size());
+        assertEquals("Not expected number of samples.", 1, mz.getSampleList().getCount().intValue());
+
+        // three software entries
+        assertEquals("SoftwareList count does not equal real number of entries.", mz.getSoftwareList().getCount().intValue(), mz.getSoftwareList().getSoftware().size());
+        assertEquals("Not expected number of softwares.", 3, mz.getSoftwareList().getCount().intValue());
+
+        // one scanSetting
+        assertEquals("ScanSettingList count does not equal real number of entries.", mz.getScanSettingsList().getCount().intValue(), mz.getScanSettingsList().getScanSettings().size());
+        assertEquals("Not expected number of scanSettings.", 1, mz.getScanSettingsList().getCount().intValue());
+
+        // one instrumentConfiguration
+        assertEquals("InstrumentConfigurationList count does not equal real number of entries.", mz.getInstrumentConfigurationList().getCount().intValue(), mz.getInstrumentConfigurationList().getInstrumentConfiguration().size());
+        assertEquals("Not expected number of InstrumentConfigurations.", 1, mz.getInstrumentConfigurationList().getCount().intValue());
+
+        // two dataProcessing entries
+        assertEquals("DataProcessingList count does not equal real number of entries.", mz.getDataProcessingList().getCount().intValue(), mz.getDataProcessingList().getDataProcessing().size());
+        assertEquals("Not expected number of data processing entries.", 2, mz.getDataProcessingList().getCount().intValue());
+
+
+
+        // now check the run element in more detail
+        Run run = mz.getRun();
+        
+        // the run has 4 spectra
+        assertEquals("SpectrumList count does not equal real number of entries.", run.getSpectrumList().getCount().intValue(), run.getSpectrumList().getSpectrum().size());
+        assertEquals("Not expected number of specrta.", 4, run.getSpectrumList().getCount().intValue());
+
+        // the run has 2 chromatograms
+        assertEquals("ChromatogramList count does not equal real number of entries.", run.getChromatogramList().getCount().intValue(), run.getChromatogramList().getChromatogram().size());
+        assertEquals("Not expected number of chromatograms.", 2, run.getChromatogramList().getCount().intValue());
+
+        // the default instrument configuration for this run (test if the references are correctly resolved)
+        assertEquals("The instrument configuration software does not match.", "Xcalibur", run.getDefaultInstrumentConfiguration().getSoftwareRef().getSoftware().getCvParam().get(0).getName());
+
+        // ToDo: check the IDREF referenced elements
+
+
     }
+
 
 }

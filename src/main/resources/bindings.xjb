@@ -22,7 +22,7 @@
               xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
               xmlns:xs="http://www.w3.org/2001/XMLSchema"
               xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-              schemaLocation="mzML1.0.0.xsd"
+              schemaLocation="mzML1.1.0.xsd"
               node="/xs:schema">
 
     <jxb:globalBindings choiceContentProperty="true">
@@ -30,60 +30,17 @@
         <jxb:serializable uid="100"/>
         <!-- this interface will be used to ensure type safety in generified methods -->
         <xjc:superInterface name="uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject"/>
-        <jxb:javaType name="java.util.Calendar"
-                      xmlType="xs:dateTime"
-                      parseMethod="javax.xml.bind.DatatypeConverter.parseDate"
-                      printMethod="javax.xml.bind.DatatypeConverter.printDate"
-                />
+        <xjc:javaType name="java.util.Calendar" xmlType="xs:dateTime" adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.CalendarAdapter" />
+
     </jxb:globalBindings>
+
 
     <jxb:schemaBindings>
         <jxb:package name="uk.ac.ebi.jmzml.model.mzml"/>
     </jxb:schemaBindings>
 
-    <jxb:bindings node="//xs:complexType[@name='AcquisitionListType']">
-        <jxb:class name="AcquisitionList"/>
-    </jxb:bindings>
-
-    <jxb:bindings node="//xs:complexType[@name='AcquisitionSettingsListType']">
-        <jxb:class name="AcquisitionSettingsList"/>
-    </jxb:bindings>
-
-    <jxb:bindings node="//xs:complexType[@name='AcquisitionSettingsType']">
-        <jxb:class name="AcquisitionSettings"/>
-    </jxb:bindings>
-    <jxb:bindings
-            node="//xs:complexType[@name='AcquisitionSettingsType']/xs:complexContent/xs:extension/xs:attribute[@name='instrumentConfigurationRef']">
-        <jxb:property name="instrumentConfiguration">
-            <jxb:baseType>
-                <xjc:javaType name="InstrumentConfiguration"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.InstrumentConfigurationAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
-
-    <jxb:bindings node="//xs:complexType[@name='AcquisitionType']">
-        <jxb:class name="Acquisition"/>
-    </jxb:bindings>
-    <jxb:bindings
-            node="//xs:complexType[@name='AcquisitionType']/xs:complexContent/xs:extension/xs:attribute[@name='spectrumRef']">
-        <jxb:property name="spectrum">
-            <jxb:baseType>
-                <xjc:javaType name="Spectrum"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SpectrumAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
-    <jxb:bindings
-            node="//xs:complexType[@name='AcquisitionType']/xs:complexContent/xs:extension/xs:attribute[@name='sourceFileRef']">
-        <jxb:property name="sourceFile">
-            <jxb:baseType>
-                <xjc:javaType name="SourceFile"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
-
+    <!-- ATTENTION: Some code in the JMZML library expects that the class names are the same
+         as the element names of the mzML XML. -->
 
     <jxb:bindings node="//xs:complexType[@name='BinaryDataArrayListType']">
         <jxb:class name="BinaryDataArrayList"/>
@@ -92,8 +49,7 @@
     <jxb:bindings node="//xs:complexType[@name='BinaryDataArrayType']">
         <jxb:class name="BinaryDataArray"/>
     </jxb:bindings>
-    <jxb:bindings
-            node="//xs:complexType[@name='BinaryDataArrayType']/xs:complexContent/xs:extension/xs:attribute[@name='dataProcessingRef']">
+    <jxb:bindings node="//xs:complexType[@name='BinaryDataArrayType']/xs:complexContent/xs:extension/xs:attribute[@name='dataProcessingRef']">
         <jxb:property name="dataProcessing">
             <jxb:baseType>
                 <xjc:javaType name="DataProcessing"
@@ -109,8 +65,7 @@
     <jxb:bindings node="//xs:complexType[@name='ChromatogramType']">
         <jxb:class name="Chromatogram"/>
     </jxb:bindings>
-    <jxb:bindings
-            node="//xs:complexType[@name='ChromatogramType']/xs:complexContent/xs:extension/xs:attribute[@name='dataProcessingRef']">
+    <jxb:bindings node="//xs:complexType[@name='ChromatogramType']/xs:complexContent/xs:extension/xs:attribute[@name='dataProcessingRef']">
         <jxb:property name="dataProcessing">
             <jxb:baseType>
                 <xjc:javaType name="DataProcessing"
@@ -176,14 +131,6 @@
     <jxb:bindings node="//xs:complexType[@name='DataProcessingType']">
         <jxb:class name="DataProcessing"/>
     </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='DataProcessingType']/xs:attribute[@name='softwareRef']">
-        <jxb:property name="software">
-            <jxb:baseType>
-                <xjc:javaType name="Software"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SoftwareAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
 
     <jxb:bindings node="//xs:complexType[@name='FileDescriptionType']">
         <jxb:class name="FileDescription"/>
@@ -196,9 +143,21 @@
     <jxb:bindings node="//xs:complexType[@name='InstrumentConfigurationType']">
         <jxb:class name="InstrumentConfiguration"/>
     </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='InstrumentConfigurationType']/xs:complexContent/xs:extension/xs:attribute[@name='scanSettingsRef']">
+        <jxb:property name="scanSettings">
+            <jxb:baseType>
+                <xjc:javaType name="ScanSettings"
+                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.ScanSettingsAdapter"/>
+            </jxb:baseType>
+        </jxb:property>
+    </jxb:bindings>
 
     <jxb:bindings node="//xs:complexType[@name='mzMLType']">
         <jxb:class name="mzML"/>
+    </jxb:bindings>
+
+    <jxb:bindings node="//xs:complexType[@name='NeutralLossType']">
+        <jxb:class name="NeutralLoss"/>
     </jxb:bindings>
 
     <jxb:bindings node="//xs:complexType[@name='ParamGroupType']">
@@ -229,8 +188,20 @@
         </jxb:property>
     </jxb:bindings>
 
+    <jxb:bindings node="//xs:complexType[@name='ProductType']">
+        <jxb:class name="Product"/>
+    </jxb:bindings>
+
     <jxb:bindings node="//xs:complexType[@name='ProcessingMethodType']">
         <jxb:class name="ProcessingMethod"/>
+    </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='ProcessingMethodType']/xs:complexContent/xs:extension/xs:attribute[@name='softwareRef']">
+        <jxb:property name="software">
+            <jxb:baseType>
+                <xjc:javaType name="Software"
+                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SoftwareAdapter"/>
+            </jxb:baseType>
+        </jxb:property>
     </jxb:bindings>
 
     <jxb:bindings node="//xs:complexType[@name='ReferenceableParamGroupListType']">
@@ -256,8 +227,7 @@
     <jxb:bindings node="//xs:complexType[@name='RunType']">
         <jxb:class name="Run"/>
     </jxb:bindings>
-    <jxb:bindings
-            node="//xs:complexType[@name='RunType']/xs:complexContent/xs:extension/xs:attribute[@name='defaultInstrumentConfigurationRef']">
+    <jxb:bindings node="//xs:complexType[@name='RunType']/xs:complexContent/xs:extension/xs:attribute[@name='defaultInstrumentConfigurationRef']">
         <jxb:property name="defaultInstrumentConfiguration">
             <jxb:baseType>
                 <xjc:javaType name="InstrumentConfiguration"
@@ -265,8 +235,7 @@
             </jxb:baseType>
         </jxb:property>
     </jxb:bindings>
-    <jxb:bindings
-            node="//xs:complexType[@name='RunType']/xs:complexContent/xs:extension/xs:attribute[@name='sampleRef']">
+    <jxb:bindings node="//xs:complexType[@name='RunType']/xs:complexContent/xs:extension/xs:attribute[@name='sampleRef']">
         <jxb:property name="sample">
             <jxb:baseType>
                 <xjc:javaType name="Sample"
@@ -283,11 +252,30 @@
         <jxb:class name="Sample"/>
     </jxb:bindings>
 
+    <jxb:bindings node="//xs:complexType[@name='ScanListType']">
+        <jxb:class name="ScanList"/>
+    </jxb:bindings>
+
+    <jxb:bindings node="//xs:complexType[@name='ScanSettingsListType']">
+        <jxb:class name="ScanSettingsList"/>
+    </jxb:bindings>
+
+    <jxb:bindings node="//xs:complexType[@name='ScanSettingsType']">
+        <jxb:class name="ScanSettings"/>
+    </jxb:bindings>
+
     <jxb:bindings node="//xs:complexType[@name='ScanType']">
         <jxb:class name="Scan"/>
     </jxb:bindings>
-    <jxb:bindings
-            node="//xs:complexType[@name='ScanType']/xs:complexContent/xs:extension/xs:attribute[@name='instrumentConfigurationRef']">
+    <jxb:bindings node="//xs:complexType[@name='ScanType']/xs:complexContent/xs:extension/xs:attribute[@name='sourceFileRef']">
+        <jxb:property name="sourceFile">
+            <jxb:baseType>
+                <xjc:javaType name="SourceFile"
+                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter"/>
+            </jxb:baseType>
+        </jxb:property>
+    </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='ScanType']/xs:complexContent/xs:extension/xs:attribute[@name='instrumentConfigurationRef']">
         <jxb:property name="instrumentConfiguration">
             <jxb:baseType>
                 <xjc:javaType name="InstrumentConfiguration"
@@ -310,18 +298,6 @@
 
     <jxb:bindings node="//xs:complexType[@name='SoftwareListType']">
         <jxb:class name="SoftwareList"/>
-    </jxb:bindings>
-
-    <jxb:bindings node="//xs:complexType[@name='SoftwareParamType']">
-        <jxb:class name="SoftwareParam"/>
-    </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='SoftwareParamType']/xs:attribute[@name='cvRef']">
-        <jxb:property name="CV">
-            <jxb:baseType>
-                <xjc:javaType name="CV"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.CVAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
     </jxb:bindings>
 
     <jxb:bindings node="//xs:complexType[@name='SoftwareRefType']">
@@ -364,19 +340,22 @@
         <jxb:class name="SourceFile"/>
     </jxb:bindings>
 
-    <jxb:bindings node="//xs:complexType[@name='SpectrumDescriptionType']">
-        <jxb:class name="SpectrumDescription"/>
-    </jxb:bindings>
-
     <jxb:bindings node="//xs:complexType[@name='SpectrumListType']">
         <jxb:class name="SpectrumList"/>
+    </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='SpectrumListType']/xs:attribute[@name='defaultDataProcessingRef']">
+        <jxb:property name="defaultDataProcessing">
+            <jxb:baseType>
+                <xjc:javaType name="DataProcessing"
+                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter"/>
+            </jxb:baseType>
+        </jxb:property>
     </jxb:bindings>
 
     <jxb:bindings node="//xs:complexType[@name='SpectrumType']">
         <jxb:class name="Spectrum"/>
     </jxb:bindings>
-    <jxb:bindings
-            node="//xs:complexType[@name='SpectrumType']/xs:complexContent/xs:extension/xs:attribute[@name='dataProcessingRef']">
+    <jxb:bindings node="//xs:complexType[@name='SpectrumType']/xs:complexContent/xs:extension/xs:attribute[@name='dataProcessingRef']">
         <jxb:property name="dataProcessing">
             <jxb:baseType>
                 <xjc:javaType name="DataProcessing"
@@ -384,8 +363,7 @@
             </jxb:baseType>
         </jxb:property>
     </jxb:bindings>
-    <jxb:bindings
-            node="//xs:complexType[@name='SpectrumType']/xs:complexContent/xs:extension/xs:attribute[@name='sourceFileRef']">
+    <jxb:bindings node="//xs:complexType[@name='SpectrumType']/xs:complexContent/xs:extension/xs:attribute[@name='sourceFileRef']">
         <jxb:property name="sourceFile">
             <jxb:baseType>
                 <xjc:javaType name="SourceFile"
@@ -410,5 +388,20 @@
         </jxb:property>
     </jxb:bindings>
 
+
+    <!-- indexed mzML bindings -->
+    <jxb:bindings schemaLocation="mzML1.1.0-idx.xsd"
+            node="//xs:complexType[@name='IndexListType']">
+        <jxb:class name="indexList"/>
+    </jxb:bindings>
+
+    <jxb:bindings schemaLocation="mzML1.1.0-idx.xsd" node="//xs:complexType[@name='IndexType']">
+        <jxb:class name="index"/>
+    </jxb:bindings>
+
+    <jxb:bindings schemaLocation="mzML1.1.0-idx.xsd" node="//xs:complexType[@name='OffsetType']">
+        <jxb:class name="Offset"/>
+    </jxb:bindings>
+    
 </jxb:bindings>
 

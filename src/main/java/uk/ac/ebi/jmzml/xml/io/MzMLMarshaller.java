@@ -23,7 +23,7 @@
 package uk.ac.ebi.jmzml.xml.io;
 
 import org.apache.log4j.Logger;
-import uk.ac.ebi.jmzml.model.mzml.ModelConstants;
+import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
 import uk.ac.ebi.jmzml.model.mzml.MzML;
 import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
 import uk.ac.ebi.jmzml.xml.Constants;
@@ -55,34 +55,39 @@ public class MzMLMarshaller {
 //            * marshal(Object,XMLStreamWriter) - the Marshaller will not generate XMLStreamConstants.START_DOCUMENT and XMLStreamConstants.END_DOCUMENT events.
 //
 
-    public <T extends MzMLObject> String marshall(T object, Class cls) {
+    public <T extends MzMLObject> String marshall(T object) {
         StringWriter sw = new StringWriter();
-        this.marshall(object, cls, sw);
+        this.marshall(object, sw);
         return sw.toString();
     }
 
-    public <T extends MzMLObject> void marshall(T object, Class cls, OutputStream os) {
-        this.marshall(object, cls, new OutputStreamWriter(os));
+    public <T extends MzMLObject> void marshall(T object, OutputStream os) {
+        this.marshall(object, new OutputStreamWriter(os));
     }
 
-    public <T extends MzMLObject> void marshall(T object, Class cls, Writer out) {
+    public <T extends MzMLObject> void marshall(T object, Writer out) {
 
         if (object == null) {
             throw new IllegalArgumentException("Cannot marshall a NULL object");
         }
 
         try {
-
             Marshaller marshaller = MarshallerFactory.getInstance().initializeMarshaller();
 
-            //Set JAXB_FRAGMENT_PROPERTY to true for all objects that do not have
-            //a @XmlRootElement annotation
+            // Set JAXB_FRAGMENT_PROPERTY to true for all objects that do not have
+            // a @XmlRootElement annotation
+            // ToDo: add handling of indexedmzML (-> add flag to control treatment as fragment or not)
             if (!(object instanceof MzML)) {
                 marshaller.setProperty(Constants.JAXB_FRAGMENT_PROPERTY, true);
-                logger.debug("set fragment property to true");
+                if (logger.isDebugEnabled()) logger.debug("Object '" + object.getClass().getName() +
+                                                          "' will be treated as root element.");
+            } else {
+                if (logger.isDebugEnabled()) logger.debug("Object '" + object.getClass().getName() +
+                                                          "' will be treated as fragment.");
             }
 
-            marshaller.marshal(new JAXBElement(new QName("", ModelConstants.getQNameForClass(cls)), cls, object), out);
+            QName aQName = ModelConstants.getQNameForClass(object.getClass());
+            marshaller.marshal( new JAXBElement(aQName, object.getClass(), object), out );
 
         } catch (JAXBException e) {
             logger.error("MzMLMarshaller.marshall", e);
@@ -90,5 +95,10 @@ public class MzMLMarshaller {
         }
 
     }
+
+    // ToDo: default marshaller can only cope with mzML or sub-elements 
+    // ToDo: ?? new marshal method to create indexedmzML (with parameter specifying the elements to index)
+
+    
 
 }

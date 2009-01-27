@@ -31,9 +31,10 @@ package uk.ac.ebi.jmzml.xml.jaxb.unmarshaller;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-import uk.ac.ebi.jmzml.model.mzml.ModelConstants;
+import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
 import uk.ac.ebi.jmzml.xml.jaxb.adapters.*;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.cache.AdapterObjectCache;
+import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.listeners.RawXMLListener;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.filters.MzMLNamespaceFilter;
 import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
 
@@ -102,7 +103,11 @@ public class UnmarshallerFactory {
             unmarshaller.setAdapter(new SoftwareAdapter(index, cache));
             unmarshaller.setAdapter(new SourceFileAdapter(index, cache));
             unmarshaller.setAdapter(new SpectrumAdapter(index, cache, useCacheForSpectra));
-            unmarshaller.setEventHandler(new DefaultValidationEventHandler());
+            unmarshaller.setAdapter(new ScanSettingsAdapter(index, cache));
+//            unmarshaller.setEventHandler(new DefaultValidationEventHandler());
+
+            unmarshaller.setListener(new RawXMLListener());
+
             UnmarshallerHandler uh = unmarshaller.getUnmarshallerHandler();
 
             // Create a new XML parser

@@ -74,7 +74,7 @@ public class MzMLObjectIterator<X extends MzMLObject> implements Iterator<X> {
             String xmlSt = innerXpathIterator.next();
 
             if (logger.isDebugEnabled()) {
-                logger.debug("XML to unmarshal: " + xmlSt);
+                logger.trace("XML to unmarshal: " + xmlSt);
             }
 
             //required for the addition of namespaces to top-level objects
