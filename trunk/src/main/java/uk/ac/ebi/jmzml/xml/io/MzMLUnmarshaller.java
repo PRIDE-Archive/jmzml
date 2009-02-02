@@ -28,7 +28,6 @@ import org.xml.sax.InputSource;
 import uk.ac.ebi.jmzml.model.mzml.*;
 import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
 import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
-import uk.ac.ebi.jmzml.xml.Constants;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.UnmarshallerFactory;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.cache.AdapterObjectCache;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.filters.MzMLNamespaceFilter;
@@ -41,14 +40,11 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.sax.SAXSource;
 import java.io.*;
-import java.net.URI;
 import java.net.URL;
-import java.net.URISyntaxException;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
-import java.nio.charset.Charset;
 
 public class MzMLUnmarshaller {
 
@@ -157,7 +153,7 @@ public class MzMLUnmarshaller {
         // ok, now compare the two checksums (provided and calculated)
         String indexChecksum = getFileChecksumFromIndex();
         logger.info("provided checksum (index)  : " + indexChecksum);
-        String calcChecksum = calculateChecksum2();
+        String calcChecksum = calculateChecksum();
         logger.info("calculated checksum (jmzml): " + calcChecksum);
         boolean checkSumOK = indexChecksum.equals(calcChecksum);
 //        boolean checkSumOK = true;
@@ -272,8 +268,7 @@ public class MzMLUnmarshaller {
         return checksum;
     }
 
-    // this does not work for some reason!
-    private String calculateChecksum1() {
+    private String calculateChecksum() {
         // we have to create the checksum for the mzML file (from its beginning to the
         // end of the fileChecksum start tag).
         // Since this stop location is very near the end of the file, we skip everything
@@ -297,8 +292,8 @@ public class MzMLUnmarshaller {
         } catch (FileNotFoundException e) {
             throw new IllegalStateException("File " + mzMLFile.getAbsoluteFile() + " could not be found!", e);
         }
-        DigestInputStream dis = new DigestInputStream(fis, hash);
-        BufferedInputStream bis = new BufferedInputStream(dis);
+        BufferedInputStream bis = new BufferedInputStream(fis);
+        DigestInputStream dis = new DigestInputStream(bis, hash);
 
         // prepare for input stream processing
         // we read through the file until we reach a specified limit before the end of the file
@@ -308,7 +303,7 @@ public class MzMLUnmarshaller {
         long cnt = 0; // counter to keep track of our position
         byte[] b = new byte[1]; // we only read one byte at a time
         try {
-            while (bis.read(b) >= 0) {
+            while (dis.read(b) >= 0) {
                 bBuf.add(b[0]);
                 cnt++;
                 // check if we have already reached the last bit of the file, where we have
@@ -326,7 +321,7 @@ public class MzMLUnmarshaller {
                     }
                 } // else if not yet near the end of the file, just keep on going
             }
-            bis.close();
+            dis.close();
         } catch (IOException e) {
             throw new IllegalStateException("Could not read from file '" + mzMLFile.getAbsolutePath() +
                     "' while trying ot calculate hash.", e);
@@ -334,118 +329,6 @@ public class MzMLUnmarshaller {
         logger.debug("Read over " + cnt + " bytes while calculating the file hash.");
 
         byte[] bytesDigest = dis.getMessageDigest().digest();
-
-        return asHex(bytesDigest);
-    }
-
-    private String calculateChecksum2() {
-        // we have to create the checksum for the mzML file (from its beginning to the
-        // end of the fileChecksum start tag).
-        // Since this stop location is very near the end of the file, we skip everything
-        // until we come within a certain limit of the end of the file
-        long limit = mzMLFile.length() - 200L;
-        logger.debug("Looking for fileChecksum tag between byte " + limit +
-                     " and byte " + mzMLFile.length() + " (the end) of the mzML file.");
-
-
-        // read the file until the point we have to calculate the hash and write that
-        // part out as separate file, on which to calculate the hash
-        FileInputStream fis;
-        try {
-            fis = new FileInputStream(mzMLFile);
-        } catch (FileNotFoundException e) {
-            throw new IllegalStateException("File " + mzMLFile.getAbsoluteFile() + " could not be found!", e);
-        }
-        BufferedInputStream bis = new BufferedInputStream(fis);
-
-        // write checksum relevant part of file to a temp file and then calculate the checksum of it.
-        BufferedOutputStream bos;
-        File tmpFile = null;
-        try {
-            tmpFile = new File("target\\classes\\checksum.tmpfile");
-            FileOutputStream fos = new FileOutputStream(tmpFile);
-            bos = new BufferedOutputStream(fos);
-        } catch (IOException e) {
-            throw new IllegalStateException("Could not open output stream to file:" + tmpFile.getAbsolutePath(), e);
-        }
-
-
-        // prepare for input stream processing
-        // we read through the file until we reach a specified limit before the end of the file
-        // From there we populate a buffer with the read bytes (characters) and check if we have
-        // already reached the position up to where we have to calculate the hash.
-        CircularFifoBuffer bBuf = new CircularFifoBuffer(15);
-        long cnt = 0; // counter to keep track of our position
-        byte[] b = new byte[1]; // we only read one byte at a time
-        try {
-            while (bis.read(b) >= 0) {
-                bos.write(b);
-                bBuf.add(b[0]);
-//                bBuf.add(b[1]);
-                cnt++;
-                // check if we have already reached the last bit of the file, where we have
-                // to find the right position to stop (after the 'fileChecksum' start tag)
-                if (cnt > limit) {
-                    // we should have reached the start of the <fileChecksum> tag,
-                    // now we have to find the end
-                    String readBuffer = convert2String(bBuf);
-                    if (readBuffer.endsWith("<fileChecksum>")) {
-                        // we have found the end of the fileChecksum start tag, we have to stop the hash
-                        if (b[0] != '>') { // check that we are really at the last character of the tag
-                            throw new IllegalStateException("We are not at the end of <fileChecksum> tag!");
-                        }
-                        break;
-                    }
-                } // else if not yet near the end of the file, just keep on going
-            }
-        } catch (IOException e) {
-            throw new IllegalStateException("Could not read from file '" + mzMLFile.getAbsolutePath() +
-                    "' while trying ot calculate hash.", e);
-        }
-        logger.debug("Read over " + cnt + " bytes while calculating the file hash.");
-
-        try {
-            bis.close();
-            bos.flush();
-            bos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // calculate the checksum over the temp file
-        // (which only contains the part of the mzML that is used for the hash)
-        return calculateChecksumOnFile(tmpFile);
-    }
-
-    private String calculateChecksumOnFile(File file) {
-        // initialize the hash algorithm
-        MessageDigest hash;
-        try {
-            hash = MessageDigest.getInstance("SHA-1");
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException("SHA-1 not recognized as Secure Hash Algorithm.", e);
-        }
-
-        // create the input stream that will calculate the checksum
-        FileInputStream fis;
-        try {
-            fis = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            throw new IllegalStateException("File " + file.getAbsoluteFile() + " could not be found!", e);
-        }
-        DigestInputStream digestInputStream = new DigestInputStream(fis, hash);
-        BufferedInputStream bis = new BufferedInputStream(digestInputStream);
-
-        // read over the whole file and calculate the hash on the go
-        byte[] b = new byte[1]; // we only read one byte at a time
-        try {
-            while (bis.read(b) >= 0) {
-            }
-        } catch (IOException e) {
-            throw new IllegalStateException("Could not read from file '" + file.getAbsolutePath() +
-                    "' while trying ot calculate hash.", e);
-        }
-        byte[] bytesDigest = digestInputStream.getMessageDigest().digest();
 
         return asHex(bytesDigest);
     }
@@ -523,7 +406,6 @@ public class MzMLUnmarshaller {
 
         return retval;
     }
-
 
 
 }
