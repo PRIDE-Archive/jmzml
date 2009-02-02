@@ -30,7 +30,7 @@ public class MzMLIndexerFactory {
     private static final Logger logger = Logger.getLogger(MzMLIndexerFactory.class);
 
     private static final MzMLIndexerFactory instance = new MzMLIndexerFactory();
-    private static final Pattern ID_PATTERN = Pattern.compile("\\sid\\s*=\\s*['\"]([\\w=]*)['\"]", Pattern.CASE_INSENSITIVE);
+    private static final Pattern ID_PATTERN = Pattern.compile("\\sid\\s*=\\s*['\"]([^'\"]*)['\"]", Pattern.CASE_INSENSITIVE);
 
     private MzMLIndexerFactory() {
     }
