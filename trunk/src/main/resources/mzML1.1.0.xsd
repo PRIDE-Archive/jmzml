@@ -340,17 +340,17 @@
       <xs:documentation>List with the different components used in the mass spectrometer. At least one source, one mass analyzer and one detector need to be specified.</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element maxOccurs="unbounded" name="source" type="dx:ComponentType">
+      <xs:element maxOccurs="unbounded" name="source" type="dx:SourceComponentType">
         <xs:annotation>
           <xs:documentation>A source component.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element maxOccurs="unbounded" name="analyzer" type="dx:ComponentType">
+      <xs:element maxOccurs="unbounded" name="analyzer" type="dx:AnalyzerComponentType">
         <xs:annotation>
           <xs:documentation>A mass analyzer (or mass filter) component.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element maxOccurs="unbounded" name="detector" type="dx:ComponentType">
+      <xs:element maxOccurs="unbounded" name="detector" type="dx:DetectorComponentType">
         <xs:annotation>
           <xs:documentation>A detector component.</xs:documentation>
         </xs:annotation>
