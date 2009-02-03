@@ -618,11 +618,8 @@
       <xs:extension base="dx:ParamGroupType">
         <xs:sequence>
           <xs:element minOccurs="0" name="scanList" type="dx:ScanListType" />
-          <xs:choice minOccurs="0" maxOccurs="1">
-            <xs:element name="precursorList" type="dx:PrecursorListType" />
-            <xs:element name="product" type="dx:ProductType" />
-            <xs:element name="neutralLoss" type="dx:NeutralLossType" />
-          </xs:choice>
+          <xs:element minOccurs="0" maxOccurs="1" name="precursorList" type="dx:PrecursorListType" />
+          <xs:element minOccurs="0" maxOccurs="1" name="productList" type="dx:ProductListType" />
           <xs:element minOccurs="0" maxOccurs="1" name="binaryDataArrayList" type="dx:BinaryDataArrayListType" />
         </xs:sequence>
         <xs:attribute name="id" use="required">
@@ -763,7 +760,7 @@
           <xs:documentation>This element captures the isolation (or 'selection') window configured to isolate one or more ionss.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="selectedIonList" type="dx:SelectedIonListType">
+      <xs:element minOccurs="0" maxOccurs="1" name="selectedIonList" type="dx:SelectedIonListType">
         <xs:annotation>
           <xs:documentation>A list of ions that were selected.</xs:documentation>
         </xs:annotation>
@@ -803,6 +800,19 @@
       </xs:annotation>
     </xs:attribute>
   </xs:complexType>
+  <xs:complexType name="ProductListType">
+    <xs:annotation>
+      <xs:documentation>List and descriptions of product isolations to the spectrum currently being described, ordered.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="product" type="dx:ProductType" />
+    </xs:sequence>
+    <xs:attribute name="count" type="xs:nonNegativeInteger" use="required">
+      <xs:annotation>
+        <xs:documentation>The number of product isolations in this list.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
   <xs:complexType name="ProductType">
     <xs:annotation>
       <xs:documentation>The method of product ion selection and activation in a precursor ion scan</xs:documentation>
@@ -811,28 +821,6 @@
       <xs:element minOccurs="0" maxOccurs="1" name="isolationWindow" type="dx:ParamGroupType">
         <xs:annotation>
           <xs:documentation>This element captures the isolation (or 'selection') window configured to isolate one or more ions.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="activation" type="dx:ParamGroupType">
-        <xs:annotation>
-          <xs:documentation>The type and energy level used for activation.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="NeutralLossType">
-    <xs:annotation>
-      <xs:documentation>The method of neutral loss selection and activation in a neutral loss scan</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="1" name="isolationWindow" type="dx:ParamGroupType">
-        <xs:annotation>
-          <xs:documentation>This element captures the isolation (or 'selection') window configured to isolate one or more ions.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="activation" type="dx:ParamGroupType">
-        <xs:annotation>
-          <xs:documentation>The type and energy level used for activation.</xs:documentation>
         </xs:annotation>
       </xs:element>
     </xs:sequence>
