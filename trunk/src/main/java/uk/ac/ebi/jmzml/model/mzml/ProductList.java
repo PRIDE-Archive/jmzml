@@ -22,18 +22,18 @@ import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
 
 
 /**
- * List and descriptions of samples.
+ * List and descriptions of product isolations to the spectrum currently being described, ordered.
  * 
- * <p>Java class for SampleListType complex type.
+ * <p>Java class for ProductListType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="SampleListType">
+ * &lt;complexType name="ProductListType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="sample" type="{http://psi.hupo.org/ms/mzml}SampleType" maxOccurs="unbounded"/>
+ *         &lt;element name="product" type="{http://psi.hupo.org/ms/mzml}ProductType" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *       &lt;attribute name="count" use="required" type="{http://www.w3.org/2001/XMLSchema}nonNegativeInteger" />
  *     &lt;/restriction>
@@ -44,47 +44,47 @@ import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SampleListType", propOrder = {
-    "sample"
+@XmlType(name = "ProductListType", propOrder = {
+    "product"
 })
-public class SampleList
+public class ProductList
     implements Serializable, MzMLObject
 {
 
     private final static long serialVersionUID = 100L;
     @XmlElement(required = true)
-    protected List<Sample> sample;
+    protected List<Product> product;
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger count;
 
     /**
-     * Gets the value of the sample property.
+     * Gets the value of the product property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the sample property.
+     * This is why there is not a <CODE>set</CODE> method for the product property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getSample().add(newItem);
+     *    getProduct().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Sample }
+     * {@link Product }
      * 
      * 
      */
-    public List<Sample> getSample() {
-        if (sample == null) {
-            sample = new ArrayList<Sample>();
+    public List<Product> getProduct() {
+        if (product == null) {
+            product = new ArrayList<Product>();
         }
-        return this.sample;
+        return this.product;
     }
 
     /**

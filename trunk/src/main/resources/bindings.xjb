@@ -156,10 +156,6 @@
         <jxb:class name="mzML"/>
     </jxb:bindings>
 
-    <jxb:bindings node="//xs:complexType[@name='NeutralLossType']">
-        <jxb:class name="NeutralLoss"/>
-    </jxb:bindings>
-
     <jxb:bindings node="//xs:complexType[@name='ParamGroupType']">
         <jxb:class name="ParamGroup"/>
     </jxb:bindings>
@@ -186,6 +182,10 @@
                               adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter"/>
             </jxb:baseType>
         </jxb:property>
+    </jxb:bindings>
+
+    <jxb:bindings node="//xs:complexType[@name='ProductListType']">
+        <jxb:class name="ProductList"/>
     </jxb:bindings>
 
     <jxb:bindings node="//xs:complexType[@name='ProductType']">
