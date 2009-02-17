@@ -26,10 +26,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.apache.log4j.Logger;
-import uk.ac.ebi.jmzml.model.mzml.Chromatogram;
-import uk.ac.ebi.jmzml.model.mzml.FileDescription;
-import uk.ac.ebi.jmzml.model.mzml.MzML;
-import uk.ac.ebi.jmzml.model.mzml.Run;
+import uk.ac.ebi.jmzml.model.mzml.*;
 import uk.ac.ebi.jmzml.xml.io.MzMLMarshaller;
 import uk.ac.ebi.jmzml.xml.io.MzMLObjectIterator;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
@@ -54,29 +51,31 @@ public class XMLTest extends TestCase {
 
         MzMLUnmarshaller um = new MzMLUnmarshaller(url);
 
-//        DataProcessing dh = um.unmarshalFromXpath("/dataProcessingList/dataProcessing", DataProcessing.class);
-//        logger.debug("dh = " + dh);
+        DataProcessing dh = um.unmarshalFromXpath("/dataProcessingList/dataProcessing", DataProcessing.class);
+        assertNotNull(dh);
 
         MzML mz = um.unmarshall();
-        logger.debug("mz = " + mz);
+        assertNotNull(mz);
         FileDescription fd = um.unmarshalFromXpath("/fileDescription", FileDescription.class);
-        logger.debug("fd = " + fd);
+        assertNotNull(fd);
 
-        fd = um.unmarshalFromXpath("/mzML/fileDescription", FileDescription.class);
-        logger.debug("fd = " + fd);
 
         MzMLMarshaller mm = new MzMLMarshaller();
         String outFD = mm.marshall(fd);
-
+        assertNotNull(outFD);
         String mzml = mm.marshall(mz);
+        assertNotNull(mzml);
 
         int chromatogramCount = 0;
         MzMLObjectIterator<Chromatogram> iter = um.unmarshalCollectionFromXpath("/run/chromatogramList/chromatogram", Chromatogram.class);
         while (iter.hasNext()) {
-            Chromatogram ch = iter.next();
+            iter.next();
             chromatogramCount++;
         }
+        Run run = um.unmarshalFromXpath("/run", Run.class);
+        ChromatogramList chl = run.getChromatogramList(); // can not unmarshal directly because not in xxindex inclusion list
 
+        assertEquals("Chromatogram count not equal!", chromatogramCount, chl.getCount().intValue());
         assertEquals("Chromatogram count not equal!", chromatogramCount, um.getObjectCountForXpath("/run/chromatogramList/chromatogram"));
 
     }
@@ -129,6 +128,17 @@ public class XMLTest extends TestCase {
         assertEquals("DataProcessingList count does not equal real number of entries.", mz.getDataProcessingList().getCount().intValue(), mz.getDataProcessingList().getDataProcessing().size());
         assertEquals("Not expected number of data processing entries.", 2, mz.getDataProcessingList().getCount().intValue());
 
+        // one instrumentConfiguration
+        assertEquals("InstrumentConfigurationList count does not equal real number of entries.", mz.getInstrumentConfigurationList().getCount().intValue(), mz.getInstrumentConfigurationList().getInstrumentConfiguration().size());
+        assertEquals("Not expected number of instrument configuration entries.", 1, mz.getInstrumentConfigurationList().getCount().intValue());
+        // note: here we test the manual modification of the JAXB generated ComponentList class to allow direct retrieval of source/analyzer/detector
+        ComponentList cpl = mz.getInstrumentConfigurationList().getInstrumentConfiguration().iterator().next().getComponentList();
+        assertNotNull(cpl);
+        assertEquals("Not expected number of component elements!", 3, cpl.getComponents().size());
+        assertEquals("Not expected number of component elements!", cpl.getCount().intValue(), cpl.getComponents().size());
+        assertEquals("Not expected number of source elements!", 1, cpl.getSource().size());
+        assertEquals("Not expected number of analyzer elements!", 1, cpl.getAnalyzer().size());
+        assertEquals("Not expected number of detector elements!", 1, cpl.getDetector().size());
 
 
         // now check the run element in more detail
