@@ -97,6 +97,9 @@
                     <removeOldOutput>false</removeOldOutput>
                     <forceRegenerate>true</forceRegenerate>
                     <verbose>true</verbose>
+                    <args>
+                        <arg>-no-header</arg>
+                    </args>
                 </configuration>
             </plugin>
         </plugins>

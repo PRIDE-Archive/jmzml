@@ -532,11 +532,6 @@
     <xs:complexContent mixed="false">
       <xs:extension base="dx:ParamGroupType">
         <xs:sequence>
-          <xs:element minOccurs="0" name="sourceFileRefList" type="dx:SourceFileRefListType">
-            <xs:annotation>
-              <xs:documentation>Container for a list of source file references.</xs:documentation>
-            </xs:annotation>
-          </xs:element>
           <xs:element name="spectrumList" type="dx:SpectrumListType">
             <xs:annotation>
               <xs:documentation>All mass spectra and the acquisitions underlying them are described and attached here. Subsidiary data arrays are also both described and attached here.</xs:documentation>
@@ -555,7 +550,12 @@
         </xs:attribute>
         <xs:attribute name="defaultInstrumentConfigurationRef" type="xs:IDREF" use="required">
           <xs:annotation>
-            <xs:documentation>This attribute can optionally reference the 'id' of the default instrument configuration. If an acquisition does not reference an instrument configuration, it implicitly refers to this configuration.</xs:documentation>
+            <xs:documentation>This attribute must reference the 'id' of the default instrument configuration. If a scan does not reference an instrument configuration, it implicitly refers to this configuration.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="defaultSourceFileRef" type="xs:IDREF" use="optional">
+          <xs:annotation>
+            <xs:documentation>This attribute can optionally reference the 'id' of the default source file. If a spectrum or scan does not reference a source file and this attribute is set, then it implicitly refers to this source file.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
         <xs:attribute name="sampleRef" type="xs:IDREF" use="optional">

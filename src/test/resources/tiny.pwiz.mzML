@@ -98,10 +98,7 @@
         </processingMethod>
       </dataProcessing>
     </dataProcessingList>
-    <run id="Exp01" defaultInstrumentConfigurationRef="LCQDeca" sampleRef="sample1" startTimeStamp="2007-06-27T15:23:45.00035">
-      <sourceFileRefList count="1">
-        <sourceFileRef ref="sf1"/>
-      </sourceFileRefList>
+    <run id="Exp01" defaultInstrumentConfigurationRef="LCQDeca" sampleRef="sample1" startTimeStamp="2007-06-27T15:23:45.00035" defaultSourceFileRef="sf1">
       <spectrumList count="4" defaultDataProcessingRef="pwizconversion">
         <spectrum index="0" id="scan=19" defaultArrayLength="15">
           <cvParam cvRef="MS" accession="MS:1000580" name="MSn spectrum" value=""/>
