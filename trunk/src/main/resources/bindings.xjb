@@ -235,6 +235,14 @@
             </jxb:baseType>
         </jxb:property>
     </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='RunType']/xs:complexContent/xs:extension/xs:attribute[@name='defaultSourceFileRef']">
+        <jxb:property name="defaultSourceFileRef">
+            <jxb:baseType>
+                <xjc:javaType name="SourceFile"
+                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter"/>
+            </jxb:baseType>
+        </jxb:property>
+    </jxb:bindings>
     <jxb:bindings node="//xs:complexType[@name='RunType']/xs:complexContent/xs:extension/xs:attribute[@name='sampleRef']">
         <jxb:property name="sample">
             <jxb:baseType>

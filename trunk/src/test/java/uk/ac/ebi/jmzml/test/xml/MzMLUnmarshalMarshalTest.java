@@ -19,7 +19,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.MalformedURLException;
 import java.util.List;
 
 /**
@@ -204,7 +203,7 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         SchemaFactory factory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
 
         // 2. Compile the schema.
-        URL schemaLocation = null;
+        URL schemaLocation;
         // Note: not checking against external schema, because of performance and availability (internet connection) issues 
 //        try {
             if (indexed) {
@@ -269,8 +268,8 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         assertEquals("Exp01", mz.getRun().getId());
 
         // the run has one source file reference
-        SourceFileRef sfr = mz.getRun().getSourceFileRefList().getSourceFileRef().get(0);
-        assertEquals("tiny1.RAW", sfr.getSourceFile().getName());
+        SourceFile sf = mz.getRun().getDefaultSourceFileRef();
+        assertEquals("tiny1.RAW", sf.getName());
 
         // check teh default processing method references
         List<ProcessingMethod> pmList = mz.getRun().getSpectrumList().getDefaultDataProcessing().getProcessingMethod();
