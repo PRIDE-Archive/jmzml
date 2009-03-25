@@ -80,18 +80,6 @@ public class RawXMLListener extends Unmarshaller.Listener {
                 ParamGroupUpdater.updateParamGroupSubclasses((Scan) target, ScanCVParam.class, ScanUserParam.class);
             }
 
-//            if ( target instanceof ScanList ) {
-//                ParamGroupUpdater.updateParamGroupSubclasses((ScanList) target, ScanListCVParam.class, ScanListUserParam.class);
-//            }
-
-//            if ( target instanceof ScanSettings ) {
-//                ParamGroupUpdater.updateParamGroupSubclasses((ScanSettings) target, ScanSettingsCVParam.class, ScanSettingsUserParam.class);
-//            }
-
-//            if ( target instanceof Software ) {
-//                ParamGroupUpdater.updateParamGroupSubclasses((Software) target, SoftwareCVParam.class, SoftwareUserParam.class);
-//            }
-
             if ( target instanceof SourceFile ) {
                 ParamGroupUpdater.updateParamGroupSubclasses((SourceFile) target, SourceFileCVParam.class, SourceFileUserParam.class);
             }
@@ -119,14 +107,6 @@ public class RawXMLListener extends Unmarshaller.Listener {
                 }
             }
 
-//            if ( target instanceof NeutralLoss ) {
-//                Precursor tmp = (NeutralLoss) target;
-//                //update activation (ParamGroup)
-//                ParamGroupUpdater.updateParamGroupSubclasses(tmp.getActivation(), ActivationCVParam.class, ActivationUserParam.class);
-//                //update ionSelection (ParamGroup)
-//                ParamGroupUpdater.updateParamGroupSubclasses(tmp.getIsolationWindow(), IsolationWindowCVParam.class, IsolationWindowUserParam.class);
-//            }
-
             if ( target instanceof Precursor ) {
                 Precursor tmp = (Precursor) target;
                 //update activation (ParamGroup)
@@ -134,14 +114,6 @@ public class RawXMLListener extends Unmarshaller.Listener {
                 //update ionSelection (ParamGroup)
                 ParamGroupUpdater.updateParamGroupSubclasses(tmp.getIsolationWindow(), IsolationWindowCVParam.class, IsolationWindowUserParam.class);
             }
-
-//            if ( target instanceof Product ) {
-//                Precursor tmp = (Product) target;
-//                //update activation (ParamGroup)
-//                ParamGroupUpdater.updateParamGroupSubclasses(tmp.getActivation(), ActivationCVParam.class, ActivationUserParam.class);
-//                //update ionSelection (ParamGroup)
-//                ParamGroupUpdater.updateParamGroupSubclasses(tmp.getIsolationWindow(), IsolationWindowCVParam.class, IsolationWindowUserParam.class);
-//            }
 
             if ( target instanceof SelectedIonList ) {
                 SelectedIonList tmp = (SelectedIonList) target;
@@ -169,13 +141,17 @@ public class RawXMLListener extends Unmarshaller.Listener {
                 }
             }
 
-            ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
-            // Update all CvParam Subclasses
-
-            if ( target instanceof ScanWindow ) {
-                ScanWindow tmp = (ScanWindow) target;
-                // update CvParam
-                ParamGroupUpdater.updateCVParamSubclasses(tmp.getCvParam(), ScanWindowCVParam.class);
+            if ( target instanceof ScanWindowList ) {
+                ScanWindowList tmp = (ScanWindowList) target;
+                if (tmp.getScanWindow() != null && !tmp.getScanWindow().isEmpty()) {
+                    List<ParamGroup> tmpList = new ArrayList<ParamGroup>();
+                    for (ParamGroup pg : tmp.getScanWindow()) {
+                        ParamGroupUpdater.updateParamGroupSubclasses(pg, ScanWindowCVParam.class, ScanWindowUserParam.class);
+                        tmpList.add(pg);
+                    }
+                    tmp.getScanWindow().clear();
+                    tmp.getScanWindow().addAll(tmpList);
+                }
             }
 
         } catch (InstantiationException e) {

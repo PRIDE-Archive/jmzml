@@ -24,12 +24,11 @@ package uk.ac.ebi.jmzml.model.mzml.utilities;
 
 import uk.ac.ebi.jmzml.model.mzml.CVParam;
 import uk.ac.ebi.jmzml.model.mzml.ParamGroup;
-import uk.ac.ebi.jmzml.model.mzml.UserParam;
 import uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroupRef;
+import uk.ac.ebi.jmzml.model.mzml.UserParam;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Iterator;
 
 /**
  * User: rcote
@@ -83,7 +82,7 @@ public class ParamGroupUpdater {
 
         if (input != null && !input.isEmpty()) {
             //tmp holder for cvParamClass
-            List<UserParam> newList = new ArrayList();
+            List<UserParam> newList = new ArrayList<UserParam>();
 
             //iterate and create new params
             for (UserParam param : input) {
@@ -111,7 +110,7 @@ public class ParamGroupUpdater {
         if (input != null && !input.isEmpty()) {
 
             //tmp holder for cvParamClass
-            List<CVParam> newList = new ArrayList();
+            List<CVParam> newList = new ArrayList<CVParam>();
 
             //iterate and create new params
             for (CVParam param : input) {
