@@ -131,6 +131,8 @@ public class MzMLUnmarshaller {
     ///// ///// ///// ///// ///// ///// ///// ///// ///// //////
     // additional unmarshal operations for indexedmzML
 
+    // ToDo: add schema validation step or implicit validation with the marshaller/unmarshaller
+
     public boolean isIndexedmzML() {
         // ToDo: find better way to check this
         // ToDo: maybe introduce validity check against schema(s)?

@@ -296,10 +296,6 @@
         <jxb:class name="ScanWindowList"/>
     </jxb:bindings>
 
-    <jxb:bindings node="//xs:complexType[@name='ScanWindowType']">
-        <jxb:class name="ScanWindow"/>
-    </jxb:bindings>
-
     <jxb:bindings node="//xs:complexType[@name='SelectedIonListType']">
         <jxb:class name="SelectedIonList"/>
     </jxb:bindings>

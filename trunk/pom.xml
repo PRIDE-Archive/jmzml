@@ -77,7 +77,7 @@
 
                      NOTE: the code generation may overwrite existing classes, so care
                            should be taken with files that were manually modified. Such
-                           files are in the current version: CVParam, UserParam,
+                           files are in the current version (0.6): CVParam, UserParam,
                            ParamGroup and ComponentList.
                  -->
                 <groupId>org.jvnet.jaxb2.maven2</groupId>

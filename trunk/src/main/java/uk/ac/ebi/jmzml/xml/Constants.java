@@ -42,10 +42,10 @@ public class Constants {
         InstrumentConfiguration,
         ReferenceableParamGroup,
         Sample,
+        ScanSettings,
         Software,
         SourceFile,
-        Spectrum,
-        ScanSettings
+        Spectrum
     }
 
     private static Set<String> xpathsToIndex = new HashSet<String>();

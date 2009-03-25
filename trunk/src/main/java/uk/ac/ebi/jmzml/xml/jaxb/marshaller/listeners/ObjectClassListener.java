@@ -23,15 +23,9 @@
 package uk.ac.ebi.jmzml.xml.jaxb.marshaller.listeners;
 
 import org.apache.log4j.Logger;
+import uk.ac.ebi.jmzml.model.mzml.ParamGroup;
 
 import javax.xml.bind.Marshaller;
-
-import uk.ac.ebi.jmzml.model.mzml.ParamGroup;
-import uk.ac.ebi.jmzml.model.mzml.CVParam;
-import uk.ac.ebi.jmzml.model.mzml.UserParam;
-
-import java.util.List;
-import java.util.ArrayList;
 
 public class ObjectClassListener extends Marshaller.Listener {
 

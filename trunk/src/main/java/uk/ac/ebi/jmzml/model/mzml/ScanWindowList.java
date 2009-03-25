@@ -22,7 +22,7 @@ import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="scanWindow" type="{http://psi.hupo.org/ms/mzml}ScanWindowType" maxOccurs="unbounded"/>
+ *         &lt;element name="scanWindow" type="{http://psi.hupo.org/ms/mzml}ParamGroupType" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *       &lt;attribute name="count" use="required" type="{http://www.w3.org/2001/XMLSchema}int" />
  *     &lt;/restriction>
@@ -42,7 +42,7 @@ public class ScanWindowList
 
     private final static long serialVersionUID = 100L;
     @XmlElement(required = true)
-    protected List<ScanWindow> scanWindow;
+    protected List<ParamGroup> scanWindow;
     @XmlAttribute(required = true)
     protected int count;
 
@@ -64,13 +64,13 @@ public class ScanWindowList
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link ScanWindow }
+     * {@link ParamGroup }
      * 
      * 
      */
-    public List<ScanWindow> getScanWindow() {
+    public List<ParamGroup> getScanWindow() {
         if (scanWindow == null) {
-            scanWindow = new ArrayList<ScanWindow>();
+            scanWindow = new ArrayList<ParamGroup>();
         }
         return this.scanWindow;
     }

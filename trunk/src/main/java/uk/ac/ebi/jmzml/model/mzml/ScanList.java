@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * List and descriptions of scans .
+ * List and descriptions of scans.
  * 
  * <p>Java class for ScanListType complex type.
  * 

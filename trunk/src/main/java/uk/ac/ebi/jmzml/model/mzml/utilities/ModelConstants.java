@@ -23,7 +23,6 @@
 package uk.ac.ebi.jmzml.model.mzml.utilities;
 
 import uk.ac.ebi.jmzml.model.mzml.*;
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
 
 import javax.xml.namespace.QName;
 import java.util.Collections;
@@ -31,7 +30,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * User: rcote
+ * @author Richard Cote
+ * @author Florian Reisinger 
  * Date: 13-Jun-2008
  * Time: 10:45:32
  * $Id: $
@@ -72,7 +72,6 @@ public class ModelConstants {
         modelQNames.put(Sample.class, new QName(MZML_NS, "sample"));
         modelQNames.put(SampleList.class, new QName(MZML_NS, "sampleList"));
         modelQNames.put(Scan.class, new QName(MZML_NS, "scan"));
-        modelQNames.put(ScanWindow.class, new QName(MZML_NS, "scanWindow"));
         modelQNames.put(ScanWindowList.class, new QName(MZML_NS, "scanWindowList"));
         modelQNames.put(SelectedIonList.class, new QName(MZML_NS, "selectedIonList"));
         modelQNames.put(Software.class, new QName(MZML_NS, "software"));
