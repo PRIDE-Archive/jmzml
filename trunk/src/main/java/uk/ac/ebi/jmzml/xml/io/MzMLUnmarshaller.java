@@ -134,8 +134,10 @@ public class MzMLUnmarshaller {
     // ToDo: add schema validation step or implicit validation with the marshaller/unmarshaller
 
     public boolean isIndexedmzML() {
-        // ToDo: find better way to check this
-        // ToDo: maybe introduce validity check against schema(s)?
+        // ToDo: find better way to check this?
+        // ToDo: maybe change log level in StandardXpathAccess class
+        // this check will log an ERROR if it is not an indexedmzML file, since we
+        // are trying to retrieve an entry that will not be in the XML
         Iterator iter = index.getXmlStringIterator("/indexedmzML/indexList");
         return iter.hasNext();
     }
@@ -151,7 +153,6 @@ public class MzMLUnmarshaller {
             throw new MzMLUnmarshallerException("Attempted check of file checksum on un-indexed mzML file.");
         }
 
-        // ToDo: sort this out!
         // ok, now compare the two checksums (provided and calculated)
         String indexChecksum = getFileChecksumFromIndex();
         logger.info("provided checksum (index)  : " + indexChecksum);
@@ -172,8 +173,7 @@ public class MzMLUnmarshaller {
         IndexList retval;
         // check if already cached
         if (indexList == null) {
-            // not cached, so we have to unmarshal it
-            // ToDo: check: potentially runs multiple times if the index unmarshalling returned null
+            // not yet cached, so we have to unmarshal it
             if (isOkFileChecksum()) {
                 retval = unmarshalFromXpath("/indexedmzML/indexList", IndexList.class);
                 indexList = retval; // save, so we don't have to generate it again
@@ -391,7 +391,7 @@ public class MzMLUnmarshaller {
                     "mzML index containing the offset was corrupted.");
         }
 
-        T retval = null;
+        T retval;
         try {
             // ToDo: check this!! try to replace with standard unmarshaller!
             MzMLNamespaceFilter xmlFilter = new MzMLNamespaceFilter();

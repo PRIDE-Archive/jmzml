@@ -54,7 +54,7 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
     // ToDo: methods for actual example testing) so we can test multiple files
 
     public void testReadIndexedMzML() throws MzMLUnmarshallerException {
-        assertTrue(isValidMzML(indexedmzMLFile, true));
+        assertTrue(isValidMzML(indexedmzMLFile));
 
         MzMLUnmarshaller um = new MzMLUnmarshaller(indexedmzMLFile);
         MzML mz = um.unmarshall();
@@ -82,7 +82,7 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
 
         ///// ///// ///// ///// FIRST READ ///// ///// ///// /////
         // check if the instance file is valid
-        assertTrue(isValidMzML(mzMLFile, false));
+        assertTrue(isValidMzML(mzMLFile));
         logger.info("zmML file is valid.");
 
         MzMLUnmarshaller um_1 = new MzMLUnmarshaller(mzMLFile);
@@ -92,6 +92,7 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         assertNotNull(mz_1.getRun());
 
         // check that there is no IndexList (since we only have a mzML and not an indexedmzML)
+        System.out.println("An ERROR could be logged here, which is perfectly fine.");
         assertFalse(um_1.isIndexedmzML());
 
         // now check if the content is as expected
@@ -116,7 +117,7 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         logger.info("Marshalled back to XML.");
 
         // now check if the written mzML is valid
-        assertTrue(isValidMzML(tmpFile, false));
+        assertTrue(isValidMzML(tmpFile));
         logger.info("Marshalling mzML is valid.");
 
 
@@ -127,6 +128,7 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         assertNotNull(mz_2);
 
         // check that there is no IndexList (since we only have a mzML and not an indexedmzML)
+        System.out.println("An ERROR could be logged here, which is perfectly fine.");
         assertFalse(um_2.isIndexedmzML());
 
         // now check if the content is as expected
@@ -142,7 +144,7 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
 
         ///// ///// ///// ///// FIRST READ ///// ///// ///// /////
         // check if the instance file is valid
-        assertTrue(isValidMzML(indexedmzMLFile, true));
+        assertTrue(isValidMzML(indexedmzMLFile));
         logger.info("zmML file is valid.");
 
         MzMLUnmarshaller um_1 = new MzMLUnmarshaller(indexedmzMLFile);
@@ -172,7 +174,7 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         logger.info("Marshalled back to XML.");
 
         // now check if the written mzML is valid
-        assertTrue(isValidMzML(tmpFile, true));
+        assertTrue(isValidMzML(tmpFile));
         logger.info("Marshalling mzML is valid.");
 
 
@@ -196,7 +198,7 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
     // private helper methods
 
 
-    private boolean isValidMzML(File mzML, boolean indexed) {
+    private boolean isValidMzML(File mzML) {
         boolean retval;
 
         // 1. Lookup a factory for the W3C XML Schema language
@@ -206,13 +208,13 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         URL schemaLocation;
         // Note: not checking against external schema, because of performance and availability (internet connection) issues 
 //        try {
-            if (indexed) {
+//            if (indexed) {
                 schemaLocation = this.getClass().getClassLoader().getResource("mzML1.1.0-idx.xsd");
 //                schemaLocation = new URL("http://psidev.cvs.sourceforge.net/*checkout*/psidev/psi/psi-ms/mzML/schema/mzML1.1.0_idx.xsd");
-            } else {
-                schemaLocation = this.getClass().getClassLoader().getResource("mzML1.1.0.xsd");
+//            } else {
+//                schemaLocation = this.getClass().getClassLoader().getResource("mzML1.1.0.xsd");
 //                schemaLocation = new URL("http://psidev.cvs.sourceforge.net/*checkout*/psidev/psi/psi-ms/mzML/schema/mzML1.1.0.xsd");
-            }
+//            }
 //        } catch (MalformedURLException e) {
 //            throw new IllegalStateException("Could not load external schema location!", e);
 //        }
