@@ -25,6 +25,8 @@ import uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter;
  *   &lt;complexContent>
  *     &lt;extension base="{http://psi.hupo.org/ms/mzml}ParamGroupType">
  *       &lt;sequence>
+ *         &lt;element name="precursor" type="{http://psi.hupo.org/ms/mzml}PrecursorType" minOccurs="0"/>
+ *         &lt;element name="product" type="{http://psi.hupo.org/ms/mzml}ProductType" minOccurs="0"/>
  *         &lt;element name="binaryDataArrayList" type="{http://psi.hupo.org/ms/mzml}BinaryDataArrayListType"/>
  *       &lt;/sequence>
  *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
@@ -40,6 +42,8 @@ import uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ChromatogramType", propOrder = {
+    "precursor",
+    "product",
     "binaryDataArrayList"
 })
 public class Chromatogram
@@ -48,6 +52,8 @@ public class Chromatogram
 {
 
     private final static long serialVersionUID = 100L;
+    protected Precursor precursor;
+    protected Product product;
     @XmlElement(required = true)
     protected BinaryDataArrayList binaryDataArrayList;
     @XmlAttribute(required = true)
@@ -61,6 +67,54 @@ public class Chromatogram
     @XmlJavaTypeAdapter(DataProcessingAdapter.class)
     @XmlSchemaType(name = "IDREF")
     protected DataProcessing dataProcessing;
+
+    /**
+     * Gets the value of the precursor property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Precursor }
+     *     
+     */
+    public Precursor getPrecursor() {
+        return precursor;
+    }
+
+    /**
+     * Sets the value of the precursor property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Precursor }
+     *     
+     */
+    public void setPrecursor(Precursor value) {
+        this.precursor = value;
+    }
+
+    /**
+     * Gets the value of the product property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Product }
+     *     
+     */
+    public Product getProduct() {
+        return product;
+    }
+
+    /**
+     * Sets the value of the product property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Product }
+     *     
+     */
+    public void setProduct(Product value) {
+        this.product = value;
+    }
 
     /**
      * Gets the value of the binaryDataArrayList property.

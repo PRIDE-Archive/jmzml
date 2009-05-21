@@ -6,7 +6,6 @@ import java.util.Calendar;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
@@ -30,7 +29,7 @@ import uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter;
  *   &lt;complexContent>
  *     &lt;extension base="{http://psi.hupo.org/ms/mzml}ParamGroupType">
  *       &lt;sequence>
- *         &lt;element name="spectrumList" type="{http://psi.hupo.org/ms/mzml}SpectrumListType"/>
+ *         &lt;element name="spectrumList" type="{http://psi.hupo.org/ms/mzml}SpectrumListType" minOccurs="0"/>
  *         &lt;element name="chromatogramList" type="{http://psi.hupo.org/ms/mzml}ChromatogramListType" minOccurs="0"/>
  *       &lt;/sequence>
  *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}ID" />
@@ -56,7 +55,6 @@ public class Run
 {
 
     private final static long serialVersionUID = 100L;
-    @XmlElement(required = true)
     protected SpectrumList spectrumList;
     protected ChromatogramList chromatogramList;
     @XmlAttribute(required = true)
