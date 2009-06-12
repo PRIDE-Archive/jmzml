@@ -50,7 +50,7 @@ public class BinaryDataArrayTest extends TestCase {
             8.123, 8.234, 8.345, 8.456, 8.567, 8.678, 8.789, 8.890,
             9.123, 9.234, 9.345, 9.456, 9.567, 9.678, 9.789, 9.890};
 
-    // binary test data: compressed, base64 encoded, 64 bit precission
+    // binary test data: compressed, base64 encoded, 64 bit precision
     // extracted from file: MzMLFile_7_compressed.mzML (line 74) "m/z array"
     private final String c64bit = "eJwtkWlIVFEAhWUQERGREHFDokQUEQmREIlDoE" +
          "gbaUVI9GOQfgwiIiYxmkRZuVRWluWSmrPoLI7jzJvtJSGhIlYQYYJESERIDCYiJ" +
@@ -64,7 +64,7 @@ public class BinaryDataArrayTest extends TestCase {
          "AsT4C8Arj95p0gFCC3AD6J9aIL+QVxWAqD5BjEVTkgRJ4hzO/kicUhcg3jgG5Iv" +
          "mFIt6UwOUegjGw5Fk9FyDsCgwyOkLuKczoY8ldh1WJXVH6HV9gH57SBqA==";
 
-    // binary test data: uncompressed, base64 encoded, 64 bit precission
+    // binary test data: uncompressed, base64 encoded, 64 bit precision
     // extracted from file: MzMLFile_7_uncompressed.mzML (line 74) "m/z array"
     private final String u64bit = "AAAAAAAAAAD8qfHSTWJQP/yp8dJNYmA/+n5qvH" +
          "STaD/8qfHSTWJwP3sUrkfhenQ/+n5qvHSTeD956SYxCKx8P/yp8dJNYoA/O99Pj" +
@@ -85,7 +85,7 @@ public class BinaryDataArrayTest extends TestCase {
          "kO99Pjbc/AiuHFtnOtz+q8dJNYhC4P1K4HoXrUbg/+n5qvHSTuD+iRbbz/dS4P0" +
          "oMAiuHFrk/";
 
-    // binary test data: compressed, base64 encoded, 32 bit precission
+    // binary test data: compressed, base64 encoded, 32 bit precision
     // extracted from file: MzMLFile_7_compressed.mzML (line 80) "intensity array"
     private final String c32bit = "eJwVxCFIQ2EAhdE/GAyGhQXDwoLBYFgwGAa+jQ" +
          "WDYcFgMCwYDIYFw4LhITLGGGOIyBAZDxkyhsgQkSFDHrJgNC4uGo1Gj5fv3BD+F" +
@@ -93,7 +93,7 @@ public class BinaryDataArrayTest extends TestCase {
          "5Nlgky0KbLNDkYgKe+xT5YBDjqhxzAmn1DmjwTkxF1zSpEWbDl16XHHNDX1uuWN" +
          "Awj1DHhgx5pEnJjzzwitT3pjxTsoH8/IfQP5IBA==";
 
-    // binary test data: uncompressed, base64 encoded, 32 bit precission
+    // binary test data: uncompressed, base64 encoded, 32 bit precision
     // extracted from file: MzMLFile_7_uncompressed.mzML (line 80) "intensity array"
     private final String u32bit = "AAAAAAAAgD8AAABAAABAQAAAgEAAAKBAAADAQA" +
          "AA4EAAAABBAAAQQQAAIEEAADBBAABAQQAAUEEAAGBBAABwQQAAgEEAAIhBAACQQ" +
@@ -114,13 +114,13 @@ public class BinaryDataArrayTest extends TestCase {
         cv.setURI("http://psidev.cvs.sourceforge.net/*checkout*/psidev/psi/psi-ms/mzML/controlledVocabulary/psi-ms.obo");
 
 
-        // define a CVParam for 64 bit precission
+        // define a CVParam for 64 bit precision
         prec64bit = new BinaryDataArrayCVParam();
         prec64bit.setAccession(BinaryDataArray.MS_64BIT_AC);
         prec64bit.setName(BinaryDataArray.MS_64BIT_NAME);
         prec64bit.setCV(cv);
 
-        // define a CVParam for 32 bit precission
+        // define a CVParam for 32 bit precision
         prec32bit = new BinaryDataArrayCVParam();
         prec32bit.setAccession(BinaryDataArray.MS_32BIT_AC);
         prec32bit.setName(BinaryDataArray.MS_32BIT_NAME);
@@ -254,7 +254,7 @@ public class BinaryDataArrayTest extends TestCase {
 
     public void test64BitSetGetNoCompression() throws UnsupportedEncodingException {
 
-        // create some test data with 64 bit precission (double)
+        // create some test data with 64 bit precision (double)
         double[] testData = testData64Bit;
 
         // create the BinaryDataArray object that will store the data and do all the conversions
@@ -283,7 +283,7 @@ public class BinaryDataArrayTest extends TestCase {
 
     public void test64BitSetGetCompressed() throws UnsupportedEncodingException {
 
-        // create some test data with 64 bit precission (double)
+        // create some test data with 64 bit precision (double)
         double[] testData = testData64Bit;
 
         // create the BinaryDataArray object that will store the data and do all the conversions
@@ -301,7 +301,7 @@ public class BinaryDataArrayTest extends TestCase {
 
     public void test32BitSetGetNoCompression() throws UnsupportedEncodingException {
 
-        // create some test data with 32 bit precission (float)
+        // create some test data with 32 bit precision (float)
         float[] testData = testData32bit;
 
         // create the BinaryDataArray object that will store the data and do all the conversions
@@ -313,14 +313,14 @@ public class BinaryDataArrayTest extends TestCase {
         int i = 0;
         for (double v : retrievedData) {
             // the retrieved value has to be the same as the original value
-            assertTrue(testData[i++] == (float)v); // cast, since we have 32 bit precission (float)
+            assertTrue(testData[i++] == (float)v); // cast, since we have 32 bit precision (float)
         }
 
     }
 
     public void test32BitSetGetCompressed() throws UnsupportedEncodingException {
 
-        // create some test data with 32 bit precission (float)
+        // create some test data with 32 bit precision (float)
         float[] testData = testData32bit;
 
         // create the BinaryDataArray object that will store the data and do all the conversions
@@ -332,7 +332,7 @@ public class BinaryDataArrayTest extends TestCase {
         int i = 0;
         for (double v : retrievedData) {
             // the retrieved value has to be the same as the original value
-            assertTrue(testData[i++] == (float)v); // cast, since we have 32 bit precission (float)
+            assertTrue(testData[i++] == (float)v); // cast, since we have 32 bit precision (float)
         }
 
     }
@@ -360,7 +360,7 @@ public class BinaryDataArrayTest extends TestCase {
 
     public void testMarshaller() throws UnsupportedEncodingException {
 
-        BinaryDataArray bda = createBDAFromC64Bit(); // compressed, 64 bit precission
+        BinaryDataArray bda = createBDAFromC64Bit(); // compressed, 64 bit precision
 
         MzMLMarshaller m = new MzMLMarshaller();
 
@@ -389,9 +389,9 @@ public class BinaryDataArrayTest extends TestCase {
 
         // manually construct a BinaryDataArray with the according CVParams
         BinaryDataArray bda = new BinaryDataArray();
-        // set compressed, 64 bit precission data
+        // set compressed, 64 bit precision data
         bda.setBinary(c64bit.getBytes("ASCII"));
-        // set CVParam for 64 bit precission
+        // set CVParam for 64 bit precision
         bda.getCvParam().add(prec64bit);
         // set CVParam for compressed data
         bda.getCvParam().add(compressed);
@@ -403,9 +403,9 @@ public class BinaryDataArrayTest extends TestCase {
 
         // manually construct a BinaryDataArray with the according CVParams
         BinaryDataArray bda = new BinaryDataArray();
-        // set uncompressed, 64 bit precission data
+        // set uncompressed, 64 bit precision data
         bda.setBinary(u64bit.getBytes("ASCII"));
-        // set CVParam for 64 bit precission
+        // set CVParam for 64 bit precision
         bda.getCvParam().add(prec64bit);
         // set CVParam for not compressed data
         bda.getCvParam().add(uncompressed);
@@ -417,9 +417,9 @@ public class BinaryDataArrayTest extends TestCase {
 
         // manually construct a BinaryDataArray with the according CVParams
         BinaryDataArray bda = new BinaryDataArray();
-        // set uncompressed, 32 bit precission data
+        // set uncompressed, 32 bit precision data
         bda.setBinary(c32bit.getBytes("ASCII"));
-        // set CVParam for 32 bit precission
+        // set CVParam for 32 bit precision
         bda.getCvParam().add(prec32bit);
         // set CVParam for compressed data
         bda.getCvParam().add(compressed);
@@ -431,9 +431,9 @@ public class BinaryDataArrayTest extends TestCase {
 
         // manually construct a BinaryDataArray with the according CVParams
         BinaryDataArray bda = new BinaryDataArray();
-        // set uncompressed, 32 bit precission data
+        // set uncompressed, 32 bit precision data
         bda.setBinary(u32bit.getBytes("ASCII"));
-        // set CVParam for 32 bit precission
+        // set CVParam for 32 bit precision
         bda.getCvParam().add(prec32bit);
         // set CVParam for not compressed data
         bda.getCvParam().add(uncompressed);

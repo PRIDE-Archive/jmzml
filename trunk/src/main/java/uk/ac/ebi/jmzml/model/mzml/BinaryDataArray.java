@@ -76,7 +76,7 @@ public class BinaryDataArray
     public static final String MS_64BIT_AC   = "MS:1000523";
     public static final String MS_64BIT_NAME = "64-bit float";
 
-    public enum Precission {FLOAT32BIT, FLOAT64BIT}
+    public enum Precision {FLOAT32BIT, FLOAT64BIT}
 
     private final static long serialVersionUID = 100L;
     // @XmlElement(required = true)
@@ -112,7 +112,7 @@ public class BinaryDataArray
     /**
      * Allows access to the binary data as double array.
      * Note: this will implicitly read the CVParams which define the
-     * precission (32/64 bit) and if compression has been applied.
+     * precision (32/64 bit) and if compression has been applied.
      *
      * @return the binary data as double array.
      */
@@ -132,39 +132,15 @@ public class BinaryDataArray
             data = decodedData;
         }
 
-        // 3. apply the specified precission (32 or 64 bit) when converting into double values
+        // 3. apply the specified precision (32 or 64 bit) when converting into double values
         double[] dataArray;
-        if (getPrecission() == Precission.FLOAT64BIT) {
+        if (getPrecision() == Precision.FLOAT64BIT) {
             dataArray = convert64bit(data);
-        } else if (getPrecission() == Precission.FLOAT32BIT){
+        } else if (getPrecision() == Precision.FLOAT32BIT){
             dataArray = convert32bit(data);
         } else {
-            throw new IllegalStateException("Not supported precission in BinaryDataArray!");
+            throw new IllegalStateException("Not supported precision in BinaryDataArray!");
         }
-
-
-//        // 1. Decompression of the data (if required)
-//        byte[] data;
-//        boolean uncompress = needsUncompressing();
-//        if (uncompress) {
-//            data = decompress(binary);
-//        } else {
-//            data = binary;
-//        }
-//
-//        // 2. decode the base64 encoded data (data is assumed to always be base64 encoded)
-//        byte[] decodedData = decodeBase64(data);
-//
-//        // 3. apply the specified precission (32 or 64 bit) when converting into double values
-//        double[] dataArray;
-//        Precission p = getPrecission();
-//        if (p == Precission.FLOAT64BIT) {
-//            dataArray = convert64bit(decodedData);
-//        } else if (p == Precission.FLOAT32BIT){
-//            dataArray = convert32bit(decodedData);
-//        } else {
-//            throw new IllegalStateException("Not supported precission in BinaryDataArray!");
-//        }
 
         return dataArray;
     }
@@ -177,17 +153,17 @@ public class BinaryDataArray
         return convertData(data, BYTES_TO_HOLD_DOUBLE);
     }
 
-    private double[] convertData(byte[] data, int precission) {
+    private double[] convertData(byte[] data, int precision) {
         // create a double array of sufficient size
-        double[] doubleArray = new double[data.length / precission];
+        double[] doubleArray = new double[data.length / precision];
         // create a buffer around the data array for easier retrieval
         ByteBuffer bb = ByteBuffer.wrap(data);
         bb.order(ByteOrder.LITTLE_ENDIAN); // the order is always LITTLE_ENDIAN
         // now read 4/8 bit at a time and create a double from them
-        for (int indexOut = 0; indexOut < data.length; indexOut += precission) {
+        for (int indexOut = 0; indexOut < data.length; indexOut += precision) {
             // Note that the 'getFloat(index)' method gets the next 4 bytes and
             // the 'getDouble(index)' method gets the next 8 bytes.
-            doubleArray[indexOut / precission] = (precission == BYTES_TO_HOLD_FLOAT) ? (double) bb.getFloat(indexOut)
+            doubleArray[indexOut / precision] = (precision == BYTES_TO_HOLD_FLOAT) ? (double) bb.getFloat(indexOut)
                     : bb.getDouble(indexOut);
         }
         return doubleArray;
@@ -301,25 +277,25 @@ public class BinaryDataArray
         return base64String.getBytes();
     }
 
-    private Precission getPrecission() {
-        Precission p;
+    private Precision getPrecision() {
+        Precision p;
 
         // first get all registered CV parameters
         List<String> cvs2 = new ArrayList<String>();
         for (CVParam param : this.getCvParam()) {
             cvs2.add(param.getAccession());
         }
-        // then check if we have 64 or 32 bit precission
+        // then check if we have 64 or 32 bit precision
         if ( cvs2.contains(MS_64BIT_AC) ) {
             if ( cvs2.contains(MS_32BIT_AC) ) {
                 throw new IllegalStateException("Found conflicting CV parameters for BinaryDataArray: '"
                         + MS_64BIT_NAME + "' AND '" + MS_32BIT_NAME + "'!");
             }
-            p = Precission.FLOAT64BIT;
+            p = Precision.FLOAT64BIT;
         } else if ( cvs2.contains(MS_32BIT_AC) ) {
-            p = Precission.FLOAT32BIT;
+            p = Precision.FLOAT32BIT;
         } else {
-            throw new IllegalStateException("Required precission CV parameter ('" + MS_64BIT_NAME
+            throw new IllegalStateException("Required precision CV parameter ('" + MS_64BIT_NAME
                     + "' or '" + MS_32BIT_NAME + "') not found in BinaryDataArray!");
         }
 
@@ -363,7 +339,7 @@ public class BinaryDataArray
      * @see #set64BitArrayAsBinaryData(double[], boolean, CV)
      *
      * Also note that this method does not add any CVParams for compression
-     * or precission. These will have to be added manually.
+     * or precision. These will have to be added manually.
      * 
      * @param value the byte[] representing the binary (spectrum) data.
      */
@@ -379,12 +355,12 @@ public class BinaryDataArray
     /**
      * Sets the value of the binary property for data in double values.
      * Additionally, according CVParams 
-     * Note that double values imply a precission of 64 bit.
+     * Note that double values imply a precision of 64 bit.
      *
      * @param value the data as double array.
      * @param compress flag whether or not the data should be compressed.
      * @param cv The CV that will be used as reference CV for the generated
-     *           compression and precission CVParams.
+     *           compression and precision CVParams.
      */
     public void set64BitArrayAsBinaryData(double[] value, boolean compress, CV cv) {
         ByteBuffer buffer = ByteBuffer.allocate(value.length * BYTES_TO_HOLD_DOUBLE);
@@ -395,7 +371,7 @@ public class BinaryDataArray
 
         setBinaryData(buffer.array(), compress, cv);
 
-        // add a cv parameter stating that the data uses 64 bit float (double) precission
+        // add a cv parameter stating that the data uses 64 bit float (double) precision
         CVParam cvParam = new BinaryDataArrayCVParam();
         cvParam.setAccession(MS_64BIT_AC);
         cvParam.setName(MS_64BIT_NAME);
@@ -406,12 +382,12 @@ public class BinaryDataArray
 
     /**
      * Sets the value of the binary property for data in double values.
-     * Note that float values imply a precission of 32 bit.
+     * Note that float values imply a precision of 32 bit.
      *
      * @param value the data as float array.
      * @param compress flag whether or not the data should be compressed.
      * @param cv The CV that will be used as reference CV for the generated
-     *           compression and precission CVParams.
+     *           compression and precision CVParams.
      */
     public void set32BitArrayAsBinaryData(float[] value, boolean compress, CV cv) {
         ByteBuffer buffer = ByteBuffer.allocate(value.length * BYTES_TO_HOLD_FLOAT);
@@ -422,7 +398,7 @@ public class BinaryDataArray
 
         setBinaryData(buffer.array(), compress, cv);
 
-        // add a cv parameter stating that the data uses 32-bit float precission
+        // add a cv parameter stating that the data uses 32-bit float precision
         CVParam cvParam = new BinaryDataArrayCVParam();
         cvParam.setAccession(MS_32BIT_AC);
         cvParam.setName(MS_32BIT_NAME);
