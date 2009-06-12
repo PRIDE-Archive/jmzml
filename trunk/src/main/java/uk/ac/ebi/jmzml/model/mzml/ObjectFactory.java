@@ -34,75 +34,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link IndexList }
-     * 
-     */
-    public IndexList createIndexList() {
-        return new IndexList();
-    }
-
-    /**
-     * Create an instance of {@link Component }
-     * 
-     */
-    public Component createComponent() {
-        return new Component();
-    }
-
-    /**
-     * Create an instance of {@link SourceFileRefList }
-     * 
-     */
-    public SourceFileRefList createSourceFileRefList() {
-        return new SourceFileRefList();
-    }
-
-    /**
-     * Create an instance of {@link ScanSettingsList }
-     * 
-     */
-    public ScanSettingsList createScanSettingsList() {
-        return new ScanSettingsList();
-    }
-
-    /**
-     * Create an instance of {@link UserParam }
-     * 
-     */
-    public UserParam createUserParam() {
-        return new UserParam();
-    }
-
-    /**
-     * Create an instance of {@link Spectrum }
-     * 
-     */
-    public Spectrum createSpectrum() {
-        return new Spectrum();
-    }
-
-    /**
-     * Create an instance of {@link DataProcessing }
-     * 
-     */
-    public DataProcessing createDataProcessing() {
-        return new DataProcessing();
-    }
-
-    /**
-     * Create an instance of {@link SourceComponent }
-     * 
-     */
-    public SourceComponent createSourceComponent() {
-        return new SourceComponent();
-    }
-
-    /**
      * Create an instance of {@link InstrumentConfiguration }
      * 
      */
     public InstrumentConfiguration createInstrumentConfiguration() {
         return new InstrumentConfiguration();
+    }
+
+    /**
+     * Create an instance of {@link ChromatogramList }
+     * 
+     */
+    public ChromatogramList createChromatogramList() {
+        return new ChromatogramList();
+    }
+
+    /**
+     * Create an instance of {@link TargetList }
+     * 
+     */
+    public TargetList createTargetList() {
+        return new TargetList();
     }
 
     /**
@@ -114,11 +66,131 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ChromatogramList }
+     * Create an instance of {@link ScanList }
      * 
      */
-    public ChromatogramList createChromatogramList() {
-        return new ChromatogramList();
+    public ScanList createScanList() {
+        return new ScanList();
+    }
+
+    /**
+     * Create an instance of {@link Component }
+     * 
+     */
+    public Component createComponent() {
+        return new Component();
+    }
+
+    /**
+     * Create an instance of {@link SoftwareRef }
+     * 
+     */
+    public SoftwareRef createSoftwareRef() {
+        return new SoftwareRef();
+    }
+
+    /**
+     * Create an instance of {@link AnalyzerComponent }
+     * 
+     */
+    public AnalyzerComponent createAnalyzerComponent() {
+        return new AnalyzerComponent();
+    }
+
+    /**
+     * Create an instance of {@link CVList }
+     * 
+     */
+    public CVList createCVList() {
+        return new CVList();
+    }
+
+    /**
+     * Create an instance of {@link ComponentList }
+     * 
+     */
+    public ComponentList createComponentList() {
+        return new ComponentList();
+    }
+
+    /**
+     * Create an instance of {@link ParamGroup }
+     * 
+     */
+    public ParamGroup createParamGroup() {
+        return new ParamGroup();
+    }
+
+    /**
+     * Create an instance of {@link SpectrumList }
+     * 
+     */
+    public SpectrumList createSpectrumList() {
+        return new SpectrumList();
+    }
+
+    /**
+     * Create an instance of {@link FileDescription }
+     * 
+     */
+    public FileDescription createFileDescription() {
+        return new FileDescription();
+    }
+
+    /**
+     * Create an instance of {@link MzML }
+     * 
+     */
+    public MzML createMzML() {
+        return new MzML();
+    }
+
+    /**
+     * Create an instance of {@link IndexedmzML }
+     * 
+     */
+    public IndexedmzML createIndexedmzML() {
+        return new IndexedmzML();
+    }
+
+    /**
+     * Create an instance of {@link ReferenceableParamGroup }
+     * 
+     */
+    public ReferenceableParamGroup createReferenceableParamGroup() {
+        return new ReferenceableParamGroup();
+    }
+
+    /**
+     * Create an instance of {@link UserParam }
+     * 
+     */
+    public UserParam createUserParam() {
+        return new UserParam();
+    }
+
+    /**
+     * Create an instance of {@link SourceFile }
+     * 
+     */
+    public SourceFile createSourceFile() {
+        return new SourceFile();
+    }
+
+    /**
+     * Create an instance of {@link SelectedIonList }
+     * 
+     */
+    public SelectedIonList createSelectedIonList() {
+        return new SelectedIonList();
+    }
+
+    /**
+     * Create an instance of {@link SourceFileList }
+     * 
+     */
+    public SourceFileList createSourceFileList() {
+        return new SourceFileList();
     }
 
     /**
@@ -138,203 +210,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Run }
+     * Create an instance of {@link SourceFileRefList }
      * 
      */
-    public Run createRun() {
-        return new Run();
+    public SourceFileRefList createSourceFileRefList() {
+        return new SourceFileRefList();
     }
 
     /**
-     * Create an instance of {@link ReferenceableParamGroup }
+     * Create an instance of {@link Index }
      * 
      */
-    public ReferenceableParamGroup createReferenceableParamGroup() {
-        return new ReferenceableParamGroup();
-    }
-
-    /**
-     * Create an instance of {@link SourceFileList }
-     * 
-     */
-    public SourceFileList createSourceFileList() {
-        return new SourceFileList();
-    }
-
-    /**
-     * Create an instance of {@link TargetList }
-     * 
-     */
-    public TargetList createTargetList() {
-        return new TargetList();
-    }
-
-    /**
-     * Create an instance of {@link CV }
-     * 
-     */
-    public CV createCV() {
-        return new CV();
-    }
-
-    /**
-     * Create an instance of {@link InstrumentConfigurationList }
-     * 
-     */
-    public InstrumentConfigurationList createInstrumentConfigurationList() {
-        return new InstrumentConfigurationList();
-    }
-
-    /**
-     * Create an instance of {@link SourceFile }
-     * 
-     */
-    public SourceFile createSourceFile() {
-        return new SourceFile();
-    }
-
-    /**
-     * Create an instance of {@link ComponentList }
-     * 
-     */
-    public ComponentList createComponentList() {
-        return new ComponentList();
-    }
-
-    /**
-     * Create an instance of {@link FileDescription }
-     * 
-     */
-    public FileDescription createFileDescription() {
-        return new FileDescription();
-    }
-
-    /**
-     * Create an instance of {@link ScanList }
-     * 
-     */
-    public ScanList createScanList() {
-        return new ScanList();
-    }
-
-    /**
-     * Create an instance of {@link AnalyzerComponent }
-     * 
-     */
-    public AnalyzerComponent createAnalyzerComponent() {
-        return new AnalyzerComponent();
-    }
-
-    /**
-     * Create an instance of {@link SampleList }
-     * 
-     */
-    public SampleList createSampleList() {
-        return new SampleList();
-    }
-
-    /**
-     * Create an instance of {@link SoftwareRef }
-     * 
-     */
-    public SoftwareRef createSoftwareRef() {
-        return new SoftwareRef();
-    }
-
-    /**
-     * Create an instance of {@link SelectedIonList }
-     * 
-     */
-    public SelectedIonList createSelectedIonList() {
-        return new SelectedIonList();
-    }
-
-    /**
-     * Create an instance of {@link CVList }
-     * 
-     */
-    public CVList createCVList() {
-        return new CVList();
-    }
-
-    /**
-     * Create an instance of {@link MzML }
-     * 
-     */
-    public MzML createMzML() {
-        return new MzML();
-    }
-
-    /**
-     * Create an instance of {@link ReferenceableParamGroupRef }
-     * 
-     */
-    public ReferenceableParamGroupRef createReferenceableParamGroupRef() {
-        return new ReferenceableParamGroupRef();
-    }
-
-    /**
-     * Create an instance of {@link Offset }
-     * 
-     */
-    public Offset createOffset() {
-        return new Offset();
-    }
-
-    /**
-     * Create an instance of {@link Chromatogram }
-     * 
-     */
-    public Chromatogram createChromatogram() {
-        return new Chromatogram();
-    }
-
-    /**
-     * Create an instance of {@link BinaryDataArrayList }
-     * 
-     */
-    public BinaryDataArrayList createBinaryDataArrayList() {
-        return new BinaryDataArrayList();
-    }
-
-    /**
-     * Create an instance of {@link Software }
-     * 
-     */
-    public Software createSoftware() {
-        return new Software();
-    }
-
-    /**
-     * Create an instance of {@link DetectorComponent }
-     * 
-     */
-    public DetectorComponent createDetectorComponent() {
-        return new DetectorComponent();
-    }
-
-    /**
-     * Create an instance of {@link SpectrumList }
-     * 
-     */
-    public SpectrumList createSpectrumList() {
-        return new SpectrumList();
-    }
-
-    /**
-     * Create an instance of {@link ParamGroup }
-     * 
-     */
-    public ParamGroup createParamGroup() {
-        return new ParamGroup();
-    }
-
-    /**
-     * Create an instance of {@link PrecursorList }
-     * 
-     */
-    public PrecursorList createPrecursorList() {
-        return new PrecursorList();
+    public Index createIndex() {
+        return new Index();
     }
 
     /**
@@ -354,27 +242,35 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ScanSettings }
+     * Create an instance of {@link ScanWindowList }
      * 
      */
-    public ScanSettings createScanSettings() {
-        return new ScanSettings();
+    public ScanWindowList createScanWindowList() {
+        return new ScanWindowList();
     }
 
     /**
-     * Create an instance of {@link ProcessingMethod }
+     * Create an instance of {@link PrecursorList }
      * 
      */
-    public ProcessingMethod createProcessingMethod() {
-        return new ProcessingMethod();
+    public PrecursorList createPrecursorList() {
+        return new PrecursorList();
     }
 
     /**
-     * Create an instance of {@link Precursor }
+     * Create an instance of {@link SourceComponent }
      * 
      */
-    public Precursor createPrecursor() {
-        return new Precursor();
+    public SourceComponent createSourceComponent() {
+        return new SourceComponent();
+    }
+
+    /**
+     * Create an instance of {@link SampleList }
+     * 
+     */
+    public SampleList createSampleList() {
+        return new SampleList();
     }
 
     /**
@@ -386,27 +282,67 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ReferenceableParamGroupList }
+     * Create an instance of {@link SourceFileRef }
      * 
      */
-    public ReferenceableParamGroupList createReferenceableParamGroupList() {
-        return new ReferenceableParamGroupList();
+    public SourceFileRef createSourceFileRef() {
+        return new SourceFileRef();
     }
 
     /**
-     * Create an instance of {@link Scan }
+     * Create an instance of {@link ReferenceableParamGroupRef }
      * 
      */
-    public Scan createScan() {
-        return new Scan();
+    public ReferenceableParamGroupRef createReferenceableParamGroupRef() {
+        return new ReferenceableParamGroupRef();
     }
 
     /**
-     * Create an instance of {@link ScanWindowList }
+     * Create an instance of {@link CV }
      * 
      */
-    public ScanWindowList createScanWindowList() {
-        return new ScanWindowList();
+    public CV createCV() {
+        return new CV();
+    }
+
+    /**
+     * Create an instance of {@link Offset }
+     * 
+     */
+    public Offset createOffset() {
+        return new Offset();
+    }
+
+    /**
+     * Create an instance of {@link DetectorComponent }
+     * 
+     */
+    public DetectorComponent createDetectorComponent() {
+        return new DetectorComponent();
+    }
+
+    /**
+     * Create an instance of {@link ProcessingMethod }
+     * 
+     */
+    public ProcessingMethod createProcessingMethod() {
+        return new ProcessingMethod();
+    }
+
+    /**
+     * Create an instance of {@link DataProcessing }
+     * 
+     */
+    public DataProcessing createDataProcessing() {
+        return new DataProcessing();
+    }
+
+    /**
+     * Create an instance of {@link Run }
+     * 
+     */
+    public Run createRun() {
+        return new Run();
     }
 
     /**
@@ -418,27 +354,91 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Index }
+     * Create an instance of {@link Scan }
      * 
      */
-    public Index createIndex() {
-        return new Index();
+    public Scan createScan() {
+        return new Scan();
     }
 
     /**
-     * Create an instance of {@link SourceFileRef }
+     * Create an instance of {@link InstrumentConfigurationList }
      * 
      */
-    public SourceFileRef createSourceFileRef() {
-        return new SourceFileRef();
+    public InstrumentConfigurationList createInstrumentConfigurationList() {
+        return new InstrumentConfigurationList();
     }
 
     /**
-     * Create an instance of {@link IndexedmzML }
+     * Create an instance of {@link ReferenceableParamGroupList }
      * 
      */
-    public IndexedmzML createIndexedmzML() {
-        return new IndexedmzML();
+    public ReferenceableParamGroupList createReferenceableParamGroupList() {
+        return new ReferenceableParamGroupList();
+    }
+
+    /**
+     * Create an instance of {@link ScanSettingsList }
+     * 
+     */
+    public ScanSettingsList createScanSettingsList() {
+        return new ScanSettingsList();
+    }
+
+    /**
+     * Create an instance of {@link Spectrum }
+     * 
+     */
+    public Spectrum createSpectrum() {
+        return new Spectrum();
+    }
+
+    /**
+     * Create an instance of {@link BinaryDataArrayList }
+     * 
+     */
+    public BinaryDataArrayList createBinaryDataArrayList() {
+        return new BinaryDataArrayList();
+    }
+
+    /**
+     * Create an instance of {@link IndexList }
+     * 
+     */
+    public IndexList createIndexList() {
+        return new IndexList();
+    }
+
+    /**
+     * Create an instance of {@link Software }
+     * 
+     */
+    public Software createSoftware() {
+        return new Software();
+    }
+
+    /**
+     * Create an instance of {@link Chromatogram }
+     * 
+     */
+    public Chromatogram createChromatogram() {
+        return new Chromatogram();
+    }
+
+    /**
+     * Create an instance of {@link Precursor }
+     * 
+     */
+    public Precursor createPrecursor() {
+        return new Precursor();
+    }
+
+    /**
+     * Create an instance of {@link ScanSettings }
+     * 
+     */
+    public ScanSettings createScanSettings() {
+        return new ScanSettings();
     }
 
     /**
