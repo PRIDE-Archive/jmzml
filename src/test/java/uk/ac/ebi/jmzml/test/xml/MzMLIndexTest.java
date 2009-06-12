@@ -3,12 +3,10 @@ package uk.ac.ebi.jmzml.test.xml;
 import junit.framework.TestCase;
 
 import java.net.URL;
-import java.util.Iterator;
 
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
 import uk.ac.ebi.jmzml.model.mzml.*;
-import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
 
 /**
  * @author Florian Reisinger
@@ -71,23 +69,6 @@ public class MzMLIndexTest extends TestCase {
         }
         assertNotNull(expected);
 
-    }
-
-
-    public void bla() {
-        // 1. Index entry exists + can be found.
-//        Spectrum s1 = um.getSpectrumBySpotID("good one");
-        // --> s is not null
-
-        // 2. Index entry does not exist.
-//        Spectrum s2 = um.getSpectrumBySpotID("unexisting one");
-        // --> s is null
-
-        // 3. Index entry exists but can not  be found.
-//        Spectrum s3 = um.getSpectrumBySpotID("corrupt one");
-        // --> throw exception (+ include hash evaluation?)
-
-           
     }
 
 }
