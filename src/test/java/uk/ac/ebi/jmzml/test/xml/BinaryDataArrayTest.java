@@ -8,10 +8,13 @@ import uk.ac.ebi.jmzml.model.mzml.params.BinaryDataArrayCVParam;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.io.UnsupportedEncodingException;
 import java.io.ByteArrayOutputStream;
 
 import junit.framework.TestCase;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  * @author Florian Reisinger
@@ -19,6 +22,8 @@ import junit.framework.TestCase;
  * @since 0.5
  */
 public class BinaryDataArrayTest extends TestCase {
+
+    // ToDo: test binary data for integer and String cases
 
     private final boolean VERBOSE = false;
 
@@ -28,27 +33,62 @@ public class BinaryDataArrayTest extends TestCase {
     private CVParam compressed;
     private CVParam uncompressed;
 
-    private float[] testData32bit = {
-            1.123F, 1.234F, 1.345F, 1.456F, 1.567F, 1.678F, 1.789F, 1.890F,
-            2.123F, 2.234F, 2.345F, 2.456F, 2.567F, 2.678F, 2.789F, 2.890F,
-            3.123F, 3.234F, 3.345F, 3.456F, 3.567F, 3.678F, 3.789F, 3.890F,
-            4.123F, 4.234F, 4.345F, 4.456F, 4.567F, 4.678F, 4.789F, 4.890F,
-            5.123F, 5.234F, 5.345F, 5.456F, 5.567F, 5.678F, 5.789F, 5.890F,
-            6.123F, 6.234F, 6.345F, 6.456F, 6.567F, 6.678F, 6.789F, 6.890F,
-            7.123F, 7.234F, 7.345F, 7.456F, 7.567F, 7.678F, 7.789F, 7.890F,
-            8.123F, 8.234F, 8.345F, 8.456F, 8.567F, 8.678F, 8.789F, 8.890F,
-            9.123F, 9.234F, 9.345F, 9.456F, 9.567F, 9.678F, 9.789F, 9.890F};
+    ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
+    // test values (like the ones in the example XML file) in
+    // different numeric types
 
-    private double[] testData64Bit = {
-            1.123, 1.234, 1.345, 1.456, 1.567, 1.678, 1.789, 1.890,
-            2.123, 2.234, 2.345, 2.456, 2.567, 2.678, 2.789, 2.890,
-            3.123, 3.234, 3.345, 3.456, 3.567, 3.678, 3.789, 3.890,
-            4.123, 4.234, 4.345, 4.456, 4.567, 4.678, 4.789, 4.890,
-            5.123, 5.234, 5.345, 5.456, 5.567, 5.678, 5.789, 5.890,
-            6.123, 6.234, 6.345, 6.456, 6.567, 6.678, 6.789, 6.890,
-            7.123, 7.234, 7.345, 7.456, 7.567, 7.678, 7.789, 7.890,
-            8.123, 8.234, 8.345, 8.456, 8.567, 8.678, 8.789, 8.890,
-            9.123, 9.234, 9.345, 9.456, 9.567, 9.678, 9.789, 9.890};
+    private double[] testData64bitFloat = {
+            0.000, 0.001, 0.002, 0.003, 0.004, 0.005, 0.006, 0.007, 0.008, 0.009,
+            0.010, 0.011, 0.012, 0.013, 0.014, 0.015, 0.016, 0.017, 0.018, 0.019,
+            0.020, 0.021, 0.022, 0.023, 0.024, 0.025, 0.026, 0.027, 0.028, 0.029,
+            0.030, 0.031, 0.032, 0.033, 0.034, 0.035, 0.036, 0.037, 0.038, 0.039,
+            0.040, 0.041, 0.042, 0.043, 0.044, 0.045, 0.046, 0.047, 0.048, 0.049,
+            0.050, 0.051, 0.052, 0.053, 0.054, 0.055, 0.056, 0.057, 0.058, 0.059,
+            0.060, 0.061, 0.062, 0.063, 0.064, 0.065, 0.066, 0.067, 0.068, 0.069,
+            0.070, 0.071, 0.072, 0.073, 0.074, 0.075, 0.076, 0.077, 0.078, 0.079,
+            0.080, 0.081, 0.082, 0.083, 0.084, 0.085, 0.086, 0.087, 0.088, 0.089,
+            0.090, 0.091, 0.092, 0.093, 0.094, 0.095, 0.096, 0.097, 0.098};
+
+    private float[] testData32bitFloat = {
+            00.0F, 01.0F, 02.0F, 03.0F, 04.0F, 05.0F, 06.0F, 07.0F, 08.0F, 09.0F,
+            10.0F, 11.0F, 12.0F, 13.0F, 14.0F, 15.0F, 16.0F, 17.0F, 18.0F, 19.0F,
+            20.0F, 21.0F, 22.0F, 23.0F, 24.0F, 25.0F, 26.0F, 27.0F, 28.0F, 29.0F,
+            30.0F, 31.0F, 32.0F, 33.0F, 34.0F, 35.0F, 36.0F, 37.0F, 38.0F, 39.0F,
+            40.0F, 41.0F, 42.0F, 43.0F, 44.0F, 45.0F, 46.0F, 47.0F, 48.0F, 49.0F,
+            50.0F, 51.0F, 52.0F, 53.0F, 54.0F, 55.0F, 56.0F, 57.0F, 58.0F, 59.0F,
+            60.0F, 61.0F, 62.0F, 63.0F, 64.0F, 65.0F, 66.0F, 67.0F, 68.0F, 69.0F,
+            70.0F, 71.0F, 72.0F, 73.0F, 74.0F, 75.0F, 76.0F, 77.0F, 78.0F, 79.0F,
+            80.0F, 81.0F, 82.0F, 83.0F, 84.0F, 85.0F, 86.0F, 87.0F, 88.0F, 89.0F,
+            90.0F, 91.0F, 92.0F, 93.0F, 94.0F, 95.0F, 96.0F, 97.0F, 98.0F};
+
+    private long[] testData64bitInt = {
+            0L, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L,
+            10L, 11L, 12L, 13L, 14L, 15L, 16L, 17L, 18L, 19L,
+            20L, 21L, 22L, 23L, 24L, 25L, 26L, 27L, 28L, 29L,
+            30L, 31L, 32L, 33L, 34L, 35L, 36L, 37L, 38L, 39L,
+            40L, 41L, 42L, 43L, 44L, 45L, 46L, 47L, 48L, 49L,
+            50L, 51L, 52L, 53L, 54L, 55L, 56L, 57L, 58L, 59L,
+            60L, 61L, 62L, 63L, 64L, 65L, 66L, 67L, 68L, 69L,
+            70L, 71L, 72L, 73L, 74L, 75L, 76L, 77L, 78L, 79L,
+            80L, 81L, 82L, 83L, 84L, 85L, 86L, 87L, 88L, 89L,
+            90L, 91L, 92L, 93L, 94L, 95L, 96L, 97L, 98L};
+
+    private int[] testData32bitInt = {
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+            10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+            20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+            30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
+            40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
+            50, 51, 52, 53, 54, 55, 56, 57, 58, 59,
+            60, 61, 62, 63, 64, 65, 66, 67, 68, 69,
+            70, 71, 72, 73, 74, 75, 76, 77, 78, 79,
+            80, 81, 82, 83, 84, 85, 86, 87, 88, 89,
+            90, 91, 92, 93, 94, 95, 96, 97, 98};
+
+
+    ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
+    // some base64 encoded binary data strings to compare against
+    // the binary data produced by the BinaryDataArray object
 
     // binary test data: compressed, base64 encoded, 64 bit precision
     // extracted from file: MzMLFile_7_compressed.mzML (line 74) "m/z array"
@@ -116,14 +156,14 @@ public class BinaryDataArrayTest extends TestCase {
 
         // define a CVParam for 64 bit precision
         prec64bit = new BinaryDataArrayCVParam();
-        prec64bit.setAccession(BinaryDataArray.MS_64BIT_AC);
-        prec64bit.setName(BinaryDataArray.MS_64BIT_NAME);
+        prec64bit.setAccession(BinaryDataArray.MS_FLOAT64BIT_AC);
+        prec64bit.setName(BinaryDataArray.MS_FLOAT64BIT_NAME);
         prec64bit.setCV(cv);
 
         // define a CVParam for 32 bit precision
         prec32bit = new BinaryDataArrayCVParam();
-        prec32bit.setAccession(BinaryDataArray.MS_32BIT_AC);
-        prec32bit.setName(BinaryDataArray.MS_32BIT_NAME);
+        prec32bit.setAccession(BinaryDataArray.MS_FLOAT32BIT_AC);
+        prec32bit.setName(BinaryDataArray.MS_FLOAT32BIT_NAME);
         prec32bit.setCV(cv);
 
         // define a CVParam for compression
@@ -138,71 +178,120 @@ public class BinaryDataArrayTest extends TestCase {
         uncompressed.setName(BinaryDataArray.MS_UNCOMPRESSED_NAME);
         uncompressed.setCV(cv);
 
-
     }
 
-    public void testUnmarshallingUncompressed() throws MzMLUnmarshallerException, UnsupportedEncodingException {
+    public void testUnmarshallingUncompressed64Float() throws MzMLUnmarshallerException, UnsupportedEncodingException {
         // find the test XML file
         URL url = this.getClass().getClassLoader().getResource("MzMLFile_7_uncompressed.mzML");
-        assertNotNull(url);
 
-        // create the marshaller and check that the file is indexed
-        MzMLUnmarshaller um = new MzMLUnmarshaller(url);
-        assertTrue( um.isIndexedmzML() );
-
-        // the checksum is not correct, so we skip this test
-        // assertTrue(um.isOkFileChecksum());
-
-        MzML content = um.unmarshall();
-        assertNotNull(content);
-
-        // fine the spectrum with id "index=0"
-        List<Spectrum> spectrumList = content.getRun().getSpectrumList().getSpectrum();
-        Spectrum spectrum = null;
-        for (Spectrum sp : spectrumList) {
-            assertNotNull(sp);
-            if ( sp.getId() != null && sp.getId().equalsIgnoreCase("index=0") ) {
-                spectrum = sp;
-            }
-        }
-        assertNotNull(spectrum);
-
-        // check that we have binary data
-        BinaryDataArrayList bdal = spectrum.getBinaryDataArrayList();
-        assertNotNull(bdal);
-        List<BinaryDataArray> dataArray = bdal.getBinaryDataArray();
-        BinaryDataArray data = dataArray.iterator().next(); // get the first BinaryDataArray
-        assertNotNull(data);
-
-        // check that the base64 encoded binary string we get from the object is the
-        // same as the string we copied from the file into the "u64bit" variable.
-        String binaryString = new String(data.getBinary(), "ASCII");
-        assertTrue(binaryString.equals(u64bit));
-
-        if (VERBOSE) {
-            // print to see what the data looks like
-            System.out.println("\n----- testUnmarshallingUncompressed --------------------------");
-            System.out.println("binary data (text):  " + new String(data.getBinary(), "ASCII") );
-            System.out.println("");
-            System.out.println("binary data (default):  " + new String(data.getBinary()) );
-            System.out.println("");
-            System.out.println("Data as double array:");
-            for (double value : data.getBinaryDataAsDoubleArray()) {
-                System.out.println("double value: " + value);
-            }
-            System.out.println("end of double array.");
-            System.out.println("----- testUnmarshalling Uncompressed end ---------------------");
-        }
+        if (VERBOSE) System.out.println("\n----- testUnmarshallingUncompressed64 ------------------------");
+        checkFile(url, BinaryDataArray.Precision.FLOAT64BIT);
+        if (VERBOSE) System.out.println("----- testUnmarshallingUncompressed64 end --------------------");
 
     }
 
-    public void testUnmarshallingCompressed() throws MzMLUnmarshallerException, UnsupportedEncodingException {
+    public void testUnmarshallingCompressed64Float() throws MzMLUnmarshallerException, UnsupportedEncodingException {
         // find the test XML file
         URL url = this.getClass().getClassLoader().getResource("MzMLFile_7_compressed.mzML");
-        assertNotNull(url);
+
+        if (VERBOSE) System.out.println("\n----- testUnmarshallingCompressed64 --------------------------");
+        checkFile(url, BinaryDataArray.Precision.FLOAT64BIT);
+        if (VERBOSE) System.out.println("----- testUnmarshallingCompressed64 end ----------------------");
+
+    }
+
+    public void testUnmarshallingUncompressed32Float() throws MzMLUnmarshallerException, UnsupportedEncodingException {
+        // find the test XML file
+        URL url = this.getClass().getClassLoader().getResource("MzMLFile_7_uncompressed.mzML");
+
+        if (VERBOSE) System.out.println("\n----- testUnmarshallingUncompressed32 ------------------------");
+        checkFile(url, BinaryDataArray.Precision.FLOAT32BIT);
+        if (VERBOSE) System.out.println("----- testUnmarshallingUncompressed32 end --------------------");
+
+    }
+
+    public void testUnmarshallingCompressed32Float() throws MzMLUnmarshallerException, UnsupportedEncodingException {
+        // find the test XML file
+        URL url = this.getClass().getClassLoader().getResource("MzMLFile_7_compressed.mzML");
+
+        if (VERBOSE) System.out.println("\n----- testUnmarshallingCompressed32 --------------------------");
+        checkFile(url, BinaryDataArray.Precision.FLOAT32BIT);
+        if (VERBOSE) System.out.println("----- testUnmarshallingCompressed32 end ----------------------");
+
+    }
+
+    private void checkFile(URL mzMLFileUrl, BinaryDataArray.Precision prec) throws UnsupportedEncodingException {
+        String id = "index=0";
+        Spectrum spectrum = getSpectrum(mzMLFileUrl, id);
+
+        // check that we have binary data
+        BinaryDataArrayList bdal = spectrum.getBinaryDataArrayList();
+        assertNotNull(bdal);
+        List<BinaryDataArray> dataArray = bdal.getBinaryDataArray();
+        Iterator<BinaryDataArray> iter = dataArray.iterator();
+        if (prec == BinaryDataArray.Precision.FLOAT32BIT) { iter.next(); } // get the second BinaryDataArray
+        BinaryDataArray data = iter.next(); // get the first BinaryDataArray
+        assertNotNull(data);
+
+        // check the data from the XML against the expected data
+        Number[] xmlData = data.getBinaryDataAsNumberArray();
+        assertNotNull(xmlData);
+
+        compareToRefData(xmlData, prec);
+    }
+
+    private void compareToRefData(Number[] array, BinaryDataArray.Precision prec) {
+        Arrays.sort(array); // make sure we have the expected (numeric) order of values
+
+        if (VERBOSE) {
+            // print to see what the data looks like
+            System.out.println("Data as double array:");
+            for (Number anArray : array) {
+                System.out.println("data: " + anArray.doubleValue());
+            }
+            System.out.println("end of double array.");
+        }
+
+        switch (prec) {
+            case FLOAT64BIT :   // double values
+                                assertTrue(array.length == testData64bitFloat.length);
+                                for (int i = 0; i < array.length; i++) {
+                                    assertTrue(array[i].doubleValue() == testData64bitFloat[i]);
+                                }
+                                break;
+
+            case FLOAT32BIT :   // float values
+                                assertTrue(array.length == testData32bitFloat.length);
+                                for (int i = 0; i < array.length; i++) {
+                                    assertTrue(array[i].floatValue() == testData32bitFloat[i]);
+                                }
+                                break;
+
+            case INT64BIT :     // long values
+                                assertTrue(array.length == testData64bitInt.length);
+                                for (int i = 0; i < array.length; i++) {
+                                    assertTrue(array[i].longValue() == testData64bitInt[i]);
+                                }
+                                break;
+
+            case INT32BIT :     // int values
+                                assertTrue(array.length == testData32bitInt.length);
+                                for (int i = 0; i < array.length; i++) {
+                                    assertTrue(array[i].intValue() == testData32bitInt[i]);
+                                }
+                                break;
+
+            default       :     throw new IllegalStateException("Not supported Precision while " +
+                                                                "comparing data with reference data!");
+        }
+
+    }
+
+    private Spectrum getSpectrum(URL mzMLFileUrl, String id) {
+        assertNotNull(mzMLFileUrl);
 
         // create the marshaller and check that the file is indexed
-        MzMLUnmarshaller um = new MzMLUnmarshaller(url);
+        MzMLUnmarshaller um = new MzMLUnmarshaller(mzMLFileUrl);
         assertTrue( um.isIndexedmzML() );
 
         // the checksum is not correct, so we skip this test
@@ -216,141 +305,97 @@ public class BinaryDataArrayTest extends TestCase {
         Spectrum spectrum = null;
         for (Spectrum sp : spectrumList) {
             assertNotNull(sp);
-            if ( sp.getId() != null && sp.getId().equalsIgnoreCase("index=0") ) {
+            if ( sp.getId() != null && sp.getId().equalsIgnoreCase(id) ) {
                 spectrum = sp;
             }
         }
         assertNotNull(spectrum);
-
-        // check that we have binary data
-        BinaryDataArrayList bdal = spectrum.getBinaryDataArrayList();
-        assertNotNull(bdal);
-        List<BinaryDataArray> dataArray = bdal.getBinaryDataArray();
-        BinaryDataArray data = dataArray.iterator().next(); // get the first BinaryDataArray
-        assertNotNull(data);
-
-        // check that the base64 encoded binary string we get from the object is the
-        // same as the string we copied from the file into the "u64bit" variable.
-        String binaryString = new String(data.getBinary(), "ASCII");
-        assertTrue(binaryString.equals(c64bit));
-
-        if (VERBOSE) {
-            // print to see what the data looks like
-            System.out.println("\n----- testUnmarshallingCompressed ----------------------------");
-            System.out.println("binary data (text):  " + new String(data.getBinary(), "ASCII") );
-            System.out.println("");
-            System.out.println("binary data (default):  " + new String(data.getBinary()) );
-            System.out.println("");
-            System.out.println("Data as double array:");
-            for (double value : data.getBinaryDataAsDoubleArray()) {
-                System.out.println("double value: " + value);
-            }
-            System.out.println("end of double array.");
-            System.out.println("----- testUnmarshalling Compressed end -----------------------");
-        }
-
+        return spectrum;
     }
 
 
-    public void test64BitSetGetNoCompression() throws UnsupportedEncodingException {
 
-        // create some test data with 64 bit precision (double)
-        double[] testData = testData64Bit;
+    public void test64BitFloatSetGet() throws UnsupportedEncodingException {
+        checkSetGetBinary(BinaryDataArray.Precision.FLOAT64BIT, false); // no compression
+        checkSetGetBinary(BinaryDataArray.Precision.FLOAT64BIT, true); // with compression
+    }
 
-        // create the BinaryDataArray object that will store the data and do all the conversions
+    public void test32BitFloatSetGet() throws UnsupportedEncodingException {
+        checkSetGetBinary(BinaryDataArray.Precision.FLOAT32BIT, false); // no compression
+        checkSetGetBinary(BinaryDataArray.Precision.FLOAT32BIT, true); // with compression
+    }
+
+    public void test64BitIntSetGet() throws UnsupportedEncodingException {
+        checkSetGetBinary(BinaryDataArray.Precision.INT64BIT, false); // no compression
+        checkSetGetBinary(BinaryDataArray.Precision.INT64BIT, true); // with compression
+    }
+
+    public void test32BitIntSetGet() throws UnsupportedEncodingException {
+        checkSetGetBinary(BinaryDataArray.Precision.INT32BIT, false); // no compression
+        checkSetGetBinary(BinaryDataArray.Precision.INT32BIT, true); // with compression
+    }
+
+    private void checkSetGetBinary(BinaryDataArray.Precision p, boolean compression) {
+        // create the BinaryDataArray object from a test data array
+        // this will do all the conversions and store the data
         BinaryDataArray bda = new BinaryDataArray();
-        bda.set64BitArrayAsBinaryData(testData, false, cv); // store data, not compressing
 
-        if (VERBOSE) {
-            System.out.println("\n----- test64BitSetGetNoCompression ---------------------------");
+        // set the test data
+        Number[] retrievedData;
+        switch (p) {
+            case FLOAT64BIT : // double
+                              bda.set64BitFloatArrayAsBinaryData(testData64bitFloat, compression, cv);
+                              retrievedData = bda.getBinaryDataAsNumberArray();
+                              for (int i = 0; i < retrievedData.length; i++) {
+                                  assertTrue(retrievedData[i].doubleValue() == testData64bitFloat[i]);
+                              }
+                              break;
 
-            // print the binary data (for reference)
-            String data = new String(bda.getBinary(), "ASCII");
-            System.out.println("data (base64 encoded): " + data);
-        }
+            case FLOAT32BIT : // float
+                              bda.set32BitFloatArrayAsBinaryData(testData32bitFloat, compression, cv);
+                              retrievedData = bda.getBinaryDataAsNumberArray();
+                              for (int i = 0; i < retrievedData.length; i++) {
+                                  assertTrue(retrievedData[i].floatValue() == testData32bitFloat[i]);
+                              }
+                              break;
 
-        // retrieve the data and check if the values are still the same
-        double[] retrievedData = bda.getBinaryDataAsDoubleArray();
-        int i = 0;
-        for (double v : retrievedData) {
-            // the retrieved value has to be the same as the original value
-            if (VERBOSE) { System.out.println("double value: " + v); }
-            assertTrue(v == testData[i++]);
-        }
-        if (VERBOSE) { System.out.println("----- test64BitSetGetNoCompression end------------------------"); }
+            case INT64BIT   : // long
+                              bda.set64BitIntArrayAsBinaryData(testData64bitInt, compression, cv);
+                              retrievedData = bda.getBinaryDataAsNumberArray();
+                              for (int i = 0; i < retrievedData.length; i++) {
+                                  assertTrue(retrievedData[i].longValue() == testData64bitInt[i]);
+                              }
+                              break;
 
-    }
+            case INT32BIT   : // int
+                              bda.set32BitIntArrayAsBinaryData(testData32bitInt, compression, cv);
+                              retrievedData = bda.getBinaryDataAsNumberArray();
+                              for (int i = 0; i < retrievedData.length; i++) {
+                                  assertTrue(retrievedData[i].intValue() == testData32bitInt[i]);
+                              }
+                              break;
 
-    public void test64BitSetGetCompressed() throws UnsupportedEncodingException {
-
-        // create some test data with 64 bit precision (double)
-        double[] testData = testData64Bit;
-
-        // create the BinaryDataArray object that will store the data and do all the conversions
-        BinaryDataArray bda = new BinaryDataArray();
-        bda.set64BitArrayAsBinaryData(testData, true, cv); // store data, compressed
-
-        // retrieve the data and check if the values are still the same
-        double[] retrievedData = bda.getBinaryDataAsDoubleArray();
-        int i = 0;
-        for (double v : retrievedData) {
-            // the retrieved value has to be the same as the original value
-            assertTrue(v == testData[i++]);
-        }
-    }
-
-    public void test32BitSetGetNoCompression() throws UnsupportedEncodingException {
-
-        // create some test data with 32 bit precision (float)
-        float[] testData = testData32bit;
-
-        // create the BinaryDataArray object that will store the data and do all the conversions
-        BinaryDataArray bda = new BinaryDataArray();
-        bda.set32BitArrayAsBinaryData(testData, false, cv);
-
-        // retrieve the data and check if the values are still the same
-        double[] retrievedData = bda.getBinaryDataAsDoubleArray();
-        int i = 0;
-        for (double v : retrievedData) {
-            // the retrieved value has to be the same as the original value
-            assertTrue(testData[i++] == (float)v); // cast, since we have 32 bit precision (float)
+            default         : throw new IllegalStateException("Not supported Precision in BinaryDataArray: " + p);
+                
         }
 
     }
 
-    public void test32BitSetGetCompressed() throws UnsupportedEncodingException {
-
-        // create some test data with 32 bit precision (float)
-        float[] testData = testData32bit;
-
-        // create the BinaryDataArray object that will store the data and do all the conversions
-        BinaryDataArray bda = new BinaryDataArray();
-        bda.set32BitArrayAsBinaryData(testData, true, cv);
-
-        // retrieve the data and check if the values are still the same
-        double[] retrievedData = bda.getBinaryDataAsDoubleArray();
-        int i = 0;
-        for (double v : retrievedData) {
-            // the retrieved value has to be the same as the original value
-            assertTrue(testData[i++] == (float)v); // cast, since we have 32 bit precision (float)
-        }
-
-    }
 
 
     public void testDataFromFile() throws UnsupportedEncodingException {
-        double[] one = createBDAFromC64Bit().getBinaryDataAsDoubleArray(); // 64 bit, compressed
-        double[] two = createBDAFromU64Bit().getBinaryDataAsDoubleArray(); // 64 bit, uncompressed
-        double[] three = createBDAFromC32Bit().getBinaryDataAsDoubleArray(); // 32 bit, compressed
-        double[] four = createBDAFromU32Bit().getBinaryDataAsDoubleArray();  // 32 bit, uncompressed
+        Number[] one = createBDAFromC64Bit().getBinaryDataAsNumberArray(); // 64 bit, compressed
+        Number[] two = createBDAFromU64Bit().getBinaryDataAsNumberArray(); // 64 bit, uncompressed
+        Number[] three = createBDAFromC32Bit().getBinaryDataAsNumberArray(); // 32 bit, compressed
+        Number[] four = createBDAFromU32Bit().getBinaryDataAsNumberArray();  // 32 bit, uncompressed
         assertTrue(one.length == two.length);
         assertTrue(three.length == four.length);
         assertTrue(one.length == four.length);
 
         // no matter the processing, the information should stay the same
         for (int i = 0; i < two.length; i++) {
-            assertTrue(one[i] == two[i]); // 64 bit (double), "m/z array"
-            assertTrue((float)three[i] == (float)four[i]); // 32 bit (float), "intensity array"
+            assertTrue(one[i].doubleValue() == two[i].doubleValue()); // 64 bit (double), "m/z array"
+            assertTrue(three[i].floatValue() == four[i].floatValue()); // 32 bit (float), "intensity array"
 
             // unfortunatley the values for "m/z array" and "intensity array" are not the same
             // assertTrue((float)one[i] == (float)four[i]);
@@ -372,8 +417,6 @@ public class BinaryDataArrayTest extends TestCase {
         if (VERBOSE) {
             System.out.println("\n----- testMarshaller -----------------------------------------");
             m.marshall(bda, System.out);
-            System.out.println("\n");
-            System.out.println(c64bitTest);
             System.out.println("----- testMarshaller end -------------------------------------");
         }
 
@@ -386,11 +429,12 @@ public class BinaryDataArrayTest extends TestCase {
 
 
     private BinaryDataArray createBDAFromC64Bit() throws UnsupportedEncodingException {
-
         // manually construct a BinaryDataArray with the according CVParams
         BinaryDataArray bda = new BinaryDataArray();
         // set compressed, 64 bit precision data
-        bda.setBinary(c64bit.getBytes("ASCII"));
+        // need to decode the base64 encoded string, since the data is stored
+        // un-encoded in the object (decoded from XML with JAXB)
+        bda.setBinary( Base64.decodeBase64(c64bit.getBytes("ASCII")) );
         // set CVParam for 64 bit precision
         bda.getCvParam().add(prec64bit);
         // set CVParam for compressed data
@@ -404,7 +448,9 @@ public class BinaryDataArrayTest extends TestCase {
         // manually construct a BinaryDataArray with the according CVParams
         BinaryDataArray bda = new BinaryDataArray();
         // set uncompressed, 64 bit precision data
-        bda.setBinary(u64bit.getBytes("ASCII"));
+        // need to decode the base64 encoded string, since the data is stored
+        // un-encoded in the object (decoded from XML with JAXB)
+        bda.setBinary( Base64.decodeBase64(u64bit.getBytes("ASCII")) );
         // set CVParam for 64 bit precision
         bda.getCvParam().add(prec64bit);
         // set CVParam for not compressed data
@@ -418,7 +464,9 @@ public class BinaryDataArrayTest extends TestCase {
         // manually construct a BinaryDataArray with the according CVParams
         BinaryDataArray bda = new BinaryDataArray();
         // set uncompressed, 32 bit precision data
-        bda.setBinary(c32bit.getBytes("ASCII"));
+        // need to decode the base64 encoded string, since the data is stored
+        // un-encoded in the object (decoded from XML with JAXB)
+        bda.setBinary( Base64.decodeBase64(c32bit.getBytes("ASCII")) );
         // set CVParam for 32 bit precision
         bda.getCvParam().add(prec32bit);
         // set CVParam for compressed data
@@ -432,7 +480,9 @@ public class BinaryDataArrayTest extends TestCase {
         // manually construct a BinaryDataArray with the according CVParams
         BinaryDataArray bda = new BinaryDataArray();
         // set uncompressed, 32 bit precision data
-        bda.setBinary(u32bit.getBytes("ASCII"));
+        // need to decode the base64 encoded string, since the data is stored
+        // un-encoded in the object (decoded from XML with JAXB)
+        bda.setBinary( Base64.decodeBase64(u32bit.getBytes("ASCII")) );
         // set CVParam for 32 bit precision
         bda.getCvParam().add(prec32bit);
         // set CVParam for not compressed data
