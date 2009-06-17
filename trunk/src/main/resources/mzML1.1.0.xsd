@@ -790,7 +790,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="dx:ParamGroupType">
         <xs:sequence>
-          <xs:element name="binary" type="xs:base64Binary" xmime:expectedContentTypes="text/plain" xmlns:xmime="http://www.w3.org/2005/05/xmlmime">
+          <xs:element name="binary" type="xs:base64Binary">
             <xs:annotation>
               <xs:documentation>The actual base64 encoded binary data. The byte order is always 'little endian'.</xs:documentation>
             </xs:annotation>
