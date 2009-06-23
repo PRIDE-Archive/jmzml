@@ -330,14 +330,18 @@ public class BinaryDataArray
      * @param compress flag whether or not the data should be compressed.
      * @param cv The CV that will be used as reference CV for the generated
      *           compression and precision CVParams.
+     * @return an int value specifying the length of the byte[] that was stored as binary data.
      */
-    public void set64BitFloatArrayAsBinaryData(double[] value, boolean compress, CV cv) {
+    public int set64BitFloatArrayAsBinaryData(double[] value, boolean compress, CV cv) {
+        int dataLength;
         ByteBuffer buffer = ByteBuffer.allocate(value.length * BYTES_64_PRECISION);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         for (double aDoubleArray : value) {
             buffer.putDouble(aDoubleArray);
         }
-        setBinaryData(buffer.array(), compress, cv);
+        byte[] data = buffer.array();
+        dataLength = data.length;
+        setBinaryData(data, compress, cv);
 
         // add a cv parameter stating that the data uses 64 bit float (double) precision
         CVParam cvParam = new BinaryDataArrayCVParam();
@@ -345,6 +349,8 @@ public class BinaryDataArray
         cvParam.setName(MS_FLOAT64BIT_NAME);
         cvParam.setCV(cv);
         this.getCvParam().add(cvParam);
+
+        return dataLength;
     }
 
     /**
@@ -355,14 +361,18 @@ public class BinaryDataArray
      * @param compress flag whether or not the data should be compressed.
      * @param cv The CV that will be used as reference CV for the generated
      *           compression and precision CVParams.
+     * @return an int value specifying the length of the byte[] that was stored as binary data.
      */
-    public void set32BitFloatArrayAsBinaryData(float[] value, boolean compress, CV cv) {
+    public int set32BitFloatArrayAsBinaryData(float[] value, boolean compress, CV cv) {
+        int dataLength;
         ByteBuffer buffer = ByteBuffer.allocate(value.length * BYTES_32_PRECISION);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         for (float aFloatArray : value) {
             buffer.putFloat(aFloatArray);
         }
-        setBinaryData(buffer.array(), compress, cv);
+        byte[] data = buffer.array();
+        dataLength = data.length;
+        setBinaryData(data, compress, cv);
 
         // add a cv parameter stating that the data uses 32-bit float precision
         CVParam cvParam = new BinaryDataArrayCVParam();
@@ -370,6 +380,8 @@ public class BinaryDataArray
         cvParam.setName(MS_FLOAT32BIT_NAME);
         cvParam.setCV(cv);
         this.getCvParam().add(cvParam);
+
+        return dataLength;
     }
 
     /**
@@ -380,14 +392,18 @@ public class BinaryDataArray
      * @param compress flag whether or not the data should be compressed.
      * @param cv The CV that will be used as reference CV for the generated
      *           compression and precision CVParams.
+     * @return an int value specifying the length of the byte[] that was stored as binary data.
      */
-    public void set32BitIntArrayAsBinaryData(int[] array, boolean compress, CV cv) {
+    public int set32BitIntArrayAsBinaryData(int[] array, boolean compress, CV cv) {
+        int dataLength;
         ByteBuffer buffer = ByteBuffer.allocate(array.length * BYTES_32_PRECISION);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         for (int aIntValue : array) {
             buffer.putInt(aIntValue);
         }
-        setBinaryData(buffer.array(), compress, cv);
+        byte[] data = buffer.array();
+        dataLength = data.length;
+        setBinaryData(data, compress, cv);
 
         // add a cv parameter stating that the data uses 32-bit integer precision
         CVParam cvParam = new BinaryDataArrayCVParam();
@@ -395,6 +411,8 @@ public class BinaryDataArray
         cvParam.setName(MS_INT32BIT_NAME);
         cvParam.setCV(cv);
         this.getCvParam().add(cvParam);
+
+        return dataLength;
     }
 
     /**
@@ -405,21 +423,27 @@ public class BinaryDataArray
      * @param compress flag whether or not the data should be compressed.
      * @param cv The CV that will be used as reference CV for the generated
      *           compression and precision CVParams.
+     * @return an int value specifying the length of the byte[] that was stored as binary data.
      */
-    public void set64BitIntArrayAsBinaryData(long[] array, boolean compress, CV cv) {
+    public int set64BitIntArrayAsBinaryData(long[] array, boolean compress, CV cv) {
+        int dataLength;
         ByteBuffer buffer = ByteBuffer.allocate(array.length * BYTES_64_PRECISION);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         for (long aIntValue : array) {
             buffer.putLong(aIntValue);
         }
-        setBinaryData(buffer.array(), compress, cv);
+        byte[] data = buffer.array();
+        dataLength = data.length;
+        setBinaryData(data, compress, cv);
 
-        // add a cv parameter stating that the data uses 32-bit integer precision
+        // add a cv parameter stating that the data uses 64-bit integer precision
         CVParam cvParam = new BinaryDataArrayCVParam();
         cvParam.setAccession(MS_INT64BIT_AC);
         cvParam.setName(MS_INT64BIT_NAME);
         cvParam.setCV(cv);
         this.getCvParam().add(cvParam);
+
+        return dataLength;
     }
 
     /**
@@ -433,21 +457,26 @@ public class BinaryDataArray
      *           compression and precision CVParams.
      * @throws UnsupportedEncodingException if the encoding (ASCII) used
      *         by the String methods is not supported.
+     * @return an int value specifying the length of the byte[] that was stored as binary data.
      */
-    public void setStringAsBinaryData(String value, boolean compress, CV cv) throws UnsupportedEncodingException {
+    public int setStringAsBinaryData(String value, boolean compress, CV cv) throws UnsupportedEncodingException {
+        int dataLength;
         // get the byte array of the String and add a null byte
         byte[] tmp = value.getBytes("ASCII");
         byte[] data = new byte[tmp.length+1];
         System.arraycopy(tmp, 0, data, 0, tmp.length);
         data[data.length-1] = 0; // add a null byte as last byte
+        dataLength = data.length;
         setBinaryData(data, compress, cv);
 
-        // add a cv parameter stating that the data uses 32-bit integer precision
+        // add a cv parameter stating that the data uses a string representation
         CVParam cvParam = new BinaryDataArrayCVParam();
         cvParam.setAccession(MS_NTSTRING_AC);
         cvParam.setName(MS_NTSTRING_NAME);
         cvParam.setCV(cv);
         this.getCvParam().add(cvParam);
+
+        return dataLength;
     }
 
     /**
@@ -460,21 +489,24 @@ public class BinaryDataArray
      * @param compress flag whether or not the data should be compressed.
      * @param cv The CV that will be used as reference CV for the generated
      *           compression and precision CVParams.
+     * @return an int value specifying the length of the byte[] that was stored as binary data.
      *
      * @see #set32BitFloatArrayAsBinaryData(float[], boolean, CV)
      * @see #set64BitFloatArrayAsBinaryData(double[], boolean, CV)
      * @see #set32BitIntArrayAsBinaryData(int[], boolean, CV)
      * @see #set64BitIntArrayAsBinaryData(long[], boolean, CV)
      */
-    public void setNumberArrayAsBinaryData(Number[] array, Precision p, boolean compress, CV cv) {
+    public int setNumberArrayAsBinaryData(Number[] array, Precision p, boolean compress, CV cv) {
+        int size;
         switch (p) {
-            case FLOAT32BIT : set32BitFloatArrayAsBinaryData(convertNumberToFloatArray(array), compress, cv); break;
-            case FLOAT64BIT : set64BitFloatArrayAsBinaryData(convertNumberToDoubleArray(array), compress, cv); break;
-            case INT32BIT   : set32BitIntArrayAsBinaryData(convertNumberToIntArray(array), compress, cv); break;
-            case INT64BIT   : set64BitIntArrayAsBinaryData(convertNumberToLongArray(array), compress, cv); break;
+            case FLOAT32BIT : size = set32BitFloatArrayAsBinaryData(convertNumberToFloatArray(array), compress, cv); break;
+            case FLOAT64BIT : size = set64BitFloatArrayAsBinaryData(convertNumberToDoubleArray(array), compress, cv); break;
+            case INT32BIT   : size = set32BitIntArrayAsBinaryData(convertNumberToIntArray(array), compress, cv); break;
+            case INT64BIT   : size = set64BitIntArrayAsBinaryData(convertNumberToLongArray(array), compress, cv); break;
             case NTSTRING   : throw new IllegalArgumentException("Precision " + Precision.NTSTRING + " is not supported in this method!");
             default         : throw new IllegalStateException("Not supported Precision in BinaryDataArray: " + p);
         }
+        return size;
     }
 
     /**
