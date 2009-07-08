@@ -22,7 +22,7 @@
 
 package uk.ac.ebi.jmzml.model.mzml.params;
 
-import uk.ac.ebi.jmzml.model.mzml.CVParam;
+import uk.ac.ebi.jmzml.model.mzml.UserParam;
 
-public class RunUserParam extends CVParam {
+public class RunUserParam extends UserParam {
 }
