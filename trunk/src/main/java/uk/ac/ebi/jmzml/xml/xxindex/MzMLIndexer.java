@@ -44,4 +44,5 @@ public interface MzMLIndexer {
 
     public Set<String> getXpath();
 
+    public Set<String> getSpectrumIDs();
 }
