@@ -81,8 +81,9 @@ public class JmzMLViewer extends JFrame {
         } else {
             jmzMLViewer = new JmzMLViewer();
         }
-        jmzMLViewer.setLocation(150,150);
-        jmzMLViewer.pack();
+        int width = Toolkit.getDefaultToolkit().getScreenSize().width;
+        jmzMLViewer.setBounds(150,150, width-250, jmzMLViewer.getPreferredSize().height);
+
         jmzMLViewer.setVisible(true);
     }
 
@@ -149,7 +150,11 @@ public class JmzMLViewer extends JFrame {
         jfc.setDialogType(JFileChooser.OPEN_DIALOG);
         int result = jfc.showOpenDialog(this);
         if(result == JFileChooser.CANCEL_OPTION) {
-            terminate(0);
+            if(addTab) {
+                return;
+            } else {
+                terminate(0);
+            }
         } else {
             File selected = jfc.getSelectedFile();
             if(!addTab) {
