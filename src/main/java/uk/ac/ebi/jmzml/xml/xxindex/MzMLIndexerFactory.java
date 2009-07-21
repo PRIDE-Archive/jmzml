@@ -97,7 +97,7 @@ public class MzMLIndexerFactory {
                     root = "/indexedmzML/mzML";
                     if (!index.containsXpath(root)) {
                         // if neither a indexedmzML, then we are in trouble, we can not handle it!
-                        throw new IllegalStateException("Invalid XML - /mzML or /indexedmlML xpaths not found!");
+                        throw new IllegalStateException("Invalid XML - /mzML or /indexedmzML xpaths not found!");
                     }
                     logger.info("We are dealing with an indexedmzML file!");
                 }
@@ -170,6 +170,10 @@ public class MzMLIndexerFactory {
             } else {
                 throw new IllegalStateException("Invalid ID in xml: " + xml);
             }
+        }
+
+        public Set<String> getSpectrumIDs() {
+            return spectrumIdMap.keySet();
         }
 
         public Iterator<String> getXmlStringIterator(String xpathExpression) {

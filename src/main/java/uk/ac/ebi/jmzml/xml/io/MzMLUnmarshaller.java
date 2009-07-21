@@ -45,6 +45,7 @@ import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
+import java.util.Set;
 
 public class MzMLUnmarshaller {
 
@@ -242,6 +243,10 @@ public class MzMLUnmarshaller {
         }
 
         return null;
+    }
+
+    public Set<String> getSpectrumIDs() {
+        return this.index.getSpectrumIDs();
     }
 
 
