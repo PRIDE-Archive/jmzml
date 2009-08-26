@@ -71,7 +71,7 @@ public class MzMLTab extends JPanel {
 
     private void displaySpectrum(String aSpecID) {
         try {
-            Spectrum spectrum = iUnmarshaller.getSpectrumByRefId(aSpecID);
+            Spectrum spectrum = iUnmarshaller.getSpectrumById(aSpecID);
             List<BinaryDataArray> bdal = spectrum.getBinaryDataArrayList().getBinaryDataArray();
             BinaryDataArray mzBinaryDataArray = (BinaryDataArray) bdal.get(0);
             Number[] mzNumbers = mzBinaryDataArray.getBinaryDataAsNumberArray();

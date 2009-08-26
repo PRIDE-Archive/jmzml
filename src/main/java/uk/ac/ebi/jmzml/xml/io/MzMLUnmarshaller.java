@@ -34,6 +34,7 @@ import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.filters.MzMLNamespaceFilter;
 import uk.ac.ebi.jmzml.xml.xxindex.FileUtils;
 import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
 import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexerFactory;
+import uk.ac.ebi.jmzml.xml.Constants;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -186,6 +187,24 @@ public class MzMLUnmarshaller {
         }
 
         return retval;
+    }
+
+    public Spectrum getSpectrumById(String aID) throws MzMLUnmarshallerException {
+        Spectrum result = null;
+        String xml = index.getXmlString(aID, Constants.ReferencedType.Spectrum);
+        try {
+            //required for the addition of namespaces to top-level objects
+            MzMLNamespaceFilter xmlFilter = new MzMLNamespaceFilter();
+            //initializeUnmarshaller will assign the proper reader to the xmlFilter
+            Unmarshaller unmarshaller = UnmarshallerFactory.getInstance().initializeUnmarshaller(index, xmlFilter, cache, useSpectrumCache);
+            //unmarshall the desired object
+            JAXBElement<Spectrum> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(xml))), Spectrum.class);
+            result = holder.getValue();
+        } catch(JAXBException je) {
+            logger.error("MzMLUnmarshaller.getSpectrumByID", je);
+            throw new IllegalStateException("Could not unmarshal spectrum with ID: " + aID);
+        }
+        return result;
     }
 
     public Spectrum getSpectrumByRefId(String refId) throws MzMLUnmarshallerException {
