@@ -1,6 +1,6 @@
 
- jmzML version 1.1.1
- ===================
+ jmzML version 1.2
+ =================
 
 
 By: Richard Cote, Florian Reisinger and Lennart Martens
