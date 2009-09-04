@@ -10,6 +10,7 @@ import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
 import uk.ac.ebi.jmzml.model.mzml.*;
 import uk.ac.ebi.jmzml.JmzMLViewer;
+import uk.ac.ebi.jmzml.gui.model.MzmlTreeModel;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionListener;
@@ -19,10 +20,8 @@ import javax.swing.tree.TreeNode;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.*;
+import java.util.*;
 import java.util.List;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.TreeSet;
 /*
  * CVS information:
  *
@@ -50,12 +49,27 @@ public class MzMLTab extends JPanel {
 
     private void initDisplay() {
         // A tree with spectra on the left, and a spectrum viewer on the right.
-        TreeSet<String> specIDs = new TreeSet(iUnmarshaller.getSpectrumIDs());
-        final JTree tree = new JTree(specIDs.toArray());
+        ArrayList<String> specIDs = new ArrayList(iUnmarshaller.getSpectrumIDs());
+        ArrayList<String> chromIDs = new ArrayList(iUnmarshaller.getChromatogramIDs());
+        final JTree tree = new JTree(new MzmlTreeModel(specIDs, chromIDs));
         tree.addTreeSelectionListener(new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent e) {
-                TreeNode node = (TreeNode) tree.getSelectionPath().getLastPathComponent();
-                displaySpectrum(node.toString());
+                TreePath path= tree.getSelectionPath();
+                if(path != null) {
+                    String node = (String) path.getLastPathComponent();
+                    // Only do this if we have something that can be shown,
+                    // such as a spectrum or a chromatogram, which are at
+                    // the third level of the tree.
+                    int pathCount = path.getPathCount();
+                    if(pathCount > 2) {
+                        String parent = (String)path.getPathComponent(pathCount-2);
+                        if(parent.equals(MzmlTreeModel.SPECTRUM_SUBROOT)) {
+                            displaySpectrum(node);
+                        } else if(parent.equals(MzmlTreeModel.CHROMATOGRAM_SUBROOT)) {
+                            displayChromatogram(node);
+                        }
+                    }
+                }
             }
         });
         JScrollPane treeScroller = new JScrollPane(tree, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -111,6 +125,46 @@ public class MzMLTab extends JPanel {
             }
             SpectrumPanel specPanel = new SpectrumPanel(mz, intensities, msLevel, precursorMz, precursorCharge, aSpecID);
             spltMain.setBottomComponent(specPanel);
+        } catch(MzMLUnmarshallerException mue) {
+            iParent.seriousProblem("Unable to access file: " + mue.getMessage(), "Problem reading spectrum!");
+        }
+    }
+
+    private void displayChromatogram(String aChromatogramID) {
+        try {
+            Chromatogram chromatogram = iUnmarshaller.getChromatogramById(aChromatogramID);
+            List<BinaryDataArray> bdal = chromatogram.getBinaryDataArrayList().getBinaryDataArray();
+            BinaryDataArray xAxisBinaryDataArray = (BinaryDataArray) bdal.get(0);
+            Number[] xAxisNumbers =  xAxisBinaryDataArray.getBinaryDataAsNumberArray();
+            double[] xAxis = new double[xAxisNumbers.length];
+            for (int i = 0; i < xAxisNumbers.length; i++) {
+                xAxis[i] = xAxisNumbers[i].doubleValue();
+            }
+            String xAxisLabel = null;
+            List<CVParam> xArrayParams = xAxisBinaryDataArray.getCvParam();
+            for (Iterator lCVParamIterator = xArrayParams.iterator(); lCVParamIterator.hasNext();) {
+                CVParam lCVParam = (CVParam) lCVParamIterator.next();
+                if(lCVParam.getUnitAccession() != null) {
+                    xAxisLabel = lCVParam.getName() + " (" + lCVParam.getUnitName() + ")";
+                }
+            }
+            BinaryDataArray yAxisBinaryDataArray = (BinaryDataArray) bdal.get(1);
+            Number[] yAxisNumbers = yAxisBinaryDataArray.getBinaryDataAsNumberArray();
+            double[] yAxis = new double[yAxisNumbers.length];
+            for (int i = 0; i < yAxisNumbers.length; i++) {
+                yAxis[i] = yAxisNumbers[i].doubleValue();
+            }
+            String yAxisLabel = null;
+            List<CVParam> yArrayParams = yAxisBinaryDataArray.getCvParam();
+            for (Iterator lCVParamIterator = yArrayParams.iterator(); lCVParamIterator.hasNext();) {
+                CVParam lCVParam = (CVParam) lCVParamIterator.next();
+                // @TODO parse out relevant bits.
+                if(lCVParam.getUnitAccession() != null) {
+                    yAxisLabel = lCVParam.getName() + " (" + lCVParam.getUnitName() + ")";
+                }
+            }
+            ChromatogramPanel chromPanel = new ChromatogramPanel(xAxis, yAxis, xAxisLabel, yAxisLabel);
+            spltMain.setBottomComponent(chromPanel);
         } catch(MzMLUnmarshallerException mue) {
             iParent.seriousProblem("Unable to access file: " + mue.getMessage(), "Problem reading spectrum!");
         }

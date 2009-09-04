@@ -207,6 +207,26 @@ public class MzMLUnmarshaller {
         return result;
     }
 
+    public Chromatogram getChromatogramById(String aID) throws MzMLUnmarshallerException {
+        Chromatogram result = null;
+        String xml = index.getXmlString(aID, Constants.ReferencedType.Chromatogram);
+        try {
+            //required for the addition of namespaces to top-level objects
+            MzMLNamespaceFilter xmlFilter = new MzMLNamespaceFilter();
+            //initializeUnmarshaller will assign the proper reader to the xmlFilter
+            Unmarshaller unmarshaller = UnmarshallerFactory.getInstance().initializeUnmarshaller(index, xmlFilter, cache, useSpectrumCache);
+            //unmarshall the desired object
+            JAXBElement<Chromatogram> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(xml))), Chromatogram.class);
+            result = holder.getValue();
+        } catch(JAXBException je) {
+            logger.error("MzMLUnmarshaller.getChromatogramByID", je);
+            throw new IllegalStateException("Could not unmarshal chromatogram with ID: " + aID);
+        }
+        return result;
+    }
+
+
+
     public Spectrum getSpectrumByRefId(String refId) throws MzMLUnmarshallerException {
         // get the index entry for 'chromatogram'
         Index aIndexEntry = getIndex("spectrum");
@@ -268,6 +288,9 @@ public class MzMLUnmarshaller {
         return this.index.getSpectrumIDs();
     }
 
+    public Set<String> getChromatogramIDs() {
+        return this.index.getChromatogramIDs();
+    }
 
     ///// ///// ///// ///// ///// ///// ///// ///// ///// //////
     // private helper method primarily for indexedmzML stuff

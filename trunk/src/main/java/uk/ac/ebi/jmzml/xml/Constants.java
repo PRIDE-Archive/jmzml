@@ -45,7 +45,8 @@ public class Constants {
         ScanSettings,
         Software,
         SourceFile,
-        Spectrum
+        Spectrum,
+        Chromatogram
     }
 
     private static Set<String> xpathsToIndex = new HashSet<String>();

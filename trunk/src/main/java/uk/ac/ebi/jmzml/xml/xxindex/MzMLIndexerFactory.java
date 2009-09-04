@@ -60,6 +60,7 @@ public class MzMLIndexerFactory {
         private HashMap<String, IndexElement> softwareIdMap = new HashMap<String, IndexElement>();
         private HashMap<String, IndexElement> sourceFileIdMap = new HashMap<String, IndexElement>();
         private HashMap<String, IndexElement> spectrumIdMap = new HashMap<String, IndexElement>();
+        private HashMap<String, IndexElement> chromatogramIdMap = new HashMap<String, IndexElement>();
         private HashMap<String, IndexElement> scanSettingsIdMap = new HashMap<String, IndexElement>();
 
         private MzMlIndexerImpl(File xmlFile) {
@@ -142,6 +143,10 @@ public class MzMLIndexerFactory {
                 initIdMapCache(spectrumIdMap, "/run/spectrumList/spectrum");
 
                 //spectrum cache
+                logger.info("Init Chromatogram cache");
+                initIdMapCache(chromatogramIdMap, "/run/chromatogramList/chromatogram");
+
+                //scansettings cache
                 logger.info("Init ScanSettings cache");
                 initIdMapCache(scanSettingsIdMap, "/scanSettingList/scanSetting");
 
@@ -174,6 +179,10 @@ public class MzMLIndexerFactory {
 
         public Set<String> getSpectrumIDs() {
             return spectrumIdMap.keySet();
+        }
+
+        public Set<String> getChromatogramIDs() {
+            return chromatogramIdMap.keySet();
         }
 
         public Iterator<String> getXmlStringIterator(String xpathExpression) {
@@ -235,6 +244,9 @@ public class MzMLIndexerFactory {
                     break;
                 case Spectrum:
                     xml = readXML(spectrumIdMap.get(ID));
+                    break;
+                case Chromatogram:
+                    xml = readXML(chromatogramIdMap.get(ID));
                     break;
                 case ScanSettings:
                     xml = readXML(scanSettingsIdMap.get(ID));

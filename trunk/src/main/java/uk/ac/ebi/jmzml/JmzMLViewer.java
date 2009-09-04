@@ -82,7 +82,8 @@ public class JmzMLViewer extends JFrame {
             jmzMLViewer = new JmzMLViewer();
         }
         int width = Toolkit.getDefaultToolkit().getScreenSize().width;
-        jmzMLViewer.setBounds(150,150, width-250, jmzMLViewer.getPreferredSize().height);
+        int height = Toolkit.getDefaultToolkit().getScreenSize().height;
+        jmzMLViewer.setBounds(50,50, width-250, height-250);
 
         jmzMLViewer.setVisible(true);
     }
