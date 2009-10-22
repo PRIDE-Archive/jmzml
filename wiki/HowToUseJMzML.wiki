@@ -1,0 +1,56 @@
+#summary A High-Level overview on how to use jMzML
+
+= jMzML =
+
+jMzML is a Java API to the PSI mzML data exchange standard. It uses JAXB and the xxindex random-access XML parser to allow the parsing of arbitrarily large XML files. Internal XML references, which are widely used in the mzML schema, are resolved up on-the-fly without the need to have the whole document in memory. jMzML is optimized to have as small a memory requirement as possible without compromising speed of data retrieval. 
+
+= A typical code sample = 
+
+The first step in using the jMzML API is to create an MzMLUnmarshaller object for a given XML file. 
+
+{{{
+//create a new unmarshaller object
+//this will be the basis of getting access to the MzML data
+//you can use a URL or a File to initialize the unmarshaller
+File xmlFile = new File("path/to/your/mzml/file");
+MzMLUnmarshaller unmarshaller = new MzMLUnmarshaller(xmlFile);
+}}}
+
+The unmarshaller will generate an internal xpath-based index that will be used internally to retrieve XML snippets and resolve internal references. This step can be time consuming, in the order of minutes for a large, multi-gigabyte file. Once this is done however, data retrieval is very efficient, as only the required chunks of XML are read and converted, using JAXB, into fully-fledged Java objects.
+
+{{{
+//while it is possible to directly unmarshall a complete MzML Object in one go, this should be used
+//with great care as, for large XML files, the memory requirements will most likely cause the JVM to
+//rapidly run out of memory. The alternative is to directly access the elements that are required 
+MzML completeMzML = unmarshaller.unmarshall();
+
+//Helper methods are provided to access the attibutes of the MzML Object
+System.out.println("MzML Version: = " + unmarshaller.getMzMLVersion());
+System.out.println("MzML ID: = " + unmarshaller.getMzMLId());
+System.out.println("MzML Accession: = " + unmarshaller.getMzMLAccession());
+}}}
+
+jMzML uses an XPath-based system to retrieve data. It is possible to access fully populated data objects using their location in the XML schema
+
+{{{
+//The jMzML API makes use of java generics wherever possible, so the unmarshallFromXpath method
+//requires a valid xpath and the class of the object to create
+CVList cvList = unmarshaller.unmarshalFromXpath("/cvList", CVList.class);
+//the object is now fully populated with the data from the XML file
+System.out.println("Number of defined CVs in this class: " + cvList.getCount());
+FileDescription fd = unmarshaller.unmarshalFromXpath("/fileDescription", FileDescription.class);
+}}}
+
+Notice in the preceding code snippet that the same method, unmarshalFromXpath, is used. The first parameter is the xpath of the element to unmarshall and the second parameter is the class of the expected return object. Also note that the xpath does not start with /mzml or /indexedmzml. 
+
+
+        //to keep the memory requirements low, jMzML provides sequential access to objects via an iterator
+        //and only reads the XML file as required
+        MzMLObjectIterator<Spectrum> spectrumIterator = unmarshaller.unmarshalCollectionFromXpath("/run/spectrumList/spectrum", Spectrum.class);
+        while (spectrumIterator.hasNext()){
+            //read next spectrum from XML file
+            Spectrum spectrum = spectrumIterator.next();
+            //use it
+            System.out.println("Spectrum ID: " + spectrum.getId());
+        }
+
