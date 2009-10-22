@@ -1,4 +1,5 @@
 #summary A High-Level overview on how to use jMzML
+#labels Featured,Phase-Implementation
 
 = jMzML =
 
@@ -56,3 +57,5 @@ while (spectrumIterator.hasNext()){
 }}}
 
 = Conclusion = 
+
+jMzML provides an easy and very efficient way to parse large MzML XML files. Ongoing work is being done to add functionality, such as the ability to write XML files from populated Java objects as well as fine-tune the caching mechanism so that users can balance performance versus memory footprint.  Users are strongly encouraged to contact the development team with feedback and requirements.
