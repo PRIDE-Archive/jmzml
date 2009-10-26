@@ -3,38 +3,40 @@
 
 = jMzML =
 
-jMzML is a Java API to the PSI mzML data exchange standard. It uses JAXB and the xxindex random-access XML parser to allow the parsing of arbitrarily large XML files. Internal XML references, which are widely used in the mzML schema, are resolved up on-the-fly without the need to have the whole document in memory. jMzML is optimized to have as small a memory requirement as possible without compromising speed of data retrieval. 
+jMzML is a Java API to the PSI mzML data exchange standard. It uses JAXB and the xxindex random-access XML parser to allow the parsing of arbitrary large XML files. Internal XML references, which can link elements across the whole file and are widely used in the mzML schema, are resolved on-the-fly without the need to keep the whole document in memory. jmzML is optimized to have as small a memory requirement as possible without compromising speed of data retrieval. 
 
 = A typical code sample = 
 
-The first step in using the jMzML API is to create an MzMLUnmarshaller object for a given XML file. 
+The first step in using the jMzML API is to create an MzMLUnmarshaller object for a given mzML file. This will be the basis of getting access to the mzML data.
 
 {{{
 //create a new unmarshaller object
-//this will be the basis of getting access to the MzML data
 //you can use a URL or a File to initialize the unmarshaller
 File xmlFile = new File("path/to/your/mzml/file");
 MzMLUnmarshaller unmarshaller = new MzMLUnmarshaller(xmlFile);
 }}}
 
-The unmarshaller will generate an internal xpath-based index that will be used internally to retrieve XML snippets and resolve internal references. This step can be time consuming, in the order of minutes for a large, multi-gigabyte file. Once this is done however, data retrieval is very efficient, as only the required chunks of XML are read and converted, using JAXB, into fully-fledged Java objects. It is also where most of the memory requirements of jMzML reside, as the index is kept in memory for rapid access.
+Upon initialization, the unmarshaller will generate an XPath-based index for the specified mzML file, which will be used under the hood to retrieve individual XML snippets and resolve file-internal XML references. To build this index can be time consuming, in the order of minutes for a large, multi-gigabyte file. Once it is done however, data retrieval is very efficient, as only required chunks of XML are read and converted, using JAXB, into fully-fledged Java objects. It is also where most of the memory requirements of jMzML reside, as the index is kept in memory for rapid access. 
+
+While it is possible to directly unmarshall a complete mzML file into a MzML object in one go, this should be used with great care as, for large XML files, the memory requirements will most likely cause the JVM to rapidly run out of memory.
 
 {{{
-//while it is possible to directly unmarshall a complete MzML Object in one go, this should be used
-//with great care as, for large XML files, the memory requirements will most likely cause the JVM to
-//rapidly run out of memory. The alternative is to directly access the elements that are required 
+//For small files the complete mzML can be unmarshalled in one go.
 MzML completeMzML = unmarshaller.unmarshall();
+}}}
 
+The alternative is to directly access the elements that are required (see below).
+
+{{{
 //Helper methods are provided to access the attibutes of the MzML Object
 System.out.println("MzML Version: = " + unmarshaller.getMzMLVersion());
 System.out.println("MzML ID: = " + unmarshaller.getMzMLId());
 System.out.println("MzML Accession: = " + unmarshaller.getMzMLAccession());
 }}}
 
-jMzML uses an XPath-based system to retrieve data. It is possible to access fully populated data objects using their location in the XML schema
+As mentioned above, jMzML uses an XPath-based system to retrieve partial data from the full mzML file. It makes use of Java Generics wherever possible, to provide a consistent and simple usage. 
 
 {{{
-//The jMzML API makes use of java generics wherever possible, so the unmarshallFromXpath method
 //requires a valid xpath and the class of the object to create
 CVList cvList = unmarshaller.unmarshalFromXpath("/cvList", CVList.class);
 //the object is now fully populated with the data from the XML file
@@ -42,9 +44,23 @@ System.out.println("Number of defined CVs in this class: " + cvList.getCount());
 FileDescription fd = unmarshaller.unmarshalFromXpath("/fileDescription", FileDescription.class);
 }}}
 
-Notice in the preceding code snippet that the same method, unmarshalFromXpath, is used. The first parameter is the xpath of the element to unmarshall and the second parameter is the class of the expected return object. Also note that the xpath does not start with /mzML or /indexedmzML. The root element of the XML file is detected automatically by the unmarshaller and the proper xpath is used accordingly to parse information from the file. 
+Notice in the preceding code snippet that the same method, unmarshalFromXpath, is used. The first parameter is the xpath of the element to unmarshall and the second parameter is the class of the expected return object. Also note that the xpath does not start with /mzML or /indexedmzML. The root element of the XML file is detected automatically by the unmarshaller and the proper xpath is used accordingly to parse information from the file. The code above would therefore work equally on both indexed and non-indexed mzML files.
 
-As noted before, it is possible to unmarshall any object in the jMzML data model. This includes potentially huge objects, such as Run, SpectrumList or ChromatogramList. In order to keep the memory requirements as low as possible, jMzML provides Iterators to load large data volumes sequentially.
+There are a few important things to keep in mind when using this method. Firstly, as you can see from the example above, the unmarshallFromXpath method requires a valid XPath and the class of the object to create. Currently the unmarshaller does not support every XPath that would be possible according to the mzML schema. This is partially to keep the index small and keep the memory requirements as low as possible. Furthermore, there would be little use in retrieving each tiny XML fragment, especially if its content only makes sense in the context of the surrounding larger element (as is usually the case for CvParams or UserParams). Therefore the XPaths that can be unmarshalled into Java objects are limited to a selection of elements that we believe will be commonly used and are logical information units. The full list of supported XPaths is available via the Constants utility class.
+
+{{{
+//supported xpath for indexed and not-indexed mzML 
+System.out.println("Supported XPath:" + Constants.XML_INDEXED_XPATHS);
+}}}
+
+Another important aspect of this method is that it returns a single object of the specified type. If there are more than one element for the provided XPath (as the case for ‘spectrum’), then it will only return the first such element. The MzMLUnmarshaller provides a method that will tell you how many elements you can expect for a given XPath.
+
+{{{
+//number of spectrum elements in the XML file
+System.out.println("Number of spectrum elements: " + unmarshaller.getObjectCountForXpath("/run/spectrumList/spectrum"));
+}}}
+
+To deal with a collection of elements and in order to keep the memory requirements as low as possible, jMzML provides Iterators to load large data volumes sequentially. This approach should also be used instead of using potentially huge objects (like Run, SpectrumList or ChromatogramList) directly, as they contain the bulk of the information contained in the mzML file.
 
 {{{
 MzMLObjectIterator<Spectrum> spectrumIterator = unmarshaller.unmarshalCollectionFromXpath("/run/spectrumList/spectrum", Spectrum.class);
@@ -56,6 +72,9 @@ while (spectrumIterator.hasNext()){
 }
 }}}
 
+Instead of trying to load all spectra at once and make them available as Collection, this code will only unmarshal one spectrum element from the XML file per iteration. Thus the memory requirements are kept at a minimum.
+
 = Conclusion = 
 
-jMzML provides an easy and very efficient way to parse large MzML XML files. Ongoing work is being done to add functionality, such as the ability to write XML files from populated Java objects as well as fine-tune the caching mechanism so that users can balance performance versus memory footprint.  Users are strongly encouraged to contact the development team with feedback and requirements.
+jMzML provides an easy and very efficient way to parse large mzML XML files. Plans for future work include additional functionality, such as the ability to write XML files from populated Java objects as well as fine-tune the caching mechanism so that users can balance performance versus memory footprint. 
+Users are strongly encouraged to contact the development team with feedback and requirements. 
