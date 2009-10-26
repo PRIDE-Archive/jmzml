@@ -76,5 +76,6 @@ Instead of trying to load all spectra at once and make them available as Collect
 
 = Conclusion = 
 
-jMzML provides an easy and very efficient way to parse large mzML XML files. Plans for future work include additional functionality, such as the ability to write XML files from populated Java objects as well as fine-tune the caching mechanism so that users can balance performance versus memory footprint. 
-Users are strongly encouraged to contact the development team with feedback and requirements. 
+jMzML provides an easy and very efficient way to parse large mzML XML files. Plans for future work include additional functionality, such as the ability to write XML files from populated Java objects as well as fine-tune the caching mechanism so that users can balance performance versus memory footprint. Users are strongly encouraged to contact the development team with feedback and requirements. 
+
+Email can be sent to pride-support@ebi.ac.uk or an ticket can be created in the [http://code.google.com/p/jmzml/issues/list Issues] section of the Google code project page.
