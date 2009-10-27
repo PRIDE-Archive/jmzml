@@ -3,7 +3,7 @@
 
 = jMzML =
 
-jMzML is a Java API to the PSI mzML data exchange standard. It uses JAXB and the xxindex random-access XML parser to allow the parsing of arbitrary large XML files. Internal XML references, which can link elements across the whole file and are widely used in the mzML schema, are resolved on-the-fly without the need to keep the whole document in memory. jmzML is optimized to have as small a memory requirement as possible without compromising speed of data retrieval. 
+jMzML is a Java API to the PSI mzML data exchange standard. It uses JAXB and the xxindex random-access XML parser to allow the parsing of arbitrary large XML files. Internal XML references, which can link elements across the whole file and are widely used in the mzML schema, are resolved on-the-fly without the need to keep the whole document in memory. jMzML is optimized to have as small a memory requirement as possible without compromising speed of data retrieval. 
 
 = A typical code sample = 
 
