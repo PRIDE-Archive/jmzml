@@ -213,13 +213,13 @@
         <repository>
             <id>ebi-repo</id>
             <name>EBI Repository</name>
-            <url>scp://lobster.ebi.ac.uk/homes/maven/public_html/m2repo</url>
+            <url>scp://ebi-001.ebi.ac.uk/homes/maven/public_html/m2repo</url>
         </repository>
         <snapshotRepository>
             <uniqueVersion>false</uniqueVersion>
             <id>ebi-repo-snapshots</id>
             <name>EBI Snapshots Repository</name>
-            <url>scp://lobster.ebi.ac.uk/homes/maven/public_html/m2repo_snapshots</url>
+            <url>scp://ebi-001.ebi.ac.uk/homes/maven/public_html/m2repo_snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
