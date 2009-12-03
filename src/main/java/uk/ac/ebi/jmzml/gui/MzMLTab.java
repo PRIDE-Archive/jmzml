@@ -6,21 +6,19 @@
  */
 package uk.ac.ebi.jmzml.gui;
 
-import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
-import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
-import uk.ac.ebi.jmzml.model.mzml.*;
 import uk.ac.ebi.jmzml.JmzMLViewer;
 import uk.ac.ebi.jmzml.gui.model.MzmlTreeModel;
+import uk.ac.ebi.jmzml.model.mzml.*;
+import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
+import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
 
 import javax.swing.*;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeNode;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 /*
  * CVS information:
@@ -89,6 +87,14 @@ public class MzMLTab extends JPanel {
             List<BinaryDataArray> bdal = spectrum.getBinaryDataArrayList().getBinaryDataArray();
             BinaryDataArray mzBinaryDataArray = (BinaryDataArray) bdal.get(0);
             Number[] mzNumbers = mzBinaryDataArray.getBinaryDataAsNumberArray();
+            if (mzNumbers.length < 1) {
+                // no biinary data found, so no spectrum can be created!
+                // reset the view and give some feedback to the user
+                JPanel noBinaryErrorPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                noBinaryErrorPanel.add(new Label("No binary data for selected Item!"));
+                spltMain.setBottomComponent(noBinaryErrorPanel);
+                return; // no need to look for SpectrumPanel data, as there is no binary data!
+            }
             double[] mz = new double[mzNumbers.length];
             for (int i = 0; i < mzNumbers.length; i++) {
                 mz[i] = mzNumbers[i].doubleValue();
@@ -104,13 +110,16 @@ public class MzMLTab extends JPanel {
             String precursorCharge = "?";
             if(plist != null) {
                 if(plist.getCount().intValue() == 1) {
-                    List<CVParam> cvParams = plist.getPrecursor().get(0).getSelectedIonList().getSelectedIon().get(0).getCvParam();
-                    for (Iterator lCVParamIterator = cvParams.iterator(); lCVParamIterator.hasNext();) {
-                        CVParam lCVParam = (CVParam) lCVParamIterator.next();
-                        if(lCVParam.getAccession().equals("MS:1000744")) {
-                            precursorMz = Double.parseDouble(lCVParam.getValue().trim());
-                        } else if(lCVParam.getAccession().equals("MS:1000041")) {
-                            precursorCharge = lCVParam.getValue();
+                    SelectedIonList sIonList = plist.getPrecursor().get(0).getSelectedIonList();
+                    if (sIonList != null) {
+                        List<CVParam> cvParams = sIonList.getSelectedIon().get(0).getCvParam();
+                        for (Object cvParam : cvParams) {
+                            CVParam lCVParam = (CVParam) cvParam;
+                            if (lCVParam.getAccession().equals("MS:1000744")) {
+                                precursorMz = Double.parseDouble(lCVParam.getValue().trim());
+                            } else if (lCVParam.getAccession().equals("MS:1000041")) {
+                                precursorCharge = lCVParam.getValue();
+                            }
                         }
                     }
                 }
