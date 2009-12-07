@@ -162,10 +162,10 @@
     </dependencies>
 
     <repositories>
-        <repository>
+	    <repository>
             <id>java.net</id>
             <name>java.net Maven Repository</name>
-            <url>https://maven-repository.dev.java.net/nonav/repository</url>
+            <url>http://download.java.net/maven/1</url>
             <layout>legacy</layout>
         </repository>
         <repository>
