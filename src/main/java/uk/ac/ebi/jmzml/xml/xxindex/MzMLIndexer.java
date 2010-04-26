@@ -22,13 +22,12 @@
 
 package uk.ac.ebi.jmzml.xml.xxindex;
 
+import psidev.psi.tools.xxindex.index.IndexElement;
 import uk.ac.ebi.jmzml.xml.Constants;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
-import psidev.psi.tools.xxindex.index.IndexElement;
 
 public interface MzMLIndexer {
 
@@ -47,4 +46,6 @@ public interface MzMLIndexer {
     public Set<String> getSpectrumIDs();
 
     public Set<String> getChromatogramIDs();
+
+    public String getMzMLAttributeXMLString();
 }
