@@ -11,7 +11,6 @@ import uk.ac.ebi.jmzml.xml.Constants;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -50,6 +49,7 @@ public class MzMLIndexerFactory {
         private XmlElementExtractor xmlExtractor = null;
         private XpathIndex index = null;
         private String root = null;
+        private String mzMLAttributeXMLString = null;
 
         // ToDo: replace by generic map of maps based on classes as in the AdapterObjectCache
         private HashMap<String, IndexElement> cvIdMap = new HashMap<String, IndexElement>();
@@ -150,11 +150,32 @@ public class MzMLIndexerFactory {
                 logger.info("Init ScanSettings cache");
                 initIdMapCache(scanSettingsIdMap, "/scanSettingList/scanSetting");
 
+                //extract the MzML attributes from the MzML start tag
+                //get start position
+                List<IndexElement> ie = index.getElements(root);
+                //there is only one root
+                IndexElement rootEl = ie.get(0);
+                long startPos = rootEl.getStart();
+
+                //get end position - this is the start position of the next tag
+                ie = index.getElements(root + "/cvList");
+                //there will always be one and only one cvList
+                IndexElement cvListEl = ie.get(0);
+
+                long stopPos = cvListEl.getStart() - 1;
+
+                //get mzML start tag content
+                mzMLAttributeXMLString = xmlExtractor.readString(startPos, stopPos, xmlFile);
+
             } catch (IOException e) {
                 logger.error("MzMLIndexerFactory$MzMlIndexerImpl.MzMlIndexerImpl", e);
                 throw new IllegalStateException("Could not generate index file for: " + xmlFile);
             }
 
+        }
+
+        public String getMzMLAttributeXMLString() {
+            return mzMLAttributeXMLString;
         }
 
         private void initIdMapCache(HashMap<String, IndexElement> idMap, String xpath) throws IOException {

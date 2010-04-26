@@ -28,13 +28,13 @@ import org.xml.sax.InputSource;
 import uk.ac.ebi.jmzml.model.mzml.*;
 import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
 import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
+import uk.ac.ebi.jmzml.xml.Constants;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.UnmarshallerFactory;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.cache.AdapterObjectCache;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.filters.MzMLNamespaceFilter;
 import uk.ac.ebi.jmzml.xml.xxindex.FileUtils;
 import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
 import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexerFactory;
-import uk.ac.ebi.jmzml.xml.Constants;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -47,6 +47,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MzMLUnmarshaller {
 
@@ -60,6 +62,12 @@ public class MzMLUnmarshaller {
 
     private IndexList indexList = null;
     private boolean fileCorrupted = false;
+
+
+
+    private final Pattern ID_PATTERN = Pattern.compile(".*id *= *\"([^\"]*)?\".*");
+    private final Pattern AC_PATTERN = Pattern.compile(".*accession *= *\"([^\"]*)?\".*");
+    private final Pattern VERSION_PATTERN = Pattern.compile(".*version *= *\"([^\"]*)?\".*");
 
     public MzMLUnmarshaller(URL mzMLFileURL) {
         this(mzMLFileURL, true);
@@ -81,8 +89,40 @@ public class MzMLUnmarshaller {
     }
 
 
+    /**
+     * USE WITH CAUTION - This will unmarshall a complete MzML object and
+     * will likely cause an OutOfMemoryError for very large files
+     * @return
+     */
     public MzML unmarshall() {
         return unmarshalFromXpath("", MzML.class);
+    }
+
+    public String getMzMLVersion(){
+        Matcher match = VERSION_PATTERN.matcher(index.getMzMLAttributeXMLString());
+        if (match.matches()){
+            return match.group();
+        } else {
+            return null;
+        }
+    }
+
+    public String getMzMLAccession(){
+        Matcher match = AC_PATTERN.matcher(index.getMzMLAttributeXMLString());
+        if (match.matches()){
+            return match.group();
+        } else {
+            return null;
+        }
+    }
+
+    public String getMzMLId(){
+        Matcher match = ID_PATTERN.matcher(index.getMzMLAttributeXMLString());
+        if (match.matches()){
+            return match.group();
+        } else {
+            return null;
+        }
     }
 
     public int getObjectCountForXpath(String xpath) {
