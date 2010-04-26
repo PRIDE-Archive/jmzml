@@ -65,9 +65,9 @@ public class MzMLUnmarshaller {
 
 
 
-    private final Pattern ID_PATTERN = Pattern.compile(".*id *= *\"([^\"]*)?\".*");
-    private final Pattern AC_PATTERN = Pattern.compile(".*accession *= *\"([^\"]*)?\".*");
-    private final Pattern VERSION_PATTERN = Pattern.compile(".*version *= *\"([^\"]*)?\".*");
+    private final Pattern ID_PATTERN = Pattern.compile("id *= *\"([^\"]*)?\"", Pattern.CASE_INSENSITIVE);
+    private final Pattern AC_PATTERN = Pattern.compile("accession *= *\"([^\"]*)?\"", Pattern.CASE_INSENSITIVE);
+    private final Pattern VERSION_PATTERN = Pattern.compile("version *= *\"([^\"]*)?\"",Pattern.CASE_INSENSITIVE);
 
     public MzMLUnmarshaller(URL mzMLFileURL) {
         this(mzMLFileURL, true);
@@ -100,8 +100,8 @@ public class MzMLUnmarshaller {
 
     public String getMzMLVersion(){
         Matcher match = VERSION_PATTERN.matcher(index.getMzMLAttributeXMLString());
-        if (match.matches()){
-            return match.group();
+        if (match.find()){
+            return match.group(1);
         } else {
             return null;
         }
@@ -109,8 +109,8 @@ public class MzMLUnmarshaller {
 
     public String getMzMLAccession(){
         Matcher match = AC_PATTERN.matcher(index.getMzMLAttributeXMLString());
-        if (match.matches()){
-            return match.group();
+        if (match.find()){
+            return match.group(1);
         } else {
             return null;
         }
@@ -118,8 +118,8 @@ public class MzMLUnmarshaller {
 
     public String getMzMLId(){
         Matcher match = ID_PATTERN.matcher(index.getMzMLAttributeXMLString());
-        if (match.matches()){
-            return match.group();
+        if (match.find()){
+            return match.group(1);
         } else {
             return null;
         }
