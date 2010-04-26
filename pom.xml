@@ -5,7 +5,7 @@
     <groupId>uk.ac.ebi.jmzml</groupId>
     <artifactId>jmzml</artifactId>
     <packaging>jar</packaging>
-    <version>1.2.1</version>
+    <version>1.3</version>
     <name>MzML Java core API</name>
     <url>http://www.ebi.ac.uk/pride</url>
     <description>
@@ -162,10 +162,10 @@
     </dependencies>
 
     <repositories>
-	    <repository>
+        <repository>
             <id>java.net</id>
             <name>java.net Maven Repository</name>
-            <url>http://download.java.net/maven/1</url>
+            <url>https://maven-repository.dev.java.net/nonav/repository</url>
             <layout>legacy</layout>
         </repository>
         <repository>
@@ -213,13 +213,13 @@
         <repository>
             <id>ebi-repo</id>
             <name>EBI Repository</name>
-            <url>scp://ebi-001.ebi.ac.uk/homes/maven/public_html/m2repo</url>
+            <url>scp://lobster.ebi.ac.uk/homes/maven/public_html/m2repo</url>
         </repository>
         <snapshotRepository>
             <uniqueVersion>false</uniqueVersion>
             <id>ebi-repo-snapshots</id>
             <name>EBI Snapshots Repository</name>
-            <url>scp://ebi-001.ebi.ac.uk/homes/maven/public_html/m2repo_snapshots</url>
+            <url>scp://lobster.ebi.ac.uk/homes/maven/public_html/m2repo_snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
