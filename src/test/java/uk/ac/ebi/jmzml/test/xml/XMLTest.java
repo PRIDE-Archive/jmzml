@@ -22,9 +22,7 @@
 
 package uk.ac.ebi.jmzml.test.xml;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.jmzml.model.mzml.*;
 import uk.ac.ebi.jmzml.xml.io.MzMLMarshaller;
@@ -32,7 +30,6 @@ import uk.ac.ebi.jmzml.xml.io.MzMLObjectIterator;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
 
 import java.net.URL;
-import java.io.File;
 
 public class XMLTest extends TestCase {
 
@@ -90,8 +87,13 @@ public class XMLTest extends TestCase {
 
         // the test file has:
 
-        assertEquals("1", true, true);
-        assertEquals("2", 2, 2);
+        // accession="PRIDE:12345" id="urn:lsid:psidev.info:mzML.instanceDocuments.tiny.pwiz" version="1.0"
+        String ac = um.getMzMLAccession();
+        assertEquals("The MzML Accession is correct", "PRIDE:12345", ac);
+        String version = um.getMzMLVersion();
+        assertEquals("The MzML Version is correct", "1.0", version);
+        String id = um.getMzMLId();
+        assertEquals("The MzML ID is correct", "urn:lsid:psidev.info:mzML.instanceDocuments.tiny.pwiz", id);
 
         // two CVs
         assertEquals("The cvList does not have the same number of entries as stated in its counter attribute!", mz.getCvList().getCount().intValue(), mz.getCvList().getCv().size());
@@ -157,8 +159,6 @@ public class XMLTest extends TestCase {
 
         // ToDo: check the IDREF referenced elements
 
-
     }
-
 
 }

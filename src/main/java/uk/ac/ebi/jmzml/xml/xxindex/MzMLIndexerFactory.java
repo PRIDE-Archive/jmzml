@@ -166,6 +166,10 @@ public class MzMLIndexerFactory {
 
                 //get mzML start tag content
                 mzMLAttributeXMLString = xmlExtractor.readString(startPos, stopPos, xmlFile);
+                if (mzMLAttributeXMLString != null){
+                    //strip newlines that might interfere with later on regex matching
+                    mzMLAttributeXMLString = mzMLAttributeXMLString.replace("\n", "");
+                }
 
             } catch (IOException e) {
                 logger.error("MzMLIndexerFactory$MzMlIndexerImpl.MzMlIndexerImpl", e);
