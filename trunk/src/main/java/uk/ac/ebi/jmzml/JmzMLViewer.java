@@ -73,13 +73,15 @@ public class JmzMLViewer extends JFrame {
                     System.err.println("\n\n  ** The mzML file you specified ('" + inFile + "') is a folder, not a file!\n     Skipping file...\n");
                 }
                 mzMLFiles.add(inputFile);
+                System.out.println("Using file "+inputFile.getName());
             }
         }
+
         JmzMLViewer jmzMLViewer = null;
         if(mzMLFiles == null || mzMLFiles.size() == 0) {
             jmzMLViewer = new JmzMLViewer();
         } else {
-            jmzMLViewer = new JmzMLViewer();
+            jmzMLViewer = new JmzMLViewer(mzMLFiles);
         }
         int width = Toolkit.getDefaultToolkit().getScreenSize().width;
         int height = Toolkit.getDefaultToolkit().getScreenSize().height;
