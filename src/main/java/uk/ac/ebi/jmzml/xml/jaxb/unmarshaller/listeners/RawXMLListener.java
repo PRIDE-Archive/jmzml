@@ -40,8 +40,8 @@ public class RawXMLListener extends Unmarshaller.Listener {
         // Whenever we encounter a ParamGroup, there could be referenced params.
         // Since some params could be used more than in one location, they are not
         // duplicated in each XML snippet that needs them, but localized in a central
-        // part of the XML and only referenced. Here we have to fetch those refernced
-        // params from the central location and add them to the local element.  
+        // part of the XML (namely in referenceableParamGroup) and only referenced. 
+        // Here we have to fetch those referenced params from the central location and add them to the local element.
 
         try {
 
@@ -111,7 +111,13 @@ public class RawXMLListener extends Unmarshaller.Listener {
                 Precursor tmp = (Precursor) target;
                 //update activation (ParamGroup)
                 ParamGroupUpdater.updateParamGroupSubclasses(tmp.getActivation(), ActivationCVParam.class, ActivationUserParam.class);
-                //update ionSelection (ParamGroup)
+                //update isolationWindow (ParamGroup)
+                ParamGroupUpdater.updateParamGroupSubclasses(tmp.getIsolationWindow(), IsolationWindowCVParam.class, IsolationWindowUserParam.class);
+            }
+
+            if ( target instanceof Product ) {
+                Product tmp = (Product) target;
+                //update isolationWindow (ParamGroup)
                 ParamGroupUpdater.updateParamGroupSubclasses(tmp.getIsolationWindow(), IsolationWindowCVParam.class, IsolationWindowUserParam.class);
             }
 
