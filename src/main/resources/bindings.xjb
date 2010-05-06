@@ -58,8 +58,13 @@
         </jxb:property>
     </jxb:bindings>
 
-    <jxb:bindings node="//xs:complexType[@name='ChromatogramListType']">
-        <jxb:class name="ChromatogramList"/>
+    <jxb:bindings node="//xs:complexType[@name='ChromatogramListType']/xs:attribute[@name='defaultDataProcessingRef']">
+        <jxb:property name="defaultDataProcessing">
+            <jxb:baseType>
+                <xjc:javaType name="DataProcessing"
+                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter"/>
+            </jxb:baseType>
+        </jxb:property>
     </jxb:bindings>
 
     <jxb:bindings node="//xs:complexType[@name='ChromatogramType']">
@@ -406,6 +411,5 @@
     <jxb:bindings schemaLocation="mzML1.1.0-idx.xsd" node="//xs:complexType[@name='OffsetType']">
         <jxb:class name="Offset"/>
     </jxb:bindings>
-    
-</jxb:bindings>
 
+</jxb:bindings>
