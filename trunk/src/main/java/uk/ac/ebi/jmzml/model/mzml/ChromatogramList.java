@@ -1,18 +1,15 @@
 
 package uk.ac.ebi.jmzml.model.mzml;
 
+import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
+import uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter;
+
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlIDREF;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
 
 
 /**
@@ -46,38 +43,39 @@ public class ChromatogramList
     implements Serializable, MzMLObject
 {
 
-    private final static long serialVersionUID = 100L;
+     private final static long serialVersionUID = 100L;
     @XmlElement(required = true)
     protected List<Chromatogram> chromatogram;
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger count;
-    @XmlAttribute(required = true)
-    @XmlIDREF
+    @XmlAttribute(name = "defaultDataProcessingRef", required = true)
+    @XmlJavaTypeAdapter(DataProcessingAdapter.class)
     @XmlSchemaType(name = "IDREF")
-    protected Object defaultDataProcessingRef;
+    protected DataProcessing defaultDataProcessing;
+
 
     /**
      * Gets the value of the chromatogram property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the chromatogram property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getChromatogram().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Chromatogram }
-     * 
-     * 
+     *
+     *
      */
     public List<Chromatogram> getChromatogram() {
         if (chromatogram == null) {
@@ -88,11 +86,11 @@ public class ChromatogramList
 
     /**
      * Gets the value of the count property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link BigInteger }
-     *     
+     *
      */
     public BigInteger getCount() {
         return count;
@@ -100,38 +98,44 @@ public class ChromatogramList
 
     /**
      * Sets the value of the count property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link BigInteger }
-     *     
+     *
      */
     public void setCount(BigInteger value) {
         this.count = value;
     }
 
     /**
-     * Gets the value of the defaultDataProcessingRef property.
-     * 
+     * Gets the value of the defaultDataProcessing property.
+     *
      * @return
      *     possible object is
-     *     {@link Object }
-     *     
+     *     {@link String }
+
+     *
      */
-    public Object getDefaultDataProcessingRef() {
-        return defaultDataProcessingRef;
+    public DataProcessing getDefaultDataProcessing() {
+        return defaultDataProcessing;
+
+
     }
 
     /**
-     * Sets the value of the defaultDataProcessingRef property.
-     * 
+     * Sets the value of the defaultDataProcessing property.
+     *
      * @param value
      *     allowed object is
-     *     {@link Object }
-     *     
+     *     {@link String }
+
+     *
      */
-    public void setDefaultDataProcessingRef(Object value) {
-        this.defaultDataProcessingRef = value;
+    public void setDefaultDataProcessing(DataProcessing value) {
+        this.defaultDataProcessing = value;
+
+
     }
 
 }
