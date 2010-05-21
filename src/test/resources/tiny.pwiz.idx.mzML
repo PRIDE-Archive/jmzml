@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<indexedmzML xmlns="http://psi.hupo.org/ms/mzml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://psi.hupo.org/ms/mzml ../../main/resources/mzML1.1.0-idx.xsd">
+<indexedmzML xmlns="http://psi.hupo.org/ms/mzml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://psi.hupo.org/ms/mzml mzML1.1.1-idx.xsd">
   <mzML xmlns="http://psi.hupo.org/ms/mzml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://psi.hupo.org/ms/mzml ../../main/resources/mzML1.1.0.xsd" id="urn:lsid:psidev.info:mzML.instanceDocuments.tiny.pwiz" version="1.0">
     <cvList count="2">
       <cv id="MS" fullName="Proteomics Standards Initiative Mass Spectrometry Ontology" version="1.3.1" URI="http://psidev.info/ms/mzML/psi-ms.obo"/>
@@ -305,5 +305,5 @@
     </index>
   </indexList>
   <indexListOffset>19935</indexListOffset>
-  <fileChecksum>17024db80453374ed4e58514be0fdb378adb557b</fileChecksum>
+  <fileChecksum>f238629b59a29200f8c81955131f0f0994a9de11</fileChecksum>
 </indexedmzML>

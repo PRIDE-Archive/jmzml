@@ -1034,7 +1034,7 @@
           This is a reference to a source file in sourceFileList. It ensures that an id is present in the file and is one of the values defined in KEY_SOURCEFILE_ID.
         </xs:documentation>
       </xs:annotation>
-      <xs:selector xpath=".//dx:precursor |.//dx:scan" />
+      <xs:selector xpath=".//dx:precursor|.//dx:scan" />
       <xs:field xpath="@sourceFileRef" />
     </xs:keyref>
     <xs:keyref name="KEYREF_RUN_SAMPLEREF" refer="dx:KEY_SAMPLE_ID">
@@ -1061,7 +1061,7 @@
           This is a reference to a data processing element in dataProcessingList. It ensures that an id is present in the file and is one of the values defined in KEY_DP_ID.
         </xs:documentation>
       </xs:annotation>
-      <xs:selector xpath="./dx:run/dx:spectrumList |./dx:run/dx:chromatogramList" />
+      <xs:selector xpath="./dx:run/dx:spectrumList|./dx:run/dx:chromatogramList" />
       <xs:field xpath="@defaultDataProcessingRef" />
     </xs:keyref>
     <xs:keyref name="KEYREF_DPREF" refer="dx:KEY_DP_ID">
@@ -1070,7 +1070,7 @@
           This is a reference to a data processing element in dataProcessingList. It ensures that an id is present in the file and is one of the values defined in KEY_DP_ID.
         </xs:documentation>
       </xs:annotation>
-      <xs:selector xpath=".//dx:spectrum |.//dx:chromatogram |.//dx:binaryDataArray" />
+      <xs:selector xpath=".//dx:spectrum|.//dx:chromatogram|.//dx:binaryDataArray" />
       <xs:field xpath="@dataProcessingRef" />
     </xs:keyref>
     <xs:keyref name="KEYREF_CVREF" refer="dx:KEY_CV_ID">
@@ -1088,7 +1088,7 @@
           This is a reference to the CV in cvList used for unit terms. It ensures that an id is present in the file and is one of the values defined in KEY_CV_ID.
         </xs:documentation>
       </xs:annotation>
-      <xs:selector xpath=".//dx:cvParam |.//dx:userParam" />
+      <xs:selector xpath=".//dx:cvParam|.//dx:userParam" />
       <xs:field xpath="@unitCvRef" />
     </xs:keyref>
     <xs:keyref name="KEYREF_RPGREF" refer="dx:KEY_RPG_ID">
@@ -1106,7 +1106,7 @@
           This is a reference to an instrument configuration in instrumentConfigurationList. It ensures that an id is present in the file and is one of the values defined in KEY_IC_ID.
         </xs:documentation>
       </xs:annotation>
-      <xs:selector xpath="./dx:run/dx:spectrumList |./dx:run/dx:chromatogramList" />
+      <xs:selector xpath="./dx:run/dx:spectrumList|./dx:run/dx:chromatogramList" />
       <xs:field xpath="@defaultInstrumentConfigurationRef" />
     </xs:keyref>
     <xs:keyref name="KEYREF_ICREF" refer="dx:KEY_IC_ID">

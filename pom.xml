@@ -109,7 +109,7 @@
                     <extension>true</extension>
                     <schemaDirectory>src/main/resources</schemaDirectory>
                     <schemaIncludes>
-                        <include>mzML1.1.0-idx.xsd</include>
+                        <include>mzML1.1.1-idx.xsd</include>
                     </schemaIncludes>
                     <bindingDirectory>src/main/resources</bindingDirectory>
                     <bindingIncludes>
@@ -163,16 +163,6 @@
 
     <repositories>
         <repository>
-            <id>java.net</id>
-            <name>java.net Maven Repository</name>
-            <url>https://maven-repository.dev.java.net/nonav/repository</url>
-            <layout>legacy</layout>
-        </repository>
-        <repository>
-            <id>PRIDE_SourceForge_Maven2_Repository</id>
-            <url>http://pride-proteome.sourceforge.net/maven2</url>
-        </repository>
-        <repository>
             <id>ebi-repo</id>
             <name>The EBI internal repository</name>
             <url>http://www.ebi.ac.uk/~maven/m2repo</url>
@@ -194,6 +184,16 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>java.net</id>
+            <name>java.net Maven Repository</name>
+            <url>https://maven-repository.dev.java.net/nonav/repository</url>
+            <layout>legacy</layout>
+        </repository>
+        <!--<repository>-->
+            <!--<id>PRIDE_SourceForge_Maven2_Repository</id>-->
+            <!--<url>http://pride-proteome.sourceforge.net/maven2</url>-->
+        <!--</repository>-->
     </repositories>
 
     <pluginRepositories>

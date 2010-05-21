@@ -1,15 +1,12 @@
 
 package uk.ac.ebi.jmzml.model.mzml;
 
+import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
+
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
 
 
 /**
@@ -24,7 +21,14 @@ import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
  *       &lt;sequence>
  *         &lt;element name="offset" type="{http://psi.hupo.org/ms/mzml}OffsetType" maxOccurs="unbounded"/>
  *       &lt;/sequence>
- *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="name" use="required">
+ *         &lt;simpleType>
+ *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
+ *             &lt;enumeration value="spectrum"/>
+ *             &lt;enumeration value="chromatogram"/>
+ *           &lt;/restriction>
+ *         &lt;/simpleType>
+ *       &lt;/attribute>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>

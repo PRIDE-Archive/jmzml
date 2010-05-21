@@ -43,7 +43,7 @@ public class ChromatogramList
     implements Serializable, MzMLObject
 {
 
-     private final static long serialVersionUID = 100L;
+    private final static long serialVersionUID = 100L;
     @XmlElement(required = true)
     protected List<Chromatogram> chromatogram;
     @XmlAttribute(required = true)
@@ -114,13 +114,10 @@ public class ChromatogramList
      * @return
      *     possible object is
      *     {@link String }
-
      *
      */
     public DataProcessing getDefaultDataProcessing() {
         return defaultDataProcessing;
-
-
     }
 
     /**
@@ -129,13 +126,10 @@ public class ChromatogramList
      * @param value
      *     allowed object is
      *     {@link String }
-
      *
      */
     public void setDefaultDataProcessing(DataProcessing value) {
         this.defaultDataProcessing = value;
-
-
     }
 
 }
