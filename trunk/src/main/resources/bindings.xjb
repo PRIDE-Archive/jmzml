@@ -58,6 +58,9 @@
         </jxb:property>
     </jxb:bindings>
 
+    <jxb:bindings node="//xs:complexType[@name='ChromatogramListType']">
+        <jxb:class name="ChromatogramList"/>
+    </jxb:bindings>
     <jxb:bindings node="//xs:complexType[@name='ChromatogramListType']/xs:attribute[@name='defaultDataProcessingRef']">
         <jxb:property name="defaultDataProcessing">
             <jxb:baseType>
@@ -399,16 +402,16 @@
 
 
     <!-- indexed mzML bindings -->
-    <jxb:bindings schemaLocation="mzML1.1.0-idx.xsd"
+    <jxb:bindings schemaLocation="mzML1.1.1-idx.xsd"
             node="//xs:complexType[@name='IndexListType']">
         <jxb:class name="indexList"/>
     </jxb:bindings>
 
-    <jxb:bindings schemaLocation="mzML1.1.0-idx.xsd" node="//xs:complexType[@name='IndexType']">
+    <jxb:bindings schemaLocation="mzML1.1.1-idx.xsd" node="//xs:complexType[@name='IndexType']">
         <jxb:class name="index"/>
     </jxb:bindings>
 
-    <jxb:bindings schemaLocation="mzML1.1.0-idx.xsd" node="//xs:complexType[@name='OffsetType']">
+    <jxb:bindings schemaLocation="mzML1.1.1-idx.xsd" node="//xs:complexType[@name='OffsetType']">
         <jxb:class name="Offset"/>
     </jxb:bindings>
 

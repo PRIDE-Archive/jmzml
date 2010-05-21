@@ -209,7 +209,7 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         // Note: not checking against external schema, because of performance and availability (internet connection) issues 
 //        try {
 //            if (indexed) {
-                schemaLocation = this.getClass().getClassLoader().getResource("mzML1.1.0-idx.xsd");
+                schemaLocation = this.getClass().getClassLoader().getResource("mzML1.1.1-idx.xsd");
 //                schemaLocation = new URL("http://psidev.cvs.sourceforge.net/*checkout*/psidev/psi/psi-ms/mzML/schema/mzML1.1.0_idx.xsd");
 //            } else {
 //                schemaLocation = this.getClass().getClassLoader().getResource("mzML1.1.0.xsd");
