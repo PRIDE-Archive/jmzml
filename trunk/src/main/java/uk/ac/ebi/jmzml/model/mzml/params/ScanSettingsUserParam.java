@@ -1,7 +1,7 @@
 /*
  * Date: 22/7/2008
  * Author: rcote
- * File: uk.ac.ebi.jmzml.model.mzml.params.AcquisitionCVParam
+ * File: uk.ac.ebi.jmzml.model.mzml.params.AcquisitionSettingsUserParam
  *
  * jmzml is Copyright 2008 The European Bioinformatics Institute
  *
@@ -22,7 +22,7 @@
 
 package uk.ac.ebi.jmzml.model.mzml.params;
 
-import uk.ac.ebi.jmzml.model.mzml.CVParam;
+import uk.ac.ebi.jmzml.model.mzml.UserParam;
 
-public class AcquisitionCVParam extends CVParam {
+public class ScanSettingsUserParam extends UserParam {
 }

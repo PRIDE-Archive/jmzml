@@ -24,5 +24,5 @@ package uk.ac.ebi.jmzml.model.mzml.params;
 
 import uk.ac.ebi.jmzml.model.mzml.UserParam;
 
-public class AcquisitionListUserParam extends UserParam {
+public class ScanListUserParam extends UserParam {
 }

@@ -24,5 +24,5 @@ package uk.ac.ebi.jmzml.model.mzml.params;
 
 import uk.ac.ebi.jmzml.model.mzml.CVParam;
 
-public class AcquisitionListCVParam extends CVParam {
+public class ScanListCVParam extends CVParam {
 }

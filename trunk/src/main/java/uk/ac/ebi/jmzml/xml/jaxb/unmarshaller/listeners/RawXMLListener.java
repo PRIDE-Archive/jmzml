@@ -27,8 +27,8 @@ import uk.ac.ebi.jmzml.model.mzml.params.*;
 import uk.ac.ebi.jmzml.model.mzml.utilities.ParamGroupUpdater;
 
 import javax.xml.bind.Unmarshaller;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class RawXMLListener extends Unmarshaller.Listener {
 
@@ -78,6 +78,14 @@ public class RawXMLListener extends Unmarshaller.Listener {
 
             if ( target instanceof Scan ) {
                 ParamGroupUpdater.updateParamGroupSubclasses((Scan) target, ScanCVParam.class, ScanUserParam.class);
+            }
+
+            if ( target instanceof ScanList ) {
+                ParamGroupUpdater.updateParamGroupSubclasses((ScanList) target, ScanListCVParam.class, ScanListUserParam.class);
+            }
+
+            if ( target instanceof ScanSettings ) {
+                ParamGroupUpdater.updateParamGroupSubclasses((ScanSettings) target, ScanSettingsCVParam.class, ScanSettingsUserParam.class);
             }
 
             if ( target instanceof SourceFile ) {
