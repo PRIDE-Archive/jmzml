@@ -90,8 +90,9 @@
                     </archive>
                 </configuration>
             </plugin>
+<!--
             <plugin>
-                <!-- you can use this plugin to generate the jaxb object model from
+                <!- you can use this plugin to generate the jaxb object model from
                      the schema and binding files specified below. Note: this will
                      need an explicit maven goal call, since it is not intergrated
                      into the standard mvn lifecycle. The goal to use is:
@@ -101,7 +102,7 @@
                            should be taken with files that were manually modified. Such
                            files are in the current version (0.6): CVParam, UserParam,
                            ParamGroup, BinaryDataArray and ComponentList.
-                 -->
+                 ->
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
                 <artifactId>maven-jaxb2-plugin</artifactId>
                 <version>0.6.3</version>
@@ -124,6 +125,7 @@
                     </args>
                 </configuration>
             </plugin>
+-->
         </plugins>
     </build>
 
@@ -147,7 +149,7 @@
         <dependency>
             <groupId>psidev.psi.tools</groupId>
             <artifactId>xxindex</artifactId>
-            <version>0.5-SNAPSHOT</version>
+            <version>0.7-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>commons-collections</groupId>
@@ -184,18 +186,9 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-        <repository>
-            <id>java.net</id>
-            <name>java.net Maven Repository</name>
-            <url>https://maven-repository.dev.java.net/nonav/repository</url>
-            <layout>legacy</layout>
-        </repository>
-        <!--<repository>-->
-            <!--<id>PRIDE_SourceForge_Maven2_Repository</id>-->
-            <!--<url>http://pride-proteome.sourceforge.net/maven2</url>-->
-        <!--</repository>-->
     </repositories>
 
+<!--
     <pluginRepositories>
         <pluginRepository>
             <id>maven2-repository.dev.java.net</id>
@@ -208,6 +201,7 @@
             <layout>legacy</layout>
         </pluginRepository>
     </pluginRepositories>
+-->
 
     <distributionManagement>
         <repository>
