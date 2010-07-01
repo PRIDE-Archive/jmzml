@@ -15,9 +15,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- *
- *
  */
 
 package uk.ac.ebi.jmzml.xml.io;
@@ -63,43 +60,69 @@ public class MzMLUnmarshaller {
     private IndexList indexList = null;
     private boolean fileCorrupted = false;
 
-
-
     private final Pattern ID_PATTERN = Pattern.compile("id *= *\"([^\"]*)?\"", Pattern.CASE_INSENSITIVE);
     private final Pattern AC_PATTERN = Pattern.compile("accession *= *\"([^\"]*)?\"", Pattern.CASE_INSENSITIVE);
     private final Pattern VERSION_PATTERN = Pattern.compile("version *= *\"([^\"]*)?\"",Pattern.CASE_INSENSITIVE);
 
+    /**
+     * Creates a new MzMLUnmarshaller object from a URL
+     *
+     * @param mzMLFileURL the URL to unmarshall
+     */
     public MzMLUnmarshaller(URL mzMLFileURL) {
         this(mzMLFileURL, true);
     }
 
+    /**
+     * Creates a new MzMLUnmarshaller object from a file
+     *
+     * @param mzMLFileURL the file to unmarshall
+     */
     public MzMLUnmarshaller(File mzMLFile) {
         this(mzMLFile, true);
-
     }
 
+    /**
+     * Creates a new MzMLUnmarshaller object from a URL
+     *
+     * @param mzMLFileURL the URL to unmarshall
+     * @param aUseSpectrumCache if true the spectra are cached
+     */
     public MzMLUnmarshaller(URL mzMLFileURL, boolean aUseSpectrumCache) {
         this(FileUtils.getFileFromURL(mzMLFileURL), aUseSpectrumCache);
     }
 
+    /**
+     * Creates a new MzMLUnmarshaller object from a file
+     *
+     * @param mzMLFile the file to unmarshall
+     * @param aUseSpectrumCache if true the spectra are cached
+     */
     public MzMLUnmarshaller(File mzMLFile, boolean aUseSpectrumCache) {
         this.mzMLFile = mzMLFile;
         index = MzMLIndexerFactory.getInstance().buildIndex(mzMLFile);
         useSpectrumCache = aUseSpectrumCache;
     }
 
-
     /**
      * USE WITH CAUTION - This will unmarshall a complete MzML object and
-     * will likely cause an OutOfMemoryError for very large files
+     * will likely cause an OutOfMemoryError for very large files.
+     *
      * @return
      */
     public MzML unmarshall() {
         return unmarshalFromXpath("", MzML.class);
     }
 
+    /**
+     * Returns the mzML version.
+     *
+     * @return the mzML version, null if not found
+     */
     public String getMzMLVersion(){
+
         Matcher match = VERSION_PATTERN.matcher(index.getMzMLAttributeXMLString());
+
         if (match.find()){
             return match.group(1);
         } else {
@@ -107,8 +130,15 @@ public class MzMLUnmarshaller {
         }
     }
 
+    /**
+     * Returns the mzML accession number.
+     *
+     * @return the mzML accession number, null if not found
+     */
     public String getMzMLAccession(){
+
         Matcher match = AC_PATTERN.matcher(index.getMzMLAttributeXMLString());
+
         if (match.find()){
             return match.group(1);
         } else {
@@ -116,8 +146,15 @@ public class MzMLUnmarshaller {
         }
     }
 
+    /**
+     * Returns the mzML ID.
+     *
+     * @return the mzML ID, null if not found
+     */
     public String getMzMLId(){
+
         Matcher match = ID_PATTERN.matcher(index.getMzMLAttributeXMLString());
+
         if (match.find()){
             return match.group(1);
         } else {
@@ -125,10 +162,27 @@ public class MzMLUnmarshaller {
         }
     }
 
+    /**
+     * Returns the number of elements for a given path.
+     *
+     * @param xpath the path to look up
+     * @return the number of elements for a given path
+     */
     public int getObjectCountForXpath(String xpath) {
         return index.getCount(xpath);
     }
 
+    /**
+     * Retrieves the list of elements of the given class at the selected path.
+     *
+     * Exp.: CVList cvList = unmarshaller.unmarshallFromXPath("/cvList", CVList.class);
+     *       Retrieves the cvList from element of the mzML file, given it's XPath
+     *
+     * @param <T>
+     * @param xpath the path to search
+     * @param cls the class type to retrieve
+     * @return the list of elements of the given class at the selected path
+     */
     public <T extends MzMLObject> T unmarshalFromXpath(String xpath, Class cls) {
         // ToDo: only unmarshalls first element in xxindex!! Document this!
         T retval = null;
@@ -154,7 +208,6 @@ public class MzMLUnmarshaller {
                 if (logger.isDebugEnabled()) {
                     logger.debug("unmarshalled object = " + retval);
                 }
-
             }
 
         } catch (JAXBException e) {
@@ -165,6 +218,14 @@ public class MzMLUnmarshaller {
         return retval;
     }
 
+    /**
+     * Retrieves a collection of elements of the given class at the selected path
+     *
+     * @param <T>
+     * @param xpath the path to search
+     * @param cls the class type to retrieve
+     * @return the collection of elements of the given class at the selected path
+     */
     public <T extends MzMLObject> MzMLObjectIterator<T> unmarshalCollectionFromXpath(String xpath, Class cls) {
         return new MzMLObjectIterator<T>(xpath, cls, index, cache, useSpectrumCache);
     }
@@ -175,6 +236,11 @@ public class MzMLUnmarshaller {
 
     // ToDo: add schema validation step or implicit validation with the marshaller/unmarshaller
 
+    /**
+     * Returns true of the mzML file is indexed.
+     *
+     * @return true of the mzML file is indexed
+     */
     public boolean isIndexedmzML() {
         // ToDo: find better way to check this?
         // ToDo: maybe change log level in StandardXpathAccess class
@@ -184,6 +250,12 @@ public class MzMLUnmarshaller {
         return iter.hasNext();
     }
 
+    /**
+     * Returns true if the mzML file's check sum is ok.
+     *
+     * @return true if the mzML file's check sum is ok
+     * @throws MzMLUnmarshallerException
+     */
     public boolean isOkFileChecksum() throws MzMLUnmarshallerException {
         // if we already have established that the checksum has changed, then don't check again
         if (fileCorrupted) {
@@ -211,6 +283,12 @@ public class MzMLUnmarshaller {
         return checkSumOK;
     }
 
+    /**
+     * Returns the mzML index.
+     *
+     * @return the mzML index
+     * @throws MzMLUnmarshallerException
+     */
     public IndexList getMzMLIndex() throws MzMLUnmarshallerException {
         IndexList retval;
         // check if already cached
@@ -229,6 +307,13 @@ public class MzMLUnmarshaller {
         return retval;
     }
 
+    /**
+     * Returns the spectrum corresponding to the provided spectrum ID.
+     *
+     * @param aID the ID of the spectrum to get
+     * @return the spectrum corresponding to the provided spectrum ID, null if no matching spectrum is found
+     * @throws MzMLUnmarshallerException
+     */
     public Spectrum getSpectrumById(String aID) throws MzMLUnmarshallerException {
         Spectrum result = null;
         String xml = index.getXmlString(aID, Constants.ReferencedType.Spectrum);
@@ -247,6 +332,13 @@ public class MzMLUnmarshaller {
         return result;
     }
 
+    /**
+     * Returns the chromatogram corresponding to the provided chromatogram ID.
+     *
+     * @param aID the ID of the chromatogram to get
+     * @return the chromatogram corresponding to the provided chromatogram ID, null if no matching chromatogram is found
+     * @throws MzMLUnmarshallerException
+     */
     public Chromatogram getChromatogramById(String aID) throws MzMLUnmarshallerException {
         Chromatogram result = null;
         String xml = index.getXmlString(aID, Constants.ReferencedType.Chromatogram);
@@ -265,8 +357,13 @@ public class MzMLUnmarshaller {
         return result;
     }
 
-
-
+    /**
+     * Returns the spectrum corresponding to a given refId.
+     *
+     * @param refId the refId of the spectrum to retrieve
+     * @return the corresponding spectrum, or null if no spectrum is found
+     * @throws MzMLUnmarshallerException
+     */
     public Spectrum getSpectrumByRefId(String refId) throws MzMLUnmarshallerException {
         // get the index entry for 'chromatogram'
         Index aIndexEntry = getIndex("spectrum");
@@ -281,6 +378,13 @@ public class MzMLUnmarshaller {
         return null;
     }
 
+    /**
+     * Returns the spectrum with a given spotId.
+     *
+     * @param spotId the spotId of the spectrum to retrieve
+     * @return the corresponding spectrum, or null if no spectrum is found
+     * @throws MzMLUnmarshallerException
+     */
     public Spectrum getSpectrumBySpotId(String spotId) throws MzMLUnmarshallerException {
         // get the index entry for 'chromatogram'
         Index aIndexEntry = getIndex("spectrum");
@@ -295,6 +399,13 @@ public class MzMLUnmarshaller {
         return null;
     }
 
+    /**
+     * Returns the spectrum with a given scan time.
+     *
+     * @param scanTime the scan time for the wanted spectrum
+     * @return the spectrum with a given scan time, null of no spectrum is found
+     * @throws MzMLUnmarshallerException
+     */
     public Spectrum getSpectrumByScanTime(double scanTime) throws MzMLUnmarshallerException {
         // get the index entry for 'chromatogram'
         Index aIndexEntry = getIndex("spectrum");
@@ -309,6 +420,13 @@ public class MzMLUnmarshaller {
         return null;
     }
 
+    /**
+     * Returns the chromatogram corresponding to a given refId.
+     *
+     * @param refId the refId of the chromatogram to retrieve
+     * @return the chromatogram corresponding to a given refId, null if no chromatogram found
+     * @throws MzMLUnmarshallerException
+     */
     public Chromatogram getChromatogramByRefId(String refId) throws MzMLUnmarshallerException {
         // get the index entry for 'chromatogram'
         Index aIndexEntry = getIndex("chromatogram");
@@ -324,10 +442,20 @@ public class MzMLUnmarshaller {
         return null;
     }
 
+    /**
+     * Returns a set containing all spectrum IDs
+     *
+     * @return a set containing all spectrum IDs
+     */
     public Set<String> getSpectrumIDs() {
         return this.index.getSpectrumIDs();
     }
 
+    /**
+     * Returns a set containing all chromatogram IDs
+     *
+     * @return a set containing all chromatogram IDs
+     */
     public Set<String> getChromatogramIDs() {
         return this.index.getChromatogramIDs();
     }
@@ -335,6 +463,12 @@ public class MzMLUnmarshaller {
     ///// ///// ///// ///// ///// ///// ///// ///// ///// //////
     // private helper method primarily for indexedmzML stuff
 
+    /**
+     * Returns the file's check sum from the index.
+     *
+     * @return the file's check sum from the index
+     * @throws MzMLUnmarshallerException
+     */
     private String getFileChecksumFromIndex() throws MzMLUnmarshallerException {
         // there will only be a fileChecksum tag it is a indexedmzML
         if (!isIndexedmzML()) {
@@ -357,6 +491,11 @@ public class MzMLUnmarshaller {
         return checksum;
     }
 
+    /**
+     * Calcultes the check sum.
+     *
+     * @return the check sum as hexidecimal
+     */
     private String calculateChecksum() {
         // we have to create the checksum for the mzML file (from its beginning to the
         // end of the fileChecksum start tag).
@@ -422,6 +561,12 @@ public class MzMLUnmarshaller {
         return asHex(bytesDigest);
     }
 
+    /**
+     * @TODO: Javadoc missing
+     *
+     * @param bBuf
+     * @return
+     */
     private String convert2String(CircularFifoBuffer bBuf) {
         byte[] tmp = new byte[bBuf.size()];
         int tmpCnt = 0;
@@ -431,6 +576,12 @@ public class MzMLUnmarshaller {
         return new String(tmp);
     }
 
+    /**
+     * @TODO: Javadoc missing
+     *
+     * @param buf
+     * @return
+     */
     public static String asHex(byte[] buf) {
         // from: http://forums.xkcd.com/viewtopic.php?f=11&t=16666&p=553936
         char[] chars = new char[2 * buf.length];
@@ -441,6 +592,13 @@ public class MzMLUnmarshaller {
         return new String(chars);
     }
 
+    /**
+     * @TODO: Javadoc missing
+     *
+     * @param elementName
+     * @return
+     * @throws MzMLUnmarshallerException
+     */
     private Index getIndex(String elementName) throws MzMLUnmarshallerException {
         IndexList list = getMzMLIndex();
 
@@ -453,6 +611,15 @@ public class MzMLUnmarshaller {
         return null;
     }
 
+    /**
+     * @TODO: Javadoc missing
+     *
+     * @param <T>
+     * @param elementName
+     * @param offset
+     * @return
+     * @throws MzMLUnmarshallerException
+     */
     private <T extends MzMLObject> T getElementByOffset(String elementName, long offset) throws MzMLUnmarshallerException {
         // now check if we can map the elementName to a xpath from the xxindex
         String aXpath = null;
@@ -495,6 +662,4 @@ public class MzMLUnmarshaller {
 
         return retval;
     }
-
-
 }
