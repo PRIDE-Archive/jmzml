@@ -22,7 +22,7 @@ import java.math.BigDecimal;
  */
 
 /**
- * This class provides a JPanel that can display a chromatogram.
+ * This class provides a JPanel that can display a chromatogram, or a profile mass spectrum.
  *
  * @author Lennart Martens
  * @version $Id$
@@ -172,17 +172,46 @@ public class ChromatogramPanel extends JPanel {
     private int iMinDrag = 15;
 
     /**
-     * This constructor creates a ChromatogramPanel based on the passed parameters.
+     * This variable holds the precursor M/Z.
+     */
+    private double iPrecursorMZ = 0.0;
+    /**
+     * This String holds the charge for the precursor.
+     */
+    private String iPrecursorCharge = null;
+    /**
+     * The ms level of the current spectrum.
+     */
+    private int iMSLevel = 0;
+    /**
+     * The spectrum filename.
+     */
+    private String iSpecFilename = null;
+    /**
+     * Boolean to indicate whether a filename should be shown.
+     */
+    private boolean showFileName = false;
+    /**
+     * Boolean to indicate whether this is a spectrum.
+     */
+    private boolean isSpectrum = false;
+
+
+
+    /**
+     * This constructor creates a ChromatogramPanel based on the passed parameters. This constructor assumes
+     * chromatogram data rather than profile spectrum data.
      *
      * @param aXAxisData    double[] with all the X axis data.
      * @param aYAxisData    double[] with all the Y axis data.
      */
     public ChromatogramPanel(double[] aXAxisData, double[] aYAxisData) {
-        this(aXAxisData, aYAxisData, null, null, 50, false);
+        this(aXAxisData, aYAxisData, null, null);
     }
 
     /**
-     * This constructor creates a ChromatogramPanel based on the passed parameters.
+     * This constructor creates a ChromatogramPanel based on the passed parameters. This constructor assumes
+     * chromatogram data rather than profile spectrum data.
      *
      * @param aXAxisData    double[] with all the X axis data.
      * @param aYAxisData    double[] with all the Y axis data.
@@ -192,30 +221,55 @@ public class ChromatogramPanel extends JPanel {
      *                      (can have a unit between brackets, if available) - can be 'null' for no label
      */
     public ChromatogramPanel(double[] aXAxisData, double[] aYAxisData, String aXAxisLabel, String aYAxisLabel) {
-        this(aXAxisData, aYAxisData, aXAxisLabel, aYAxisLabel, 50, false);
+        initData(aXAxisData, aYAxisData, aXAxisLabel, aYAxisLabel);
     }
 
     /**
      * This constructor creates a ChromatogramPanel based on the passed parameters.
+     * <b>Note</b> that it is intended for use with a profile spectrum rather than a
+     * chromatogram, and it flag the display to assume spectrum layout and properties,
+     * which are distinct from the chromatogram ones!
+     *
+     * @param aXAxisData            double[] with all the X axis data.
+     * @param aYAxisData            double[] with all the Y axis data.
+     * @param aMSLevel              int with the ms level for the spectrum
+     * @param aPrecursorMz          Double with the precursor m/z.
+     * @param aPrecursorCharge      String with the precursor charge.
+     * @param aFilename             String with the title of the spectrum.
+     */
+    public ChromatogramPanel(double[] aXAxisData, double[] aYAxisData, int aMSLevel, double aPrecursorMz, String aPrecursorCharge, String aFilename) {
+        this.initData(aXAxisData, aYAxisData, "m/z", "intensity");
+        if(aFilename != null) {
+            iSpecFilename = aFilename;
+            showFileName = true;
+        }
+        iPrecursorMZ = aPrecursorMz;
+        iPrecursorCharge = aPrecursorCharge;
+        iMSLevel = aMSLevel;
+        isSpectrum = true;
+        this.setPointSize(4);
+        this.setChromatogramLineColor(Color.PINK);
+        this.setChromatogramPointColor(Color.RED);
+
+        this.addListeners();
+    }
+
+    /**
+     * This method wraps all the shared logic of the various constructors.
      *
      * @param aXAxisData    double[] with all the X axis data.
      * @param aYAxisData    double[] with all the Y axis data.
-     * @param aMaxPadding   int the sets the maximum padding size.
-     * @param aHideDecimals boolean that specifies if the decimals for the axis tags should be shown.
      * @param aXAxisLabel   String with the label for the x-axis
      *                      (can have a unit between brackets, if available) - can be 'null' for no label
      * @param aYAxisLabel   String with the label for the y-axis
      *                      (can have a unit between brackets, if available) - can be 'null' for no label
      */
-    public ChromatogramPanel(double[] aXAxisData, double[] aYAxisData, String aXAxisLabel, String aYAxisLabel, int aMaxPadding, boolean aHideDecimals) {
+    private void initData(double[] aXAxisData, double[] aYAxisData, String aXAxisLabel, String aYAxisLabel) {
         this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         this.setBackground(Color.WHITE);
         processXandYData(aXAxisData, aYAxisData);
         this.iXAxisLabel = (aXAxisLabel==null?"unknown":aXAxisLabel);
         this.iYAxisLabel = (aYAxisLabel==null?"unknown":aYAxisLabel);
-        this.maxPadding = aMaxPadding;
-        this.hideDecimals = aHideDecimals;
-        this.addListeners();
     }
 
     /**
@@ -595,7 +649,50 @@ public class ChromatogramPanel extends JPanel {
         double delta = aMax - aMin;
         double scaleUnit = delta / numberTimes;
         iXScaleUnit = delta / aXAxisWidth;
-        // Restore original font.
+
+        // The next section will only be drawn for profile spectra.
+        if(isSpectrum) {
+            // Since we know the scale unit, we also know the resolution.
+            // This will be displayed on the bottom line.
+            String resolution = "Resolution: " + new BigDecimal(iXScaleUnit).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+            String msLevel_and_optional_precursor = "MS level: " + iMSLevel;
+            if(iMSLevel > 1) {
+                // Also print the precursor MZ and charge (if known, '?' otherwise).
+                msLevel_and_optional_precursor += "   Precursor M/Z: " + this.iPrecursorMZ + " (" + this.iPrecursorCharge + ")";
+            }
+            // Finally, we also want the filename.
+            String filename = "";
+            if (showFileName) {
+                filename = "Filename: " + iSpecFilename;
+            }
+            int precLength = fm.stringWidth(msLevel_and_optional_precursor);
+            int resLength = fm.stringWidth(resolution);
+            int xDistance = ((this.getWidth() - (iXPadding * 2)) / 4) - (precLength / 2);
+            int fromBottom = fm.getAscent() / 2;
+            Font oldFont = this.getFont();
+
+            int smallFontCorrection = 0;
+            int yHeight = this.getHeight() - fromBottom;
+            int xAdditionForResolution = precLength + 15;
+            int xAdditionForFilename = xAdditionForResolution + resLength + 15;
+            if (precLength + resLength + 45 + fm.stringWidth(filename) > aXAxisWidth) {
+                g.setFont(new Font(oldFont.getName(), oldFont.getStyle(), oldFont.getSize() - 2));
+                smallFontCorrection = g.getFontMetrics().getAscent();
+                xAdditionForFilename = g.getFontMetrics().stringWidth(msLevel_and_optional_precursor) + 5;
+                xAdditionForResolution = g.getFontMetrics().stringWidth(msLevel_and_optional_precursor) / 2;
+                xDistance = aPadding;
+            }
+            g.drawString(msLevel_and_optional_precursor, xDistance, yHeight - smallFontCorrection);
+            g.drawString(resolution, xDistance + xAdditionForResolution, yHeight);
+            Color foreground = null;
+            g.drawString(filename, xDistance + xAdditionForFilename, yHeight - smallFontCorrection);
+            if (foreground != null) {
+                g.setColor(foreground);
+            }
+            // Restore original font.
+            g.setFont(oldFont);
+        }
+
         int labelHeight = fm.getAscent() + 5;
         // Now mark each unit.
         for (int i = 0; i < numberTimes; i++) {

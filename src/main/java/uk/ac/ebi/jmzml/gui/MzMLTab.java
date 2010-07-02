@@ -125,14 +125,23 @@ public class MzMLTab extends JPanel {
                 }
             }
             int msLevel = -1;
+            boolean isCentroid = false;
             List<CVParam> specParams = spectrum.getCvParam();
             for (Iterator lCVParamIterator = specParams.iterator(); lCVParamIterator.hasNext();) {
                 CVParam lCVParam = (CVParam) lCVParamIterator.next();
                 if(lCVParam.getAccession().equals("MS:1000511")) {
                     msLevel = Integer.parseInt(lCVParam.getValue().trim());
                 }
+                if(lCVParam.getAccession().equals("MS:1000127")) {
+                    isCentroid = true;
+                }
             }
-            SpectrumPanel specPanel = new SpectrumPanel(mz, intensities, msLevel, precursorMz, precursorCharge, aSpecID);
+            JPanel specPanel = null;
+            if(isCentroid) {
+                specPanel = new SpectrumPanel(mz, intensities, msLevel, precursorMz, precursorCharge, aSpecID);
+            } else {
+                specPanel = new ChromatogramPanel(mz, intensities, msLevel, precursorMz, precursorCharge, aSpecID);
+            }
             spltMain.setBottomComponent(specPanel);
         } catch(MzMLUnmarshallerException mue) {
             iParent.seriousProblem("Unable to access file: " + mue.getMessage(), "Problem reading spectrum!");
