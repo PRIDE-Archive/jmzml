@@ -164,6 +164,7 @@ public class JmzMLViewer extends JFrame {
                 iUnmarshallers = new ArrayList<MzMLUnmarshaller>();
                 iFilenames = new ArrayList<String>();
             }
+            // @TODO Add validation code!
             addUnmarshaller(new MzMLUnmarshaller(selected), selected.getName());
         }
     }
