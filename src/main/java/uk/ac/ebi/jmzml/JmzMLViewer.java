@@ -34,6 +34,12 @@ import java.awt.*;
  */
 public class JmzMLViewer extends JFrame {
 
+    /**
+     * A reference to the last mzML file opened in the viewer. Defaults to
+     * the user's home directory.
+     */
+    private String pathToLastOpenedFile = "user.home";
+
     private ArrayList<MzMLUnmarshaller> iUnmarshallers = null;
     private ArrayList<String> iFilenames = null;
     private JTabbedPane jtpMain = null;
@@ -144,7 +150,7 @@ public class JmzMLViewer extends JFrame {
      *                  whether it should replace all existing tabs.
      */
     private void loadMzmlFile(boolean addTab) {
-        JFileChooser jfc = new JFileChooser("/");
+        JFileChooser jfc = new JFileChooser(pathToLastOpenedFile);
         jfc.setDialogTitle("Select mzML file to view...");
         jfc.setFileFilter(new FileFilter() {
             @Override
@@ -171,6 +177,7 @@ public class JmzMLViewer extends JFrame {
             }
         } else {
             File selected = jfc.getSelectedFile();
+            pathToLastOpenedFile = selected.getAbsolutePath();
             if(!addTab) {
                 iUnmarshallers = new ArrayList<MzMLUnmarshaller>();
                 iFilenames = new ArrayList<String>();
