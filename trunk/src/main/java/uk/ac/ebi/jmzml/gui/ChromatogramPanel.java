@@ -222,6 +222,7 @@ public class ChromatogramPanel extends JPanel {
      */
     public ChromatogramPanel(double[] aXAxisData, double[] aYAxisData, String aXAxisLabel, String aYAxisLabel) {
         initData(aXAxisData, aYAxisData, aXAxisLabel, aYAxisLabel);
+        this.addListeners();
     }
 
     /**
@@ -362,7 +363,7 @@ public class ChromatogramPanel extends JPanel {
     private void addListeners() {
         this.addMouseListener(new MouseAdapter() {
 
-            /**
+        /**
              * Invoked when a mouse button has been released on a component.
              */
             public void mouseReleased(MouseEvent e) {
@@ -395,8 +396,8 @@ public class ChromatogramPanel extends JPanel {
             }
 
             /**
-             * Invoked when a mouse button has been pressed on a component.
-             */
+                  * Invoked when a mouse button has been pressed on a component.
+                  */
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     iStartXLoc = e.getX();
@@ -406,18 +407,18 @@ public class ChromatogramPanel extends JPanel {
         });
         this.addMouseMotionListener(new MouseMotionAdapter() {
 
-            /**
+        /**
              * Invoked when a mouse button is pressed on a component and then
              * dragged.  Mouse drag events will continue to be delivered to
              * the component where the first originated until the mouse button is
              * released (regardless of whether the mouse position is within the
              * bounds of the component).
              */
-            public void mouseDragged(MouseEvent e) {
-                iDragged = true;
-                iDragXLoc = e.getX();
-                repaint();
-            }
+         public void mouseDragged(MouseEvent e) {
+            iDragged = true;
+            iDragXLoc = e.getX();
+            repaint();
+         }
 
             /**
              * Invoked when the mouse button has been moved on a component
