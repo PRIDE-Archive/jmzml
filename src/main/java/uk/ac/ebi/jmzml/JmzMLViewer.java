@@ -6,6 +6,9 @@
  */
 package uk.ac.ebi.jmzml;
 
+import com.jgoodies.looks.plastic.PlasticLookAndFeel;
+import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
+import com.jgoodies.looks.plastic.theme.SkyKrupp;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
 import uk.ac.ebi.jmzml.gui.MzMLTab;
 
@@ -77,8 +80,16 @@ public class JmzMLViewer extends JFrame {
             }
         }
 
+        // Set the Java Look and Feel
+        try {
+            PlasticLookAndFeel.setPlasticTheme(new SkyKrupp());
+            UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+
         JmzMLViewer jmzMLViewer = null;
-        if(mzMLFiles == null || mzMLFiles.size() == 0) {
+        if(mzMLFiles == null || mzMLFiles.isEmpty()) {
             jmzMLViewer = new JmzMLViewer();
         } else {
             jmzMLViewer = new JmzMLViewer(mzMLFiles);
