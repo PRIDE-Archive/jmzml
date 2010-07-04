@@ -19,6 +19,9 @@ import java.util.Iterator;
 import java.io.File;
 import java.awt.event.*;
 import java.awt.*;
+import uk.ac.ebi.jmzml.gui.HelpWindow;
+import uk.ac.ebi.jmzml.gui.ProgressDialog;
+import uk.ac.ebi.jmzml.gui.ProgressDialogParent;
 /*
  * CVS information:
  *
@@ -32,13 +35,18 @@ import java.awt.*;
  * @author Lennart Martens
  * @version $Id$
  */
-public class JmzMLViewer extends JFrame {
+public class JmzMLViewer extends JFrame implements ProgressDialogParent {
 
     /**
      * A reference to the last mzML file opened in the viewer. Defaults to
      * the user's home directory.
      */
     private String pathToLastOpenedFile = "user.home";
+
+    /**
+     * A small dialog containing a progress bar.
+     */
+    ProgressDialog progressDialog;
 
     private ArrayList<MzMLUnmarshaller> iUnmarshallers = null;
     private ArrayList<String> iFilenames = null;
@@ -104,6 +112,7 @@ public class JmzMLViewer extends JFrame {
         int height = Toolkit.getDefaultToolkit().getScreenSize().height;
         jmzMLViewer.setBounds(50,50, width-250, height-250);
 
+        jmzMLViewer.setLocationRelativeTo(null);
         jmzMLViewer.setVisible(true);
     }
 
@@ -121,12 +130,16 @@ public class JmzMLViewer extends JFrame {
 
         JMenu fileMenu = new JMenu("File");
         fileMenu.setMnemonic(KeyEvent.VK_F);
+
         JMenuItem openItem = new JMenuItem("Open...", KeyEvent.VK_O);
+        openItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, 
+                java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         openItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 loadMzmlFile(true);
             }
         });
+
         JMenuItem exitItem = new JMenuItem("Exit", KeyEvent.VK_E);
         exitItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -139,7 +152,36 @@ public class JmzMLViewer extends JFrame {
 
         menuBar.add(fileMenu);
 
+        JMenu helpMenu = new JMenu("Help");
+        helpMenu.setMnemonic(KeyEvent.VK_H);
+
+        JMenuItem aboutItem = new JMenuItem("About", KeyEvent.VK_A);
+        aboutItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                openHelpDialog("/helpfiles/AboutJmzML.html");
+            }
+        });
+        JMenuItem helpItem = new JMenuItem("Help", KeyEvent.VK_H);
+        helpItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        helpItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                openHelpDialog("/helpfiles/JmzMLViewer.html");
+            }
+        });
+
+        helpMenu.add(helpItem);
+        helpMenu.add(aboutItem);
+
+        menuBar.add(helpMenu);
+
         this.getContentPane().add(menuBar, BorderLayout.NORTH);
+    }
+
+    /**
+     * Open help dialog
+     */
+    private void openHelpDialog(String urlAsString){
+        new HelpWindow(this, getClass().getResource(urlAsString));
     }
 
     /**
@@ -176,14 +218,36 @@ public class JmzMLViewer extends JFrame {
                 terminate(0);
             }
         } else {
-            File selected = jfc.getSelectedFile();
+            final File selected = jfc.getSelectedFile();
             pathToLastOpenedFile = selected.getAbsolutePath();
             if(!addTab) {
                 iUnmarshallers = new ArrayList<MzMLUnmarshaller>();
                 iFilenames = new ArrayList<String>();
             }
             // @TODO Add validation code!
-            addUnmarshaller(new MzMLUnmarshaller(selected), selected.getName());
+
+            progressDialog = new ProgressDialog(this, this, true);
+            progressDialog.setIntermidiate(true);
+
+            new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        progressDialog.setIntermidiate(true);
+                        progressDialog.setTitle("Opening mzML File. Please Wait...");
+                        progressDialog.setVisible(true);
+                    }
+                }, "ProgressDialog").start();
+
+            new Thread("SearchThread") {
+
+                @Override
+                public void run() {
+                    addUnmarshaller(new MzMLUnmarshaller(selected), selected.getName());
+                    progressDialog.setVisible(false);
+                    progressDialog.dispose();
+                }
+            }.start();
         }
     }
 
@@ -202,5 +266,12 @@ public class JmzMLViewer extends JFrame {
         this.setVisible(false);
         this.dispose();
         System.exit(aStatus);
+    }
+
+    /**
+     * Cancels the opening of a jmzML file and closes the tool.
+     */
+    public void cancelProgress() {
+        terminate(0);
     }
 }
