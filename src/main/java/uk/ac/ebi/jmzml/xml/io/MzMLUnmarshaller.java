@@ -38,6 +38,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.sax.SAXSource;
 import java.io.*;
+import java.math.BigInteger;
 import java.net.URL;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
@@ -76,7 +77,7 @@ public class MzMLUnmarshaller {
     /**
      * Creates a new MzMLUnmarshaller object from a file
      *
-     * @param mzMLFileURL the file to unmarshall
+     * @param mzMLFile the file to unmarshall
      */
     public MzMLUnmarshaller(File mzMLFile) {
         this(mzMLFile, true);
@@ -420,6 +421,21 @@ public class MzMLUnmarshaller {
         return null;
     }
 
+
+    /**
+     * Returns the spectrum with a given index.
+     *
+     * @param aIndex BigInteger with the index for the desired spectrum
+     * @return the spectrum with the given index, or 'null' if none is found.
+     * @throws MzMLUnmarshallerException
+     */
+    public Spectrum getSpectrumByScanTime(BigInteger aIndex) throws MzMLUnmarshallerException {
+        // Resolve the index to an ID.
+        String specID = index.getSpectrumIDFromSpectrumIndex(aIndex);
+
+        return this.getSpectrumById(specID);
+    }
+
     /**
      * Returns the chromatogram corresponding to a given refId.
      *
@@ -442,6 +458,7 @@ public class MzMLUnmarshaller {
         return null;
     }
 
+
     /**
      * Returns a set containing all spectrum IDs
      *
@@ -449,6 +466,27 @@ public class MzMLUnmarshaller {
      */
     public Set<String> getSpectrumIDs() {
         return this.index.getSpectrumIDs();
+    }
+
+    /**
+     * Returns a set containing all spectrum indexes
+     *
+     * @return a set containing all spectrum indexes
+     */
+    public Set<BigInteger> getSpectrumIndexes() {
+        return this.index.getSpectrumIndexes();
+    }
+
+    /**
+     * This method returns the spectrum ID for a given spectrum index, or 'null'
+     * if the specified index could not be found.
+     *
+     * @param aIndex    BigInteger with the spectrum index to retrieve
+     *                  the spectrum ID for
+     * @return  String  with the spectrum ID, or 'null' if the index could not be found.
+     */
+    public String getSpectrumIDFromSpectrumIndex(BigInteger aIndex) {
+        return index.getSpectrumIDFromSpectrumIndex(aIndex);
     }
 
     /**

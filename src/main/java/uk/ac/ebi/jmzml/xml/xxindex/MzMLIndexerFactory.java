@@ -11,6 +11,7 @@ import uk.ac.ebi.jmzml.xml.Constants;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -30,6 +31,7 @@ public class MzMLIndexerFactory {
 
     private static final MzMLIndexerFactory instance = new MzMLIndexerFactory();
     private static final Pattern ID_PATTERN = Pattern.compile("\\sid\\s*=\\s*['\"]([^'\"]*)['\"]", Pattern.CASE_INSENSITIVE);
+    private static final Pattern INDEX_PATTERN = Pattern.compile("\\sindex\\s*=\\s*['\"]([^'\"]*)['\"]", Pattern.CASE_INSENSITIVE);
 
     private MzMLIndexerFactory() {
     }
@@ -60,6 +62,7 @@ public class MzMLIndexerFactory {
         private HashMap<String, IndexElement> softwareIdMap = new HashMap<String, IndexElement>();
         private HashMap<String, IndexElement> sourceFileIdMap = new HashMap<String, IndexElement>();
         private HashMap<String, IndexElement> spectrumIdMap = new HashMap<String, IndexElement>();
+        private HashMap<BigInteger, String> spectrumIndexToIDMap = new HashMap<BigInteger, String>();
         private HashMap<String, IndexElement> chromatogramIdMap = new HashMap<String, IndexElement>();
         private HashMap<String, IndexElement> scanSettingsIdMap = new HashMap<String, IndexElement>();
 
@@ -112,43 +115,43 @@ public class MzMLIndexerFactory {
 
                 //cv cache
                 logger.info("Init CV cache");
-                initIdMapCache(cvIdMap, "/cvList/cv");
+                initIdMapCache(cvIdMap, null, "/cvList/cv");
 
                 //dataProcessing cache
                 logger.info("Init DataProcessing cache");
-                initIdMapCache(dataProcessingIdMap, "/dataProcessingList/dataProcessing");
+                initIdMapCache(dataProcessingIdMap, null, "/dataProcessingList/dataProcessing");
 
                 //instrumentConfig cache
                 logger.info("Init InstrumentConfiguration cache");
-                initIdMapCache(instrConfigIdMap, "/instrumentConfigurationList/instrumentConfiguration");
+                initIdMapCache(instrConfigIdMap, null, "/instrumentConfigurationList/instrumentConfiguration");
 
                 //refParamGroup cache
                 logger.info("Init ReferenceableParamGroup cache");
-                initIdMapCache(refParamGroupIdMap, "/referenceableParamGroupList/referenceableParamGroup");
+                initIdMapCache(refParamGroupIdMap, null, "/referenceableParamGroupList/referenceableParamGroup");
 
                 //sample cache
                 logger.info("Init Sample cache");
-                initIdMapCache(sampleIdMap, "/sampleList/sample");
+                initIdMapCache(sampleIdMap, null, "/sampleList/sample");
 
                 //software cache
                 logger.info("Init Software cache");
-                initIdMapCache(softwareIdMap, "/softwareList/software");
+                initIdMapCache(softwareIdMap, null, "/softwareList/software");
 
                 //sourceFile cache
                 logger.info("Init SourceFile cache");
-                initIdMapCache(sourceFileIdMap, "/fileDescription/sourceFileList/sourceFile");
+                initIdMapCache(sourceFileIdMap, null, "/fileDescription/sourceFileList/sourceFile");
 
                 //spectrum cache
                 logger.info("Init Spectrum cache");
-                initIdMapCache(spectrumIdMap, "/run/spectrumList/spectrum");
+                initIdMapCache(spectrumIdMap, spectrumIndexToIDMap, "/run/spectrumList/spectrum");
 
                 //spectrum cache
                 logger.info("Init Chromatogram cache");
-                initIdMapCache(chromatogramIdMap, "/run/chromatogramList/chromatogram");
+                initIdMapCache(chromatogramIdMap, null, "/run/chromatogramList/chromatogram");
 
                 //scansettings cache
                 logger.info("Init ScanSettings cache");
-                initIdMapCache(scanSettingsIdMap, "/scanSettingList/scanSetting");
+                initIdMapCache(scanSettingsIdMap, null, "/scanSettingList/scanSetting");
 
                 //extract the MzML attributes from the MzML start tag
                 //get start position
@@ -182,13 +185,33 @@ public class MzMLIndexerFactory {
             return mzMLAttributeXMLString;
         }
 
-        private void initIdMapCache(HashMap<String, IndexElement> idMap, String xpath) throws IOException {
+        /**
+         * This method initializes the specified ID (and optionally the specified Index) Map(s)
+         * for the given XPath. The index map is optional, because although most elements have an ID,
+         * only some have an index.
+         *
+         * @param idMap HashMap<String, IndexElement> to contain the ID-based index.
+         * @param indexMap HashMap<BigInteger, IndexElement> to contain an index to ID lookup map.
+         *                  Can be 'null' as the index is not always present for each element. If this
+         *                  parameter is 'null', the index attribute is simply ignored.
+         * @param xpath teh XPath to index for.
+         * @throws IOException  when the reading or parsing of the XML file failed. 
+         */
+        private void initIdMapCache(HashMap<String, IndexElement> idMap, HashMap<BigInteger, String> indexMap, String xpath) throws IOException {
             List<IndexElement> ranges = index.getElements(root + xpath);
             for (IndexElement byteRange : ranges) {
                 String xml = readXML(byteRange);
+                // Get the ID.
                 String id = getIdFromRawXML(xml);
                 if (id != null) {
                     idMap.put(id, byteRange);
+                    // See if we also need to get the index translation map.
+                    if(indexMap != null) {
+                        BigInteger index = getIndexFromRawXML(xml);
+                        if (index != null) {
+                            indexMap.put(index, id);
+                        }
+                    }
                 }
             }
         }
@@ -202,8 +225,31 @@ public class MzMLIndexerFactory {
             }
         }
 
+        private BigInteger getIndexFromRawXML(String xml) {
+            Matcher match = INDEX_PATTERN.matcher(xml);
+            if (match.find()) {
+                String result = match.group(1).intern();
+                try {
+                    BigInteger biResult = new BigInteger(result);
+                    return biResult;
+                } catch(NumberFormatException nfe) {
+                    throw new IllegalStateException("Index attribute could not be parsed into an integer in xml: " + xml);
+                }
+            } else {
+                throw new IllegalStateException("Invalid index in xml: " + xml);
+            }
+        }
+        
         public Set<String> getSpectrumIDs() {
             return spectrumIdMap.keySet();
+        }
+
+        public Set<BigInteger> getSpectrumIndexes() {
+            return spectrumIndexToIDMap.keySet();
+        }
+
+        public String getSpectrumIDFromSpectrumIndex(BigInteger aIndex) {
+            return spectrumIndexToIDMap.get(aIndex);
         }
 
         public Set<String> getChromatogramIDs() {
