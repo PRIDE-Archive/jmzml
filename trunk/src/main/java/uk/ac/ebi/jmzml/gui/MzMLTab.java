@@ -17,8 +17,8 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.math.BigInteger;
+import java.util.*;
 import java.util.List;
 /*
  * CVS information:
@@ -46,8 +46,17 @@ public class MzMLTab extends JPanel {
     }
 
     private void initDisplay() {
+
+        // Sort spectra by index, but display by ID.
+        TreeSet<BigInteger> specIndexes = new TreeSet<BigInteger>(iUnmarshaller.getSpectrumIndexes());
+        ArrayList<String> specIDs = new ArrayList(specIndexes.size());
+
+        Iterator<BigInteger> iter = specIndexes.iterator();
+        while (iter.hasNext()) {
+            specIDs.add(iUnmarshaller.getSpectrumIDFromSpectrumIndex(iter.next()));
+        }
+
         // A tree with spectra on the left, and a spectrum viewer on the right.
-        ArrayList<String> specIDs = new ArrayList(iUnmarshaller.getSpectrumIDs());
         ArrayList<String> chromIDs = new ArrayList(iUnmarshaller.getChromatogramIDs());
         final JTree tree = new JTree(new MzmlTreeModel(specIDs, chromIDs));
         tree.addTreeSelectionListener(new TreeSelectionListener() {

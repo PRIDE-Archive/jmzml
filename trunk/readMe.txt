@@ -1,10 +1,13 @@
 
- jmzML version 1.2
+ jmzML version 1.5
  =================
 
 
-By: Richard Cote, Florian Reisinger and Lennart Martens
-    EMBL-EBI, Cambridge, UK
+By: Richard Cote (1), Florian Reisinger (1), Harald Barsnes (2) and Lennart Martens (3,4)
+       (1) EMBL-EBI, Cambridge, UK
+       (2) Unibversity of Bergen, Bergen, Norway
+       (3) Ghent University, Ghent, Belgium
+       (4) VIB, Ghent, Belgium
 
 
 Licensed under the Apache2 open source license
