@@ -40,7 +40,7 @@ public class ChromatogramPanel extends JPanel {
     /**
      * Size for the point on a chromatogram.
      */
-    private int iPointSize = 6;
+    private Integer iPointSize = 4;
     /**
      * When the mouse is dragged, this represents the
      * X-coordinate of the starting location.
@@ -170,7 +170,6 @@ public class ChromatogramPanel extends JPanel {
      * Minimal dragging distance in pixels.
      */
     private int iMinDrag = 15;
-
     /**
      * This variable holds the precursor M/Z.
      */
@@ -196,8 +195,6 @@ public class ChromatogramPanel extends JPanel {
      */
     private boolean isSpectrum = false;
 
-
-
     /**
      * This constructor creates a ChromatogramPanel based on the passed parameters. This constructor assumes
      * chromatogram data rather than profile spectrum data.
@@ -206,7 +203,7 @@ public class ChromatogramPanel extends JPanel {
      * @param aYAxisData    double[] with all the Y axis data.
      */
     public ChromatogramPanel(double[] aXAxisData, double[] aYAxisData) {
-        this(aXAxisData, aYAxisData, null, null);
+        this(aXAxisData, aYAxisData, null, null, null);
     }
 
     /**
@@ -221,6 +218,28 @@ public class ChromatogramPanel extends JPanel {
      *                      (can have a unit between brackets, if available) - can be 'null' for no label
      */
     public ChromatogramPanel(double[] aXAxisData, double[] aYAxisData, String aXAxisLabel, String aYAxisLabel) {
+        this(aXAxisData, aYAxisData, aXAxisLabel, aYAxisLabel, null);
+    }
+
+    /**
+     * This constructor creates a ChromatogramPanel based on the passed parameters. This constructor assumes
+     * chromatogram data rather than profile spectrum data.
+     *
+     * @param aXAxisData    double[] with all the X axis data.
+     * @param aYAxisData    double[] with all the Y axis data.
+     * @param aXAxisLabel   String with the label for the x-axis
+     *                      (can have a unit between brackets, if available) - can be 'null' for no label
+     * @param aYAxisLabel   String with the label for the y-axis
+     *                      (can have a unit between brackets, if available) - can be 'null' for no label
+     * @param aPointSize    Integer with the point size to use
+     */
+    public ChromatogramPanel(double[] aXAxisData, double[] aYAxisData, String aXAxisLabel, String aYAxisLabel, Integer aPointSize) {
+
+        // if point size is given, update the point size, otherwise keep the default point size
+        if (aPointSize != null) {
+            this.setPointSize(aPointSize);
+        }
+
         initData(aXAxisData, aYAxisData, aXAxisLabel, aYAxisLabel);
         this.addListeners();
     }
@@ -239,16 +258,41 @@ public class ChromatogramPanel extends JPanel {
      * @param aFilename             String with the title of the spectrum.
      */
     public ChromatogramPanel(double[] aXAxisData, double[] aYAxisData, int aMSLevel, double aPrecursorMz, String aPrecursorCharge, String aFilename) {
+        this(aXAxisData, aYAxisData, aMSLevel, aPrecursorMz, aPrecursorCharge, aFilename, null);
+    }
+
+    /**
+     * This constructor creates a ChromatogramPanel based on the passed parameters.
+     * <b>Note</b> that it is intended for use with a profile spectrum rather than a
+     * chromatogram, and it flag the display to assume spectrum layout and properties,
+     * which are distinct from the chromatogram ones!
+     *
+     * @param aXAxisData            double[] with all the X axis data.
+     * @param aYAxisData            double[] with all the Y axis data.
+     * @param aMSLevel              int with the ms level for the spectrum
+     * @param aPrecursorMz          Double with the precursor m/z.
+     * @param aPrecursorCharge      String with the precursor charge.
+     * @param aFilename             String with the title of the spectrum.
+     * @param aPointSize    Integer with the point size to use
+     */
+    public ChromatogramPanel(double[] aXAxisData, double[] aYAxisData, int aMSLevel, double aPrecursorMz, String aPrecursorCharge, String aFilename, Integer aPointSize) {
         this.initData(aXAxisData, aYAxisData, "m/z", "intensity");
-        if(aFilename != null) {
+
+        if (aFilename != null) {
             iSpecFilename = aFilename;
             showFileName = true;
         }
+
         iPrecursorMZ = aPrecursorMz;
         iPrecursorCharge = aPrecursorCharge;
         iMSLevel = aMSLevel;
         isSpectrum = true;
-        this.setPointSize(4);
+
+        // if point size is given, update the point size, otherwise keep the default point size
+        if (aPointSize != null) {
+            this.setPointSize(aPointSize);
+        }
+
         this.setChromatogramLineColor(Color.PINK);
         this.setChromatogramPointColor(Color.RED);
 
@@ -269,8 +313,8 @@ public class ChromatogramPanel extends JPanel {
         this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         this.setBackground(Color.WHITE);
         processXandYData(aXAxisData, aYAxisData);
-        this.iXAxisLabel = (aXAxisLabel==null?"unknown":aXAxisLabel);
-        this.iYAxisLabel = (aYAxisLabel==null?"unknown":aYAxisLabel);
+        this.iXAxisLabel = (aXAxisLabel == null ? "unknown" : aXAxisLabel);
+        this.iYAxisLabel = (aYAxisLabel == null ? "unknown" : aYAxisLabel);
     }
 
     /**
@@ -350,8 +394,8 @@ public class ChromatogramPanel extends JPanel {
      *                   to the closest, lower even integer  (e.g.,
      *                   5 becomes 4, 13 becomes 12).
      */
-    public void setPointSize(int aPointSize) {
-        if(aPointSize%2 != 0) {
+    public void setPointSize(Integer aPointSize) {
+        if (aPointSize % 2 != 0) {
             aPointSize--;
         }
         iPointSize = aPointSize;
@@ -363,7 +407,7 @@ public class ChromatogramPanel extends JPanel {
     private void addListeners() {
         this.addMouseListener(new MouseAdapter() {
 
-        /**
+            /**
              * Invoked when a mouse button has been released on a component.
              */
             public void mouseReleased(MouseEvent e) {
@@ -396,8 +440,8 @@ public class ChromatogramPanel extends JPanel {
             }
 
             /**
-                  * Invoked when a mouse button has been pressed on a component.
-                  */
+             * Invoked when a mouse button has been pressed on a component.
+             */
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     iStartXLoc = e.getX();
@@ -405,20 +449,21 @@ public class ChromatogramPanel extends JPanel {
                 }
             }
         });
+
         this.addMouseMotionListener(new MouseMotionAdapter() {
 
-        /**
+            /**
              * Invoked when a mouse button is pressed on a component and then
              * dragged.  Mouse drag events will continue to be delivered to
              * the component where the first originated until the mouse button is
              * released (regardless of whether the mouse position is within the
              * bounds of the component).
              */
-         public void mouseDragged(MouseEvent e) {
-            iDragged = true;
-            iDragXLoc = e.getX();
-            repaint();
-         }
+            public void mouseDragged(MouseEvent e) {
+                iDragged = true;
+                iDragXLoc = e.getX();
+                repaint();
+            }
 
             /**
              * Invoked when the mouse button has been moved on a component
@@ -503,14 +548,14 @@ public class ChromatogramPanel extends JPanel {
         double delta = aMaxXAxisMeasurement - aMinXAxisMeasurement;
 
         // Round to nearest order of 10, based on displayed delta.
-        double tempOoM = (Math.log(delta)/Math.log(10))-1;
-        if(tempOoM < 0) {
+        double tempOoM = (Math.log(delta) / Math.log(10)) - 1;
+        if (tempOoM < 0) {
             tempOoM--;
         }
-        int orderOfMagnitude = (int)tempOoM;
+        int orderOfMagnitude = (int) tempOoM;
         double power = Math.pow(10, orderOfMagnitude);
         iXAxisMin = aMinXAxisMeasurement - (aMinXAxisMeasurement % power);
-        iXAxisMax = aMaxXAxisMeasurement + (power-(aMaxXAxisMeasurement % power));
+        iXAxisMax = aMaxXAxisMeasurement + (power - (aMaxXAxisMeasurement % power));
 
         iYAxisMax = maxInt + (maxInt / 10);
     }
@@ -601,7 +646,7 @@ public class ChromatogramPanel extends JPanel {
                 new int[]{this.getHeight() - tempPadding + 5, this.getHeight() - tempPadding - 5, this.getHeight() - tempPadding},
                 3);
         // X-axis label
-        g.drawString(iXAxisLabel, this.getWidth() - (xAxisLabelWidth + 5), this.getHeight() - (tempPadding/2));
+        g.drawString(iXAxisLabel, this.getWidth() - (xAxisLabelWidth + 5), this.getHeight() - (tempPadding / 2));
         // Y-axis.
         g.drawLine(tempPadding, this.getHeight() - tempPadding, tempPadding, tempPadding / 2);
         iXPadding = tempPadding;
@@ -611,7 +656,7 @@ public class ChromatogramPanel extends JPanel {
                 new int[]{(tempPadding / 2) + 5, (tempPadding / 2) + 5, tempPadding / 2},
                 3);
         // Y-axis label
-        g.drawString(iYAxisLabel, tempPadding - (yAxisLabelWidth/5), (tempPadding / 2) - 4);
+        g.drawString(iYAxisLabel, tempPadding - (yAxisLabelWidth / 5), (tempPadding / 2) - 4);
 
         // Now the tags along the axes.
         this.drawXTags(g, aXMin, aXMax, aXScale, xaxis, tempPadding);
@@ -652,12 +697,12 @@ public class ChromatogramPanel extends JPanel {
         iXScaleUnit = delta / aXAxisWidth;
 
         // The next section will only be drawn for profile spectra.
-        if(isSpectrum) {
+        if (isSpectrum) {
             // Since we know the scale unit, we also know the resolution.
             // This will be displayed on the bottom line.
             String resolution = "Resolution: " + new BigDecimal(iXScaleUnit).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
             String msLevel_and_optional_precursor = "MS level: " + iMSLevel;
-            if(iMSLevel > 1) {
+            if (iMSLevel > 1) {
                 // Also print the precursor MZ and charge (if known, '?' otherwise).
                 msLevel_and_optional_precursor += "   Precursor M/Z: " + this.iPrecursorMZ + " (" + this.iPrecursorCharge + ")";
             }
@@ -833,16 +878,16 @@ public class ChromatogramPanel extends JPanel {
         }
         // First draw the filled polygon.
         g.setColor(iChromatogramLineColor);
-        int[] xTemp = new int[xAxisPointsShown.size()+2];
-        int[] yTemp = new int[yAxisPointsShown.size()+2];
+        int[] xTemp = new int[xAxisPointsShown.size() + 2];
+        int[] yTemp = new int[yAxisPointsShown.size() + 2];
         xTemp[0] = xAxisPointsShown.get(0).intValue();
         yTemp[0] = this.getHeight() - iXPadding;
-        for(int i=0;i<xAxisPointsShown.size();i++) {
-            xTemp[i+1] = xAxisPointsShown.get(i).intValue();
-            yTemp[i+1] = yAxisPointsShown.get(i).intValue();
+        for (int i = 0; i < xAxisPointsShown.size(); i++) {
+            xTemp[i + 1] = xAxisPointsShown.get(i).intValue();
+            yTemp[i + 1] = yAxisPointsShown.get(i).intValue();
         }
-        xTemp[xTemp.length-1] = xAxisPointsShown.get(xAxisPointsShown.size()-1).intValue();
-        yTemp[xTemp.length-1] = this.getHeight() - iXPadding;
+        xTemp[xTemp.length - 1] = xAxisPointsShown.get(xAxisPointsShown.size() - 1).intValue();
+        yTemp[xTemp.length - 1] = this.getHeight() - iXPadding;
         // Fill out the chromatogram.
         g.fillPolygon(xTemp, yTemp, xTemp.length);
 
@@ -851,9 +896,9 @@ public class ChromatogramPanel extends JPanel {
         g.drawPolyline(xTemp, yTemp, xTemp.length);
         // Skip the point for the first and last element;
         // these are just there to nicely fill the polygon.
-        for (int i = 1; i < xTemp.length-1; i++) {
-            int x = xTemp[i] - (iPointSize/2);
-            int y = yTemp[i] - (iPointSize/2);
+        for (int i = 1; i < xTemp.length - 1; i++) {
+            int x = xTemp[i] - (iPointSize / 2);
+            int y = yTemp[i] - (iPointSize / 2);
             g.fillOval(x, y, iPointSize, iPointSize);
         }
 
@@ -875,8 +920,10 @@ public class ChromatogramPanel extends JPanel {
      *                           should be drawn over the peak.
      */
     private void highLight(int aIndex, Graphics g, Color aColor, String aComment, int aPixelsSpacer, boolean aShowArrow) {
+
         int x = iXAxisDataInPixels[aIndex];
         int y = 0;
+
         if (aPixelsSpacer < 0) {
             y = iTopPadding;
         } else {
@@ -886,9 +933,11 @@ public class ChromatogramPanel extends JPanel {
                 y = iTopPadding / 3;
             }
         }
+
         // Temporarily change the color to blue.
         Color originalColor = g.getColor();
         g.setColor(aColor);
+
         // Draw the triangle first, if appropriate.
         int arrowSpacer = 6;
         if (aShowArrow) {
@@ -897,6 +946,7 @@ public class ChromatogramPanel extends JPanel {
                     3);
             arrowSpacer = 9;
         }
+
         // Now the mass.
         // If there is any, print the comment instead of the mass.
         if (aComment != null && !aComment.trim().equals("")) {
@@ -908,9 +958,8 @@ public class ChromatogramPanel extends JPanel {
             int halfWayMass = g.getFontMetrics().stringWidth(mass) / 2;
             g.drawString(mass, x - halfWayMass, y - arrowSpacer);
         }
+
         // Restore original color.
         g.setColor(originalColor);
-
     }
 }
-
