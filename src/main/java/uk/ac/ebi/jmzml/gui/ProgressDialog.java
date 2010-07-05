@@ -1,6 +1,6 @@
 package uk.ac.ebi.jmzml.gui;
 
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 /**
  * A dialog for displaying information about progress.

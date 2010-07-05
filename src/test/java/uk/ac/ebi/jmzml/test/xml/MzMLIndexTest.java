@@ -1,12 +1,13 @@
 package uk.ac.ebi.jmzml.test.xml;
 
 import junit.framework.TestCase;
-
-import java.net.URL;
-
+import uk.ac.ebi.jmzml.model.mzml.Chromatogram;
+import uk.ac.ebi.jmzml.model.mzml.IndexList;
+import uk.ac.ebi.jmzml.model.mzml.Spectrum;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
-import uk.ac.ebi.jmzml.model.mzml.*;
+
+import java.net.URL;
 
 /**
  * @author Florian Reisinger

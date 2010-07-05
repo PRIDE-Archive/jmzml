@@ -10,8 +10,9 @@ package uk.ac.ebi.jmzml.gui;
 //     BareBonesBrowserLaunch.openURL(url);            //
 //  Public Domain Software -- Free to Use as You Like  //
 /////////////////////////////////////////////////////////
+
+import javax.swing.*;
 import java.lang.reflect.Method;
-import javax.swing.JOptionPane;
 
 public class BareBonesBrowserLaunch {
 

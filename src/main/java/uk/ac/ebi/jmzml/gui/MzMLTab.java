@@ -18,8 +18,10 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
 import java.awt.*;
 import java.math.BigInteger;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.TreeSet;
 /*
  * CVS information:
  *
@@ -63,18 +65,39 @@ public class MzMLTab extends JPanel {
             public void valueChanged(TreeSelectionEvent e) {
                 TreePath path= tree.getSelectionPath();
                 if(path != null) {
-                    String node = (String) path.getLastPathComponent();
+                    final String node = (String) path.getLastPathComponent();
                     // Only do this if we have something that can be shown,
                     // such as a spectrum or a chromatogram, which are at
                     // the third level of the tree.
                     int pathCount = path.getPathCount();
                     if(pathCount > 2) {
-                        String parent = (String)path.getPathComponent(pathCount-2);
-                        if(parent.equals(MzmlTreeModel.SPECTRUM_SUBROOT)) {
-                            displaySpectrum(node);
-                        } else if(parent.equals(MzmlTreeModel.CHROMATOGRAM_SUBROOT)) {
-                            displayChromatogram(node);
-                        }
+                        final String parent = (String)path.getPathComponent(pathCount-2);
+                        // First create and start a progress bar.
+                        final ProgressDialog progressDialog = new ProgressDialog(iParent, iParent, true);
+                        progressDialog.setIntermidiate(true);
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.setIntermidiate(true);
+                                progressDialog.setVisible(true);
+                            }
+                        }, "ProgressDialog").start();
+
+                        // Now get the spectrum of chromatogram displayed.
+                        new Thread("displaythread"){
+                            public void run() {
+                                if(parent.equals(MzmlTreeModel.SPECTRUM_SUBROOT)) {
+                                    progressDialog.setTitle("Loading spectrum...");
+                                    displaySpectrum(node);
+                                } else if(parent.equals(MzmlTreeModel.CHROMATOGRAM_SUBROOT)) {
+                                    progressDialog.setTitle("Loading chromatogram...");
+                                    displayChromatogram(node);
+                                }
+                                progressDialog.setVisible(false);
+                                progressDialog.dispose();
+                            }
+                        }.start();
                     }
                 }
             }

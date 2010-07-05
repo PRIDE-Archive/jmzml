@@ -26,8 +26,6 @@ import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.net.URL;
-import java.net.URISyntaxException;
-import java.net.URI;
 
 public class FileUtils {
 

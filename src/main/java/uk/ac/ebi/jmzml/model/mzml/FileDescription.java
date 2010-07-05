@@ -1,14 +1,15 @@
 
 package uk.ac.ebi.jmzml.model.mzml;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**

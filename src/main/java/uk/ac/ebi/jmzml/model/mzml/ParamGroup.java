@@ -30,14 +30,13 @@
 
 package uk.ac.ebi.jmzml.model.mzml;
 
+import org.apache.log4j.Logger;
+import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
+
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.*;
-
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
-
-import org.apache.log4j.Logger;
 
 /**
  * Structure allowing the use of a controlled (cvParam) or uncontrolled vocabulary (userParam), or a reference to a predefined set of these in this mzML file (paramGroupRef).

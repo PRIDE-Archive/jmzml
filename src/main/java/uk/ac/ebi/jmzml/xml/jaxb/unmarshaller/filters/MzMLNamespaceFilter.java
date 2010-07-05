@@ -23,9 +23,9 @@
 package uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.filters;
 
 import org.apache.log4j.Logger;
-import org.xml.sax.XMLReader;
-import org.xml.sax.SAXException;
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLFilterImpl;
 import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
 

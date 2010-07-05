@@ -5,7 +5,7 @@
     <groupId>uk.ac.ebi.jmzml</groupId>
     <artifactId>jmzml</artifactId>
     <packaging>jar</packaging>
-    <version>1.5</version>
+    <version>1.6</version>
     <name>MzML Java core API</name>
     <url>http://www.ebi.ac.uk/pride</url>
     <description>
@@ -178,6 +178,11 @@
             <artifactId>swing-layout</artifactId>
             <version>1.0.3</version>
         </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1</version>
+        </dependency>        
     </dependencies>
 
     <repositories>

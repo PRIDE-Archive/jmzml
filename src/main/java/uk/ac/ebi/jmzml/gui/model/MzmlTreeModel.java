@@ -6,9 +6,9 @@
  */
 package uk.ac.ebi.jmzml.gui.model;
 
+import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
-import javax.swing.event.TreeModelListener;
 import java.util.ArrayList;
 /*
  * CVS information:

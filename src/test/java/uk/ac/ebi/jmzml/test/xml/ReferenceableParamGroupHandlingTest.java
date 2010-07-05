@@ -1,21 +1,20 @@
 package uk.ac.ebi.jmzml.test.xml;
 
-import junit.framework.TestCase;
 import junit.framework.Assert;
-
-import java.net.URL;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.io.File;
-import java.io.IOException;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-
-import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
-import uk.ac.ebi.jmzml.xml.io.MzMLMarshaller;
+import junit.framework.TestCase;
 import uk.ac.ebi.jmzml.model.mzml.MzML;
-import uk.ac.ebi.jmzml.model.mzml.Spectrum;
 import uk.ac.ebi.jmzml.model.mzml.Scan;
+import uk.ac.ebi.jmzml.model.mzml.Spectrum;
+import uk.ac.ebi.jmzml.xml.io.MzMLMarshaller;
+import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.List;
 
 /**
  * This class

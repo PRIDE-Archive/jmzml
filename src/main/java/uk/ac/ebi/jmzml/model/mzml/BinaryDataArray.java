@@ -1,27 +1,23 @@
 
 package uk.ac.ebi.jmzml.model.mzml;
 
-import java.io.Serializable;
+import uk.ac.ebi.jmzml.model.mzml.params.BinaryDataArrayCVParam;
+import uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter;
+
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.zip.Deflater;
-import java.util.zip.Inflater;
-import java.util.zip.DataFormatException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter;
-import uk.ac.ebi.jmzml.model.mzml.params.BinaryDataArrayCVParam;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.zip.DataFormatException;
+import java.util.zip.Deflater;
+import java.util.zip.Inflater;
 
 
 /**
