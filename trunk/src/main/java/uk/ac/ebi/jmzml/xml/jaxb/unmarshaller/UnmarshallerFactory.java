@@ -34,15 +34,14 @@ import org.xml.sax.XMLReader;
 import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
 import uk.ac.ebi.jmzml.xml.jaxb.adapters.*;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.cache.AdapterObjectCache;
-import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.listeners.RawXMLListener;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.filters.MzMLNamespaceFilter;
+import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.listeners.RawXMLListener;
 import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.UnmarshallerHandler;
-import javax.xml.bind.helpers.DefaultValidationEventHandler;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;

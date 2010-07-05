@@ -1,5 +1,5 @@
 
- jmzML version 1.5
+ jmzML version 1.6
  =================
 
 

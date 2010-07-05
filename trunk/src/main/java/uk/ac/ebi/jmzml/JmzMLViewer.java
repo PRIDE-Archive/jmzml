@@ -9,19 +9,27 @@ package uk.ac.ebi.jmzml;
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 import com.jgoodies.looks.plastic.theme.SkyKrupp;
-import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
+import org.xml.sax.SAXException;
+import uk.ac.ebi.jmzml.gui.HelpWindow;
 import uk.ac.ebi.jmzml.gui.MzMLTab;
+import uk.ac.ebi.jmzml.gui.ProgressDialog;
+import uk.ac.ebi.jmzml.gui.ProgressDialogParent;
+import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.io.File;
-import java.awt.event.*;
-import java.awt.*;
-import uk.ac.ebi.jmzml.gui.HelpWindow;
-import uk.ac.ebi.jmzml.gui.ProgressDialog;
-import uk.ac.ebi.jmzml.gui.ProgressDialogParent;
 /*
  * CVS information:
  *
@@ -224,26 +232,40 @@ public class JmzMLViewer extends JFrame implements ProgressDialogParent {
                 iUnmarshallers = new ArrayList<MzMLUnmarshaller>();
                 iFilenames = new ArrayList<String>();
             }
-            // @TODO Add validation code!
+
 
             progressDialog = new ProgressDialog(this, this, true);
             progressDialog.setIntermidiate(true);
 
+            // First create and start a progress bar.
             new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    progressDialog.setIntermidiate(true);
+                    progressDialog.setTitle("Validating mzML File. Please Wait...");
+                    progressDialog.setVisible(true);
+                }
+            }, "ProgressDialog").start();
 
-                    @Override
-                    public void run() {
-                        progressDialog.setIntermidiate(true);
-                        progressDialog.setTitle("Opening mzML File. Please Wait...");
-                        progressDialog.setVisible(true);
-                    }
-                }, "ProgressDialog").start();
-
+            // Now validate file, and open it if it is valid.
             new Thread("SearchThread") {
 
                 @Override
                 public void run() {
-                    addUnmarshaller(new MzMLUnmarshaller(selected), selected.getName());
+                    // validate the mzML file before opening it
+                    String errors = validateMzMLFile(selected);
+
+                    if(errors != null) {
+                        JOptionPane.showMessageDialog(JmzMLViewer.this,
+                                new String[] {"jmzML validation failed. Please check your mzML file.\n",
+                                              "Error messages returned by validation:\n",
+                                              errors},
+                                "Your mzML file Failed Validation!",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        progressDialog.setTitle("Reading mzML File. Please Wait...");
+                        addUnmarshaller(new MzMLUnmarshaller(selected), selected.getName());
+                    }
                     progressDialog.setVisible(false);
                     progressDialog.dispose();
                 }
@@ -273,5 +295,56 @@ public class JmzMLViewer extends JFrame implements ProgressDialogParent {
      */
     public void cancelProgress() {
         terminate(0);
+    }
+
+    /**
+     * Validates the mzML file. Returns 'null' String if the file is valid,
+     * or a non-null String with the errors if there was a problem.
+     *
+     * @param mzML the mzML file to validate
+     * @return String with the error msg, or 'null' if the file is valid.
+     */
+    private String validateMzMLFile(File mzML){
+
+        // 1. Lookup a factory for the W3C XML Schema language
+        SchemaFactory factory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
+
+        // 2. Compile the schema.
+        URL schemaLocation;
+        schemaLocation = this.getClass().getClassLoader().getResource("mzML1.1.1-idx.xsd");
+
+        if(schemaLocation == null){
+            return "Schema (mzML1.1.1-idx.xsd) not found!";
+        }
+
+        Schema schema;
+
+        try {
+            schema = factory.newSchema(schemaLocation);
+        } catch (SAXException e) {
+            e.printStackTrace();
+            return "Could not compile Schema for file: " + schemaLocation;
+        }
+
+        // 3. Get a validator from the schema.
+        Validator validator = schema.newValidator();
+        
+        // 4. Parse the document you want to check.
+        Source source = new StreamSource(mzML);
+
+        // 5. Check the document
+        String errorMsg = null;
+        try {
+            validator.validate(source);
+        } catch (SAXException ex) {
+            System.out.println(mzML.getName() + " is not valid because ");
+            System.out.println(ex.getMessage());
+            errorMsg = ex.getMessage();
+        } catch (IOException e) {
+            e.printStackTrace();
+            errorMsg = "Could not validate file because of file read problems for source:" + mzML.getAbsolutePath();
+        }
+
+        return errorMsg;
     }
 }

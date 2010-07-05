@@ -8,12 +8,14 @@ package uk.ac.ebi.jmzml.gui;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
-import java.util.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.TreeSet;
 /*
  * CVS information:
  *

@@ -22,9 +22,7 @@
 
 package uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.cache;
 
-import uk.ac.ebi.jmzml.model.mzml.*;
 import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
-import uk.ac.ebi.jmzml.xml.Constants;
 
 import java.util.HashMap;
 import java.util.Map;

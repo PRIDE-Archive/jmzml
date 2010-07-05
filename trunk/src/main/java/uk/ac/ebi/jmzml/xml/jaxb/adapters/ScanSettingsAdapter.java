@@ -1,10 +1,9 @@
 package uk.ac.ebi.jmzml.xml.jaxb.adapters;
 
-import uk.ac.ebi.jmzml.model.mzml.Software;
 import uk.ac.ebi.jmzml.model.mzml.ScanSettings;
-import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
-import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.cache.AdapterObjectCache;
 import uk.ac.ebi.jmzml.xml.Constants;
+import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.cache.AdapterObjectCache;
+import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
 
 /**
  * @author Florian Reisinger

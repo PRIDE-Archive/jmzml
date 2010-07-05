@@ -1,20 +1,19 @@
 package uk.ac.ebi.jmzml.test.xml;
 
-import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
-import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
-import uk.ac.ebi.jmzml.xml.io.MzMLMarshaller;
-import uk.ac.ebi.jmzml.model.mzml.*;
-import uk.ac.ebi.jmzml.model.mzml.params.BinaryDataArrayCVParam;
-
-import java.net.URL;
-import java.util.List;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.io.UnsupportedEncodingException;
-import java.io.ByteArrayOutputStream;
-
 import junit.framework.TestCase;
 import org.apache.commons.codec.binary.Base64;
+import uk.ac.ebi.jmzml.model.mzml.*;
+import uk.ac.ebi.jmzml.model.mzml.params.BinaryDataArrayCVParam;
+import uk.ac.ebi.jmzml.xml.io.MzMLMarshaller;
+import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
+import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
+
+import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Florian Reisinger

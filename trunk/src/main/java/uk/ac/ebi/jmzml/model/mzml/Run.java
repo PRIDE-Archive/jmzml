@@ -1,20 +1,16 @@
 
 package uk.ac.ebi.jmzml.model.mzml;
 
-import java.io.Serializable;
-import java.util.Calendar;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import uk.ac.ebi.jmzml.xml.jaxb.adapters.CalendarAdapter;
 import uk.ac.ebi.jmzml.xml.jaxb.adapters.InstrumentConfigurationAdapter;
 import uk.ac.ebi.jmzml.xml.jaxb.adapters.SampleAdapter;
 import uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter;
+
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.io.Serializable;
+import java.util.Calendar;
 
 
 /**
