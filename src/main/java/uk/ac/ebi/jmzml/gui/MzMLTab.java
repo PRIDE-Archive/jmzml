@@ -30,9 +30,10 @@ import java.util.TreeSet;
  */
 
 /**
- * This class
+ * This class contains the  MzMLTab JPanel, the main GUI component of the JmzMLViewer.
  *
- * @author martlenn
+ * @author Lennart Martens
+ * @author Harald Barsnes
  * @version $Id$
  */
 public class MzMLTab extends JPanel {
@@ -41,12 +42,21 @@ public class MzMLTab extends JPanel {
     private JmzMLViewer iParent = null;
     private JSplitPane spltMain = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);;
 
+    /**
+     * Creates a new MzMLTab JPanel.
+     *
+     * @param aParent a reference to the parent JmzMLViewer
+     * @param aUnmarshaller the unmarshaller of the mzML file
+     */
     public MzMLTab(JmzMLViewer aParent, MzMLUnmarshaller aUnmarshaller) {
         this.iParent = aParent;
         this.iUnmarshaller = aUnmarshaller;
         this.initDisplay();
     }
 
+    /**
+     * Sets up the main display and adds the tree listeners.
+     */
     private void initDisplay() {
 
         // Sort spectra by index, but display by ID.
@@ -61,6 +71,7 @@ public class MzMLTab extends JPanel {
         // A tree with spectra on the left, and a spectrum viewer on the right.
         ArrayList<String> chromIDs = new ArrayList(iUnmarshaller.getChromatogramIDs());
         final JTree tree = new JTree(new MzmlTreeModel(specIDs, chromIDs));
+
         tree.addTreeSelectionListener(new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent e) {
                 TreePath path= tree.getSelectionPath();
@@ -72,6 +83,7 @@ public class MzMLTab extends JPanel {
                     int pathCount = path.getPathCount();
                     if(pathCount > 2) {
                         final String parent = (String)path.getPathComponent(pathCount-2);
+
                         // First create and start a progress bar.
                         final ProgressDialog progressDialog = new ProgressDialog(iParent, iParent, true);
                         progressDialog.setIntermidiate(true);
@@ -85,7 +97,7 @@ public class MzMLTab extends JPanel {
                         }, "ProgressDialog").start();
 
                         // Now get the spectrum of chromatogram displayed.
-                        new Thread("displaythread"){
+                        new Thread("displayThread"){
                             public void run() {
                                 if(parent.equals(MzmlTreeModel.SPECTRUM_SUBROOT)) {
                                     progressDialog.setTitle("Loading spectrum...");
@@ -102,6 +114,7 @@ public class MzMLTab extends JPanel {
                 }
             }
         });
+
         JScrollPane treeScroller = new JScrollPane(tree, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         spltMain.setTopComponent(treeScroller);
@@ -113,6 +126,11 @@ public class MzMLTab extends JPanel {
         spltMain.setDividerLocation(0.2);        
     }
 
+    /**
+     * Reads the given spectrum and displays it on screen.
+     *
+     * @param aSpecID the ID of the spectrum to display
+     */
     private void displaySpectrum(String aSpecID) {
         try {
             Spectrum spectrum = iUnmarshaller.getSpectrumById(aSpecID);
@@ -180,6 +198,11 @@ public class MzMLTab extends JPanel {
         }
     }
 
+    /**
+     * Reads the given chromatogram and displays it on screen.
+     *
+     * @param aChromatogramID the ID of the chromatogram to display
+     */
     private void displayChromatogram(String aChromatogramID) {
         try {
             Chromatogram chromatogram = iUnmarshaller.getChromatogramById(aChromatogramID);
@@ -219,5 +242,4 @@ public class MzMLTab extends JPanel {
             iParent.seriousProblem("Unable to access file: " + mue.getMessage(), "Problem reading spectrum!");
         }
     }
-
 }

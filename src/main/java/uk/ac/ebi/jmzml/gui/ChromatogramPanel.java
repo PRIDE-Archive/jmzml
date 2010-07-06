@@ -28,6 +28,7 @@ import java.util.TreeSet;
  * This class provides a JPanel that can display a chromatogram, or a profile mass spectrum.
  *
  * @author Lennart Martens
+ * @author Harald Barsnes
  * @version $Id$
  */
 public class ChromatogramPanel extends JPanel {
