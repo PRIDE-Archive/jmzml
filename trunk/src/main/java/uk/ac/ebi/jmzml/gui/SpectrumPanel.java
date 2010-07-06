@@ -26,7 +26,8 @@ import java.util.TreeSet;
 /**
  * This class
  *
- * @author martlenn
+ * @author Lennart Martens
+ * @author Harald Barsnes
  * @version $Id$
  */
 public class SpectrumPanel extends JPanel {

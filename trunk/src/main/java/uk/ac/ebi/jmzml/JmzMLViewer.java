@@ -41,6 +41,7 @@ import java.util.Iterator;
  * This class provides a basic viewer for jmzML spectra.
  *
  * @author Lennart Martens
+ * @author Harald Barsnes
  * @version $Id$
  */
 public class JmzMLViewer extends JFrame implements ProgressDialogParent {
@@ -60,10 +61,18 @@ public class JmzMLViewer extends JFrame implements ProgressDialogParent {
     private ArrayList<String> iFilenames = null;
     private JTabbedPane jtpMain = null;
 
+    /**
+     * Basic constructor.
+     */
     public JmzMLViewer() {
         this(null);
     }
 
+    /**
+     * Constructor, that also tries to open any files provided as paramaters.
+     *
+     * @param aMzMLFiles array of mzML files to open
+     */
     public JmzMLViewer(ArrayList<File> aMzMLFiles) {
         super("jmzML Viewer");
         this.initDisplay();
@@ -85,6 +94,12 @@ public class JmzMLViewer extends JFrame implements ProgressDialogParent {
         });
     }
 
+    /**
+     * Main method. Starts the JmzMLViewer and tries to open any files provided as
+     * paramaters.
+     *
+     * @param args array of mzML files to open
+     */
     public static void main(String[] args) {
         ArrayList<File> mzMLFiles = new ArrayList<File>();
         if(args != null) {
@@ -116,14 +131,19 @@ public class JmzMLViewer extends JFrame implements ProgressDialogParent {
         } else {
             jmzMLViewer = new JmzMLViewer(mzMLFiles);
         }
+
         int width = Toolkit.getDefaultToolkit().getScreenSize().width;
         int height = Toolkit.getDefaultToolkit().getScreenSize().height;
         jmzMLViewer.setBounds(50,50, width-250, height-250);
 
+        // locate the viewer in the middle of the screen
         jmzMLViewer.setLocationRelativeTo(null);
         jmzMLViewer.setVisible(true);
     }
 
+    /**
+     * Initiates the display.
+     */
     private void initDisplay() {
         // Add menubar.
         this.addMenuBar();
@@ -133,6 +153,9 @@ public class JmzMLViewer extends JFrame implements ProgressDialogParent {
         this.getContentPane().add(jtpMain, BorderLayout.CENTER);
     }
 
+    /**
+     * Adds the menu bar to the graphical user interface.
+     */
     private void addMenuBar() {
         JMenuBar menuBar = new JMenuBar();
 
@@ -186,7 +209,9 @@ public class JmzMLViewer extends JFrame implements ProgressDialogParent {
     }
 
     /**
-     * Open help dialog
+     * Openes the help dialog.
+     *
+     * @param urlAsString the URL (as a String) of the help file to display
      */
     private void openHelpDialog(String urlAsString){
         new HelpWindow(this, getClass().getResource(urlAsString));
@@ -233,11 +258,10 @@ public class JmzMLViewer extends JFrame implements ProgressDialogParent {
                 iFilenames = new ArrayList<String>();
             }
 
-
+            // First create and start a progress bar.
             progressDialog = new ProgressDialog(this, this, true);
             progressDialog.setIntermidiate(true);
 
-            // First create and start a progress bar.
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -248,7 +272,7 @@ public class JmzMLViewer extends JFrame implements ProgressDialogParent {
             }, "ProgressDialog").start();
 
             // Now validate file, and open it if it is valid.
-            new Thread("SearchThread") {
+            new Thread("validateAndOpenMzMLFileThread") {
 
                 @Override
                 public void run() {
@@ -260,7 +284,7 @@ public class JmzMLViewer extends JFrame implements ProgressDialogParent {
                                 new String[] {"jmzML validation failed. Please check your mzML file.\n",
                                               "Error messages returned by validation:\n",
                                               errors},
-                                "Your mzML file Failed Validation!",
+                                "Your mzML File Failed Validation!",
                                 JOptionPane.ERROR_MESSAGE);
                     } else {
                         progressDialog.setTitle("Reading mzML File. Please Wait...");
@@ -273,17 +297,34 @@ public class JmzMLViewer extends JFrame implements ProgressDialogParent {
         }
     }
 
+    /**
+     * Adds a new tab to the viewer with a new unmarshaller.
+     *
+     * @param aUnmarshaller the unmarshaller to add
+     * @param aFilename the name of the mzML file to unmarshall
+     */
     private void addUnmarshaller(MzMLUnmarshaller aUnmarshaller, String aFilename) {
         iUnmarshallers.add(aUnmarshaller);
         iFilenames.add(aFilename);
         jtpMain.addTab(aFilename, new MzMLTab(this, aUnmarshaller));
     }
 
+    /**
+     * Opens a dialog with an error message to show the user. Then closes the JmzMLViewer.
+     *
+     * @param aMessage the message to display
+     * @param aTitle the title of the dialog
+     */
     public void seriousProblem(String aMessage, String aTitle) {
         JOptionPane.showMessageDialog(this, new String[] {aMessage, "", "Quitting application"}, aTitle, JOptionPane.ERROR_MESSAGE);
         terminate(1);
     }
 
+    /**
+     * Closes the JmzMLViewer and terminates the JVM.
+     *
+     * @param aStatus exit status
+     */
     private void terminate(int aStatus) {
         this.setVisible(false);
         this.dispose();
@@ -323,7 +364,7 @@ public class JmzMLViewer extends JFrame implements ProgressDialogParent {
             schema = factory.newSchema(schemaLocation);
         } catch (SAXException e) {
             e.printStackTrace();
-            return "Could not compile Schema for file: " + schemaLocation;
+            return "Could not compile Schema for file:\n" + schemaLocation;
         }
 
         // 3. Get a validator from the schema.
@@ -342,7 +383,7 @@ public class JmzMLViewer extends JFrame implements ProgressDialogParent {
             errorMsg = ex.getMessage();
         } catch (IOException e) {
             e.printStackTrace();
-            errorMsg = "Could not validate file because of file read problems for source:" + mzML.getAbsolutePath();
+            errorMsg = "Could not validate file because of file read problems for source:\n" + mzML.getAbsolutePath();
         }
 
         return errorMsg;
