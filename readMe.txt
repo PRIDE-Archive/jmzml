@@ -5,7 +5,7 @@
 
 By: Richard Cote (1), Florian Reisinger (1), Harald Barsnes (2) and Lennart Martens (3,4)
        (1) EMBL-EBI, Cambridge, UK
-       (2) Unibversity of Bergen, Bergen, Norway
+       (2) University of Bergen, Bergen, Norway
        (3) Ghent University, Ghent, Belgium
        (4) VIB, Ghent, Belgium
 
