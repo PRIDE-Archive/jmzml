@@ -6,6 +6,8 @@
  */
 package uk.ac.ebi.jmzml.gui;
 
+import com.compomics.util.gui.spectrum.ChromatogramPanel;
+import com.compomics.util.gui.spectrum.SpectrumPanel;
 import uk.ac.ebi.jmzml.JmzMLViewer;
 import uk.ac.ebi.jmzml.gui.model.MzmlTreeModel;
 import uk.ac.ebi.jmzml.model.mzml.*;
@@ -38,6 +40,11 @@ import java.util.TreeSet;
  */
 public class MzMLTab extends JPanel {
 
+    /**
+     * Neeed to make sure that the GUI does not crash if too many node events
+     * are in action at the same time
+     */
+    private boolean handlingNodeEvent = false; // @TODO: does not catch all issues
     private MzMLUnmarshaller iUnmarshaller = null;
     private JmzMLViewer iParent = null;
     private JSplitPane spltMain = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);;
@@ -75,7 +82,7 @@ public class MzMLTab extends JPanel {
         tree.addTreeSelectionListener(new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent e) {
                 TreePath path= tree.getSelectionPath();
-                if(path != null) {
+                if(path != null && !handlingNodeEvent) {
                     final String node = (String) path.getLastPathComponent();
                     // Only do this if we have something that can be shown,
                     // such as a spectrum or a chromatogram, which are at
@@ -96,14 +103,14 @@ public class MzMLTab extends JPanel {
                             }
                         }, "ProgressDialog").start();
 
-                        // Now get the spectrum of chromatogram displayed.
+                        // Now get the spectrum or chromatogram displayed.
                         new Thread("displayThread"){
                             public void run() {
                                 if(parent.equals(MzmlTreeModel.SPECTRUM_SUBROOT)) {
-                                    progressDialog.setTitle("Loading spectrum...");
+                                    progressDialog.setTitle("Loading Spectrum...");
                                     displaySpectrum(node);
                                 } else if(parent.equals(MzmlTreeModel.CHROMATOGRAM_SUBROOT)) {
-                                    progressDialog.setTitle("Loading chromatogram...");
+                                    progressDialog.setTitle("Loading Chromatogram...");
                                     displayChromatogram(node);
                                 }
                                 progressDialog.setVisible(false);
@@ -132,6 +139,9 @@ public class MzMLTab extends JPanel {
      * @param aSpecID the ID of the spectrum to display
      */
     private void displaySpectrum(String aSpecID) {
+
+        handlingNodeEvent = true;
+
         try {
             Spectrum spectrum = iUnmarshaller.getSpectrumById(aSpecID);
             List<BinaryDataArray> bdal = spectrum.getBinaryDataArrayList().getBinaryDataArray();
@@ -188,14 +198,16 @@ public class MzMLTab extends JPanel {
             }
             JPanel specPanel = null;
             if(isCentroid) {
-                specPanel = new SpectrumPanel(mz, intensities, msLevel, precursorMz, precursorCharge, aSpecID);
+                specPanel = new SpectrumPanel(mz, intensities, precursorMz, precursorCharge, aSpecID, 50, false, true, true, true, msLevel);
             } else {
-                specPanel = new ChromatogramPanel(mz, intensities, msLevel, precursorMz, precursorCharge, aSpecID);
+                specPanel = new ChromatogramPanel(mz, intensities, msLevel, precursorMz, precursorCharge, aSpecID, 1);
             }
             spltMain.setBottomComponent(specPanel);
         } catch(MzMLUnmarshallerException mue) {
             iParent.seriousProblem("Unable to access file: " + mue.getMessage(), "Problem reading spectrum!");
         }
+
+        handlingNodeEvent = false;
     }
 
     /**
@@ -204,6 +216,9 @@ public class MzMLTab extends JPanel {
      * @param aChromatogramID the ID of the chromatogram to display
      */
     private void displayChromatogram(String aChromatogramID) {
+
+        handlingNodeEvent = true;
+
         try {
             Chromatogram chromatogram = iUnmarshaller.getChromatogramById(aChromatogramID);
             List<BinaryDataArray> bdal = chromatogram.getBinaryDataArrayList().getBinaryDataArray();
@@ -236,10 +251,12 @@ public class MzMLTab extends JPanel {
                     yAxisLabel = lCVParam.getName() + " (" + lCVParam.getUnitName() + ")";
                 }
             }
-            ChromatogramPanel chromPanel = new ChromatogramPanel(xAxis, yAxis, xAxisLabel, yAxisLabel);
+            ChromatogramPanel chromPanel = new ChromatogramPanel(xAxis, yAxis, xAxisLabel, yAxisLabel, 1);
             spltMain.setBottomComponent(chromPanel);
         } catch(MzMLUnmarshallerException mue) {
             iParent.seriousProblem("Unable to access file: " + mue.getMessage(), "Problem reading spectrum!");
         }
+
+        handlingNodeEvent = false;
     }
 }
