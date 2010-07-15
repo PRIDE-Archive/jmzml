@@ -27,6 +27,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -75,6 +76,10 @@ public class JmzMLViewer extends JFrame implements ProgressDialogParent {
      */
     public JmzMLViewer(ArrayList<File> aMzMLFiles) {
         super("jmzML Viewer");
+
+        // add the version number to the title
+        this.setTitle(this.getTitle() + " " + getVersion());
+
         this.initDisplay();
         if(aMzMLFiles == null) {
             this.loadMzmlFile(false);
@@ -92,6 +97,25 @@ public class JmzMLViewer extends JFrame implements ProgressDialogParent {
                 terminate(0);
             }
         });
+    }
+
+    /**
+     * Retrieves the version number set in the pom file.
+     *
+     * @return the version number of jmzML
+     */
+    private String getVersion() {
+
+        java.util.Properties p = new java.util.Properties();
+
+        try {
+            InputStream is = this.getClass().getClassLoader().getResourceAsStream("jmzML.properties");
+            p.load(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return p.getProperty("jmzML.version");
     }
 
     /**
