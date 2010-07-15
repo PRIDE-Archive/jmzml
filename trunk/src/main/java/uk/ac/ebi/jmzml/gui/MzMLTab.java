@@ -196,12 +196,8 @@ public class MzMLTab extends JPanel {
                     isCentroid = true;
                 }
             }
-            JPanel specPanel = null;
-            if(isCentroid) {
-                specPanel = new SpectrumPanel(mz, intensities, precursorMz, precursorCharge, aSpecID, 50, false, true, true, true, msLevel);
-            } else {
-                specPanel = new ChromatogramPanel(mz, intensities, msLevel, precursorMz, precursorCharge, aSpecID, 1);
-            }
+            JPanel specPanel = new SpectrumPanel(
+                    mz, intensities, precursorMz, precursorCharge, aSpecID, 50, false, true, true, true, msLevel, !isCentroid);
             spltMain.setBottomComponent(specPanel);
         } catch(MzMLUnmarshallerException mue) {
             iParent.seriousProblem("Unable to access file: " + mue.getMessage(), "Problem reading spectrum!");
@@ -251,7 +247,7 @@ public class MzMLTab extends JPanel {
                     yAxisLabel = lCVParam.getName() + " (" + lCVParam.getUnitName() + ")";
                 }
             }
-            ChromatogramPanel chromPanel = new ChromatogramPanel(xAxis, yAxis, xAxisLabel, yAxisLabel, 1);
+            ChromatogramPanel chromPanel = new ChromatogramPanel(xAxis, yAxis, xAxisLabel, yAxisLabel);
             spltMain.setBottomComponent(chromPanel);
         } catch(MzMLUnmarshallerException mue) {
             iParent.seriousProblem("Unable to access file: " + mue.getMessage(), "Problem reading spectrum!");
