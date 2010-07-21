@@ -40,14 +40,9 @@ import java.util.TreeSet;
  */
 public class MzMLTab extends JPanel {
 
-    /**
-     * Neeed to make sure that the GUI does not crash if too many node events
-     * are in action at the same time
-     */
-    private boolean handlingNodeEvent = false; // @TODO: does not catch all issues
     private MzMLUnmarshaller iUnmarshaller = null;
     private JmzMLViewer iParent = null;
-    private JSplitPane spltMain = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);;
+    private JSplitPane spltMain = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 
     /**
      * Creates a new MzMLTab JPanel.
@@ -80,43 +75,49 @@ public class MzMLTab extends JPanel {
         final JTree tree = new JTree(new MzmlTreeModel(specIDs, chromIDs));
 
         tree.addTreeSelectionListener(new TreeSelectionListener() {
+
             public void valueChanged(TreeSelectionEvent e) {
-                TreePath path= tree.getSelectionPath();
-                if(path != null && !handlingNodeEvent) {
+
+                TreePath path = tree.getSelectionPath();
+
+                if (path != null) {
+
                     final String node = (String) path.getLastPathComponent();
                     // Only do this if we have something that can be shown,
                     // such as a spectrum or a chromatogram, which are at
                     // the third level of the tree.
                     int pathCount = path.getPathCount();
-                    if(pathCount > 2) {
-                        final String parent = (String)path.getPathComponent(pathCount-2);
+                    if (pathCount > 2) {
+                        final String parent = (String) path.getPathComponent(pathCount - 2);
 
                         // First create and start a progress bar.
                         final ProgressDialog progressDialog = new ProgressDialog(iParent, iParent, true);
                         progressDialog.setIntermidiate(true);
 
-                        new Thread(new Runnable() {
+                        java.awt.EventQueue.invokeLater(new Runnable() {
+
                             @Override
                             public void run() {
                                 progressDialog.setIntermidiate(true);
                                 progressDialog.setVisible(true);
                             }
-                        }, "ProgressDialog").start();
+                        });
 
                         // Now get the spectrum or chromatogram displayed.
-                        new Thread("displayThread"){
+                        java.awt.EventQueue.invokeLater(new Runnable() {
+
                             public void run() {
-                                if(parent.equals(MzmlTreeModel.SPECTRUM_SUBROOT)) {
+                                if (parent.equals(MzmlTreeModel.SPECTRUM_SUBROOT)) {
                                     progressDialog.setTitle("Loading Spectrum...");
                                     displaySpectrum(node);
-                                } else if(parent.equals(MzmlTreeModel.CHROMATOGRAM_SUBROOT)) {
+                                } else if (parent.equals(MzmlTreeModel.CHROMATOGRAM_SUBROOT)) {
                                     progressDialog.setTitle("Loading Chromatogram...");
                                     displayChromatogram(node);
                                 }
                                 progressDialog.setVisible(false);
                                 progressDialog.dispose();
                             }
-                        }.start();
+                        });
                     }
                 }
             }
@@ -130,7 +131,7 @@ public class MzMLTab extends JPanel {
         this.setLayout(new BorderLayout());
         this.add(spltMain, BorderLayout.CENTER);
         spltMain.setOneTouchExpandable(true);
-        spltMain.setDividerLocation(0.2);        
+        spltMain.setDividerLocation(0.2);
     }
 
     /**
@@ -139,8 +140,6 @@ public class MzMLTab extends JPanel {
      * @param aSpecID the ID of the spectrum to display
      */
     private void displaySpectrum(String aSpecID) {
-
-        handlingNodeEvent = true;
 
         try {
             Spectrum spectrum = iUnmarshaller.getSpectrumById(aSpecID);
@@ -168,8 +167,8 @@ public class MzMLTab extends JPanel {
             PrecursorList plist = spectrum.getPrecursorList();
             double precursorMz = 0.0;
             String precursorCharge = "?";
-            if(plist != null) {
-                if(plist.getCount().intValue() == 1) {
+            if (plist != null) {
+                if (plist.getCount().intValue() == 1) {
                     SelectedIonList sIonList = plist.getPrecursor().get(0).getSelectedIonList();
                     if (sIonList != null) {
                         List<CVParam> cvParams = sIonList.getSelectedIon().get(0).getCvParam();
@@ -189,21 +188,19 @@ public class MzMLTab extends JPanel {
             List<CVParam> specParams = spectrum.getCvParam();
             for (Iterator lCVParamIterator = specParams.iterator(); lCVParamIterator.hasNext();) {
                 CVParam lCVParam = (CVParam) lCVParamIterator.next();
-                if(lCVParam.getAccession().equals("MS:1000511")) {
+                if (lCVParam.getAccession().equals("MS:1000511")) {
                     msLevel = Integer.parseInt(lCVParam.getValue().trim());
                 }
-                if(lCVParam.getAccession().equals("MS:1000127")) {
+                if (lCVParam.getAccession().equals("MS:1000127")) {
                     isCentroid = true;
                 }
             }
             JPanel specPanel = new SpectrumPanel(
                     mz, intensities, precursorMz, precursorCharge, aSpecID, 50, false, true, true, true, msLevel, !isCentroid);
             spltMain.setBottomComponent(specPanel);
-        } catch(MzMLUnmarshallerException mue) {
+        } catch (MzMLUnmarshallerException mue) {
             iParent.seriousProblem("Unable to access file: " + mue.getMessage(), "Problem reading spectrum!");
         }
-
-        handlingNodeEvent = false;
     }
 
     /**
@@ -213,13 +210,11 @@ public class MzMLTab extends JPanel {
      */
     private void displayChromatogram(String aChromatogramID) {
 
-        handlingNodeEvent = true;
-
         try {
             Chromatogram chromatogram = iUnmarshaller.getChromatogramById(aChromatogramID);
             List<BinaryDataArray> bdal = chromatogram.getBinaryDataArrayList().getBinaryDataArray();
             BinaryDataArray xAxisBinaryDataArray = (BinaryDataArray) bdal.get(0);
-            Number[] xAxisNumbers =  xAxisBinaryDataArray.getBinaryDataAsNumberArray();
+            Number[] xAxisNumbers = xAxisBinaryDataArray.getBinaryDataAsNumberArray();
             double[] xAxis = new double[xAxisNumbers.length];
             for (int i = 0; i < xAxisNumbers.length; i++) {
                 xAxis[i] = xAxisNumbers[i].doubleValue();
@@ -228,7 +223,7 @@ public class MzMLTab extends JPanel {
             List<CVParam> xArrayParams = xAxisBinaryDataArray.getCvParam();
             for (Iterator lCVParamIterator = xArrayParams.iterator(); lCVParamIterator.hasNext();) {
                 CVParam lCVParam = (CVParam) lCVParamIterator.next();
-                if(lCVParam.getUnitAccession() != null) {
+                if (lCVParam.getUnitAccession() != null) {
                     xAxisLabel = lCVParam.getName() + " (" + lCVParam.getUnitName() + ")";
                 }
             }
@@ -243,16 +238,14 @@ public class MzMLTab extends JPanel {
             for (Iterator lCVParamIterator = yArrayParams.iterator(); lCVParamIterator.hasNext();) {
                 CVParam lCVParam = (CVParam) lCVParamIterator.next();
                 // @TODO parse out relevant bits.
-                if(lCVParam.getUnitAccession() != null) {
+                if (lCVParam.getUnitAccession() != null) {
                     yAxisLabel = lCVParam.getName() + " (" + lCVParam.getUnitName() + ")";
                 }
             }
             ChromatogramPanel chromPanel = new ChromatogramPanel(xAxis, yAxis, xAxisLabel, yAxisLabel);
             spltMain.setBottomComponent(chromPanel);
-        } catch(MzMLUnmarshallerException mue) {
+        } catch (MzMLUnmarshallerException mue) {
             iParent.seriousProblem("Unable to access file: " + mue.getMessage(), "Problem reading spectrum!");
         }
-
-        handlingNodeEvent = false;
     }
 }
