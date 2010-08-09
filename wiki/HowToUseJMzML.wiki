@@ -1,4 +1,4 @@
-#summary High-Level Overview on How to use jmzML
+#summary High-Level Overview on How to Use jmzML
 #labels Featured,Phase-Implementation
 
 = jmzML =
