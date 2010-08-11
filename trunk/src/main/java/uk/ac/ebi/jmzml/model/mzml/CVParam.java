@@ -256,7 +256,7 @@ public class CVParam
      * out, as it will already be marshalled out in the referenceableParamGroupRef.
      * Also, caution is to be used when editing the CVParam!
      *
-     * @returns boolean that indicates whether this CVParam was inferred from
+     * @return boolean that indicates whether this CVParam was inferred from
      *                  a referenceableParamGroupRef.
      */
     public boolean isInferredFromReferenceableParamGroupRef() {
