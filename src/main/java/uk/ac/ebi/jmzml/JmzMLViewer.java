@@ -287,7 +287,6 @@ public class JmzMLViewer extends JFrame implements ProgressDialogParent {
             progressDialog.setIntermidiate(true);
 
             new Thread(new Runnable() {
-                @Override
                 public void run() {
                     progressDialog.setIntermidiate(true);
                     progressDialog.setTitle("Validating mzML File. Please Wait...");
