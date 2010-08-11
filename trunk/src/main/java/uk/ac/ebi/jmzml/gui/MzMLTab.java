@@ -96,7 +96,6 @@ public class MzMLTab extends JPanel {
 
                         java.awt.EventQueue.invokeLater(new Runnable() {
 
-                            @Override
                             public void run() {
                                 progressDialog.setIntermidiate(true);
                                 progressDialog.setVisible(true);
