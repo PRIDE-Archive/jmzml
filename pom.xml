@@ -10,14 +10,14 @@
     <name>MzML Java core API</name>
     <url>http://www.ebi.ac.uk/pride</url>
     <description>
-        JAXB implementation of the MzML 1.1 standard as made available from the Proteomics Standards Initiative. This
-        object model can be used to serialize/deserialize properly formed MzML XML files.
+        JAXB implementation of the mzML 1.1 standard as made available from the Proteomics Standards Initiative. This
+        object model can be used to serialize/deserialize properly formed mzML XML files.
     </description>
 
 
     <!-- Set the version number for the whole project -->
     <properties>
-        <version.number>1.6.3</version.number>
+        <version.number>1.6.4</version.number>
     </properties>
 
 
@@ -251,7 +251,25 @@
         <dependency>
             <groupId>com.compomics</groupId>
             <artifactId>utilities</artifactId>
-            <version>3.0.13</version>
+            <version>3.0.16</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>xtandem-parser</artifactId>
+                    <groupId>de.proteinms.xtandemparser</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>omssa-parser</artifactId>
+                    <groupId>de.proteinms.omxparser</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>mascotdatfile</artifactId>
+                    <groupId>com.compomics</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>servlet-api</artifactId>
+                    <groupId>javax.servlet</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
