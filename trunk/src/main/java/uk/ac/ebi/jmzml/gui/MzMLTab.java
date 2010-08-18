@@ -43,6 +43,11 @@ public class MzMLTab extends JPanel {
     private MzMLUnmarshaller iUnmarshaller = null;
     private JmzMLViewer iParent = null;
     private JSplitPane spltMain = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+    /**
+     * The maximum padding allowed in the spectrum and chromatogram panels. 
+     * Increase if font size on the y-axis becomes too small.
+     */
+    private int spectrumPanelMaxPadding = 80;
 
     /**
      * Creates a new MzMLTab JPanel.
@@ -195,7 +200,7 @@ public class MzMLTab extends JPanel {
                 }
             }
             JPanel specPanel = new SpectrumPanel(
-                    mz, intensities, precursorMz, precursorCharge, aSpecID, 50, false, true, true, true, msLevel, !isCentroid);
+                    mz, intensities, precursorMz, precursorCharge, aSpecID, spectrumPanelMaxPadding, false, true, true, true, msLevel, !isCentroid);
             spltMain.setBottomComponent(specPanel);
         } catch (MzMLUnmarshallerException mue) {
             iParent.seriousProblem("Unable to access file: " + mue.getMessage(), "Problem reading spectrum!");
@@ -242,6 +247,7 @@ public class MzMLTab extends JPanel {
                 }
             }
             ChromatogramPanel chromPanel = new ChromatogramPanel(xAxis, yAxis, xAxisLabel, yAxisLabel);
+            chromPanel.setMaxPadding(spectrumPanelMaxPadding);
             spltMain.setBottomComponent(chromPanel);
         } catch (MzMLUnmarshallerException mue) {
             iParent.seriousProblem("Unable to access file: " + mue.getMessage(), "Problem reading spectrum!");
