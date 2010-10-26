@@ -17,7 +17,7 @@
 
     <!-- Set the version number for the whole project -->
     <properties>
-        <version.number>1.6.4</version.number>
+        <version.number>1.6.5</version.number>
     </properties>
 
 
@@ -221,7 +221,7 @@
         <dependency>
             <groupId>psidev.psi.tools</groupId>
             <artifactId>xxindex</artifactId>
-            <version>0.7-SNAPSHOT</version>
+            <version>0.10</version>
         </dependency>
         <dependency>
             <groupId>commons-collections</groupId>
