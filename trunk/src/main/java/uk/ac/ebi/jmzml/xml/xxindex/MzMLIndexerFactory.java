@@ -1,10 +1,7 @@
 package uk.ac.ebi.jmzml.xml.xxindex;
 
 import org.apache.log4j.Logger;
-import psidev.psi.tools.xxindex.StandardXmlElementExtractor;
-import psidev.psi.tools.xxindex.StandardXpathAccess;
-import psidev.psi.tools.xxindex.XmlElementExtractor;
-import psidev.psi.tools.xxindex.XpathAccess;
+import psidev.psi.tools.xxindex.*;
 import psidev.psi.tools.xxindex.index.IndexElement;
 import psidev.psi.tools.xxindex.index.XpathIndex;
 import uk.ac.ebi.jmzml.xml.Constants;
@@ -86,8 +83,11 @@ public class MzMLIndexerFactory {
                 logger.debug("done!");
 
                 //create xml element extractor
-                xmlExtractor = new StandardXmlElementExtractor();
-                xmlExtractor.setEncoding(xmlExtractor.detectFileEncoding(xmlFile.toURI().toURL()));
+                xmlExtractor = new SimpleXmlElementExtractor();
+                String encoding = xmlExtractor.detectFileEncoding(xmlFile.toURI().toURL());
+                if (encoding != null) {
+                    xmlExtractor.setEncoding(encoding);
+                }
 
                 //create index
                 index = xpathAccess.getIndex();
