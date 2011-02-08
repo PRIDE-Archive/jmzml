@@ -3,11 +3,12 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="uk.ac.ebi.jmzml.model.mzml.BinaryDataArrayList" table="BinaryDataArrayList">
+    <class name="uk.ac.ebi.jmzml.model.mzml.SoftwareRef" table="SoftwareRef">
         <id name="hid" type="long" access="field">
             <column name="hid"/>
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
-        <many-to-one name="isolationWindow" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup"/>
+        <many-to-one name="software" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Software"/>
+
     </class>
 </hibernate-mapping>
