@@ -9,7 +9,7 @@
             <generator class="native"/>
         </id>
 
-        <property name="count" type="long" not-null="true"/>
+        <property name="count" column="count" type="long" not-null="true"/>
 
         <list name="target" cascade="all" table="TargetList_ParamGroup">
             <key column="TargetList_hid"/>

@@ -15,6 +15,6 @@
         <property name="unitAccession" type="string" column="unitAccession" not-null="false"/>
         <property name="unitName" type="string" column="unitAccession" not-null="false"/>
 
-        <many-to-one name="unitCV" column="unitCV" class="uk.ac.ebi.jmzml.model.mzml.CV" cascade="all" not-null="false" lazy="proxy" />
+        <many-to-one name="unitCV" column="unitCV" class="uk.ac.ebi.jmzml.model.mzml.CV" cascade="all" not-null="false" />
     </class>
 </hibernate-mapping>
