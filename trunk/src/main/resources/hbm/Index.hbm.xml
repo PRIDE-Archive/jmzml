@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="uk.ac.ebi.jmzml.model.mzml.Index" table="Index">
+        <id name="hid" type="java.lang.Long" access="field">
+            <column name="hid"/>
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
+        </id>
+        <property name="name" type="string"/>
+        <list name="offset" access="field" cascade="all" table="Index_Offset">
+                <key column="Index_hid"/>
+                <index column="idx"/>
+                <many-to-many column="Offset_hid" class="uk.ac.ebi.jmzml.model.mzml.Offset"/>
+        </list>
+    </class>
+</hibernate-mapping>
