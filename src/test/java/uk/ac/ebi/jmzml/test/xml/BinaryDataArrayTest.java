@@ -157,25 +157,25 @@ public class BinaryDataArrayTest extends TestCase {
         prec64bit = new BinaryDataArrayCVParam();
         prec64bit.setAccession(BinaryDataArray.MS_FLOAT64BIT_AC);
         prec64bit.setName(BinaryDataArray.MS_FLOAT64BIT_NAME);
-        prec64bit.setCV(cv);
+        prec64bit.setCv(cv);
 
         // define a CVParam for 32 bit precision
         prec32bit = new BinaryDataArrayCVParam();
         prec32bit.setAccession(BinaryDataArray.MS_FLOAT32BIT_AC);
         prec32bit.setName(BinaryDataArray.MS_FLOAT32BIT_NAME);
-        prec32bit.setCV(cv);
+        prec32bit.setCv(cv);
 
         // define a CVParam for compression
         compressed = new BinaryDataArrayCVParam();
         compressed.setAccession(BinaryDataArray.MS_COMPRESSED_AC);
         compressed.setName(BinaryDataArray.MS_COMPRESSED_NAME);
-        compressed.setCV(cv);
+        compressed.setCv(cv);
 
         // define a CVParam for no compression
         uncompressed = new BinaryDataArrayCVParam();
         uncompressed.setAccession(BinaryDataArray.MS_UNCOMPRESSED_AC);
         uncompressed.setName(BinaryDataArray.MS_UNCOMPRESSED_NAME);
-        uncompressed.setCV(cv);
+        uncompressed.setCv(cv);
 
     }
 

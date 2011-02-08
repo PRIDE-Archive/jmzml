@@ -11,7 +11,7 @@
 
         <property name="count" column="count" type="long" not-null="true"/>
 
-        <list name="target" cascade="all" table="TargetList_Target">
+        <list name="target" cascade="all" table="TargetList_Target" access="field">
             <key column="TargetList_hid"/>
             <!-- list-index should be used instead of index, index should be used only to support hibernate 2.x -->
             <list-index column="idx"/>

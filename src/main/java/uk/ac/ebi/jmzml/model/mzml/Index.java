@@ -49,6 +49,16 @@ public class Index
     protected List<Offset> offset;
     @XmlAttribute(required = true)
     protected String name;
+    @XmlTransient
+    protected long hid;
+
+    public long getHid() {
+        return hid;
+    }
+
+    public void setHid(long hid) {
+        this.hid = hid;
+    }
 
     /**
      * Gets the value of the offset property.

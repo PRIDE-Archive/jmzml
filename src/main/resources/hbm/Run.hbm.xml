@@ -10,6 +10,6 @@
         <many-to-one name="defaultInstrumentConfiguration" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.InstrumentConfiguration"/>
         <many-to-one name="defaultSourceFileRef" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFile"/>
         <many-to-one name="sample" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Sample"/>
-        <property name="calendar" type="calendar"/>
+        <property name="startTimeStamp" type="calendar"/>
     </union-subclass>
 </hibernate-mapping>

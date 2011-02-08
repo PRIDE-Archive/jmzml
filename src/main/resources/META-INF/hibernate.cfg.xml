@@ -28,8 +28,8 @@
         <!-- Drop and re-create the database schema on startup -->
         <property name="hibernate.hbm2ddl.auto">create</property>
 
-        <property name="hibernate.ejb.naming_strategy">uk.ac.ebi.jmzidml.persistence.hibernate.TestNamingStrategy
-        </property>
+        <!--<property name="hibernate.ejb.naming_strategy">uk.ac.ebi.jmzidml.persistence.hibernate.TestNamingStrategy-->
+        <!--</property>-->
         <!-- Mapping files -->
 
         <mapping resource="hbm/AnalyzerComponent.hbm.xml"/>

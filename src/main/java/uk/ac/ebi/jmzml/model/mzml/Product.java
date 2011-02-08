@@ -5,6 +5,7 @@ import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 
@@ -40,6 +41,16 @@ public class Product
 
     private final static long serialVersionUID = 100L;
     protected ParamGroup isolationWindow;
+    @XmlTransient
+    protected long hid;
+
+    public long getHid() {
+        return hid;
+    }
+
+    public void setHid(long hid) {
+        this.hid = hid;
+    }
 
     /**
      * Gets the value of the isolationWindow property.
