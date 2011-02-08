@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <!-- Database connection settings -->
+        <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+        <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:xe</property>
+        <!-- property name="hibernate.connection.driver_class" / -->
+        <property name="hibernate.connection.username">mzml</property>
+        <property name="hibernate.connection.password">mzml</property>
+        <!-- Hibernate specific configuration  -->
+        <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
+        <property name="hibernate.max_fetch_depth">3</property>
+
+        <!-- Auto detect annotation model classes -->
+        <property name="hibernate.archive.autodetection">class</property>
+
+        <!-- Disable the second-level cache  -->
+        <property name="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+
+        <!-- Echo all executed SQL to stdout -->
+        <property name="use_sql_comments">true</property>
+        <property name="hibernate.show_sql">true</property>
+
+        <!-- Drop and re-create the database schema on startup -->
+        <property name="hibernate.hbm2ddl.auto">create</property>
+
+        <property name="hibernate.ejb.naming_strategy">uk.ac.ebi.jmzidml.persistence.hibernate.TestNamingStrategy
+        </property>
+        <!-- Mapping files -->
+
+        <mapping resource="hbm/AnalyzerComponent.hbm.xml"/>
+        <mapping resource="hbm/BinaryDataArray.hbm.xml"/>
+        <mapping resource="hbm/BinaryDataArrayList.hbm.xml"/>
+        <mapping resource="hbm/Chromatogram.hbm.xml"/>
+        <mapping resource="hbm/ChromatogramList.hbm.xml"/>
+        <mapping resource="hbm/Component.hbm.xml"/>
+        <mapping resource="hbm/ComponentList.hbm.xml"/>
+        <mapping resource="hbm/CV.hbm.xml"/>
+        <mapping resource="hbm/CVList.hbm.xml"/>
+        <mapping resource="hbm/CVParam.hbm.xml"/>
+        <mapping resource="hbm/DataProcessing.hbm.xml"/>
+        <mapping resource="hbm/DataProcessingList.hbm.xml"/>
+        <mapping resource="hbm/DetectorComponent.hbm.xml"/>
+        <mapping resource="hbm/FileDescription.hbm.xml"/>
+        <mapping resource="hbm/Index.hbm.xml"/>
+        <mapping resource="hbm/ParamGroup.hbm.xml"/>
+        <mapping resource="hbm/Precursor.hbm.xml"/>
+        <mapping resource="hbm/PrecursorList.hbm.xml"/>
+        <mapping resource="hbm/ProcessingMethod.hbm.xml"/>
+        <mapping resource="hbm/Product.hbm.xml"/>
+        <mapping resource="hbm/ProductList.hbm.xml"/>
+        <mapping resource="hbm/ReferenceableParamGroup.hbm.xml"/>
+        <mapping resource="hbm/ReferenceableParamGroupList.hbm.xml"/>
+        <mapping resource="hbm/ReferenceableParamGroupRef.hbm.xml"/>
+        <mapping resource="hbm/Run.hbm.xml"/>
+
+
+    </session-factory>
+</hibernate-configuration>
