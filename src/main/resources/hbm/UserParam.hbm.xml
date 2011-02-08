@@ -2,8 +2,8 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping default-access="property">
-    <class name="uk.ac.ebi.jmzml.model.mzml.UserParam" table="UserParam">
+<hibernate-mapping default-access="property" package="uk.ac.ebi.jmzml.model.mzml">
+    <class name="UserParam" table="UserParam">
 
         <id name="hid" column="hid" type="long">
             <generator class="native"/>
@@ -15,6 +15,6 @@
         <property name="unitAccession" type="string" column="unitAccession" not-null="false"/>
         <property name="unitName" type="string" column="unitAccession" not-null="false"/>
 
-        <many-to-one name="unitCV" column="unitCV" class="uk.ac.ebi.jmzml.model.mzml.CV" cascade="all" not-null="false" />
+        <many-to-one name="unitCV" column="unitCV" class="CV" cascade="all" not-null="false" />
     </class>
 </hibernate-mapping>
