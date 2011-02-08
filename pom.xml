@@ -1,12 +1,12 @@
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    
+
     <groupId>uk.ac.ebi.jmzml</groupId>
     <artifactId>jmzml</artifactId>
     <packaging>jar</packaging>
-    <version>${version.number}</version> <!-- version number is set below -->
+    <version>${version.number}</version>
+    <!-- version number is set below -->
     <name>MzML Java core API</name>
     <url>http://www.ebi.ac.uk/pride</url>
     <description>
@@ -21,7 +21,7 @@
     </properties>
 
 
-     <!-- License -->
+    <!-- License -->
     <licenses>
         <license>
             <name>The Apache Software License 2.0</name>
@@ -133,7 +133,7 @@
                 </configuration>
             </plugin>
 
-             <!-- Resources plugin -->
+            <!-- Resources plugin -->
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.3</version>
@@ -160,42 +160,42 @@
                     </execution>
                 </executions>
             </plugin>
-<!--
-            <plugin>
-                <!- you can use this plugin to generate the jaxb object model from
-                     the schema and binding files specified below. Note: this will
-                     need an explicit maven goal call, since it is not intergrated
-                     into the standard mvn lifecycle. The goal to use is:
-                     org.jvnet.jaxb2.maven2:maven-jaxb2-plugin:0.6.3:generate
+            <!--
+                        <plugin>
+                            <!- you can use this plugin to generate the jaxb object model from
+                                 the schema and binding files specified below. Note: this will
+                                 need an explicit maven goal call, since it is not intergrated
+                                 into the standard mvn lifecycle. The goal to use is:
+                                 org.jvnet.jaxb2.maven2:maven-jaxb2-plugin:0.6.3:generate
 
-                     NOTE: the code generation may overwrite existing classes, so care
-                           should be taken with files that were manually modified. Such
-                           files are in the current version (0.6): CVParam, UserParam,
-                           ParamGroup, BinaryDataArray and ComponentList.
-                 ->
-                <groupId>org.jvnet.jaxb2.maven2</groupId>
-                <artifactId>maven-jaxb2-plugin</artifactId>
-                <version>0.6.3</version>
-                <configuration>
-                    <extension>true</extension>
-                    <schemaDirectory>src/main/resources</schemaDirectory>
-                    <schemaIncludes>
-                        <include>mzML1.1.1-idx.xsd</include>
-                    </schemaIncludes>
-                    <bindingDirectory>src/main/resources</bindingDirectory>
-                    <bindingIncludes>
-                        <include>bindings.xjb</include>
-                    </bindingIncludes>
-                    <generateDirectory>src/main/java</generateDirectory>
-                    <removeOldOutput>false</removeOldOutput>
-                    <forceRegenerate>true</forceRegenerate>
-                    <verbose>true</verbose>
-                    <args>
-                        <arg>-no-header</arg>
-                    </args>
-                </configuration>
-            </plugin>
--->
+                                 NOTE: the code generation may overwrite existing classes, so care
+                                       should be taken with files that were manually modified. Such
+                                       files are in the current version (0.6): CVParam, UserParam,
+                                       ParamGroup, BinaryDataArray and ComponentList.
+                             ->
+                            <groupId>org.jvnet.jaxb2.maven2</groupId>
+                            <artifactId>maven-jaxb2-plugin</artifactId>
+                            <version>0.6.3</version>
+                            <configuration>
+                                <extension>true</extension>
+                                <schemaDirectory>src/main/resources</schemaDirectory>
+                                <schemaIncludes>
+                                    <include>mzML1.1.1-idx.xsd</include>
+                                </schemaIncludes>
+                                <bindingDirectory>src/main/resources</bindingDirectory>
+                                <bindingIncludes>
+                                    <include>bindings.xjb</include>
+                                </bindingIncludes>
+                                <generateDirectory>src/main/java</generateDirectory>
+                                <removeOldOutput>false</removeOldOutput>
+                                <forceRegenerate>true</forceRegenerate>
+                                <verbose>true</verbose>
+                                <args>
+                                    <arg>-no-header</arg>
+                                </args>
+                            </configuration>
+                        </plugin>
+            -->
         </plugins>
     </build>
 
@@ -270,6 +270,21 @@
                     <groupId>javax.servlet</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>3.6.0.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.9.0.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc14</artifactId>
+            <version>10.2.0.4.0</version>
         </dependency>
     </dependencies>
 

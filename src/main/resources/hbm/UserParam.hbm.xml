@@ -13,7 +13,7 @@
         <property name="type" type="string" column="type" not-null="true"/>
         <property name="value" type="string" column="value" not-null="true"/>
         <property name="unitAccession" type="string" column="unitAccession" not-null="false"/>
-        <property name="unitName" type="string" column="unitAccession" not-null="false"/>
+        <property name="unitName" type="string" column="unitName" not-null="false"/>
 
         <many-to-one name="unitCV" column="unitCV" class="CV" cascade="all" not-null="false" />
     </class>
