@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-access="property">
+    <class name="uk.ac.ebi.jmzml.model.mzml.UserParam">
+
+        <id name="hid" column="hid" type="long">
+            <generator class="native"/>
+        </id>
+
+        <property name="name" type="string" column="name" not-null="true"/>
+        <property name="type" type="string" column="type" not-null="true"/>
+        <property name="value" type="string" column="value" not-null="true"/>
+        <property name="unitAccession" type="string" column="unitAccession" not-null="false"/>
+        <property name="unitName" type="string" column="unitAccession" not-null="false"/>
+
+        <many-to-one name="unitCV" column="unitCV" class="uk.ac.ebi.jmzml.model.mzml.CV" cascade="all" not-null="false" lazy="proxy" />
+    </class>
+</hibernate-mapping>
