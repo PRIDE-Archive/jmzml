@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="uk.ac.ebi.jmzml.model.mzml.CVParam" table="CVParam">
+        <id name="hid" type="java.lang.Long" access="field">
+            <column name="hid"/>
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
+        </id>
+        <many-to-one name="cv" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.CV"/>
+
+        <property name="accession" type="string"/>
+        <property name="value" type="string"/>
+        <property name="name" type="string"/>
+        <property name="unitAccession" type="string"/>
+        <property name="unitName" type="string"/>
+
+        <many-to-one name="unitCV" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.CV"/>
+    </class>
+</hibernate-mapping>

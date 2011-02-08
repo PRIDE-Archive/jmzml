@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="uk.ac.ebi.jmzml.model.mzml.PrecursorList" table="PrecursorList">
+        <id name="hid" type="java.lang.Long" access="field">
+            <column name="hid"/>
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
+        </id>
+        <property name="count" type="big_integer"/>
+        <list name="precursor" access="field" cascade="all" table="PrecursorList_Precursor">
+                <key column="PrecursorList_hid"/>
+                <index column="idx"/>
+                <many-to-many column="Precursor_hid" class="uk.ac.ebi.jmzml.model.mzml.Precursor"/>
+        </list>
+    </class>
+</hibernate-mapping>
