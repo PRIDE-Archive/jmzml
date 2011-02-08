@@ -2,12 +2,12 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping>
-    <class name="uk.ac.ebi.jmzml.model.mzml.BinaryDataArrayList" table="BinaryDataArrayList">
+<hibernate-mapping package="uk.ac.ebi.jmzml.model.mzml">
+    <class name="Product" table="Product">
         <id name="hid" type="long" access="field">
             <column name="hid"/>
-            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
+            <generator class="native"/>
         </id>
-        <many-to-one name="isolationWindow" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup"/>
+        <many-to-one name="isolationWindow" cascade="all" class="ParamGroup"/>
     </class>
 </hibernate-mapping>

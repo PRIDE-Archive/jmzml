@@ -43,6 +43,16 @@ public class Offset
     protected String spotID;
     @XmlAttribute
     protected Double scanTime;
+    @XmlTransient
+    protected long hid;
+
+    public long getHid() {
+        return hid;
+    }
+
+    public void setHid(long hid) {
+        this.hid = hid;
+    }
 
     /**
      * Gets the value of the value property.

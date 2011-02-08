@@ -2,26 +2,26 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping>
-    <class name="uk.ac.ebi.jmzml.model.mzml.BinaryDataArrayList" table="BinaryDataArrayList">
+<hibernate-mapping package="uk.ac.ebi.jmzml.model.mzml">
+    <class name="ParamGroup" table="ParamGroup">
         <id name="hid" type="long" access="field">
             <column name="hid"/>
-            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
+            <generator class="native"/>
         </id>
         <list name="referenceableParamGroupRef" access="field" cascade="all" table="ParamGroup_ReferenceableParamGroupRef">
                 <key column="ParamGroup_hid"/>
                 <index column="idx"/>
-                <many-to-many column="ReferenceableParamGroupRef_hid" class="uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroupRef"/>
+                <many-to-many column="ReferenceableParamGroupRef_hid" class="ReferenceableParamGroupRef"/>
         </list>
         <list name="cvParam" access="field" cascade="all" table="ParamGroup_CVParam">
                 <key column="ParamGroup_hid"/>
                 <index column="idx"/>
-                <many-to-many column="CVParam_hid" class="uk.ac.ebi.jmzml.model.mzml.CVParam"/>
+                <many-to-many column="CVParam_hid" class="CVParam"/>
         </list>
         <list name="userParam" access="field" cascade="all" table="ParamGroup_UserParam">
                 <key column="ParamGroup_hid"/>
                 <index column="idx"/>
-                <many-to-many column="UserParam_hid" class="uk.ac.ebi.jmzml.model.mzml.UserParam"/>
+                <many-to-many column="UserParam_hid" class="UserParam"/>
         </list>
     </class>
 </hibernate-mapping>
