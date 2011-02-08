@@ -46,6 +46,17 @@ public class TargetList
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger count;
+    @XmlTransient
+    protected long hid;
+
+
+    public long getHid() {
+        return hid;
+    }
+
+    public void setHid(long hid) {
+        this.hid = hid;
+    }
 
     /**
      * Gets the value of the target property.
