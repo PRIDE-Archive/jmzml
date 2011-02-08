@@ -2,21 +2,21 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping default-access="property">
-    <class name="uk.ac.ebi.jmzml.model.mzml.SpectrumList">
+<hibernate-mapping default-access="property" package="uk.ac.ebi.jmzml.model.mzml">
+    <class name="SpectrumList">
 
         <id name="hid" column="hid" type="long">
             <generator class="native"/>
         </id>
 
         <list name="spectrum" table="SpectrumList_Spectrum">
-            <key column="SpectrumList_hid"/>
-            <index column="idx"/>
-            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.Spectrum"/>
+            <key column="hid"/>
+            <list-index column="idx"/>
+            <one-to-many class="Spectrum"/>
         </list>
 
         <property name="count" type="big_integer" column="count" not-null="false"/>
 
-        <many-to-one name="defaultDataProcessing" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing" cascade="all" not-null="false"/>
+        <many-to-one name="defaultDataProcessing" class="DataProcessing" cascade="all" not-null="false"/>
     </class>
 </hibernate-mapping>
