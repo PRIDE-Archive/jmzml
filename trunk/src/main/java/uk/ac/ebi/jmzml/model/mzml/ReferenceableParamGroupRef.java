@@ -39,6 +39,16 @@ public class ReferenceableParamGroupRef
     @XmlJavaTypeAdapter(ReferenceableParamGroupAdapter.class)
     @XmlSchemaType(name = "IDREF")
     protected ReferenceableParamGroup referenceableParamGroup;
+    @XmlTransient
+    protected long hid;
+
+    public long getHid() {
+        return hid;
+    }
+
+    public void setHid(long hid) {
+        this.hid = hid;
+    }
 
     /**
      * Gets the value of the referenceableParamGroup property.

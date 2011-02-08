@@ -86,6 +86,16 @@ public class CVParam
     @XmlJavaTypeAdapter(CVAdapter.class)
     @XmlSchemaType(name = "IDREF")
     protected CV unitCV;
+    @XmlTransient
+    protected long hid;
+
+    public long getHid() {
+        return hid;
+    }
+
+    public void setHid(long hid) {
+        this.hid = hid;
+    }
 
     /**
      * Added a boolean to indicate whether this CVParam was inferred from
@@ -103,7 +113,7 @@ public class CVParam
      * @return possible object is
      *         {@link String }
      */
-    public CV getCV() {
+    public CV getCv() {
         return cv;
     }
 
@@ -113,7 +123,7 @@ public class CVParam
      * @param value allowed object is
      *              {@link String }
      */
-    public void setCV(CV value) {
+    public void setCv(CV value) {
         this.cv = value;
     }
 

@@ -97,6 +97,16 @@ public class ParamGroup
     private List<CVParam> cvParamsSkippedDuringMarshalling = new ArrayList<CVParam>();
     @XmlTransient
     private List<UserParam> userParamsSkippedDuringMarshalling = new ArrayList<UserParam>();
+    @XmlTransient
+    protected long hid;
+
+    public long getHid() {
+        return hid;
+    }
+
+    public void setHid(long hid) {
+        this.hid = hid;
+    }
 
     /**
      * Gets the value of the referenceableParamGroupRef property.

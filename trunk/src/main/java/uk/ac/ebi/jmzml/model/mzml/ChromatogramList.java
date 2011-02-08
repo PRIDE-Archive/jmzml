@@ -53,7 +53,16 @@ public class ChromatogramList
     @XmlJavaTypeAdapter(DataProcessingAdapter.class)
     @XmlSchemaType(name = "IDREF")
     protected DataProcessing defaultDataProcessing;
+    @XmlTransient
+    protected long hid;
 
+    public long getHid() {
+        return hid;
+    }
+
+    public void setHid(long hid) {
+        this.hid = hid;
+    }
 
     /**
      * Gets the value of the chromatogram property.

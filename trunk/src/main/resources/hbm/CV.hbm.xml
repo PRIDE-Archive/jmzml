@@ -11,6 +11,7 @@
         <property name="id" type="string"/>
         <property name="fullName" type="string"/>
         <property name="version" type="string"/>
-        <property name="uri" type="string"/>
+        <!-- getter method is not compatible with JavaBean -->
+        <property name="uri" type="string" access="field"/>
     </class>
 </hibernate-mapping>

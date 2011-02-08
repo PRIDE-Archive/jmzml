@@ -60,6 +60,16 @@ public class Precursor
     protected SourceFile sourceFile;
     @XmlAttribute
     protected String externalSpectrumID;
+    @XmlTransient
+    protected long hid;
+
+    public long getHid() {
+        return hid;
+    }
+
+    public void setHid(long hid) {
+        this.hid = hid;
+    }
 
     /**
      * Gets the value of the isolationWindow property.

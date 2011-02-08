@@ -137,6 +137,16 @@ public class BinaryDataArray
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger encodedLength;
+    @XmlTransient
+    protected long hid;
+
+    public long getHid() {
+        return hid;
+    }
+
+    public void setHid(long hid) {
+        this.hid = hid;
+    }
 
     ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
     // auto-generated Getter & Setter
@@ -343,7 +353,7 @@ public class BinaryDataArray
         CVParam cvParam = new BinaryDataArrayCVParam();
         cvParam.setAccession(MS_FLOAT64BIT_AC);
         cvParam.setName(MS_FLOAT64BIT_NAME);
-        cvParam.setCV(cv);
+        cvParam.setCv(cv);
         this.getCvParam().add(cvParam);
 
         return dataLength;
@@ -374,7 +384,7 @@ public class BinaryDataArray
         CVParam cvParam = new BinaryDataArrayCVParam();
         cvParam.setAccession(MS_FLOAT32BIT_AC);
         cvParam.setName(MS_FLOAT32BIT_NAME);
-        cvParam.setCV(cv);
+        cvParam.setCv(cv);
         this.getCvParam().add(cvParam);
 
         return dataLength;
@@ -405,7 +415,7 @@ public class BinaryDataArray
         CVParam cvParam = new BinaryDataArrayCVParam();
         cvParam.setAccession(MS_INT32BIT_AC);
         cvParam.setName(MS_INT32BIT_NAME);
-        cvParam.setCV(cv);
+        cvParam.setCv(cv);
         this.getCvParam().add(cvParam);
 
         return dataLength;
@@ -436,7 +446,7 @@ public class BinaryDataArray
         CVParam cvParam = new BinaryDataArrayCVParam();
         cvParam.setAccession(MS_INT64BIT_AC);
         cvParam.setName(MS_INT64BIT_NAME);
-        cvParam.setCV(cv);
+        cvParam.setCv(cv);
         this.getCvParam().add(cvParam);
 
         return dataLength;
@@ -469,7 +479,7 @@ public class BinaryDataArray
         CVParam cvParam = new BinaryDataArrayCVParam();
         cvParam.setAccession(MS_NTSTRING_AC);
         cvParam.setName(MS_NTSTRING_NAME);
-        cvParam.setCV(cv);
+        cvParam.setCv(cv);
         this.getCvParam().add(cvParam);
 
         return dataLength;
@@ -699,7 +709,7 @@ public class BinaryDataArray
             CVParam cvParam = new BinaryDataArrayCVParam();
             cvParam.setAccession(MS_COMPRESSED_AC);
             cvParam.setName(MS_COMPRESSED_NAME);
-            cvParam.setCV(cv);
+            cvParam.setCv(cv);
             this.getCvParam().add(cvParam);
         } else {
             // the data will not be compressed
@@ -708,7 +718,7 @@ public class BinaryDataArray
             CVParam cvParam = new BinaryDataArrayCVParam();
             cvParam.setAccession(MS_UNCOMPRESSED_AC);
             cvParam.setName(MS_UNCOMPRESSED_NAME);
-            cvParam.setCV(cv);
+            cvParam.setCv(cv);
             this.getCvParam().add(cvParam);
         }
 
