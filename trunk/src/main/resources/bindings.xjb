@@ -25,6 +25,8 @@
               schemaLocation="mzML1.1.0.xsd"
               node="/xs:schema">
 
+    
+
     <jxb:globalBindings choiceContentProperty="true">
         <!-- the serializable uid should reflect the version number 1.0.0 -->
         <jxb:serializable uid="100"/>
