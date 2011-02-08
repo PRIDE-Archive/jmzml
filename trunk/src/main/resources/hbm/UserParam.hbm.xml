@@ -3,7 +3,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-access="property">
-    <class name="uk.ac.ebi.jmzml.model.mzml.UserParam">
+    <class name="uk.ac.ebi.jmzml.model.mzml.UserParam" table="UserParam">
 
         <id name="hid" column="hid" type="long">
             <generator class="native"/>
