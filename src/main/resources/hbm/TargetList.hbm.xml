@@ -3,7 +3,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-access="property">
-    <class name="uk.ac.ebi.jmzml.model.mzml.TargetList">
+    <class name="uk.ac.ebi.jmzml.model.mzml.TargetList" table="TargetList">
 
         <id name="hid" column="hid" type="long">
             <generator class="native"/>
@@ -11,6 +11,10 @@
 
         <property name="count" type="long" not-null="true"/>
 
-
+        <list name="target" cascade="all" table="TargetList_ParamGroup">
+            <key column="TargetList_hid"/>
+            <index column="idx"/>
+            <many-to-many class="uk.ac.ebi.jmzml.model.mzml.ParamGroup" column="ParamGroup_hid"/>
+        </list>
     </class>
 </hibernate-mapping>
