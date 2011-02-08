@@ -57,6 +57,9 @@
         <mapping resource="hbm/ReferenceableParamGroupList.hbm.xml"/>
         <mapping resource="hbm/ReferenceableParamGroupRef.hbm.xml"/>
         <mapping resource="hbm/Run.hbm.xml"/>
+        <mapping resource="hbm/SpectrumList.hbm.xml"/>
+        <mapping resource="hbm/TargetList.hbm.xml"/>
+        <mapping resource="hbm/UserParam.hbm.xml" />
 
         <!-- params mapping file -->
         <mapping resource="hbm/params/ActivationCVParam.hbm.xml"/>
