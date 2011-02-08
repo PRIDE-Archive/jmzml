@@ -3,16 +3,16 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="uk.ac.ebi.jmzml.model.mzml.BinaryDataArrayList" table="BinaryDataArrayList">
-        <id name="hid" type="long" access="field">
+    <class name="uk.ac.ebi.jmzml.model.mzml.SampleList" table="SampleList">
+        <id name="hid" type="java.lang.Long" access="field">
             <column name="hid"/>
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
         <property name="count" type="big_integer"/>
-        <list name="product" access="field" cascade="all" table="ProductList_Product">
-                <key column="ProductList_hid"/>
+        <list name="sample" access="field" cascade="all" table="SampleList_Sample">
+                <key column="SampleList_hid"/>
                 <index column="idx"/>
-                <many-to-many column="Product_hid" class="uk.ac.ebi.jmzml.model.mzml.Product"/>
+                <many-to-many column="Sample_hid" class="uk.ac.ebi.jmzml.model.mzml.Sample"/>
         </list>
     </class>
 </hibernate-mapping>
