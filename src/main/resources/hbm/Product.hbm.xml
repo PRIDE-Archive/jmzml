@@ -6,7 +6,7 @@
     <class name="Product" table="Product">
         <id name="hid" type="long" access="field">
             <column name="hid"/>
-            <generator class="native"/>
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
         <many-to-one name="isolationWindow" cascade="all" class="ParamGroup"/>
     </class>
