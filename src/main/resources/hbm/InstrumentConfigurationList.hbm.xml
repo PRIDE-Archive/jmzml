@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="uk.ac.ebi.jmzml.model.mzml" default-access="property">
+    <class name="InstrumentConfigurationList" table="InstrumentConfigurationList">
+        <id name="hid" type="long">
+            <column name="hid"/>
+            <generator class="native"/>
+        </id>
+
+        <list name="instrumentConfiguration" table="InstrumentConfigList_InstrumentConfig" cascade="all" access="field">
+            <key column="InstrumentConfigurationList_hid"/>
+            <list-index column="idx"/>
+            <one-to-many class="InstrumentConfiguration"/>
+        </list>
+
+        <property name="count" column="count" type="big_integer"/>
+    </class>
+</hibernate-mapping>

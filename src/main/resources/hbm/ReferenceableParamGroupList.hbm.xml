@@ -6,7 +6,7 @@
     <class name="uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroupList" table="ReferenceableParamGroupList">
         <id name="hid" type="long" access="field">
             <column name="hid"/>
-            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
+            <generator class="native"/>
         </id>
         <property name="count" type="big_integer"/>
         <list name="referenceableParamGroup" access="field" cascade="all" table="ReferenceableParamGroupList_ReferenceableParamGroup">

@@ -48,6 +48,8 @@
         <mapping resource="hbm/FileDescription.hbm.xml"/>
         <mapping resource="hbm/Index.hbm.xml"/>
         <mapping resource="hbm/InstrumentConfiguration.hbm.xml" />
+        <mapping resource="hbm/InstrumentConfigurationList.hbm.xml" />
+        <mapping resource="hbm/MzML.hbm.xml"/>
         <mapping resource="hbm/Offset.hbm.xml"/>
         <mapping resource="hbm/ParamGroup.hbm.xml"/>
         <mapping resource="hbm/Precursor.hbm.xml"/>
