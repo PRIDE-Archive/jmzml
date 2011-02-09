@@ -9,10 +9,10 @@
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
         <property name="count" type="big_integer"/>
-        <list name="dataProcessing" access="field" cascade="all" table="DataProcessingList_DataProcessing">
-                <key column="DataProcessingList_hid"/>
-                <index column="idx"/>
-                <many-to-many column="DataProcessing_hid" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing"/>
+        <list name="dataProcessing" access="field" cascade="all">
+            <key column="DataProcessingList_hid"/>
+            <index column="idx"/>
+            <many-to-many column="DataProcessing_hid" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing"/>
         </list>
     </class>
 </hibernate-mapping>

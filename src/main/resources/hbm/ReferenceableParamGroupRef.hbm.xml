@@ -8,6 +8,7 @@
             <column name="hid"/>
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
-        <many-to-one name="referenceableParamGroup" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroup"/>
+        <many-to-one name="referenceableParamGroup" cascade="all"
+                     class="uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroup"/>
     </class>
 </hibernate-mapping>

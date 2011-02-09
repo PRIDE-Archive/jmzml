@@ -9,10 +9,10 @@
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
         <property name="count" type="big_integer"/>
-        <list name="sourceFileRef" access="field" cascade="all" table="SourceFileRefList_SourceFileRef">
-                <key column="SourceFileRefList_hid"/>
-                <index column="idx"/>
-                <many-to-many column="SourceFileRef_hid" class="uk.ac.ebi.jmzml.model.mzml.SourceFileRef"/>
+        <list name="sourceFileRef" access="field" cascade="all">
+            <key column="SourceFileRefList_hid"/>
+            <index column="idx"/>
+            <many-to-many column="SourceFileRef_hid" class="uk.ac.ebi.jmzml.model.mzml.SourceFileRef"/>
         </list>
     </class>
 </hibernate-mapping>

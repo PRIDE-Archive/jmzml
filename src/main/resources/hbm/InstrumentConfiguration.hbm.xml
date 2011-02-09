@@ -2,11 +2,12 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="uk.ac.ebi.jmzml.model.mzml" default-access="property">
-    <union-subclass name="InstrumentConfiguration" table="InstrumentConfiguration" extends="ParamGroup">
-        <one-to-one name="componentList" cascade="all" />
-        <one-to-one name="softwareRef" cascade="all" />
-        <property name="id" type="string" column="id" />
-        <one-to-one name="scanSettings" cascade="all" />
+<hibernate-mapping>
+    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.InstrumentConfiguration" table="InstrumentConfiguration"
+                    extends="uk.ac.ebi.jmzml.model.mzml.ParamGroup">
+        <one-to-one name="componentList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ComponentList"/>
+        <many-to-one name="softwareRef" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SoftwareRef"/>
+        <property name="id" type="string"/>
+        <many-to-one name="scanSettings" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ScanSettings"/>
     </union-subclass>
 </hibernate-mapping>

@@ -2,24 +2,26 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="uk.ac.ebi.jmzml.model.mzml" default-access="property">
-    <class name="MzML" table="MzML">
-        <id name="hid" type="long">
+<hibernate-mapping>
+    <class name="uk.ac.ebi.jmzml.model.mzml.MzML" table="MzML">
+        <id name="hid" type="long" access="field">
             <column name="hid"/>
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
 
-        <one-to-one name="cvList" class="CVList" cascade="all" />
-        <one-to-one name="fileDescription" class="FileDescription" cascade="all" />
-        <one-to-one name="referenceableParamGroupList" class="ReferenceableParamGroup" cascade="all" />
-        <one-to-one name="sampleList" class="SampleList" cascade="all" />
-        <one-to-one name="softwareList" class="SoftwareList" cascade="all" />
-        <one-to-one name="scanSettingsList" class="ScanSettingsList" cascade="all" />
-        <one-to-one name="instrumentConfigurationList" class="InstrumentConfigurationList" cascade="all" />
-        <one-to-one name="dataProcessingList" class="DataProcessingList" cascade="all" />
-        <one-to-one name="run" class="Run" cascade="all" />
-        <property name="accession" column="accession" type="string" not-null="false" />
-        <property name="version" column="version" type="string" not-null="true" />
-        <property name="id" column="id" type="string" not-null="false" />
+        <one-to-one name="cvList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.CVList"/>
+        <one-to-one name="fileDescription" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.FileDescription"/>
+        <one-to-one name="referenceableParamGroupList" cascade="all"
+                    class="uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroupList"/>
+        <one-to-one name="sampleList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SampleList"/>
+        <one-to-one name="softwareList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SoftwareList"/>
+        <one-to-one name="scanSettingsList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ScanSettingsList"/>
+        <one-to-one name="instrumentConfigurationList" cascade="all"
+                    class="uk.ac.ebi.jmzml.model.mzml.InstrumentConfigurationList"/>
+        <one-to-one name="dataProcessingList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.DataProcessingList"/>
+        <one-to-one name="run" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Run"/>
+        <property name="accession" type="string"/>
+        <property name="version" type="string"/>
+        <property name="id" type="string"/>
     </class>
 </hibernate-mapping>

@@ -2,20 +2,20 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping default-access="property" package="uk.ac.ebi.jmzml.model.mzml">
-    <class name="TargetList" table="TargetList">
+<hibernate-mapping default-access="property">
+    <class name="uk.ac.ebi.jmzml.model.mzml.TargetList" table="TargetList">
 
-        <id name="hid" column="hid" type="long">
+        <id name="hid" type="long" access="field">
+            <column name="hid"/>
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
 
-        <property name="count" column="count" type="long" not-null="true"/>
+        <property name="count" type="long" not-null="true"/>
 
-        <list name="target" cascade="all" table="TargetList_Target" access="field">
+        <list name="target" access="field" cascade="all" table="TargetList_ParamGroup">
             <key column="TargetList_hid"/>
-            <!-- list-index should be used instead of index, index should be used only to support hibernate 2.x -->
-            <list-index column="idx"/>
-            <one-to-many class="ParamGroup"/>
+            <index column="idx"/>
+            <many-to-many class="uk.ac.ebi.jmzml.model.mzml.ParamGroup" column="ParamGroup_hid"/>
         </list>
     </class>
 </hibernate-mapping>

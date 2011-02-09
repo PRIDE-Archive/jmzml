@@ -11,9 +11,9 @@
         <property name="count" type="big_integer"/>
         <many-to-one name="defaultDataProcessing" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing"/>
         <list name="chromatogram" access="field" cascade="all" table="ChromatogramList_Chromatogram">
-                <key column="ChromatogramList_hid"/>
-                <index column="idx"/>
-                <many-to-many column="Chromatogram_hid" class="uk.ac.ebi.jmzml.model.mzml.Chromatogram"/>
+            <key column="ChromatogramList_hid"/>
+            <index column="idx"/>
+            <many-to-many column="Chromatogram_hid" class="uk.ac.ebi.jmzml.model.mzml.Chromatogram"/>
         </list>
     </class>
 </hibernate-mapping>

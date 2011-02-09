@@ -10,9 +10,9 @@
         </id>
         <property name="count" type="big_integer"/>
         <list name="components" access="field" cascade="all" table="ComponentList_Component">
-                <key column="ComponentList_hid"/>
-                <index column="idx"/>
-                <many-to-many column="Component_hid" class="uk.ac.ebi.jmzml.model.mzml.Component"/>
+            <key column="ComponentList_hid"/>
+            <index column="idx"/>
+            <many-to-many column="Component_hid" class="uk.ac.ebi.jmzml.model.mzml.Component"/>
         </list>
     </class>
 </hibernate-mapping>
