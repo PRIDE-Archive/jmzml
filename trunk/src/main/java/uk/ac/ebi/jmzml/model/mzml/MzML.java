@@ -77,6 +77,16 @@ public class MzML
     protected String version;
     @XmlAttribute
     protected String id;
+    @XmlTransient
+    protected long hid;
+
+    public long getHid() {
+        return hid;
+    }
+
+    public void setHid(long hid) {
+        this.hid = hid;
+    }
 
     /**
      * Gets the value of the cvList property.

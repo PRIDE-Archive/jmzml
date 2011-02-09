@@ -9,6 +9,17 @@
             <generator class="native"/>
         </id>
 
-
+        <one-to-one name="cvList" class="CVList" cascade="all" />
+        <one-to-one name="fileDescription" class="FileDescription" cascade="all" />
+        <one-to-one name="referenceableParamGroupList" class="ReferenceableParamGroup" cascade="all" />
+        <one-to-one name="sampleList" class="SampleList" cascade="all" />
+        <one-to-one name="softwareList" class="SoftwareList" cascade="all" />
+        <one-to-one name="scanSettingsList" class="ScanSettingsList" cascade="all" />
+        <one-to-one name="instrumentConfigurationList" class="InstrumentConfigurationList" cascade="all" />
+        <one-to-one name="dataProcessingList" class="DataProcessingList" cascade="all" />
+        <one-to-one name="run" class="Run" cascade="all" />
+        <property name="accession" column="accession" type="string" not-null="false" />
+        <property name="version" column="version" type="string" not-null="true" />
+        <property name="id" column="id" type="string" not-null="false" />
     </class>
 </hibernate-mapping>
