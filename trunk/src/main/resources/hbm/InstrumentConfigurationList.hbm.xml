@@ -6,7 +6,7 @@
     <class name="InstrumentConfigurationList" table="InstrumentConfigurationList">
         <id name="hid" type="long">
             <column name="hid"/>
-            <generator class="native"/>
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
 
         <list name="instrumentConfiguration" table="InstrumentConfigList_InstrumentConfig" cascade="all" access="field">

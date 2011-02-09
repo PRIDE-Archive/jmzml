@@ -4,8 +4,7 @@
 
 <hibernate-mapping>
     <class name="uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroup" table="ReferenceableParamGroup">
-        <id name="hid" type="long" access="field">
-            <column name="hid"/>
+        <id name="hid" column="hid" type="long" access="field">
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
         <property name="id" type="string"/>

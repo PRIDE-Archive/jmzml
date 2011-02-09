@@ -6,7 +6,7 @@
     <class name="SpectrumList">
 
         <id name="hid" column="hid" type="long">
-            <generator class="native"/>
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
 
         <list name="spectrum" table="SpectrumList_Spectrum" cascade="all" access="field">
