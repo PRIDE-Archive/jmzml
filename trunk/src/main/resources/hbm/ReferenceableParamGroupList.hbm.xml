@@ -9,10 +9,11 @@
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
         <property name="count" type="big_integer"/>
-        <list name="referenceableParamGroup" access="field" cascade="all" table="ReferenceableParamGroupList_ReferenceableParamGroup">
-                <key column="ReferenceableParamGroupList_hid"/>
-                <index column="idx"/>
-                <many-to-many column="ReferenceableParamGroup_hid" class="uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroup"/>
+        <list name="referenceableParamGroup" access="field" cascade="all">
+            <key column="ReferenceableParaGrupList_hid"/>
+            <index column="idx"/>
+            <many-to-many column="ReferenceableParamGroup_hid"
+                          class="uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroup"/>
         </list>
     </class>
 </hibernate-mapping>

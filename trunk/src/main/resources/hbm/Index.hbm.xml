@@ -3,16 +3,16 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="uk.ac.ebi.jmzml.model.mzml.Index" table="Index">
+    <class name="uk.ac.ebi.jmzml.model.mzml.Index" table="IndexType">
         <id name="hid" type="long" access="field">
             <column name="hid"/>
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
         <property name="name" type="string"/>
         <list name="offset" access="field" cascade="all" table="Index_Offset">
-                <key column="Index_hid"/>
-                <index column="idx"/>
-                <many-to-many column="Offset_hid" class="uk.ac.ebi.jmzml.model.mzml.Offset"/>
+            <key column="Index_hid"/>
+            <index column="idx"/>
+            <many-to-many column="Offset_hid" class="uk.ac.ebi.jmzml.model.mzml.Offset"/>
         </list>
     </class>
 </hibernate-mapping>

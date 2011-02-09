@@ -2,13 +2,14 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="uk.ac.ebi.jmzml.model.mzml">
-    <union-subclass name="Scan" table="Scan" extends="ParamGroup">
-        <one-to-one name="scanWindowList" cascade="all" class="ScanWindowList"/>
+<hibernate-mapping>
+    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.Scan" table="Scan" extends="uk.ac.ebi.jmzml.model.mzml.ParamGroup">
+        <one-to-one name="scanWindowList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ScanWindowList"/>
 
         <property name="spectrumRef" type="string"/>
-        <many-to-one name="sourceFile" cascade="all" class="SourceFile"/>
+        <many-to-one name="sourceFile" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFile"/>
         <property name="externalSpectrumID" type="string"/>
-        <many-to-one name="instrumentConfiguration" cascade="all" class="InstrumentConfiguration"/>
+        <many-to-one name="instrumentConfiguration" cascade="all"
+                     class="uk.ac.ebi.jmzml.model.mzml.InstrumentConfiguration"/>
     </union-subclass>
 </hibernate-mapping>

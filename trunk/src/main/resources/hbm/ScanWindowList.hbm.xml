@@ -10,9 +10,9 @@
         </id>
         <property name="count" type="big_integer"/>
         <list name="scanWindow" access="field" cascade="all" table="ScanWindow_ParamGroup">
-                <key column="ScanWindow_hid"/>
-                <index column="idx"/>
-                <many-to-many column="ParamGroup_hid" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup"/>
+            <key column="ScanWindow_hid"/>
+            <index column="idx"/>
+            <many-to-many column="ParamGroup_hid" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup"/>
         </list>
     </class>
 </hibernate-mapping>

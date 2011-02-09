@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.Spectrum"  table="Spectrum"  extends="uk.ac.ebi.jmzml.model.mzml.ParamGroup">
+    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.Spectrum" table="Spectrum"
+                    extends="uk.ac.ebi.jmzml.model.mzml.ParamGroup">
         <one-to-one name="scanList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ScanList"/>
         <one-to-one name="precursorList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.PrecursorList"/>
         <one-to-one name="productList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ProductList"/>
@@ -11,7 +12,7 @@
 
         <property name="id" type="string"/>
         <property name="spotID" type="string"/>
-        <property name="index" type="big_integer"/>
+        <property name="index" column="index_order" type="big_integer"/>
         <property name="defaultArrayLength" type="integer"/>
 
         <many-to-one name="dataProcessing" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing"/>

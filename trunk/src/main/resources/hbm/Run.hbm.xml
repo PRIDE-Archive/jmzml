@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.Run"  table="Run"  extends="uk.ac.ebi.jmzml.model.mzml.ParamGroup">
+    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.Run" table="Run" extends="uk.ac.ebi.jmzml.model.mzml.ParamGroup">
         <one-to-one name="spectrumList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SpectrumList"/>
-        <one-to-one name="chromatogramList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ChromatogramList"/>        
+        <one-to-one name="chromatogramList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ChromatogramList"/>
         <property name="id" type="string"/>
-        <many-to-one name="defaultInstrumentConfiguration" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.InstrumentConfiguration"/>
+        <many-to-one name="defaultInstrumentConfiguration" cascade="all"
+                     class="uk.ac.ebi.jmzml.model.mzml.InstrumentConfiguration"/>
         <many-to-one name="defaultSourceFileRef" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFile"/>
         <many-to-one name="sample" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Sample"/>
         <property name="startTimeStamp" type="calendar"/>

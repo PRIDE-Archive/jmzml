@@ -10,9 +10,9 @@
         </id>
         <property name="count" type="big_integer"/>
         <list name="scanSettings" access="field" cascade="all" table="ScanSettingsList_ScanSettings">
-                <key column="ScanSettingsList_hid"/>
-                <index column="idx"/>
-                <many-to-many column="ScanSettings_hid" class="uk.ac.ebi.jmzml.model.mzml.ScanSettings"/>
+            <key column="ScanSettingsList_hid"/>
+            <index column="idx"/>
+            <many-to-many column="ScanSettings_hid" class="uk.ac.ebi.jmzml.model.mzml.ScanSettings"/>
         </list>
     </class>
 </hibernate-mapping>

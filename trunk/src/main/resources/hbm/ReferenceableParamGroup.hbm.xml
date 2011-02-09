@@ -8,15 +8,15 @@
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
         <property name="id" type="string"/>
-        <list name="cvParam" access="field" cascade="all" table="ReferenceableParamGroup_CVParam">
-                <key column="ReferenceableParamGroup_hid"/>
-                <index column="idx"/>
-                <many-to-many column="CVParam_hid" class="uk.ac.ebi.jmzml.model.mzml.CVParam"/>
+        <list name="cvParam" access="field" cascade="all">
+            <key column="ReferenceableParamGroup_hid"/>
+            <index column="idx"/>
+            <many-to-many column="CVParam_hid" class="uk.ac.ebi.jmzml.model.mzml.CVParam"/>
         </list>
-        <list name="userParam" access="field" cascade="all" table="ReferenceableParamGroup_UserParam">
-                <key column="ReferenceableParamGroup_hid"/>
-                <index column="idx"/>
-                <many-to-many column="UserParam_hid" class="uk.ac.ebi.jmzml.model.mzml.UserParam"/>
+        <list name="userParam" access="field" cascade="all">
+            <key column="ReferenceableParamGroup_hid"/>
+            <index column="idx"/>
+            <many-to-many column="UserParam_hid" class="uk.ac.ebi.jmzml.model.mzml.UserParam"/>
         </list>
     </class>
 </hibernate-mapping>

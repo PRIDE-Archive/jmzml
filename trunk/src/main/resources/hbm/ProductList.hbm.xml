@@ -2,17 +2,17 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="uk.ac.ebi.jmzml.model.mzml">
-    <class name="ProductList" table="ProductList">
+<hibernate-mapping>
+    <class name="uk.ac.ebi.jmzml.model.mzml.ProductList" table="ProductList">
         <id name="hid" type="long" access="field">
             <column name="hid"/>
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
         <property name="count" type="big_integer"/>
         <list name="product" access="field" cascade="all" table="ProductList_Product">
-                <key column="ProductList_hid"/>
-                <index column="idx"/>
-                <many-to-many column="Product_hid" class="Product"/>
+            <key column="ProductList_hid"/>
+            <index column="idx"/>
+            <many-to-many column="Product_hid" class="uk.ac.ebi.jmzml.model.mzml.Product"/>
         </list>
     </class>
 </hibernate-mapping>

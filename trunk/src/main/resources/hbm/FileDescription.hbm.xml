@@ -11,9 +11,9 @@
         <many-to-one name="fileContent" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup"/>
         <many-to-one name="sourceFileList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFileList"/>
         <list name="contact" access="field" cascade="all" table="FileDescription_ParamGroup">
-                <key column="FileDescription_hid"/>
-                <index column="idx"/>
-                <many-to-many column="ParamGroup_hid" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup"/>
+            <key column="FileDescription_hid"/>
+            <index column="idx"/>
+            <many-to-many column="ParamGroup_hid" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup"/>
         </list>
     </class>
 </hibernate-mapping>

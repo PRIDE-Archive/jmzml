@@ -10,9 +10,9 @@
         </id>
         <property name="count" type="big_integer"/>
         <list name="cv" access="field" cascade="all" table="CVList_CV">
-                <key column="CVList_hid"/>
-                <index column="idx"/>
-                <many-to-many column="CV_hid" class="uk.ac.ebi.jmzml.model.mzml.CV"/>
+            <key column="CVList_hid"/>
+            <index column="idx"/>
+            <many-to-many column="CV_hid" class="uk.ac.ebi.jmzml.model.mzml.CV"/>
         </list>
     </class>
 </hibernate-mapping>

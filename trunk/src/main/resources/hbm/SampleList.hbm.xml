@@ -10,9 +10,9 @@
         </id>
         <property name="count" type="big_integer"/>
         <list name="sample" access="field" cascade="all" table="SampleList_Sample">
-                <key column="SampleList_hid"/>
-                <index column="idx"/>
-                <many-to-many column="Sample_hid" class="uk.ac.ebi.jmzml.model.mzml.Sample"/>
+            <key column="SampleList_hid"/>
+            <index column="idx"/>
+            <many-to-many column="Sample_hid" class="uk.ac.ebi.jmzml.model.mzml.Sample"/>
         </list>
     </class>
 </hibernate-mapping>
