@@ -4,13 +4,13 @@
 
 <hibernate-mapping>
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.Run" table="Run" extends="uk.ac.ebi.jmzml.model.mzml.ParamGroup">
-        <one-to-one name="spectrumList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SpectrumList"/>
-        <one-to-one name="chromatogramList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ChromatogramList"/>
+        <many-to-one name="spectrumList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SpectrumList" column="SpectrumList_hid"/>
+        <many-to-one name="chromatogramList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ChromatogramList" column="ChromatogramList_hid"/>
         <property name="id" type="string"/>
         <many-to-one name="defaultInstrumentConfiguration" cascade="all"
-                     class="uk.ac.ebi.jmzml.model.mzml.InstrumentConfiguration"/>
-        <many-to-one name="defaultSourceFileRef" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFile"/>
-        <many-to-one name="sample" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Sample"/>
+                     class="uk.ac.ebi.jmzml.model.mzml.InstrumentConfiguration" column="InstrumentConfiguration_hid"/>
+        <many-to-one name="defaultSourceFileRef" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFile" column="Default_SourceFile_hid"/>
+        <many-to-one name="sample" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Sample" column="Sample_hid"/>
         <property name="startTimeStamp" type="calendar"/>
     </union-subclass>
 </hibernate-mapping>

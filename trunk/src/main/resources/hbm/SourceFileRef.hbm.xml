@@ -8,6 +8,6 @@
             <column name="hid"/>
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
-        <many-to-one name="sourceFile" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFile"/>
+        <many-to-one name="sourceFile" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFile" column="SourceFile_hid"/>
     </class>
 </hibernate-mapping>

@@ -6,6 +6,6 @@
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.ProcessingMethod" table="ProcessingMethod"
                     extends="uk.ac.ebi.jmzml.model.mzml.ParamGroup">
         <property name="order" column="order_index" type="big_integer"/>
-        <many-to-one name="software" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Software"/>
+        <many-to-one name="software" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Software" column="Software_hid"/>
     </union-subclass>
 </hibernate-mapping>

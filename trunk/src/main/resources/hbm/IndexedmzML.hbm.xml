@@ -8,8 +8,8 @@
             <column name="hid"/>
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
-        <one-to-one name="mzML" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.MzML"/>
-        <one-to-one name="indexList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.IndexList"/>
+        <many-to-one name="mzML" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.MzML" column="mzML_hid"/>
+        <many-to-one name="indexList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.IndexList" column="IndexList_hid"/>
         <property name="indexListOffset" type="long"/>
         <property name="fileChecksum" type="string"/>
     </class>

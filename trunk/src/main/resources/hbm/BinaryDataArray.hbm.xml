@@ -9,6 +9,6 @@
         <property name="arrayLength" type="big_integer"/>
         <property name="encodedLength" type="big_integer"/>
 
-        <many-to-one name="dataProcessing" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing"/>
+        <many-to-one name="dataProcessing" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing" column="DataProcessing_hid"/>
     </union-subclass>
 </hibernate-mapping>
