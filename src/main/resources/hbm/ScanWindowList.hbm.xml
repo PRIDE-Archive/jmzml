@@ -8,7 +8,7 @@
             <column name="hid"/>
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
-        <property name="count" type="big_integer"/>
+        <property name="count" type="integer"/>
         <list name="scanWindow" access="field" cascade="all" table="ScanWindow_ParamGroup">
             <key column="ScanWindow_hid"/>
             <index column="idx"/>

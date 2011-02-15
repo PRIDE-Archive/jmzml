@@ -8,11 +8,11 @@
             <column name="hid"/>
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
-        <many-to-one name="isolationWindow" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup"/>
-        <many-to-one name="selectedIonList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SelectedIonList"/>
-        <many-to-one name="activation" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup"/>
-        <many-to-one name="spectrum" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Spectrum"/>
-        <many-to-one name="sourceFile" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFile"/>
+        <many-to-one name="isolationWindow" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup" column="IsolationWindow_ParamGroup_hid"/>
+        <many-to-one name="selectedIonList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SelectedIonList" column="SelectedIonList_hid"/>
+        <many-to-one name="activation" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup" column="Activation_ParamGroup_hid"/>
+        <many-to-one name="spectrum" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Spectrum" column="Spectrum_hid"/>
+        <many-to-one name="sourceFile" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFile" column="SourceFile_hid"/>
         <property name="externalSpectrumID" type="string"/>
 
     </class>

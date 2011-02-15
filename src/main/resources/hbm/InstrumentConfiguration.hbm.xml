@@ -5,9 +5,9 @@
 <hibernate-mapping>
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.InstrumentConfiguration" table="InstrumentConfiguration"
                     extends="uk.ac.ebi.jmzml.model.mzml.ParamGroup">
-        <one-to-one name="componentList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ComponentList"/>
-        <many-to-one name="softwareRef" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SoftwareRef"/>
+        <many-to-one name="componentList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ComponentList" column="ComponentList_hid"/>
+        <many-to-one name="softwareRef" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SoftwareRef" column="SoftwareRef_hid"/>
         <property name="id" type="string"/>
-        <many-to-one name="scanSettings" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ScanSettings"/>
+        <many-to-one name="scanSettings" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ScanSettings" column="ScanSettings_hid"/>
     </union-subclass>
 </hibernate-mapping>

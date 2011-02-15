@@ -4,12 +4,12 @@
 
 <hibernate-mapping>
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.Scan" table="Scan" extends="uk.ac.ebi.jmzml.model.mzml.ParamGroup">
-        <one-to-one name="scanWindowList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ScanWindowList"/>
+        <many-to-one name="scanWindowList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ScanWindowList" column="ScanWindowList_hid"/>
 
         <property name="spectrumRef" type="string"/>
-        <many-to-one name="sourceFile" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFile"/>
+        <many-to-one name="sourceFile" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFile" column="SourceFile_hid"/>
         <property name="externalSpectrumID" type="string"/>
         <many-to-one name="instrumentConfiguration" cascade="all"
-                     class="uk.ac.ebi.jmzml.model.mzml.InstrumentConfiguration"/>
+                     class="uk.ac.ebi.jmzml.model.mzml.InstrumentConfiguration" column="InstrumentConfiguration_hid"/>
     </union-subclass>
 </hibernate-mapping>

@@ -8,8 +8,8 @@
             <column name="hid"/>
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
-        <many-to-one name="fileContent" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup"/>
-        <many-to-one name="sourceFileList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFileList"/>
+        <many-to-one name="fileContent" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup" column="FileContent_ParamGroup_hid"/>
+        <many-to-one name="sourceFileList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFileList" column="SourceFileList_hid"/>
         <list name="contact" access="field" cascade="all" table="FileDescription_ParamGroup">
             <key column="FileDescription_hid"/>
             <index column="idx"/>

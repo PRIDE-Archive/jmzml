@@ -10,7 +10,7 @@
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
 
-        <property name="count" type="long" not-null="true"/>
+        <property name="count" type="big_integer" not-null="true"/>
 
         <list name="target" access="field" cascade="all" table="TargetList_ParamGroup">
             <key column="TargetList_hid"/>

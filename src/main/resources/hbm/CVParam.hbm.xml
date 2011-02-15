@@ -8,7 +8,7 @@
             <column name="hid"/>
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
-        <many-to-one name="cv" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.CV" access="field"/>
+        <many-to-one name="cv" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.CV" access="field" column="CV_hid"/>
 
         <property name="accession" type="string"/>
         <property name="value" type="string"/>
@@ -16,6 +16,6 @@
         <property name="unitAccession" type="string"/>
         <property name="unitName" type="string"/>
 
-        <many-to-one name="unitCV" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.CV"/>
+        <many-to-one name="unitCV" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.CV" column="Unit_CV_hid"/>
     </class>
 </hibernate-mapping>

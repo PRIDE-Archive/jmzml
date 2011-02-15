@@ -8,7 +8,7 @@
             <column name="hid"/>
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
         </id>
-        <many-to-one name="software" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Software"/>
+        <many-to-one name="software" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Software" column="Software_hid"/>
 
     </class>
 </hibernate-mapping>

@@ -18,6 +18,6 @@
 
         <property name="count" type="big_integer"/>
 
-        <many-to-one name="defaultDataProcessing" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing" cascade="all"/>
+        <many-to-one name="defaultDataProcessing" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing" cascade="all" column="Default_DataProcessing_hid"/>
     </class>
 </hibernate-mapping>
