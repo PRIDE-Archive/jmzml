@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.jmzml.model.mzml;
 
 import uk.ac.ebi.jmzml.xml.jaxb.adapters.InstrumentConfigurationAdapter;
@@ -11,11 +10,11 @@ import java.io.Serializable;
 
 /**
  * Scan or acquisition from original raw file used to create this peak list, as specified in sourceFile.
- * 
+ * <p/>
  * <p>Java class for ScanType complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType name="ScanType">
  *   &lt;complexContent>
@@ -31,17 +30,14 @@ import java.io.Serializable;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ScanType", propOrder = {
-    "scanWindowList"
+        "scanWindowList"
 })
 public class Scan
-    extends ParamGroup
-    implements Serializable
-{
+        extends ParamGroup
+        implements Serializable {
 
     private final static long serialVersionUID = 100L;
     protected ScanWindowList scanWindowList;
@@ -60,11 +56,9 @@ public class Scan
 
     /**
      * Gets the value of the scanWindowList property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ScanWindowList }
-     *     
+     *
+     * @return possible object is
+     *         {@link ScanWindowList }
      */
     public ScanWindowList getScanWindowList() {
         return scanWindowList;
@@ -72,11 +66,9 @@ public class Scan
 
     /**
      * Sets the value of the scanWindowList property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ScanWindowList }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link ScanWindowList }
      */
     public void setScanWindowList(ScanWindowList value) {
         this.scanWindowList = value;
@@ -84,11 +76,9 @@ public class Scan
 
     /**
      * Gets the value of the spectrumRef property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public String getSpectrumRef() {
         return spectrumRef;
@@ -96,11 +86,9 @@ public class Scan
 
     /**
      * Sets the value of the spectrumRef property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setSpectrumRef(String value) {
         this.spectrumRef = value;
@@ -108,11 +96,9 @@ public class Scan
 
     /**
      * Gets the value of the sourceFile property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public SourceFile getSourceFile() {
         return sourceFile;
@@ -120,11 +106,9 @@ public class Scan
 
     /**
      * Sets the value of the sourceFile property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setSourceFile(SourceFile value) {
         this.sourceFile = value;
@@ -132,11 +116,9 @@ public class Scan
 
     /**
      * Gets the value of the externalSpectrumID property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public String getExternalSpectrumID() {
         return externalSpectrumID;
@@ -144,11 +126,9 @@ public class Scan
 
     /**
      * Sets the value of the externalSpectrumID property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setExternalSpectrumID(String value) {
         this.externalSpectrumID = value;
@@ -156,11 +136,9 @@ public class Scan
 
     /**
      * Gets the value of the instrumentConfiguration property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public InstrumentConfiguration getInstrumentConfiguration() {
         return instrumentConfiguration;
@@ -168,11 +146,9 @@ public class Scan
 
     /**
      * Sets the value of the instrumentConfiguration property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setInstrumentConfiguration(InstrumentConfiguration value) {
         this.instrumentConfiguration = value;

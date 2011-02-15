@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.jmzml.model.mzml;
 
 import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
@@ -11,9 +10,9 @@ import java.io.Serializable;
 
 /**
  * <p>Java class for SourceFileRefType complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType name="SourceFileRefType">
  *   &lt;complexContent>
@@ -23,38 +22,26 @@ import java.io.Serializable;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SourceFileRefType")
 public class SourceFileRef
-    implements Serializable, MzMLObject
-{
+        implements Serializable, MzMLObject {
 
     private final static long serialVersionUID = 100L;
     @XmlAttribute(name = "ref", required = true)
     @XmlJavaTypeAdapter(SourceFileAdapter.class)
     @XmlSchemaType(name = "IDREF")
     protected SourceFile sourceFile;
+
     @XmlTransient
     protected long hid;
 
-    public long getHid() {
-        return hid;
-    }
-
-    public void setHid(long hid) {
-        this.hid = hid;
-    }
-
     /**
      * Gets the value of the sourceFile property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public SourceFile getSourceFile() {
         return sourceFile;
@@ -62,11 +49,9 @@ public class SourceFileRef
 
     /**
      * Sets the value of the sourceFile property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setSourceFile(SourceFile value) {
         this.sourceFile = value;

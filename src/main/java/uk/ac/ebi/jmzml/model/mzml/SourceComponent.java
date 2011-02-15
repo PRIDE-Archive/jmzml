@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.jmzml.model.mzml;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -9,13 +8,13 @@ import java.io.Serializable;
 
 /**
  * This element must be used to describe a Source Component Type. This is a PRIDE3-specific
- *                 modification of the core MzML schema that does not have any impact on the base schema validation.
- *             
- * 
+ * modification of the core MzML schema that does not have any impact on the base schema validation.
+ * <p/>
+ * <p/>
  * <p>Java class for SourceComponentType complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType name="SourceComponentType">
  *   &lt;complexContent>
@@ -24,15 +23,12 @@ import java.io.Serializable;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SourceComponentType")
 public class SourceComponent
-    extends Component
-    implements Serializable
-{
+        extends Component
+        implements Serializable {
 
     private final static long serialVersionUID = 100L;
 

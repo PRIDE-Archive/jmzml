@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.jmzml.model.mzml;
 
 import javax.xml.bind.annotation.*;
@@ -9,11 +8,11 @@ import java.io.Serializable;
 
 /**
  * Description of the acquisition settings of the instrument prior to the start of the run.
- * 
+ * <p/>
  * <p>Java class for ScanSettingsType complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType name="ScanSettingsType">
  *   &lt;complexContent>
@@ -27,18 +26,15 @@ import java.io.Serializable;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ScanSettingsType", propOrder = {
-    "sourceFileRefList",
-    "targetList"
+        "sourceFileRefList",
+        "targetList"
 })
 public class ScanSettings
-    extends ParamGroup
-    implements Serializable
-{
+        extends ParamGroup
+        implements Serializable {
 
     private final static long serialVersionUID = 100L;
     protected SourceFileRefList sourceFileRefList;
@@ -51,11 +47,9 @@ public class ScanSettings
 
     /**
      * Gets the value of the sourceFileRefList property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SourceFileRefList }
-     *     
+     *
+     * @return possible object is
+     *         {@link SourceFileRefList }
      */
     public SourceFileRefList getSourceFileRefList() {
         return sourceFileRefList;
@@ -63,11 +57,9 @@ public class ScanSettings
 
     /**
      * Sets the value of the sourceFileRefList property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SourceFileRefList }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link SourceFileRefList }
      */
     public void setSourceFileRefList(SourceFileRefList value) {
         this.sourceFileRefList = value;
@@ -75,11 +67,9 @@ public class ScanSettings
 
     /**
      * Gets the value of the targetList property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TargetList }
-     *     
+     *
+     * @return possible object is
+     *         {@link TargetList }
      */
     public TargetList getTargetList() {
         return targetList;
@@ -87,11 +77,9 @@ public class ScanSettings
 
     /**
      * Sets the value of the targetList property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TargetList }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link TargetList }
      */
     public void setTargetList(TargetList value) {
         this.targetList = value;
@@ -99,11 +87,9 @@ public class ScanSettings
 
     /**
      * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public String getId() {
         return id;
@@ -111,11 +97,9 @@ public class ScanSettings
 
     /**
      * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setId(String value) {
         this.id = value;

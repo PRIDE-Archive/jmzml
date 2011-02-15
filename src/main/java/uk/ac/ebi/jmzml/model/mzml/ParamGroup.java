@@ -40,11 +40,11 @@ import java.util.List;
 
 /**
  * Structure allowing the use of a controlled (cvParam) or uncontrolled vocabulary (userParam), or a reference to a predefined set of these in this mzML file (paramGroupRef).
- * 
+ * <p/>
  * <p>Java class for ParamGroupType complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType name="ParamGroupType">
  *   &lt;complexContent>
@@ -58,33 +58,30 @@ import java.util.List;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ParamGroupType", propOrder = {
-    "referenceableParamGroupRef",
-    "cvParam",
-    "userParam"
+        "referenceableParamGroupRef",
+        "cvParam",
+        "userParam"
 })
 @XmlSeeAlso({
-    Scan.class,
-    Run.class,
-    ProcessingMethod.class,
-    Sample.class,
-    Software.class,
-    Spectrum.class,
-    Component.class,
-    ScanSettings.class,
-    Chromatogram.class,
-    SourceFile.class,
-    InstrumentConfiguration.class,
-    BinaryDataArray.class,
-    ScanList.class
+        Scan.class,
+        Run.class,
+        ProcessingMethod.class,
+        Sample.class,
+        Software.class,
+        Spectrum.class,
+        Component.class,
+        ScanSettings.class,
+        Chromatogram.class,
+        SourceFile.class,
+        InstrumentConfiguration.class,
+        BinaryDataArray.class,
+        ScanList.class
 })
 public class ParamGroup
-    implements Serializable, MzMLObject
-{
+        implements Serializable, MzMLObject {
 
     private static final Logger logger = Logger.getLogger(ParamGroup.class);
 
@@ -97,38 +94,29 @@ public class ParamGroup
     private List<CVParam> cvParamsSkippedDuringMarshalling = new ArrayList<CVParam>();
     @XmlTransient
     private List<UserParam> userParamsSkippedDuringMarshalling = new ArrayList<UserParam>();
+   
     @XmlTransient
     protected long hid;
 
-    public long getHid() {
-        return hid;
-    }
-
-    public void setHid(long hid) {
-        this.hid = hid;
-    }
-
     /**
      * Gets the value of the referenceableParamGroupRef property.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the referenceableParamGroupRef property.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getReferenceableParamGroupRef().add(newItem);
      * </pre>
-     * 
-     * 
-     * <p>
+     * <p/>
+     * <p/>
+     * <p/>
      * Objects of the following type(s) are allowed in the list
      * {@link ReferenceableParamGroupRef }
-     * 
-     * 
      */
     public List<ReferenceableParamGroupRef> getReferenceableParamGroupRef() {
         if (referenceableParamGroupRef == null) {
@@ -139,25 +127,23 @@ public class ParamGroup
 
     /**
      * Gets the value of the cvParam property.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the cvParam property.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getCvParam().add(newItem);
      * </pre>
-     * 
-     * 
-     * <p>
+     * <p/>
+     * <p/>
+     * <p/>
      * Objects of the following type(s) are allowed in the list
      * {@link CVParam }
-     * 
-     * 
      */
     public List<CVParam> getCvParam() {
         if (cvParam == null) {
@@ -168,25 +154,23 @@ public class ParamGroup
 
     /**
      * Gets the value of the userParam property.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the userParam property.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getUserParam().add(newItem);
      * </pre>
-     * 
-     * 
-     * <p>
+     * <p/>
+     * <p/>
+     * <p/>
      * Objects of the following type(s) are allowed in the list
      * {@link UserParam }
-     * 
-     * 
      */
     public List<UserParam> getUserParam() {
         if (userParam == null) {
@@ -199,7 +183,7 @@ public class ParamGroup
         List<CVParam> cvParams = this.getCvParam();
         List<CVParam> tempCV = new ArrayList<CVParam>();
         for (CVParam cvParam : cvParams) {
-            if(cvParam.isInferredFromReferenceableParamGroupRef()) {
+            if (cvParam.isInferredFromReferenceableParamGroupRef()) {
                 cvParamsSkippedDuringMarshalling.add(cvParam);
                 logger.debug("Skipping cvParam " + cvParam);
             } else {
@@ -214,7 +198,7 @@ public class ParamGroup
         List<UserParam> userParams = this.getUserParam();
         List<UserParam> tempUser = new ArrayList<UserParam>();
         for (UserParam userParam : userParams) {
-            if(userParam.isInferredFromReferenceableParamGroupRef()) {
+            if (userParam.isInferredFromReferenceableParamGroupRef()) {
                 userParamsSkippedDuringMarshalling.add(userParam);
                 logger.debug("Skipping cvParam " + userParam);
             } else {

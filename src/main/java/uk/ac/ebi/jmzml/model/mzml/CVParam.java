@@ -86,16 +86,9 @@ public class CVParam
     @XmlJavaTypeAdapter(CVAdapter.class)
     @XmlSchemaType(name = "IDREF")
     protected CV unitCV;
+    
     @XmlTransient
     protected long hid;
-
-    public long getHid() {
-        return hid;
-    }
-
-    public void setHid(long hid) {
-        this.hid = hid;
-    }
 
     /**
      * Added a boolean to indicate whether this CVParam was inferred from
@@ -267,7 +260,7 @@ public class CVParam
      * Also, caution is to be used when editing the CVParam!
      *
      * @return boolean that indicates whether this CVParam was inferred from
-     *                  a referenceableParamGroupRef.
+     *         a referenceableParamGroupRef.
      */
     public boolean isInferredFromReferenceableParamGroupRef() {
         return isInferredFromReferenceableParamGroupRef;
@@ -279,9 +272,10 @@ public class CVParam
      * out, as it will already be marshalled out in the referenceableParamGroupRef.
      * Also, caution is to be used when editing the CVParam!
      *
-     * @param   inferredFromReferenceableParamGroupRef boolean to indicates whether
-     *                                                 this CVParam was inferred from
-     *                                                 a referenceableParamGroupRef.
+     * @param inferredFromReferenceableParamGroupRef
+     *         boolean to indicates whether
+     *         this CVParam was inferred from
+     *         a referenceableParamGroupRef.
      */
     public void setInferredFromReferenceableParamGroupRef(boolean inferredFromReferenceableParamGroupRef) {
         isInferredFromReferenceableParamGroupRef = inferredFromReferenceableParamGroupRef;
