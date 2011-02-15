@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.jmzml.model.mzml;
 
 import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
@@ -11,11 +10,11 @@ import java.io.Serializable;
 
 /**
  * Reference to a previously defined software element
- * 
+ * <p/>
  * <p>Java class for SoftwareRefType complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType name="SoftwareRefType">
  *   &lt;complexContent>
@@ -25,38 +24,26 @@ import java.io.Serializable;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SoftwareRefType")
 public class SoftwareRef
-    implements Serializable, MzMLObject
-{
+        implements Serializable, MzMLObject {
 
     private final static long serialVersionUID = 100L;
     @XmlAttribute(name = "ref", required = true)
     @XmlJavaTypeAdapter(SoftwareAdapter.class)
     @XmlSchemaType(name = "IDREF")
     protected Software software;
+
     @XmlTransient
     protected long hid;
 
-    public long getHid() {
-        return hid;
-    }
-
-    public void setHid(long hid) {
-        this.hid = hid;
-    }
-
     /**
      * Gets the value of the software property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public Software getSoftware() {
         return software;
@@ -64,11 +51,9 @@ public class SoftwareRef
 
     /**
      * Sets the value of the software property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setSoftware(Software value) {
         this.software = value;

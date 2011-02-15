@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.jmzml.model.mzml;
 
 import javax.xml.bind.annotation.*;
@@ -9,11 +8,11 @@ import java.io.Serializable;
 
 /**
  * Expansible description of the sample used to generate the dataset, named in sampleName.
- * 
+ * <p/>
  * <p>Java class for SampleType complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType name="SampleType">
  *   &lt;complexContent>
@@ -24,15 +23,12 @@ import java.io.Serializable;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SampleType")
 public class Sample
-    extends ParamGroup
-    implements Serializable
-{
+        extends ParamGroup
+        implements Serializable {
 
     private final static long serialVersionUID = 100L;
     @XmlAttribute(required = true)
@@ -45,11 +41,9 @@ public class Sample
 
     /**
      * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public String getId() {
         return id;
@@ -57,11 +51,9 @@ public class Sample
 
     /**
      * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setId(String value) {
         this.id = value;
@@ -69,11 +61,9 @@ public class Sample
 
     /**
      * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public String getName() {
         return name;
@@ -81,11 +71,9 @@ public class Sample
 
     /**
      * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setName(String value) {
         this.name = value;

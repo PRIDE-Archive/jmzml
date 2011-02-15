@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.jmzml.model.mzml;
 
 import uk.ac.ebi.jmzml.xml.jaxb.adapters.CalendarAdapter;
@@ -15,11 +14,11 @@ import java.util.Calendar;
 
 /**
  * A run in mzML should correspond to a single, consecutive and coherent set of scans on an instrument.
- * 
+ * <p/>
  * <p>Java class for RunType complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType name="RunType">
  *   &lt;complexContent>
@@ -37,18 +36,15 @@ import java.util.Calendar;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RunType", propOrder = {
-    "spectrumList",
-    "chromatogramList"
+        "spectrumList",
+        "chromatogramList"
 })
 public class Run
-    extends ParamGroup
-    implements Serializable
-{
+        extends ParamGroup
+        implements Serializable {
 
     private final static long serialVersionUID = 100L;
     protected SpectrumList spectrumList;
@@ -77,11 +73,9 @@ public class Run
 
     /**
      * Gets the value of the spectrumList property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SpectrumList }
-     *     
+     *
+     * @return possible object is
+     *         {@link SpectrumList }
      */
     public SpectrumList getSpectrumList() {
         return spectrumList;
@@ -89,11 +83,9 @@ public class Run
 
     /**
      * Sets the value of the spectrumList property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SpectrumList }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link SpectrumList }
      */
     public void setSpectrumList(SpectrumList value) {
         this.spectrumList = value;
@@ -101,11 +93,9 @@ public class Run
 
     /**
      * Gets the value of the chromatogramList property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ChromatogramList }
-     *     
+     *
+     * @return possible object is
+     *         {@link ChromatogramList }
      */
     public ChromatogramList getChromatogramList() {
         return chromatogramList;
@@ -113,11 +103,9 @@ public class Run
 
     /**
      * Sets the value of the chromatogramList property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ChromatogramList }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link ChromatogramList }
      */
     public void setChromatogramList(ChromatogramList value) {
         this.chromatogramList = value;
@@ -125,11 +113,9 @@ public class Run
 
     /**
      * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public String getId() {
         return id;
@@ -137,11 +123,9 @@ public class Run
 
     /**
      * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setId(String value) {
         this.id = value;
@@ -149,11 +133,9 @@ public class Run
 
     /**
      * Gets the value of the defaultInstrumentConfiguration property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public InstrumentConfiguration getDefaultInstrumentConfiguration() {
         return defaultInstrumentConfiguration;
@@ -161,11 +143,9 @@ public class Run
 
     /**
      * Sets the value of the defaultInstrumentConfiguration property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setDefaultInstrumentConfiguration(InstrumentConfiguration value) {
         this.defaultInstrumentConfiguration = value;
@@ -173,11 +153,9 @@ public class Run
 
     /**
      * Gets the value of the defaultSourceFileRef property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public SourceFile getDefaultSourceFileRef() {
         return defaultSourceFileRef;
@@ -185,11 +163,9 @@ public class Run
 
     /**
      * Sets the value of the defaultSourceFileRef property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setDefaultSourceFileRef(SourceFile value) {
         this.defaultSourceFileRef = value;
@@ -197,11 +173,9 @@ public class Run
 
     /**
      * Gets the value of the sample property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public Sample getSample() {
         return sample;
@@ -209,11 +183,9 @@ public class Run
 
     /**
      * Sets the value of the sample property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setSample(Sample value) {
         this.sample = value;
@@ -221,11 +193,9 @@ public class Run
 
     /**
      * Gets the value of the startTimeStamp property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public Calendar getStartTimeStamp() {
         return startTimeStamp;
@@ -233,11 +203,9 @@ public class Run
 
     /**
      * Sets the value of the startTimeStamp property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setStartTimeStamp(Calendar value) {
         this.startTimeStamp = value;

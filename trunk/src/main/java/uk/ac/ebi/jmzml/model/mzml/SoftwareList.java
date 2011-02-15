@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.jmzml.model.mzml;
 
 import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
@@ -12,11 +11,11 @@ import java.util.List;
 
 /**
  * List and descriptions of software used to acquire and/or process the data in this mzML file.
- * 
+ * <p/>
  * <p>Java class for SoftwareListType complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType name="SoftwareListType">
  *   &lt;complexContent>
@@ -29,16 +28,13 @@ import java.util.List;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SoftwareListType", propOrder = {
-    "software"
+        "software"
 })
 public class SoftwareList
-    implements Serializable, MzMLObject
-{
+        implements Serializable, MzMLObject {
 
     private final static long serialVersionUID = 100L;
     @XmlElement(required = true)
@@ -49,35 +45,25 @@ public class SoftwareList
     @XmlTransient
     protected long hid;
 
-    public long getHid() {
-        return hid;
-    }
-
-    public void setHid(long hid) {
-        this.hid = hid;
-    }
-
     /**
      * Gets the value of the software property.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the software property.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getSoftware().add(newItem);
      * </pre>
-     * 
-     * 
-     * <p>
+     * <p/>
+     * <p/>
+     * <p/>
      * Objects of the following type(s) are allowed in the list
      * {@link Software }
-     * 
-     * 
      */
     public List<Software> getSoftware() {
         if (software == null) {
@@ -88,11 +74,9 @@ public class SoftwareList
 
     /**
      * Gets the value of the count property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @return possible object is
+     *         {@link BigInteger }
      */
     public BigInteger getCount() {
         return count;
@@ -100,11 +84,9 @@ public class SoftwareList
 
     /**
      * Sets the value of the count property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setCount(BigInteger value) {
         this.count = value;

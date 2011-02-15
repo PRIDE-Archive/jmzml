@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.jmzml.model.mzml;
 
 import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
@@ -13,11 +12,11 @@ import java.util.List;
 
 /**
  * A collection of CVParam and UserParam elements that can be referenced from elsewhere in this mzML document by using the 'paramGroupRef' element in that location to reference the 'id' attribute value of this element.
- * 
+ * <p/>
  * <p>Java class for ReferenceableParamGroupType complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType name="ReferenceableParamGroupType">
  *   &lt;complexContent>
@@ -31,17 +30,14 @@ import java.util.List;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ReferenceableParamGroupType", propOrder = {
-    "cvParam",
-    "userParam"
+        "cvParam",
+        "userParam"
 })
 public class ReferenceableParamGroup
-    implements Serializable, MzMLObject
-{
+        implements Serializable, MzMLObject {
 
     private final static long serialVersionUID = 100L;
     protected List<CVParam> cvParam;
@@ -51,38 +47,29 @@ public class ReferenceableParamGroup
     @XmlID
     @XmlSchemaType(name = "ID")
     protected String id;
+    
     @XmlTransient
     protected long hid;
 
-    public long getHid() {
-        return hid;
-    }
-
-    public void setHid(long hid) {
-        this.hid = hid;
-    }
-
     /**
      * Gets the value of the cvParam property.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the cvParam property.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getCvParam().add(newItem);
      * </pre>
-     * 
-     * 
-     * <p>
+     * <p/>
+     * <p/>
+     * <p/>
      * Objects of the following type(s) are allowed in the list
      * {@link CVParam }
-     * 
-     * 
      */
     public List<CVParam> getCvParam() {
         if (cvParam == null) {
@@ -93,25 +80,23 @@ public class ReferenceableParamGroup
 
     /**
      * Gets the value of the userParam property.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the userParam property.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getUserParam().add(newItem);
      * </pre>
-     * 
-     * 
-     * <p>
+     * <p/>
+     * <p/>
+     * <p/>
      * Objects of the following type(s) are allowed in the list
      * {@link UserParam }
-     * 
-     * 
      */
     public List<UserParam> getUserParam() {
         if (userParam == null) {
@@ -122,11 +107,9 @@ public class ReferenceableParamGroup
 
     /**
      * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public String getId() {
         return id;
@@ -134,11 +117,9 @@ public class ReferenceableParamGroup
 
     /**
      * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setId(String value) {
         this.id = value;

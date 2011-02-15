@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.jmzml.model.mzml;
 
 import uk.ac.ebi.jmzml.model.mzml.params.BinaryDataArrayCVParam;
@@ -22,11 +21,11 @@ import java.util.zip.Inflater;
 
 /**
  * The structure into which encoded binary data goes. Byte ordering is always little endian (Intel style). Computers using a different endian style must convert to/from little endian when writing/reading mzML
- * 
+ * <p/>
  * <p>Java class for BinaryDataArrayType complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType name="BinaryDataArrayType">
  *   &lt;complexContent>
@@ -41,17 +40,14 @@ import java.util.zip.Inflater;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "BinaryDataArrayType", propOrder = {
-    "binary"
+        "binary"
 })
 public class BinaryDataArray
-    extends ParamGroup
-    implements Serializable
-{
+        extends ParamGroup
+        implements Serializable {
 
     /**
      * Defines the number of bytes required in an UNENCODED byte array to hold
@@ -66,24 +62,24 @@ public class BinaryDataArray
     public static final int BYTES_32_PRECISION = 4;
 
     // PSI-MS controlled vocabulary terms and accessions
-    public static final String MS_COMPRESSED_AC     = "MS:1000574";
-    public static final String MS_COMPRESSED_NAME   = "zlib compression";
-    public static final String MS_UNCOMPRESSED_AC   = "MS:1000576";
+    public static final String MS_COMPRESSED_AC = "MS:1000574";
+    public static final String MS_COMPRESSED_NAME = "zlib compression";
+    public static final String MS_UNCOMPRESSED_AC = "MS:1000576";
     public static final String MS_UNCOMPRESSED_NAME = "no compression";
-    public static final String MS_FLOAT32BIT_AC     = "MS:1000521";
-    public static final String MS_FLOAT32BIT_NAME   = "32-bit float";
-    public static final String MS_FLOAT64BIT_AC     = "MS:1000523";
-    public static final String MS_FLOAT64BIT_NAME   = "64-bit float";
-    public static final String MS_INT32BIT_AC       = "MS:1000519";
-    public static final String MS_INT32BIT_NAME     = "32-bit integer";
-    public static final String MS_INT64BIT_AC       = "MS:1000522";
-    public static final String MS_INT64BIT_NAME     = "64-bit integer";
-    public static final String MS_NTSTRING_AC       = "MS:1001479";
-    public static final String MS_NTSTRING_NAME     = "null-terminated ASCII string";
+    public static final String MS_FLOAT32BIT_AC = "MS:1000521";
+    public static final String MS_FLOAT32BIT_NAME = "32-bit float";
+    public static final String MS_FLOAT64BIT_AC = "MS:1000523";
+    public static final String MS_FLOAT64BIT_NAME = "64-bit float";
+    public static final String MS_INT32BIT_AC = "MS:1000519";
+    public static final String MS_INT32BIT_NAME = "32-bit integer";
+    public static final String MS_INT64BIT_AC = "MS:1000522";
+    public static final String MS_INT64BIT_NAME = "64-bit integer";
+    public static final String MS_NTSTRING_AC = "MS:1001479";
+    public static final String MS_NTSTRING_NAME = "null-terminated ASCII string";
 
     /**
      * Enumeration defining the allowed precision cases for the binary data
-     * as defined in the mzML specifications and the PSI-MS ontology. 
+     * as defined in the mzML specifications and the PSI-MS ontology.
      */
     public enum Precision {
         /**
@@ -153,10 +149,9 @@ public class BinaryDataArray
 
     /**
      * Gets the value of the binary property.
-     * 
-     * @return
-     *     possible object is
-     *     byte[]
+     *
+     * @return possible object is
+     *         byte[]
      */
     public byte[] getBinary() {
         return binary;
@@ -164,10 +159,9 @@ public class BinaryDataArray
 
     /**
      * Sets the value of the binary property.
-     * 
-     * @param value
-     *     allowed object is
-     *     byte[]
+     *
+     * @param value allowed object is
+     *              byte[]
      */
     public void setBinary(byte[] value) {
         this.binary = value;
@@ -175,11 +169,9 @@ public class BinaryDataArray
 
     /**
      * Gets the value of the arrayLength property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @return possible object is
+     *         {@link BigInteger }
      */
     public BigInteger getArrayLength() {
         return arrayLength;
@@ -187,11 +179,9 @@ public class BinaryDataArray
 
     /**
      * Sets the value of the arrayLength property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setArrayLength(BigInteger value) {
         this.arrayLength = value;
@@ -199,11 +189,9 @@ public class BinaryDataArray
 
     /**
      * Gets the value of the dataProcessing property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public DataProcessing getDataProcessing() {
         return dataProcessing;
@@ -211,11 +199,9 @@ public class BinaryDataArray
 
     /**
      * Sets the value of the dataProcessing property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setDataProcessing(DataProcessing value) {
         this.dataProcessing = value;
@@ -223,11 +209,9 @@ public class BinaryDataArray
 
     /**
      * Gets the value of the encodedLength property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @return possible object is
+     *         {@link BigInteger }
      */
     public BigInteger getEncodedLength() {
         return encodedLength;
@@ -235,11 +219,9 @@ public class BinaryDataArray
 
     /**
      * Sets the value of the encodedLength property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setEncodedLength(BigInteger value) {
         this.encodedLength = value;
@@ -274,12 +256,22 @@ public class BinaryDataArray
         // 3. apply the specified precision when converting into numeric values
         Number[] dataArray;
         switch (getPrecision()) {
-            case FLOAT64BIT : dataArray = convertData(data, Precision.FLOAT64BIT); break;
-            case FLOAT32BIT : dataArray = convertData(data, Precision.FLOAT32BIT); break;
-            case INT64BIT   : dataArray = convertData(data, Precision.INT64BIT); break;
-            case INT32BIT   : dataArray = convertData(data, Precision.INT32BIT); break;
-            case NTSTRING   : throw new IllegalArgumentException("Precision " + Precision.NTSTRING + " is not supported in this method!");
-            default         : throw new IllegalStateException("Not supported Precision in BinaryDataArray: " + getPrecision());
+            case FLOAT64BIT:
+                dataArray = convertData(data, Precision.FLOAT64BIT);
+                break;
+            case FLOAT32BIT:
+                dataArray = convertData(data, Precision.FLOAT32BIT);
+                break;
+            case INT64BIT:
+                dataArray = convertData(data, Precision.INT64BIT);
+                break;
+            case INT32BIT:
+                dataArray = convertData(data, Precision.INT32BIT);
+                break;
+            case NTSTRING:
+                throw new IllegalArgumentException("Precision " + Precision.NTSTRING + " is not supported in this method!");
+            default:
+                throw new IllegalStateException("Not supported Precision in BinaryDataArray: " + getPrecision());
         }
 
         // return the result
@@ -293,12 +285,10 @@ public class BinaryDataArray
      * as "null-terminated ASCII string".
      *
      * @return the String constructed from the binary data.
-     *
-     * @see #getPrecision()
-     *
      * @throws UnsupportedEncodingException if the expected encoding (ASCII) is not supported.
-     * @throws IllegalStateException if the method is used on binary data and the accompanying
-     *         CVParams state that the data does not represent a "null-terminated ASCII string".
+     * @throws IllegalStateException        if the method is used on binary data and the accompanying
+     *                                      CVParams state that the data does not represent a "null-terminated ASCII string".
+     * @see #getPrecision()
      */
     public String getBinaryDataAsString() throws UnsupportedEncodingException {
         // check if we have the right binary data
@@ -322,7 +312,7 @@ public class BinaryDataArray
         // since we are dealing with a "null terminated string" as defined
         // in the mzML specification, we have to first get rid of the null
         // byte before we can convert the data into a Java String.
-        byte[] stringData = new byte[data.length-1]; // one byte less than data
+        byte[] stringData = new byte[data.length - 1]; // one byte less than data
         System.arraycopy(data, 0, stringData, 0, stringData.length);
 
         return new String(stringData, "ASCII");
@@ -332,10 +322,10 @@ public class BinaryDataArray
      * Sets the value of the binary property for data in double values.
      * Note that double values imply a precision of 64 bit.
      *
-     * @param value the data as double array.
+     * @param value    the data as double array.
      * @param compress flag whether or not the data should be compressed.
-     * @param cv The CV that will be used as reference CV for the generated
-     *           compression and precision CVParams.
+     * @param cv       The CV that will be used as reference CV for the generated
+     *                 compression and precision CVParams.
      * @return an int value specifying the length of the byte[] that was stored as binary data.
      */
     public int set64BitFloatArrayAsBinaryData(double[] value, boolean compress, CV cv) {
@@ -363,10 +353,10 @@ public class BinaryDataArray
      * Sets the value of the binary property for data in float values.
      * Note that float values imply a precision of 32 bit.
      *
-     * @param value the data as float array.
+     * @param value    the data as float array.
      * @param compress flag whether or not the data should be compressed.
-     * @param cv The CV that will be used as reference CV for the generated
-     *           compression and precision CVParams.
+     * @param cv       The CV that will be used as reference CV for the generated
+     *                 compression and precision CVParams.
      * @return an int value specifying the length of the byte[] that was stored as binary data.
      */
     public int set32BitFloatArrayAsBinaryData(float[] value, boolean compress, CV cv) {
@@ -394,10 +384,10 @@ public class BinaryDataArray
      * Sets the value of the binary property for data in int values.
      * Note that int values imply a precision of 32 bit.
      *
-     * @param array the data as int array.
+     * @param array    the data as int array.
      * @param compress flag whether or not the data should be compressed.
-     * @param cv The CV that will be used as reference CV for the generated
-     *           compression and precision CVParams.
+     * @param cv       The CV that will be used as reference CV for the generated
+     *                 compression and precision CVParams.
      * @return an int value specifying the length of the byte[] that was stored as binary data.
      */
     public int set32BitIntArrayAsBinaryData(int[] array, boolean compress, CV cv) {
@@ -425,10 +415,10 @@ public class BinaryDataArray
      * Sets the value of the binary property for data in long values.
      * Note that long values imply a precision of 64 bit.
      *
-     * @param array the data as long array.
+     * @param array    the data as long array.
      * @param compress flag whether or not the data should be compressed.
-     * @param cv The CV that will be used as reference CV for the generated
-     *           compression and precision CVParams.
+     * @param cv       The CV that will be used as reference CV for the generated
+     *                 compression and precision CVParams.
      * @return an int value specifying the length of the byte[] that was stored as binary data.
      */
     public int set64BitIntArrayAsBinaryData(long[] array, boolean compress, CV cv) {
@@ -457,21 +447,21 @@ public class BinaryDataArray
      * Note: since Java does not have the concept of "null terminated strings",
      * this will add a null byte to comply with the mzML specifications.
      *
-     * @param value the String value of the binary data.
+     * @param value    the String value of the binary data.
      * @param compress flag whether or not the data should be compressed.
-     * @param cv The CV that will be used as reference CV for the generated
-     *           compression and precision CVParams.
-     * @throws UnsupportedEncodingException if the encoding (ASCII) used
-     *         by the String methods is not supported.
+     * @param cv       The CV that will be used as reference CV for the generated
+     *                 compression and precision CVParams.
      * @return an int value specifying the length of the byte[] that was stored as binary data.
+     * @throws UnsupportedEncodingException if the encoding (ASCII) used
+     *                                      by the String methods is not supported.
      */
     public int setStringAsBinaryData(String value, boolean compress, CV cv) throws UnsupportedEncodingException {
         int dataLength;
         // get the byte array of the String and add a null byte
         byte[] tmp = value.getBytes("ASCII");
-        byte[] data = new byte[tmp.length+1];
+        byte[] data = new byte[tmp.length + 1];
         System.arraycopy(tmp, 0, data, 0, tmp.length);
-        data[data.length-1] = 0; // add a null byte as last byte
+        data[data.length - 1] = 0; // add a null byte as last byte
         dataLength = data.length;
         setBinaryData(data, compress, cv);
 
@@ -490,13 +480,12 @@ public class BinaryDataArray
      * Since Number can hold all other number data, the precision has
      * to be specified.
      *
-     * @param array the Number array holding the data.
-     * @param p the Precision defining the data format.
+     * @param array    the Number array holding the data.
+     * @param p        the Precision defining the data format.
      * @param compress flag whether or not the data should be compressed.
-     * @param cv The CV that will be used as reference CV for the generated
-     *           compression and precision CVParams.
+     * @param cv       The CV that will be used as reference CV for the generated
+     *                 compression and precision CVParams.
      * @return an int value specifying the length of the byte[] that was stored as binary data.
-     *
      * @see #set32BitFloatArrayAsBinaryData(float[], boolean, CV)
      * @see #set64BitFloatArrayAsBinaryData(double[], boolean, CV)
      * @see #set32BitIntArrayAsBinaryData(int[], boolean, CV)
@@ -505,12 +494,22 @@ public class BinaryDataArray
     public int setNumberArrayAsBinaryData(Number[] array, Precision p, boolean compress, CV cv) {
         int size;
         switch (p) {
-            case FLOAT32BIT : size = set32BitFloatArrayAsBinaryData(convertNumberToFloatArray(array), compress, cv); break;
-            case FLOAT64BIT : size = set64BitFloatArrayAsBinaryData(convertNumberToDoubleArray(array), compress, cv); break;
-            case INT32BIT   : size = set32BitIntArrayAsBinaryData(convertNumberToIntArray(array), compress, cv); break;
-            case INT64BIT   : size = set64BitIntArrayAsBinaryData(convertNumberToLongArray(array), compress, cv); break;
-            case NTSTRING   : throw new IllegalArgumentException("Precision " + Precision.NTSTRING + " is not supported in this method!");
-            default         : throw new IllegalStateException("Not supported Precision in BinaryDataArray: " + p);
+            case FLOAT32BIT:
+                size = set32BitFloatArrayAsBinaryData(convertNumberToFloatArray(array), compress, cv);
+                break;
+            case FLOAT64BIT:
+                size = set64BitFloatArrayAsBinaryData(convertNumberToDoubleArray(array), compress, cv);
+                break;
+            case INT32BIT:
+                size = set32BitIntArrayAsBinaryData(convertNumberToIntArray(array), compress, cv);
+                break;
+            case INT64BIT:
+                size = set64BitIntArrayAsBinaryData(convertNumberToLongArray(array), compress, cv);
+                break;
+            case NTSTRING:
+                throw new IllegalArgumentException("Precision " + Precision.NTSTRING + " is not supported in this method!");
+            default:
+                throw new IllegalStateException("Not supported Precision in BinaryDataArray: " + p);
         }
         return size;
     }
@@ -531,15 +530,15 @@ public class BinaryDataArray
         }
 
         // then check if we have 64 or 32 bit precision
-        if ( cvs2.contains(MS_FLOAT64BIT_AC) ) {
+        if (cvs2.contains(MS_FLOAT64BIT_AC)) {
             p = Precision.FLOAT64BIT;
-        } else if ( cvs2.contains(MS_FLOAT32BIT_AC) ) {
+        } else if (cvs2.contains(MS_FLOAT32BIT_AC)) {
             p = Precision.FLOAT32BIT;
-        } else if ( cvs2.contains(MS_INT64BIT_AC) ) {
+        } else if (cvs2.contains(MS_INT64BIT_AC)) {
             p = Precision.INT64BIT;
-        } else if ( cvs2.contains(MS_INT32BIT_AC) ) {
+        } else if (cvs2.contains(MS_INT32BIT_AC)) {
             p = Precision.INT32BIT;
-        } else if ( cvs2.contains(MS_NTSTRING_AC) ) {
+        } else if (cvs2.contains(MS_NTSTRING_AC)) {
             p = Precision.NTSTRING;
         } else {
             throw new IllegalStateException("Required precision CV parameter ('" + MS_FLOAT64BIT_NAME
@@ -557,7 +556,6 @@ public class BinaryDataArray
      * @return true if the attached CVParams contain a parameter stating
      *         that the data is compressed. False is returned if the
      *         CVParam for uncompressed data is found.
-     *
      * @throws IllegalStateException if none of the expected CVParams were found.
      */
     public boolean needsUncompressing() {
@@ -589,11 +587,16 @@ public class BinaryDataArray
     private Number[] convertData(byte[] data, Precision prec) {
         int step;
         switch (prec) {
-            case FLOAT64BIT : // fall through
-            case INT64BIT   : step = 8; break;
-            case FLOAT32BIT : // fall through
-            case INT32BIT   : step = 4; break;
-            default         : step = -1;
+            case FLOAT64BIT: // fall through
+            case INT64BIT:
+                step = 8;
+                break;
+            case FLOAT32BIT: // fall through
+            case INT32BIT:
+                step = 4;
+                break;
+            default:
+                step = -1;
         }
         // create a Number array of sufficient size
         Number[] resultArray = new Number[data.length / step];
@@ -606,11 +609,20 @@ public class BinaryDataArray
             // and the 'getDouble(index)' and getLong(index) methods read the next 8 bytes.
             Number num;
             switch (prec) {
-                case FLOAT64BIT : num = bb.getDouble(indexOut); break;
-                case INT64BIT   : num = bb.getLong(indexOut); break;
-                case FLOAT32BIT : num = bb.getFloat(indexOut); break;
-                case INT32BIT   : num = bb.getInt(indexOut); break;
-                default         : num = null;
+                case FLOAT64BIT:
+                    num = bb.getDouble(indexOut);
+                    break;
+                case INT64BIT:
+                    num = bb.getLong(indexOut);
+                    break;
+                case FLOAT32BIT:
+                    num = bb.getFloat(indexOut);
+                    break;
+                case INT32BIT:
+                    num = bb.getInt(indexOut);
+                    break;
+                default:
+                    num = null;
             }
             resultArray[indexOut / step] = num;
         }
@@ -671,7 +683,7 @@ public class BinaryDataArray
     private double[] convertNumberToDoubleArray(Number[] array) {
         double[] result = new double[array.length];
         for (int i = 0; i < array.length; i++) {
-           result[i] = array[i].doubleValue();
+            result[i] = array[i].doubleValue();
         }
         return result;
     }
@@ -679,7 +691,7 @@ public class BinaryDataArray
     private float[] convertNumberToFloatArray(Number[] array) {
         float[] result = new float[array.length];
         for (int i = 0; i < array.length; i++) {
-           result[i] = array[i].floatValue();
+            result[i] = array[i].floatValue();
         }
         return result;
     }
@@ -687,7 +699,7 @@ public class BinaryDataArray
     private int[] convertNumberToIntArray(Number[] array) {
         int[] result = new int[array.length];
         for (int i = 0; i < array.length; i++) {
-           result[i] = array[i].intValue();
+            result[i] = array[i].intValue();
         }
         return result;
     }
@@ -695,7 +707,7 @@ public class BinaryDataArray
     private long[] convertNumberToLongArray(Number[] array) {
         long[] result = new long[array.length];
         for (int i = 0; i < array.length; i++) {
-           result[i] = array[i].longValue();
+            result[i] = array[i].longValue();
         }
         return result;
     }

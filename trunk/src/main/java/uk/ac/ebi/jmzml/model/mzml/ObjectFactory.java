@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.jmzml.model.mzml;
 
 import javax.xml.bind.JAXBElement;
@@ -8,18 +7,17 @@ import javax.xml.namespace.QName;
 
 
 /**
- * This object contains factory methods for each 
- * Java content interface and Java element interface 
- * generated in the uk.ac.ebi.jmzml.model.mzml package. 
- * <p>An ObjectFactory allows you to programatically 
- * construct new instances of the Java representation 
- * for XML content. The Java representation of XML 
- * content can consist of schema derived interfaces 
- * and classes representing the binding of schema 
- * type definitions, element declarations and model 
- * groups.  Factory methods for each of these are 
+ * This object contains factory methods for each
+ * Java content interface and Java element interface
+ * generated in the uk.ac.ebi.jmzml.model.mzml package.
+ * <p>An ObjectFactory allows you to programatically
+ * construct new instances of the Java representation
+ * for XML content. The Java representation of XML
+ * content can consist of schema derived interfaces
+ * and classes representing the binding of schema
+ * type definitions, element declarations and model
+ * groups.  Factory methods for each of these are
  * provided in this class.
- * 
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -28,14 +26,12 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: uk.ac.ebi.jmzml.model.mzml
-     * 
      */
     public ObjectFactory() {
     }
 
     /**
      * Create an instance of {@link SpectrumList }
-     * 
      */
     public SpectrumList createSpectrumList() {
         return new SpectrumList();
@@ -43,7 +39,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ProductList }
-     * 
      */
     public ProductList createProductList() {
         return new ProductList();
@@ -51,7 +46,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Run }
-     * 
      */
     public Run createRun() {
         return new Run();
@@ -59,7 +53,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link DataProcessingList }
-     * 
      */
     public DataProcessingList createDataProcessingList() {
         return new DataProcessingList();
@@ -67,7 +60,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CVList }
-     * 
      */
     public CVList createCVList() {
         return new CVList();
@@ -75,7 +67,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link InstrumentConfigurationList }
-     * 
      */
     public InstrumentConfigurationList createInstrumentConfigurationList() {
         return new InstrumentConfigurationList();
@@ -83,7 +74,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SourceFile }
-     * 
      */
     public SourceFile createSourceFile() {
         return new SourceFile();
@@ -91,7 +81,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link DetectorComponent }
-     * 
      */
     public DetectorComponent createDetectorComponent() {
         return new DetectorComponent();
@@ -99,7 +88,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link PrecursorList }
-     * 
      */
     public PrecursorList createPrecursorList() {
         return new PrecursorList();
@@ -107,7 +95,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link IndexList }
-     * 
      */
     public IndexList createIndexList() {
         return new IndexList();
@@ -115,7 +102,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Sample }
-     * 
      */
     public Sample createSample() {
         return new Sample();
@@ -123,7 +109,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Spectrum }
-     * 
      */
     public Spectrum createSpectrum() {
         return new Spectrum();
@@ -131,7 +116,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link IndexedmzML }
-     * 
      */
     public IndexedmzML createIndexedmzML() {
         return new IndexedmzML();
@@ -139,7 +123,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link FileDescription }
-     * 
      */
     public FileDescription createFileDescription() {
         return new FileDescription();
@@ -147,7 +130,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ScanSettingsList }
-     * 
      */
     public ScanSettingsList createScanSettingsList() {
         return new ScanSettingsList();
@@ -155,7 +137,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Product }
-     * 
      */
     public Product createProduct() {
         return new Product();
@@ -163,7 +144,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link AnalyzerComponent }
-     * 
      */
     public AnalyzerComponent createAnalyzerComponent() {
         return new AnalyzerComponent();
@@ -171,7 +151,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link MzML }
-     * 
      */
     public MzML createMzML() {
         return new MzML();
@@ -179,7 +158,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SelectedIonList }
-     * 
      */
     public SelectedIonList createSelectedIonList() {
         return new SelectedIonList();
@@ -187,7 +165,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ScanSettings }
-     * 
      */
     public ScanSettings createScanSettings() {
         return new ScanSettings();
@@ -195,7 +172,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ParamGroup }
-     * 
      */
     public ParamGroup createParamGroup() {
         return new ParamGroup();
@@ -203,7 +179,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ScanWindowList }
-     * 
      */
     public ScanWindowList createScanWindowList() {
         return new ScanWindowList();
@@ -211,7 +186,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TargetList }
-     * 
      */
     public TargetList createTargetList() {
         return new TargetList();
@@ -219,7 +193,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Software }
-     * 
      */
     public Software createSoftware() {
         return new Software();
@@ -227,7 +200,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ReferenceableParamGroup }
-     * 
      */
     public ReferenceableParamGroup createReferenceableParamGroup() {
         return new ReferenceableParamGroup();
@@ -235,7 +207,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CV }
-     * 
      */
     public CV createCV() {
         return new CV();
@@ -243,7 +214,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link DataProcessing }
-     * 
      */
     public DataProcessing createDataProcessing() {
         return new DataProcessing();
@@ -251,7 +221,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Scan }
-     * 
      */
     public Scan createScan() {
         return new Scan();
@@ -259,7 +228,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SourceComponent }
-     * 
      */
     public SourceComponent createSourceComponent() {
         return new SourceComponent();
@@ -267,7 +235,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ReferenceableParamGroupList }
-     * 
      */
     public ReferenceableParamGroupList createReferenceableParamGroupList() {
         return new ReferenceableParamGroupList();
@@ -275,7 +242,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ScanList }
-     * 
      */
     public ScanList createScanList() {
         return new ScanList();
@@ -283,7 +249,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CVParam }
-     * 
      */
     public CVParam createCVParam() {
         return new CVParam();
@@ -291,7 +256,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ReferenceableParamGroupRef }
-     * 
      */
     public ReferenceableParamGroupRef createReferenceableParamGroupRef() {
         return new ReferenceableParamGroupRef();
@@ -299,7 +263,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ChromatogramList }
-     * 
      */
     public ChromatogramList createChromatogramList() {
         return new ChromatogramList();
@@ -307,7 +270,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SoftwareList }
-     * 
      */
     public SoftwareList createSoftwareList() {
         return new SoftwareList();
@@ -315,7 +277,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ComponentList }
-     * 
      */
     public ComponentList createComponentList() {
         return new ComponentList();
@@ -323,7 +284,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Offset }
-     * 
      */
     public Offset createOffset() {
         return new Offset();
@@ -331,7 +291,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Index }
-     * 
      */
     public Index createIndex() {
         return new Index();
@@ -339,7 +298,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SourceFileRef }
-     * 
      */
     public SourceFileRef createSourceFileRef() {
         return new SourceFileRef();
@@ -347,7 +305,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SampleList }
-     * 
      */
     public SampleList createSampleList() {
         return new SampleList();
@@ -355,7 +312,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link InstrumentConfiguration }
-     * 
      */
     public InstrumentConfiguration createInstrumentConfiguration() {
         return new InstrumentConfiguration();
@@ -363,7 +319,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Precursor }
-     * 
      */
     public Precursor createPrecursor() {
         return new Precursor();
@@ -371,7 +326,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SourceFileList }
-     * 
      */
     public SourceFileList createSourceFileList() {
         return new SourceFileList();
@@ -379,7 +333,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link UserParam }
-     * 
      */
     public UserParam createUserParam() {
         return new UserParam();
@@ -387,7 +340,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SourceFileRefList }
-     * 
      */
     public SourceFileRefList createSourceFileRefList() {
         return new SourceFileRefList();
@@ -395,7 +347,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link BinaryDataArray }
-     * 
      */
     public BinaryDataArray createBinaryDataArray() {
         return new BinaryDataArray();
@@ -403,7 +354,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ProcessingMethod }
-     * 
      */
     public ProcessingMethod createProcessingMethod() {
         return new ProcessingMethod();
@@ -411,7 +361,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Component }
-     * 
      */
     public Component createComponent() {
         return new Component();
@@ -419,7 +368,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Chromatogram }
-     * 
      */
     public Chromatogram createChromatogram() {
         return new Chromatogram();
@@ -427,7 +375,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SoftwareRef }
-     * 
      */
     public SoftwareRef createSoftwareRef() {
         return new SoftwareRef();
@@ -435,7 +382,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link BinaryDataArrayList }
-     * 
      */
     public BinaryDataArrayList createBinaryDataArrayList() {
         return new BinaryDataArrayList();
@@ -443,7 +389,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link MzML }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://psi.hupo.org/ms/mzml", name = "mzML")
     public JAXBElement<MzML> createMzML(MzML value) {

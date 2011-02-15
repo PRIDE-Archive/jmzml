@@ -82,19 +82,8 @@ public class UserParam
     @XmlSchemaType(name = "IDREF")
     protected CV unitCV;
 
-    /**
-     * Andreas's implementation was using Long object
-     */
     @XmlTransient
     protected long hid;
-
-    public Long getHid() {
-        return hid;
-    }
-
-    public void setHid(Long hid) {
-        this.hid = hid;
-    }
 
     /**
      * Added a boolean to indicate whether this UserParam was inferred from

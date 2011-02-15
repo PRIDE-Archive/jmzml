@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.jmzml.model.mzml;
 
 import javax.xml.bind.annotation.*;
@@ -10,11 +9,11 @@ import java.util.List;
 
 /**
  * List and descriptions of scans.
- * 
+ * <p/>
  * <p>Java class for ScanListType complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType name="ScanListType">
  *   &lt;complexContent>
@@ -27,17 +26,14 @@ import java.util.List;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ScanListType", propOrder = {
-    "scan"
+        "scan"
 })
 public class ScanList
-    extends ParamGroup
-    implements Serializable
-{
+        extends ParamGroup
+        implements Serializable {
 
     private final static long serialVersionUID = 100L;
     @XmlElement(required = true)
@@ -48,25 +44,23 @@ public class ScanList
 
     /**
      * Gets the value of the scan property.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the scan property.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getScan().add(newItem);
      * </pre>
-     * 
-     * 
-     * <p>
+     * <p/>
+     * <p/>
+     * <p/>
      * Objects of the following type(s) are allowed in the list
      * {@link Scan }
-     * 
-     * 
      */
     public List<Scan> getScan() {
         if (scan == null) {
@@ -77,11 +71,9 @@ public class ScanList
 
     /**
      * Gets the value of the count property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @return possible object is
+     *         {@link BigInteger }
      */
     public BigInteger getCount() {
         return count;
@@ -89,11 +81,9 @@ public class ScanList
 
     /**
      * Sets the value of the count property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setCount(BigInteger value) {
         this.count = value;

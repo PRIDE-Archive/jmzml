@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.jmzml.model.mzml;
 
 import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
@@ -12,11 +11,11 @@ import java.util.List;
 
 /**
  * List of binary data arrays.
- * 
+ * <p/>
  * <p>Java class for BinaryDataArrayListType complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType name="BinaryDataArrayListType">
  *   &lt;complexContent>
@@ -29,16 +28,13 @@ import java.util.List;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "BinaryDataArrayListType", propOrder = {
-    "binaryDataArray"
+        "binaryDataArray"
 })
 public class BinaryDataArrayList
-    implements Serializable, MzMLObject
-{
+        implements Serializable, MzMLObject {
 
     private final static long serialVersionUID = 100L;
     @XmlElement(required = true)
@@ -46,38 +42,29 @@ public class BinaryDataArrayList
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger count;
+    
     @XmlTransient
     protected long hid;
 
-    public long getHid() {
-        return hid;
-    }
-
-    public void setHid(long hid) {
-        this.hid = hid;
-    }
-
     /**
      * Gets the value of the binaryDataArray property.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the binaryDataArray property.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getBinaryDataArray().add(newItem);
      * </pre>
-     * 
-     * 
-     * <p>
+     * <p/>
+     * <p/>
+     * <p/>
      * Objects of the following type(s) are allowed in the list
      * {@link BinaryDataArray }
-     * 
-     * 
      */
     public List<BinaryDataArray> getBinaryDataArray() {
         if (binaryDataArray == null) {
@@ -88,11 +75,9 @@ public class BinaryDataArrayList
 
     /**
      * Gets the value of the count property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @return possible object is
+     *         {@link BigInteger }
      */
     public BigInteger getCount() {
         return count;
@@ -100,11 +85,9 @@ public class BinaryDataArrayList
 
     /**
      * Sets the value of the count property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setCount(BigInteger value) {
         this.count = value;

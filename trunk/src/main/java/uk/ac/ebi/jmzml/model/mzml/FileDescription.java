@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.jmzml.model.mzml;
 
 import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
@@ -11,11 +10,11 @@ import java.util.List;
 
 /**
  * Information pertaining to the entire mzML file (i.e. not specific to any part of the data set) is stored here.
- * 
+ * <p/>
  * <p>Java class for FileDescriptionType complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType name="FileDescriptionType">
  *   &lt;complexContent>
@@ -29,42 +28,30 @@ import java.util.List;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "FileDescriptionType", propOrder = {
-    "fileContent",
-    "sourceFileList",
-    "contact"
+        "fileContent",
+        "sourceFileList",
+        "contact"
 })
 public class FileDescription
-    implements Serializable, MzMLObject
-{
+        implements Serializable, MzMLObject {
 
     private final static long serialVersionUID = 100L;
     @XmlElement(required = true)
     protected ParamGroup fileContent;
     protected SourceFileList sourceFileList;
     protected List<ParamGroup> contact;
+
     @XmlTransient
     protected long hid;
 
-    public long getHid() {
-        return hid;
-    }
-
-    public void setHid(long hid) {
-        this.hid = hid;
-    }
-
     /**
      * Gets the value of the fileContent property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ParamGroup }
-     *     
+     *
+     * @return possible object is
+     *         {@link ParamGroup }
      */
     public ParamGroup getFileContent() {
         return fileContent;
@@ -72,11 +59,9 @@ public class FileDescription
 
     /**
      * Sets the value of the fileContent property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ParamGroup }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link ParamGroup }
      */
     public void setFileContent(ParamGroup value) {
         this.fileContent = value;
@@ -84,11 +69,9 @@ public class FileDescription
 
     /**
      * Gets the value of the sourceFileList property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SourceFileList }
-     *     
+     *
+     * @return possible object is
+     *         {@link SourceFileList }
      */
     public SourceFileList getSourceFileList() {
         return sourceFileList;
@@ -96,11 +79,9 @@ public class FileDescription
 
     /**
      * Sets the value of the sourceFileList property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SourceFileList }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link SourceFileList }
      */
     public void setSourceFileList(SourceFileList value) {
         this.sourceFileList = value;
@@ -108,25 +89,23 @@ public class FileDescription
 
     /**
      * Gets the value of the contact property.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the contact property.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getContact().add(newItem);
      * </pre>
-     * 
-     * 
-     * <p>
+     * <p/>
+     * <p/>
+     * <p/>
      * Objects of the following type(s) are allowed in the list
      * {@link ParamGroup }
-     * 
-     * 
      */
     public List<ParamGroup> getContact() {
         if (contact == null) {

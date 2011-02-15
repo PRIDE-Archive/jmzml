@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.jmzml.model.mzml;
 
 import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
@@ -9,9 +8,9 @@ import java.io.Serializable;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -26,20 +25,17 @@ import java.io.Serializable;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "mzML",
-    "indexList",
-    "indexListOffset",
-    "fileChecksum"
+        "mzML",
+        "indexList",
+        "indexListOffset",
+        "fileChecksum"
 })
 @XmlRootElement(name = "indexedmzML")
 public class IndexedmzML
-    implements Serializable, MzMLObject
-{
+        implements Serializable, MzMLObject {
 
     private final static long serialVersionUID = 100L;
     @XmlElement(required = true)
@@ -51,13 +47,14 @@ public class IndexedmzML
     @XmlElement(required = true)
     protected String fileChecksum;
 
+    @XmlTransient
+    protected long hid;
+
     /**
      * Gets the value of the mzML property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link MzML }
-     *     
+     *
+     * @return possible object is
+     *         {@link MzML }
      */
     public MzML getMzML() {
         return mzML;
@@ -65,11 +62,9 @@ public class IndexedmzML
 
     /**
      * Sets the value of the mzML property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link MzML }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link MzML }
      */
     public void setMzML(MzML value) {
         this.mzML = value;
@@ -77,11 +72,9 @@ public class IndexedmzML
 
     /**
      * Gets the value of the indexList property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link IndexList }
-     *     
+     *
+     * @return possible object is
+     *         {@link IndexList }
      */
     public IndexList getIndexList() {
         return indexList;
@@ -89,11 +82,9 @@ public class IndexedmzML
 
     /**
      * Sets the value of the indexList property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link IndexList }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link IndexList }
      */
     public void setIndexList(IndexList value) {
         this.indexList = value;
@@ -101,11 +92,9 @@ public class IndexedmzML
 
     /**
      * Gets the value of the indexListOffset property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Long }
-     *     
+     *
+     * @return possible object is
+     *         {@link Long }
      */
     public Long getIndexListOffset() {
         return indexListOffset;
@@ -113,11 +102,9 @@ public class IndexedmzML
 
     /**
      * Sets the value of the indexListOffset property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Long }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Long }
      */
     public void setIndexListOffset(Long value) {
         this.indexListOffset = value;
@@ -125,11 +112,9 @@ public class IndexedmzML
 
     /**
      * Gets the value of the fileChecksum property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public String getFileChecksum() {
         return fileChecksum;
@@ -137,11 +122,9 @@ public class IndexedmzML
 
     /**
      * Sets the value of the fileChecksum property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setFileChecksum(String value) {
         this.fileChecksum = value;
