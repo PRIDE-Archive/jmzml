@@ -5,7 +5,8 @@
 <hibernate-mapping>
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.BinaryDataArray" table="BinaryDataArray"
                     extends="uk.ac.ebi.jmzml.model.mzml.ParamGroup">
-        <property name="binary" type="binary"/>
+        <!--We need to force hibernate to create a long raw column to allow values longer than 2KB-->
+        <property name="binary" type="binary" length="30000"/>
         <property name="arrayLength" type="big_integer"/>
         <property name="encodedLength" type="big_integer"/>
 
