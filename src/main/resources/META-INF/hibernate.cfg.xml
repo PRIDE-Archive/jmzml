@@ -14,7 +14,7 @@
         <!-- Hibernate specific configuration  -->
         <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
         <property name="hibernate.max_fetch_depth">3</property>
-
+     
         <!-- Auto detect annotation model classes -->
         <property name="hibernate.archive.autodetection">class</property>
 
@@ -46,13 +46,9 @@
         <mapping resource="hbm/DataProcessingList.hbm.xml"/>
         <mapping resource="hbm/DetectorComponent.hbm.xml"/>
         <mapping resource="hbm/FileDescription.hbm.xml"/>
-        <mapping resource="hbm/Index.hbm.xml"/>
-        <mapping resource="hbm/IndexedmzML.hbm.xml"/>
-        <mapping resource="hbm/IndexList.hbm.xml"/>
         <mapping resource="hbm/InstrumentConfiguration.hbm.xml"/>
         <mapping resource="hbm/InstrumentConfigurationList.hbm.xml"/>
         <mapping resource="hbm/MzML.hbm.xml"/>
-        <mapping resource="hbm/Offset.hbm.xml"/>
         <mapping resource="hbm/ParamGroup.hbm.xml"/>
         <mapping resource="hbm/Precursor.hbm.xml"/>
         <mapping resource="hbm/PrecursorList.hbm.xml"/>
