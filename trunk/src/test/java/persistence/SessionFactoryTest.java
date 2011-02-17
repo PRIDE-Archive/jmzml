@@ -149,6 +149,9 @@ public class SessionFactoryTest {
         createSessionFactory();
         unmarshallMzML(fileName);
         SampleList sampleList = mzML.getSampleList();
+        if (sampleList == null){
+            return;    
+        }
         // Persist object
         session.getTransaction().begin();
         session.persist(sampleList);
@@ -176,6 +179,9 @@ public class SessionFactoryTest {
         createSessionFactory();
         unmarshallMzML(fileName);
         ScanSettingsList scanSettingsList = mzML.getScanSettingsList();
+        if (scanSettingsList == null){
+            return;
+        }
         // Persist object
         session.getTransaction().begin();
         session.persist(scanSettingsList);
