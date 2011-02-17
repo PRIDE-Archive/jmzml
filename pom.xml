@@ -202,6 +202,23 @@
 
     <!-- Dependencies -->
     <dependencies>
+        <!--<dependency>-->
+        <!--<groupId>hibernate</groupId>-->
+        <!--<artifactId>hibernate</artifactId>-->
+        <!--<version>3.1rc2</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.5.10</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.5.8</version>
+        </dependency>
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
@@ -258,6 +275,34 @@
             <artifactId>activation</artifactId>
             <version>1.1</version>
         </dependency>
+        <!-- Database -->
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc14</artifactId>
+            <version>10.2.0.3.0</version>
+        </dependency>
+
+        <!-- Hibernate Dependencies -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>3.6.0.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>3.5.6-Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.6.0.Final</version>
+            <scope>test</scope>
+        </dependency>
+
+
         <dependency>
             <groupId>com.compomics</groupId>
             <artifactId>utilities</artifactId>
@@ -332,6 +377,13 @@
             <name>Genesis maven2 repository</name>
             <url>http://genesis.UGent.be/maven2</url>
             <layout>default</layout>
+        </repository>
+        <!-- Hibernate repository -->
+
+        <repository>
+            <id>JBoss</id>
+            <name>JBoss repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
         </repository>
     </repositories>
 
