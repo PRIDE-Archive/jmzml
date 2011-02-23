@@ -1,5 +1,6 @@
 package uk.ac.ebi.jmzml.model.mzml;
 
+import org.apache.log4j.Logger;
 import uk.ac.ebi.jmzml.model.mzml.params.BinaryDataArrayCVParam;
 import uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter;
 
@@ -16,11 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
-import java.util.zip.Inflater;
+import java.util.zip.Inflater;                                                               
 
 
 /**
- * The structure into which encoded binary data goes. Byte ordering is always little endian (Intel style). Computers using a different endian style must convert to/from little endian when writing/reading mzML
+ * The structure into which encoded binary data goes. Byte ordering is always little endian (Intel style).
+ * Computers using a different endian style must convert to/from little endian when writing/reading mzML
  * <p/>
  * <p>Java class for BinaryDataArrayType complex type.
  * <p/>
@@ -48,6 +50,8 @@ import java.util.zip.Inflater;
 public class BinaryDataArray
         extends ParamGroup
         implements Serializable {
+
+     private static final Logger logger = Logger.getLogger(BinaryDataArray.class);
 
     /**
      * Defines the number of bytes required in an UNENCODED byte array to hold
@@ -634,6 +638,8 @@ public class BinaryDataArray
                 int count = decompressor.inflate(buf);
                 bos.write(buf, 0, count);
             } catch (DataFormatException e) {
+                logger.error("Encountered wrong data format " +
+                        "while trying to decompress binary data!", e);
                 throw new IllegalStateException("Encountered wrong data format " +
                         "while trying to decompress binary data!", e);
             }
@@ -641,13 +647,14 @@ public class BinaryDataArray
         try {
             bos.close();
         } catch (IOException e) {
-            // ToDo: add logging
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
         // Get the decompressed data
         decompressedData = bos.toByteArray();
 
         if (decompressedData == null) {
+            logger.error("Decompression of binary data prodeuced no result (null)!");
             throw new IllegalStateException("Decompression of binary data prodeuced no result (null)!");
         }
         return decompressedData;

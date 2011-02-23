@@ -26,6 +26,7 @@ public class MzMLIndexerFactory {
 
     private static final Logger logger = Logger.getLogger(MzMLIndexerFactory.class);
 
+    // TODO what if we have to index more than one file at a time?
     private static final MzMLIndexerFactory instance = new MzMLIndexerFactory();
     private static final Pattern ID_PATTERN = Pattern.compile("\\sid\\s*=\\s*['\"]([^'\"]*)['\"]", Pattern.CASE_INSENSITIVE);
     private static final Pattern INDEX_PATTERN = Pattern.compile("\\sindex\\s*=\\s*['\"]([^'\"]*)['\"]", Pattern.CASE_INSENSITIVE);
@@ -35,6 +36,17 @@ public class MzMLIndexerFactory {
 
     public static MzMLIndexerFactory getInstance() {
         return instance;
+    }
+
+    /**
+     * In case of any new Index instance needed.
+     * For example if the user wants to parse more than one mzml file.
+     *
+     * @return new instance of MzMLIndexerFactory
+     *
+     */
+    public static MzMLIndexerFactory getNewInstance(){
+        return new MzMLIndexerFactory();
     }
 
     public MzMLIndexer buildIndex(File xmlFile) {

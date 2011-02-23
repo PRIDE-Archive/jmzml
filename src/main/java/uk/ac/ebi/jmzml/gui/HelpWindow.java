@@ -33,14 +33,15 @@ public class HelpWindow extends javax.swing.JFrame {
             InputStreamReader streamReader = new InputStreamReader(stream);
             BufferedReader b = new BufferedReader(streamReader);
             String s = b.readLine();
-            String helpText = "";
+            //String helpText = "";
+            StringBuffer helpText = new StringBuffer();
 
             while (s != null) {
-                helpText += s;
+                helpText.append(s);
                 s = b.readLine();
             }
 
-            textJEditorPane.setText(helpText);
+            textJEditorPane.setText(helpText.toString());
 
             if (fileName.getPath().endsWith("AboutJmzML.html")) {
                 aboutFile = true;
@@ -75,14 +76,15 @@ public class HelpWindow extends javax.swing.JFrame {
             InputStreamReader streamReader = new InputStreamReader(stream);
             BufferedReader b = new BufferedReader(streamReader);
             String s = b.readLine();
-            String helpText = "";
+            //String helpText = "";
+            StringBuffer helpText = new StringBuffer();
 
             while (s != null) {
-                helpText += s;
+                helpText.append(s);
                 s = b.readLine();
             }
 
-            textJEditorPane.setText(helpText);
+            textJEditorPane.setText(helpText.toString());
 
             if (fileName.getPath().endsWith("AboutJmzML.html")) {
                 setTitle("About");

@@ -22,6 +22,7 @@ package uk.ac.ebi.jmzml.xml.io;
 import org.apache.commons.collections.buffer.CircularFifoBuffer;
 import org.apache.log4j.Logger;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 import uk.ac.ebi.jmzml.model.mzml.*;
 import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
 import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
@@ -33,10 +34,13 @@ import uk.ac.ebi.jmzml.xml.xxindex.FileUtils;
 import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
 import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexerFactory;
 
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.sax.SAXSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
 import java.io.*;
 import java.math.BigInteger;
 import java.net.URL;
@@ -99,6 +103,7 @@ public class MzMLUnmarshaller {
      * @param mzMLFile the file to unmarshall
      * @param aUseSpectrumCache if true the spectra are cached
      */
+    // TODO - Melh every time this UnMarshaller called it should create a new index for each file.
     public MzMLUnmarshaller(File mzMLFile, boolean aUseSpectrumCache) {
         this.mzMLFile = mzMLFile;
         index = MzMLIndexerFactory.getInstance().buildIndex(mzMLFile);
@@ -202,6 +207,9 @@ public class MzMLUnmarshaller {
                 MzMLNamespaceFilter xmlFilter = new MzMLNamespaceFilter();
                 //initializeUnmarshaller will assign the proper reader to the xmlFilter
                 Unmarshaller unmarshaller = UnmarshallerFactory.getInstance().initializeUnmarshaller(index, xmlFilter, cache, useSpectrumCache);
+                // add XSD to unmarshaller for validation
+                // melh
+                unmarshaller.setSchema(getSchema());
                 //unmarshall the desired object
                 JAXBElement<T> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(xmlSt))), cls);
                 retval = holder.getValue();
@@ -217,6 +225,19 @@ public class MzMLUnmarshaller {
         }
 
         return retval;
+    }
+
+    private Schema getSchema() {
+        Schema schema = null;
+        SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+        URL schemaUrl = this.getClass().getClassLoader().getResource("mzML1.1.1-idx.xsd");
+
+        try{
+            schema = schemaFactory.newSchema(FileUtils.getFileFromURL(schemaUrl));
+        }catch(SAXException e ){
+            logger.debug("Error in creation of schema" + e);
+        }
+       return schema;
     }
 
     /**
@@ -235,7 +256,8 @@ public class MzMLUnmarshaller {
     ///// ///// ///// ///// ///// ///// ///// ///// ///// //////
     // additional unmarshal operations for indexedmzML
 
-    // ToDo: add schema validation step or implicit validation with the marshaller/unmarshaller
+    // ToDo:-DONE add schema validation step or implicit validation with the marshaller/unmarshaller
+    // TODO:-DONE added a schema validation at the method unmarshalFromXpath by "unmarshaller.setSchema(schema)"
 
     /**
      * Returns true of the mzML file is indexed.
