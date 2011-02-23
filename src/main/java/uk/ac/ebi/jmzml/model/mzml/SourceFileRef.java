@@ -1,7 +1,7 @@
+
 package uk.ac.ebi.jmzml.model.mzml;
 
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter;
+import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -10,9 +10,9 @@ import java.io.Serializable;
 
 /**
  * <p>Java class for SourceFileRefType complex type.
- * <p/>
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- * <p/>
+ * 
  * <pre>
  * &lt;complexType name="SourceFileRefType">
  *   &lt;complexContent>
@@ -22,39 +22,58 @@ import java.io.Serializable;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SourceFileRefType")
 public class SourceFileRef
-        implements Serializable, MzMLObject {
+    extends MzMLObject
+    implements Serializable
+{
 
     private final static long serialVersionUID = 100L;
-    @XmlAttribute(name = "ref", required = true)
-    @XmlJavaTypeAdapter(SourceFileAdapter.class)
+    @XmlAttribute(required = true)
+    @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
-    protected SourceFile sourceFile;
-
+    protected String ref;
     @XmlTransient
-    protected long hid;
+    private SourceFile sourceFile;
 
     /**
-     * Gets the value of the sourceFile property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * Gets the value of the ref property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
+    public String getRef() {
+        return ref;
+    }
+
+    /**
+     * Sets the value of the ref property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setRef(String value) {
+        this.ref = value;
+    }
+
     public SourceFile getSourceFile() {
         return sourceFile;
     }
 
-    /**
-     * Sets the value of the sourceFile property.
-     *
-     * @param value allowed object is
-     *              {@link String }
-     */
-    public void setSourceFile(SourceFile value) {
-        this.sourceFile = value;
+    public void setSourceFile(SourceFile sourceFile) {
+        this.sourceFile = sourceFile;
+        if (sourceFile != null) {
+            this.ref = sourceFile.getId();
+        }
     }
+
 
 }

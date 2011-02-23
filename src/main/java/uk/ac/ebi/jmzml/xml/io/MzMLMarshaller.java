@@ -24,7 +24,7 @@ package uk.ac.ebi.jmzml.xml.io;
 
 import org.apache.log4j.Logger;
 import uk.ac.ebi.jmzml.model.mzml.MzML;
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
+import uk.ac.ebi.jmzml.model.mzml.MzMLObject;
 import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
 import uk.ac.ebi.jmzml.xml.Constants;
 import uk.ac.ebi.jmzml.xml.jaxb.marshaller.MarshallerFactory;

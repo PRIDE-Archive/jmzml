@@ -1,6 +1,7 @@
+
 package uk.ac.ebi.jmzml.model.mzml;
 
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.ScanSettingsAdapter;
+import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
@@ -10,11 +11,11 @@ import java.io.Serializable;
 
 /**
  * Description of a particular hardware configuration of a mass spectrometer. Each configuration must have one (and only one) of the three different components used for an analysis. For hybrid instruments, such as an LTQ-FT, there must be one configuration for each permutation of the components that is used in the document. For software configuration, use a ReferenceableParamGroup element.
- * <p/>
+ * 
  * <p>Java class for InstrumentConfigurationType complex type.
- * <p/>
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- * <p/>
+ * 
  * <pre>
  * &lt;complexType name="InstrumentConfigurationType">
  *   &lt;complexContent>
@@ -29,15 +30,18 @@ import java.io.Serializable;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "InstrumentConfigurationType", propOrder = {
-        "componentList",
-        "softwareRef"
+    "componentList",
+    "softwareRef"
 })
 public class InstrumentConfiguration
-        extends ParamGroup
-        implements Serializable {
+    extends ParamGroup
+    implements Serializable
+{
 
     private final static long serialVersionUID = 100L;
     protected ComponentList componentList;
@@ -47,16 +51,21 @@ public class InstrumentConfiguration
     @XmlID
     @XmlSchemaType(name = "ID")
     protected String id;
-    @XmlAttribute(name = "scanSettingsRef")
-    @XmlJavaTypeAdapter(ScanSettingsAdapter.class)
+    @XmlAttribute
+    @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
-    protected ScanSettings scanSettings;
+    protected String scanSettingsRef;
+
+    @XmlTransient
+    private ScanSettings scanSettings;
 
     /**
      * Gets the value of the componentList property.
-     *
-     * @return possible object is
-     *         {@link ComponentList }
+     * 
+     * @return
+     *     possible object is
+     *     {@link ComponentList }
+     *     
      */
     public ComponentList getComponentList() {
         return componentList;
@@ -64,9 +73,11 @@ public class InstrumentConfiguration
 
     /**
      * Sets the value of the componentList property.
-     *
-     * @param value allowed object is
-     *              {@link ComponentList }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ComponentList }
+     *     
      */
     public void setComponentList(ComponentList value) {
         this.componentList = value;
@@ -74,9 +85,11 @@ public class InstrumentConfiguration
 
     /**
      * Gets the value of the softwareRef property.
-     *
-     * @return possible object is
-     *         {@link SoftwareRef }
+     * 
+     * @return
+     *     possible object is
+     *     {@link SoftwareRef }
+     *     
      */
     public SoftwareRef getSoftwareRef() {
         return softwareRef;
@@ -84,9 +97,11 @@ public class InstrumentConfiguration
 
     /**
      * Sets the value of the softwareRef property.
-     *
-     * @param value allowed object is
-     *              {@link SoftwareRef }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link SoftwareRef }
+     *     
      */
     public void setSoftwareRef(SoftwareRef value) {
         this.softwareRef = value;
@@ -94,9 +109,11 @@ public class InstrumentConfiguration
 
     /**
      * Gets the value of the id property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getId() {
         return id;
@@ -104,32 +121,49 @@ public class InstrumentConfiguration
 
     /**
      * Sets the value of the id property.
-     *
-     * @param value allowed object is
-     *              {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setId(String value) {
         this.id = value;
     }
 
     /**
-     * Gets the value of the scanSettings property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * Gets the value of the scanSettingsRef property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
+    public String getScanSettingsRef() {
+        return scanSettingsRef;
+    }
+
+    /**
+     * Sets the value of the scanSettingsRef property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setScanSettingsRef(String value) {
+        this.scanSettingsRef = value;
+    }
+
     public ScanSettings getScanSettings() {
         return scanSettings;
     }
 
-    /**
-     * Sets the value of the scanSettings property.
-     *
-     * @param value allowed object is
-     *              {@link String }
-     */
-    public void setScanSettings(ScanSettings value) {
-        this.scanSettings = value;
-    }
 
+    public void setScanSettings(ScanSettings scanSettings) {
+        this.scanSettings = scanSettings;
+        if (scanSettings != null) {
+            this.scanSettingsRef = scanSettings.getId();
+        }
+    }
 }

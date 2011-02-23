@@ -15,7 +15,9 @@
         <property name="index" column="index_order" type="big_integer"/>
         <property name="defaultArrayLength" type="integer"/>
 
-        <many-to-one name="dataProcessing" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing" column="DataProcessing_hid"/>
-        <many-to-one name="sourceFile" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFile" column="SourceFile_hid"/>
+        <property name="dataProcessingRef" type="string"/>
+        <!--<many-to-one name="dataProcessing" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing" column="DataProcessing_hid"/>-->
+        <property name="sourceFileRef" type="string"/>
+        <!--<many-to-one name="sourceFile" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFile" column="SourceFile_hid"/>-->
     </union-subclass>
 </hibernate-mapping>

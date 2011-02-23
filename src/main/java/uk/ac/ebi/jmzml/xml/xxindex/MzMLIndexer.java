@@ -23,7 +23,6 @@
 package uk.ac.ebi.jmzml.xml.xxindex;
 
 import psidev.psi.tools.xxindex.index.IndexElement;
-import uk.ac.ebi.jmzml.xml.Constants;
 
 import java.math.BigInteger;
 import java.util.Iterator;
@@ -34,7 +33,7 @@ public interface MzMLIndexer {
 
     public Iterator<String> getXmlStringIterator(String xpathExpression);
 
-    public String getXmlString(String ID, Constants.ReferencedType type);
+    public String getXmlString(String ID, Class clazz);
 
     public int getCount(String xpathExpression);
 

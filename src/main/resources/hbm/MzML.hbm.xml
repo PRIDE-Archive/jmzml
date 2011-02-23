@@ -3,11 +3,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="uk.ac.ebi.jmzml.model.mzml.MzML" table="MzML">
-        <id name="hid" type="long" access="field">
-            <column name="hid"/>
-            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
-        </id>
+    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.MzML" table="MzML" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
 
         <many-to-one name="cvList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.CVList" column="CVList_hid"/>
         <many-to-one name="fileDescription" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.FileDescription" column="FileDescription_hid"/>
@@ -23,5 +19,5 @@
         <property name="accession" type="string"/>
         <property name="version" type="string"/>
         <property name="id" type="string"/>
-    </class>
+    </union-subclass>
 </hibernate-mapping>

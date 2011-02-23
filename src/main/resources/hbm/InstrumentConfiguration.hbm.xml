@@ -8,6 +8,7 @@
         <many-to-one name="componentList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ComponentList" column="ComponentList_hid"/>
         <many-to-one name="softwareRef" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SoftwareRef" column="SoftwareRef_hid"/>
         <property name="id" type="string"/>
-        <many-to-one name="scanSettings" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ScanSettings" column="ScanSettings_hid"/>
+        <property name="scanSettingsRef" type="string"/>
+        <!--<many-to-one name="scanSettings" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ScanSettings" column="ScanSettings_hid"/>-->
     </union-subclass>
 </hibernate-mapping>

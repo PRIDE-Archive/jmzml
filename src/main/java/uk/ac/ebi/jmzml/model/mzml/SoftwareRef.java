@@ -1,7 +1,7 @@
+
 package uk.ac.ebi.jmzml.model.mzml;
 
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.SoftwareAdapter;
+import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -10,11 +10,11 @@ import java.io.Serializable;
 
 /**
  * Reference to a previously defined software element
- * <p/>
+ * 
  * <p>Java class for SoftwareRefType complex type.
- * <p/>
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- * <p/>
+ * 
  * <pre>
  * &lt;complexType name="SoftwareRefType">
  *   &lt;complexContent>
@@ -24,39 +24,58 @@ import java.io.Serializable;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SoftwareRefType")
 public class SoftwareRef
-        implements Serializable, MzMLObject {
+    extends MzMLObject
+    implements Serializable
+{
 
     private final static long serialVersionUID = 100L;
-    @XmlAttribute(name = "ref", required = true)
-    @XmlJavaTypeAdapter(SoftwareAdapter.class)
+    @XmlAttribute(required = true)
+    @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
-    protected Software software;
-
+    protected String ref;
     @XmlTransient
-    protected long hid;
+    private Software software;
 
     /**
-     * Gets the value of the software property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * Gets the value of the ref property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
+    public String getRef() {
+        return ref;
+    }
+
+    /**
+     * Sets the value of the ref property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setRef(String value) {
+        this.ref = value;
+    }
+
     public Software getSoftware() {
         return software;
     }
 
-    /**
-     * Sets the value of the software property.
-     *
-     * @param value allowed object is
-     *              {@link String }
-     */
-    public void setSoftware(Software value) {
-        this.software = value;
+
+    public void setSoftware(Software software) {
+        this.software = software;
+        if (software != null) {
+            this.ref =software.getId();
+        }
     }
 
 }

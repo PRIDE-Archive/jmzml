@@ -244,7 +244,7 @@ public class ReferenceableParamGroupHandlingTest extends TestCase {
             marshaller.marshall(mz, bw);
             bw.flush();
             bw.close();
-            um = new MzMLUnmarshaller(output, false);
+            um = new MzMLUnmarshaller(output, false, null);
             mz = um.unmarshall();
             // First pass.
             List<Spectrum> spectra = mz.getRun().getSpectrumList().getSpectrum();
@@ -298,7 +298,7 @@ public class ReferenceableParamGroupHandlingTest extends TestCase {
             bw.close();
 
             // Check wether this one still makes sense.
-            um = new MzMLUnmarshaller(output2, false);
+            um = new MzMLUnmarshaller(output2, false, null);
             mz = um.unmarshall();
             // First pass.
             spectra = mz.getRun().getSpectrumList().getSpectrum();

@@ -1,6 +1,5 @@
-package uk.ac.ebi.jmzml.model.mzml;
 
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
+package uk.ac.ebi.jmzml.model.mzml;
 
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
@@ -8,11 +7,11 @@ import java.io.Serializable;
 
 /**
  * This is the root element for the Proteomics Standards Initiative (PSI) mzML schema, which is intended to capture the use of a mass spectrometer, the data generated, and the initial processing of that data (to the level of the peak list).
- * <p/>
+ * 
  * <p>Java class for mzMLType complex type.
- * <p/>
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- * <p/>
+ * 
  * <pre>
  * &lt;complexType name="mzMLType">
  *   &lt;complexContent>
@@ -35,21 +34,25 @@ import java.io.Serializable;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "mzMLType", propOrder = {
-        "cvList",
-        "fileDescription",
-        "referenceableParamGroupList",
-        "sampleList",
-        "softwareList",
-        "scanSettingsList",
-        "instrumentConfigurationList",
-        "dataProcessingList",
-        "run"
+    "cvList",
+    "fileDescription",
+    "referenceableParamGroupList",
+    "sampleList",
+    "softwareList",
+    "scanSettingsList",
+    "instrumentConfigurationList",
+    "dataProcessingList",
+    "run"
 })
 public class MzML
-        implements Serializable, MzMLObject {
+    extends MzMLObject
+    implements Serializable
+{
 
     private final static long serialVersionUID = 100L;
     @XmlElement(required = true)
@@ -73,16 +76,14 @@ public class MzML
     protected String version;
     @XmlAttribute
     protected String id;
-    
-    @XmlTransient
-    protected long hid;
-
 
     /**
      * Gets the value of the cvList property.
-     *
-     * @return possible object is
-     *         {@link CVList }
+     * 
+     * @return
+     *     possible object is
+     *     {@link CVList }
+     *     
      */
     public CVList getCvList() {
         return cvList;
@@ -90,9 +91,11 @@ public class MzML
 
     /**
      * Sets the value of the cvList property.
-     *
-     * @param value allowed object is
-     *              {@link CVList }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link CVList }
+     *     
      */
     public void setCvList(CVList value) {
         this.cvList = value;
@@ -100,9 +103,11 @@ public class MzML
 
     /**
      * Gets the value of the fileDescription property.
-     *
-     * @return possible object is
-     *         {@link FileDescription }
+     * 
+     * @return
+     *     possible object is
+     *     {@link FileDescription }
+     *     
      */
     public FileDescription getFileDescription() {
         return fileDescription;
@@ -110,9 +115,11 @@ public class MzML
 
     /**
      * Sets the value of the fileDescription property.
-     *
-     * @param value allowed object is
-     *              {@link FileDescription }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link FileDescription }
+     *     
      */
     public void setFileDescription(FileDescription value) {
         this.fileDescription = value;
@@ -120,9 +127,11 @@ public class MzML
 
     /**
      * Gets the value of the referenceableParamGroupList property.
-     *
-     * @return possible object is
-     *         {@link ReferenceableParamGroupList }
+     * 
+     * @return
+     *     possible object is
+     *     {@link ReferenceableParamGroupList }
+     *     
      */
     public ReferenceableParamGroupList getReferenceableParamGroupList() {
         return referenceableParamGroupList;
@@ -130,9 +139,11 @@ public class MzML
 
     /**
      * Sets the value of the referenceableParamGroupList property.
-     *
-     * @param value allowed object is
-     *              {@link ReferenceableParamGroupList }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ReferenceableParamGroupList }
+     *     
      */
     public void setReferenceableParamGroupList(ReferenceableParamGroupList value) {
         this.referenceableParamGroupList = value;
@@ -140,9 +151,11 @@ public class MzML
 
     /**
      * Gets the value of the sampleList property.
-     *
-     * @return possible object is
-     *         {@link SampleList }
+     * 
+     * @return
+     *     possible object is
+     *     {@link SampleList }
+     *     
      */
     public SampleList getSampleList() {
         return sampleList;
@@ -150,9 +163,11 @@ public class MzML
 
     /**
      * Sets the value of the sampleList property.
-     *
-     * @param value allowed object is
-     *              {@link SampleList }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link SampleList }
+     *     
      */
     public void setSampleList(SampleList value) {
         this.sampleList = value;
@@ -160,9 +175,11 @@ public class MzML
 
     /**
      * Gets the value of the softwareList property.
-     *
-     * @return possible object is
-     *         {@link SoftwareList }
+     * 
+     * @return
+     *     possible object is
+     *     {@link SoftwareList }
+     *     
      */
     public SoftwareList getSoftwareList() {
         return softwareList;
@@ -170,9 +187,11 @@ public class MzML
 
     /**
      * Sets the value of the softwareList property.
-     *
-     * @param value allowed object is
-     *              {@link SoftwareList }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link SoftwareList }
+     *     
      */
     public void setSoftwareList(SoftwareList value) {
         this.softwareList = value;
@@ -180,9 +199,11 @@ public class MzML
 
     /**
      * Gets the value of the scanSettingsList property.
-     *
-     * @return possible object is
-     *         {@link ScanSettingsList }
+     * 
+     * @return
+     *     possible object is
+     *     {@link ScanSettingsList }
+     *     
      */
     public ScanSettingsList getScanSettingsList() {
         return scanSettingsList;
@@ -190,9 +211,11 @@ public class MzML
 
     /**
      * Sets the value of the scanSettingsList property.
-     *
-     * @param value allowed object is
-     *              {@link ScanSettingsList }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ScanSettingsList }
+     *     
      */
     public void setScanSettingsList(ScanSettingsList value) {
         this.scanSettingsList = value;
@@ -200,9 +223,11 @@ public class MzML
 
     /**
      * Gets the value of the instrumentConfigurationList property.
-     *
-     * @return possible object is
-     *         {@link InstrumentConfigurationList }
+     * 
+     * @return
+     *     possible object is
+     *     {@link InstrumentConfigurationList }
+     *     
      */
     public InstrumentConfigurationList getInstrumentConfigurationList() {
         return instrumentConfigurationList;
@@ -210,9 +235,11 @@ public class MzML
 
     /**
      * Sets the value of the instrumentConfigurationList property.
-     *
-     * @param value allowed object is
-     *              {@link InstrumentConfigurationList }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link InstrumentConfigurationList }
+     *     
      */
     public void setInstrumentConfigurationList(InstrumentConfigurationList value) {
         this.instrumentConfigurationList = value;
@@ -220,9 +247,11 @@ public class MzML
 
     /**
      * Gets the value of the dataProcessingList property.
-     *
-     * @return possible object is
-     *         {@link DataProcessingList }
+     * 
+     * @return
+     *     possible object is
+     *     {@link DataProcessingList }
+     *     
      */
     public DataProcessingList getDataProcessingList() {
         return dataProcessingList;
@@ -230,9 +259,11 @@ public class MzML
 
     /**
      * Sets the value of the dataProcessingList property.
-     *
-     * @param value allowed object is
-     *              {@link DataProcessingList }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link DataProcessingList }
+     *     
      */
     public void setDataProcessingList(DataProcessingList value) {
         this.dataProcessingList = value;
@@ -240,9 +271,11 @@ public class MzML
 
     /**
      * Gets the value of the run property.
-     *
-     * @return possible object is
-     *         {@link Run }
+     * 
+     * @return
+     *     possible object is
+     *     {@link Run }
+     *     
      */
     public Run getRun() {
         return run;
@@ -250,9 +283,11 @@ public class MzML
 
     /**
      * Sets the value of the run property.
-     *
-     * @param value allowed object is
-     *              {@link Run }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Run }
+     *     
      */
     public void setRun(Run value) {
         this.run = value;
@@ -260,9 +295,11 @@ public class MzML
 
     /**
      * Gets the value of the accession property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getAccession() {
         return accession;
@@ -270,9 +307,11 @@ public class MzML
 
     /**
      * Sets the value of the accession property.
-     *
-     * @param value allowed object is
-     *              {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setAccession(String value) {
         this.accession = value;
@@ -280,9 +319,11 @@ public class MzML
 
     /**
      * Gets the value of the version property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getVersion() {
         return version;
@@ -290,9 +331,11 @@ public class MzML
 
     /**
      * Sets the value of the version property.
-     *
-     * @param value allowed object is
-     *              {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setVersion(String value) {
         this.version = value;
@@ -300,9 +343,11 @@ public class MzML
 
     /**
      * Gets the value of the id property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getId() {
         return id;
@@ -310,9 +355,11 @@ public class MzML
 
     /**
      * Sets the value of the id property.
-     *
-     * @param value allowed object is
-     *              {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setId(String value) {
         this.id = value;

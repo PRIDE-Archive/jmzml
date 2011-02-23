@@ -160,9 +160,9 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--
+
                         <plugin>
-                            <!- you can use this plugin to generate the jaxb object model from
+                            <!-- you can use this plugin to generate the jaxb object model from
                                  the schema and binding files specified below. Note: this will
                                  need an explicit maven goal call, since it is not intergrated
                                  into the standard mvn lifecycle. The goal to use is:
@@ -172,7 +172,7 @@
                                        should be taken with files that were manually modified. Such
                                        files are in the current version (0.6): CVParam, UserParam,
                                        ParamGroup, BinaryDataArray and ComponentList.
-                             ->
+                             -->
                             <groupId>org.jvnet.jaxb2.maven2</groupId>
                             <artifactId>maven-jaxb2-plugin</artifactId>
                             <version>0.6.3</version>
@@ -195,7 +195,7 @@
                                 </args>
                             </configuration>
                         </plugin>
-            -->
+            
         </plugins>
     </build>
 
@@ -248,7 +248,7 @@
         <dependency>
             <groupId>psidev.psi.tools</groupId>
             <artifactId>xxindex</artifactId>
-            <version>0.10</version>
+            <version>0.11</version>
         </dependency>
         <dependency>
             <groupId>commons-collections</groupId>

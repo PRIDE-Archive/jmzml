@@ -1,7 +1,7 @@
+
 package uk.ac.ebi.jmzml.model.mzml;
 
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.ReferenceableParamGroupAdapter;
+import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -10,11 +10,11 @@ import java.io.Serializable;
 
 /**
  * A reference to a previously defined ParamGroup, which is a reusable container of one or more cvParams.
- * <p/>
+ * 
  * <p>Java class for ReferenceableParamGroupRefType complex type.
- * <p/>
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- * <p/>
+ * 
  * <pre>
  * &lt;complexType name="ReferenceableParamGroupRefType">
  *   &lt;complexContent>
@@ -24,39 +24,60 @@ import java.io.Serializable;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ReferenceableParamGroupRefType")
 public class ReferenceableParamGroupRef
-        implements Serializable, MzMLObject {
+    extends MzMLObject
+    implements Serializable
+{
 
     private final static long serialVersionUID = 100L;
-    @XmlAttribute(name = "ref", required = true)
-    @XmlJavaTypeAdapter(ReferenceableParamGroupAdapter.class)
+    @XmlAttribute(required = true)
+    @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
-    protected ReferenceableParamGroup referenceableParamGroup;
-    
+    protected String ref;
+
     @XmlTransient
-    protected long hid;
+    private ReferenceableParamGroup referenceableParamGroup;
+
+
 
     /**
-     * Gets the value of the referenceableParamGroup property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * Gets the value of the ref property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
+    public String getRef() {
+        return ref;
+    }
+
+    /**
+     * Sets the value of the ref property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setRef(String value) {
+        this.ref = value;
+    }
+
     public ReferenceableParamGroup getReferenceableParamGroup() {
         return referenceableParamGroup;
     }
 
-    /**
-     * Sets the value of the referenceableParamGroup property.
-     *
-     * @param value allowed object is
-     *              {@link String }
-     */
-    public void setReferenceableParamGroup(ReferenceableParamGroup value) {
-        this.referenceableParamGroup = value;
+    public void setReferenceableParamGroup(ReferenceableParamGroup referenceableParamGroup) {
+        this.referenceableParamGroup = referenceableParamGroup;
+        if (referenceableParamGroup != null) {
+            this.ref = referenceableParamGroup.getId();
+        }
     }
 
 }

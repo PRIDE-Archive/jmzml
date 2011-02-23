@@ -1,8 +1,7 @@
+
 package uk.ac.ebi.jmzml.model.mzml;
 
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter;
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.SpectrumAdapter;
+import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -11,11 +10,11 @@ import java.io.Serializable;
 
 /**
  * The method of precursor ion selection and activation
- * <p/>
+ * 
  * <p>Java class for PrecursorType complex type.
- * <p/>
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- * <p/>
+ * 
  * <pre>
  * &lt;complexType name="PrecursorType">
  *   &lt;complexContent>
@@ -32,39 +31,49 @@ import java.io.Serializable;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PrecursorType", propOrder = {
-        "isolationWindow",
-        "selectedIonList",
-        "activation"
+    "isolationWindow",
+    "selectedIonList",
+    "activation"
 })
 public class Precursor
-        implements Serializable, MzMLObject {
+    extends MzMLObject
+    implements Serializable
+{
 
     private final static long serialVersionUID = 100L;
     protected ParamGroup isolationWindow;
     protected SelectedIonList selectedIonList;
     @XmlElement(required = true)
     protected ParamGroup activation;
-    @XmlAttribute(name = "spectrumRef")
-    @XmlJavaTypeAdapter(SpectrumAdapter.class)
-    protected Spectrum spectrum;
-    @XmlAttribute(name = "sourceFileRef")
-    @XmlJavaTypeAdapter(SourceFileAdapter.class)
+    @XmlAttribute
+    protected String spectrumRef;
+
+    @XmlTransient
+    private Spectrum spectrum;
+
+    @XmlAttribute
+    @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
-    protected SourceFile sourceFile;
+    protected String sourceFileRef;
+
+    @XmlTransient
+    private SourceFile sourceFile;
+
     @XmlAttribute
     protected String externalSpectrumID;
-    
-    @XmlTransient
-    protected long hid;
 
     /**
      * Gets the value of the isolationWindow property.
-     *
-     * @return possible object is
-     *         {@link ParamGroup }
+     * 
+     * @return
+     *     possible object is
+     *     {@link ParamGroup }
+     *     
      */
     public ParamGroup getIsolationWindow() {
         return isolationWindow;
@@ -72,9 +81,11 @@ public class Precursor
 
     /**
      * Sets the value of the isolationWindow property.
-     *
-     * @param value allowed object is
-     *              {@link ParamGroup }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ParamGroup }
+     *     
      */
     public void setIsolationWindow(ParamGroup value) {
         this.isolationWindow = value;
@@ -82,9 +93,11 @@ public class Precursor
 
     /**
      * Gets the value of the selectedIonList property.
-     *
-     * @return possible object is
-     *         {@link SelectedIonList }
+     * 
+     * @return
+     *     possible object is
+     *     {@link SelectedIonList }
+     *     
      */
     public SelectedIonList getSelectedIonList() {
         return selectedIonList;
@@ -92,9 +105,11 @@ public class Precursor
 
     /**
      * Sets the value of the selectedIonList property.
-     *
-     * @param value allowed object is
-     *              {@link SelectedIonList }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link SelectedIonList }
+     *     
      */
     public void setSelectedIonList(SelectedIonList value) {
         this.selectedIonList = value;
@@ -102,9 +117,11 @@ public class Precursor
 
     /**
      * Gets the value of the activation property.
-     *
-     * @return possible object is
-     *         {@link ParamGroup }
+     * 
+     * @return
+     *     possible object is
+     *     {@link ParamGroup }
+     *     
      */
     public ParamGroup getActivation() {
         return activation;
@@ -112,59 +129,97 @@ public class Precursor
 
     /**
      * Sets the value of the activation property.
-     *
-     * @param value allowed object is
-     *              {@link ParamGroup }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ParamGroup }
+     *     
      */
     public void setActivation(ParamGroup value) {
         this.activation = value;
     }
 
     /**
-     * Gets the value of the spectrum property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * Gets the value of the spectrumRef property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
+    public String getSpectrumRef() {
+        return spectrumRef;
+    }
+
+    /**
+     * Sets the value of the spectrumRef property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSpectrumRef(String value) {
+        this.spectrumRef = value;
+    }
+
     public Spectrum getSpectrum() {
         return spectrum;
     }
 
-    /**
-     * Sets the value of the spectrum property.
-     *
-     * @param value allowed object is
-     *              {@link String }
-     */
-    public void setSpectrum(Spectrum value) {
-        this.spectrum = value;
+
+
+    public void setSpectrum(Spectrum spectrum) {
+        this.spectrum = spectrum;
+        if (spectrum != null) {
+            this.spectrumRef = spectrum.getId();
+        }
     }
 
     /**
-     * Gets the value of the sourceFile property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * Gets the value of the sourceFileRef property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
+    public String getSourceFileRef() {
+        return sourceFileRef;
+    }
+
+    /**
+     * Sets the value of the sourceFileRef property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSourceFileRef(String value) {
+        this.sourceFileRef = value;
+    }
+
     public SourceFile getSourceFile() {
         return sourceFile;
     }
 
-    /**
-     * Sets the value of the sourceFile property.
-     *
-     * @param value allowed object is
-     *              {@link String }
-     */
-    public void setSourceFile(SourceFile value) {
-        this.sourceFile = value;
+
+
+    public void setSourceFile(SourceFile sourceFile) {
+        this.sourceFile = sourceFile;
+        if (sourceFile != null) {
+            this.sourceFileRef = sourceFile.getId();
+        }
     }
 
     /**
      * Gets the value of the externalSpectrumID property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getExternalSpectrumID() {
         return externalSpectrumID;
@@ -172,9 +227,11 @@ public class Precursor
 
     /**
      * Sets the value of the externalSpectrumID property.
-     *
-     * @param value allowed object is
-     *              {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setExternalSpectrumID(String value) {
         this.externalSpectrumID = value;

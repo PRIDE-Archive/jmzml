@@ -13,6 +13,7 @@
         <property name="id" type="string"/>
         <property name="index" column="order_index" type="big_integer"/>
         <property name="defaultArrayLength" type="integer"/>
-        <many-to-one name="dataProcessing" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing" column="DataProcessing_hid"/>
+        <property name="dataProcessingRef" type="string"/>
+        <!--<many-to-one name="dataProcessing" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing" column="DataProcessing_hid"/>-->
     </union-subclass>
 </hibernate-mapping>

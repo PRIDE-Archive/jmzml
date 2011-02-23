@@ -1,7 +1,6 @@
 package uk.ac.ebi.jmzml.model.mzml;
 
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter;
+import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -37,20 +36,20 @@ import java.util.List;
         "spectrum"
 })
 public class SpectrumList
-        implements Serializable, MzMLObject {
+        extends MzMLObject
+        implements Serializable {
 
     private final static long serialVersionUID = 100L;
     protected List<Spectrum> spectrum;
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger count;
-    @XmlAttribute(name = "defaultDataProcessingRef", required = true)
-    @XmlJavaTypeAdapter(DataProcessingAdapter.class)
+    @XmlAttribute(required = true)
+    @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
-    protected DataProcessing defaultDataProcessing;
-
+    protected String defaultDataProcessingRef;
     @XmlTransient
-    protected long hid;
+    private DataProcessing defaultDataProcessing;
 
     /**
      * Gets the value of the spectrum property.
@@ -100,23 +99,35 @@ public class SpectrumList
     }
 
     /**
-     * Gets the value of the defaultDataProcessing property.
+     * Gets the value of the defaultDataProcessingRef property.
      *
      * @return possible object is
      *         {@link String }
      */
-    public DataProcessing getDefaultDataProcessing() {
-        return defaultDataProcessing;
+    public String getDefaultDataProcessingRef() {
+        return defaultDataProcessingRef;
     }
 
     /**
-     * Sets the value of the defaultDataProcessing property.
+     * Sets the value of the defaultDataProcessingRef property.
      *
      * @param value allowed object is
      *              {@link String }
      */
-    public void setDefaultDataProcessing(DataProcessing value) {
-        this.defaultDataProcessing = value;
+    public void setDefaultDataProcessingRef(String value) {
+        this.defaultDataProcessingRef = value;
     }
+
+    public DataProcessing getDefaultDataProcessing() {
+        return defaultDataProcessing;
+    }
+
+    public void setDefaultDataProcessing(DataProcessing dataProcessing) {
+        this.defaultDataProcessing = dataProcessing;
+        if (dataProcessing != null) {
+            this.defaultDataProcessingRef = dataProcessing.getId();
+        }
+    }
+
 
 }

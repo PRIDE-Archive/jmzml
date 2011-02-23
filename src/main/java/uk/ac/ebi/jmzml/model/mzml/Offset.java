@@ -1,6 +1,5 @@
-package uk.ac.ebi.jmzml.model.mzml;
 
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
+package uk.ac.ebi.jmzml.model.mzml;
 
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
@@ -8,9 +7,9 @@ import java.io.Serializable;
 
 /**
  * <p>Java class for OffsetType complex type.
- * <p/>
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- * <p/>
+ * 
  * <pre>
  * &lt;complexType name="OffsetType">
  *   &lt;simpleContent>
@@ -22,13 +21,17 @@ import java.io.Serializable;
  *   &lt;/simpleContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "OffsetType", propOrder = {
-        "value"
+    "value"
 })
 public class Offset
-        implements Serializable, MzMLObject {
+    extends MzMLObject
+    implements Serializable
+{
 
     private final static long serialVersionUID = 100L;
     @XmlValue
@@ -39,13 +42,10 @@ public class Offset
     protected String spotID;
     @XmlAttribute
     protected Double scanTime;
-    
-    @XmlTransient
-       protected long hid;
-
 
     /**
      * Gets the value of the value property.
+     * 
      */
     public long getValue() {
         return value;
@@ -53,6 +53,7 @@ public class Offset
 
     /**
      * Sets the value of the value property.
+     * 
      */
     public void setValue(long value) {
         this.value = value;
@@ -60,9 +61,11 @@ public class Offset
 
     /**
      * Gets the value of the idRef property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getIdRef() {
         return idRef;
@@ -70,9 +73,11 @@ public class Offset
 
     /**
      * Sets the value of the idRef property.
-     *
-     * @param value allowed object is
-     *              {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setIdRef(String value) {
         this.idRef = value;
@@ -80,9 +85,11 @@ public class Offset
 
     /**
      * Gets the value of the spotID property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getSpotID() {
         return spotID;
@@ -90,9 +97,11 @@ public class Offset
 
     /**
      * Sets the value of the spotID property.
-     *
-     * @param value allowed object is
-     *              {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setSpotID(String value) {
         this.spotID = value;
@@ -100,9 +109,11 @@ public class Offset
 
     /**
      * Gets the value of the scanTime property.
-     *
-     * @return possible object is
-     *         {@link Double }
+     * 
+     * @return
+     *     possible object is
+     *     {@link Double }
+     *     
      */
     public Double getScanTime() {
         return scanTime;
@@ -110,9 +121,11 @@ public class Offset
 
     /**
      * Sets the value of the scanTime property.
-     *
-     * @param value allowed object is
-     *              {@link Double }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Double }
+     *     
      */
     public void setScanTime(Double value) {
         this.scanTime = value;

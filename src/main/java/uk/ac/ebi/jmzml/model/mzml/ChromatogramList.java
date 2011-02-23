@@ -1,7 +1,6 @@
 package uk.ac.ebi.jmzml.model.mzml;
 
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter;
+import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -37,7 +36,8 @@ import java.util.List;
         "chromatogram"
 })
 public class ChromatogramList
-        implements Serializable, MzMLObject {
+        extends MzMLObject
+        implements Serializable {
 
     private final static long serialVersionUID = 100L;
     @XmlElement(required = true)
@@ -45,14 +45,13 @@ public class ChromatogramList
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger count;
-    @XmlAttribute(name = "defaultDataProcessingRef", required = true)
-    @XmlJavaTypeAdapter(DataProcessingAdapter.class)
+    @XmlAttribute(required = true)
+    @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
-    protected DataProcessing defaultDataProcessing;
+    protected String defaultDataProcessingRef;
 
     @XmlTransient
-    protected long hid;
-
+    private DataProcessing defaultDataProcessing;
 
     /**
      * Gets the value of the chromatogram property.
@@ -102,23 +101,50 @@ public class ChromatogramList
     }
 
     /**
-     * Gets the value of the defaultDataProcessing property.
+     * Gets the value of the defaultDataProcessingRef property.
      *
      * @return possible object is
      *         {@link String }
+     */
+    public String getDefaultDataProcessingRef() {
+        return defaultDataProcessingRef;
+    }
+
+    /**
+     * Sets the value of the defaultDataProcessingRef property.
+     *
+     * @param value allowed object is
+     *              {@link String }
+     */
+    public void setDefaultDataProcessingRef(String value) {
+        this.defaultDataProcessingRef = value;
+    }
+
+    /**
+     * Gets the value of the defaultDataProcessing property.
+     * Note: this property may be populated automatically at unmarshal
+     * time with the Object referenced with the defaultDataProcessingRef property.
+     *
+     * @return Valid values are DataProcessing objects.
+     * @see uk.ac.ebi.jmzml.MzMLElement#isAutoRefResolving()
      */
     public DataProcessing getDefaultDataProcessing() {
         return defaultDataProcessing;
     }
 
+
     /**
-     * Sets the value of the defaultDataProcessing property.
+     * Sets a DefaultDataProcessing reference. Setting a DefaultDataProcessing object will update
+     * the defaultDataProcessingRef element with the id from the new DataProcessing object.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param defaultDataProcessing the DataProcessing to reference from this ChromatogramList.
+     * @see #defaultDataProcessingRef
      */
-    public void setDefaultDataProcessing(DataProcessing value) {
-        this.defaultDataProcessing = value;
+    public void setDefaultDataProcessing(DataProcessing defaultDataProcessing) {
+        this.defaultDataProcessing = defaultDataProcessing;
+        if (defaultDataProcessing != null) {
+            this.defaultDataProcessingRef = defaultDataProcessing.getId();
+        }
     }
 
 }

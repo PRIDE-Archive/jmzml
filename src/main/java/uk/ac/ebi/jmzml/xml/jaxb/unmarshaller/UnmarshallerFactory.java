@@ -32,8 +32,7 @@ import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.*;
-import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.cache.AdapterObjectCache;
+import uk.ac.ebi.jmzml.xml.io.MzMLObjectCache;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.filters.MzMLNamespaceFilter;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.listeners.RawXMLListener;
 import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
@@ -60,11 +59,11 @@ public class UnmarshallerFactory {
     private UnmarshallerFactory() {
     }
 
-    public Unmarshaller initializeUnmarshaller(MzMLIndexer index, MzMLNamespaceFilter xmlFilter, AdapterObjectCache cache) {
+    public Unmarshaller initializeUnmarshaller(MzMLIndexer index, MzMLObjectCache cache, MzMLNamespaceFilter xmlFilter) {
         return initializeUnmarshaller(index, xmlFilter, cache, true);
     }
 
-    public Unmarshaller initializeUnmarshaller(MzMLIndexer index, MzMLNamespaceFilter xmlFilter, AdapterObjectCache cache, boolean useCacheForSpectra) {
+    public Unmarshaller initializeUnmarshaller(MzMLIndexer index, MzMLNamespaceFilter xmlFilter, MzMLObjectCache cache, boolean useCacheForSpectra) {
 
         try {
             // Lazy caching of the JAXB Context.
@@ -94,15 +93,15 @@ public class UnmarshallerFactory {
             //parent object.
 
             //create a cache object that will be common to all adapters in this unmarshaller
-            unmarshaller.setAdapter(new CVAdapter(index, cache));
-            unmarshaller.setAdapter(new DataProcessingAdapter(index, cache));
-            unmarshaller.setAdapter(new InstrumentConfigurationAdapter(index, cache));
-            unmarshaller.setAdapter(new ReferenceableParamGroupAdapter(index, cache));
-            unmarshaller.setAdapter(new SampleAdapter(index, cache));
-            unmarshaller.setAdapter(new SoftwareAdapter(index, cache));
-            unmarshaller.setAdapter(new SourceFileAdapter(index, cache));
-            unmarshaller.setAdapter(new SpectrumAdapter(index, cache, useCacheForSpectra));
-            unmarshaller.setAdapter(new ScanSettingsAdapter(index, cache));
+//            unmarshaller.setAdapter(new CVAdapter(index, cache));
+//            unmarshaller.setAdapter(new DataProcessingAdapter(index, cache));
+//            unmarshaller.setAdapter(new InstrumentConfigurationAdapter(index, cache));
+//            unmarshaller.setAdapter(new ReferenceableParamGroupAdapter(index, cache));
+//            unmarshaller.setAdapter(new SampleAdapter(index, cache));
+//            unmarshaller.setAdapter(new SoftwareAdapter(index, cache));
+//            unmarshaller.setAdapter(new SourceFileAdapter(index, cache));
+//            unmarshaller.setAdapter(new SpectrumAdapter(index, cache, useCacheForSpectra));
+//            unmarshaller.setAdapter(new ScanSettingsAdapter(index, cache));
 //            unmarshaller.setEventHandler(new DefaultValidationEventHandler());
 
             unmarshaller.setListener(new RawXMLListener());

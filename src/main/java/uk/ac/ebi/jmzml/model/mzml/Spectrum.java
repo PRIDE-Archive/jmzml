@@ -1,7 +1,7 @@
+
 package uk.ac.ebi.jmzml.model.mzml;
 
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter;
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter;
+import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -11,11 +11,11 @@ import java.math.BigInteger;
 
 /**
  * The structure that captures the generation of a peak list (including the underlying acquisitions). Also describes some of the parameters for the mass spectrometer for a given acquisition (or list of acquisitions).
- * <p/>
+ * 
  * <p>Java class for SpectrumType complex type.
- * <p/>
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- * <p/>
+ * 
  * <pre>
  * &lt;complexType name="SpectrumType">
  *   &lt;complexContent>
@@ -42,17 +42,20 @@ import java.math.BigInteger;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SpectrumType", propOrder = {
-        "scanList",
-        "precursorList",
-        "productList",
-        "binaryDataArrayList"
+    "scanList",
+    "precursorList",
+    "productList",
+    "binaryDataArrayList"
 })
 public class Spectrum
-        extends ParamGroup
-        implements Serializable {
+    extends ParamGroup
+    implements Serializable
+{
 
     private final static long serialVersionUID = 100L;
     protected ScanList scanList;
@@ -68,20 +71,26 @@ public class Spectrum
     protected BigInteger index;
     @XmlAttribute(required = true)
     protected int defaultArrayLength;
-    @XmlAttribute(name = "dataProcessingRef")
-    @XmlJavaTypeAdapter(DataProcessingAdapter.class)
+    @XmlAttribute
+    @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
-    protected DataProcessing dataProcessing;
-    @XmlAttribute(name = "sourceFileRef")
-    @XmlJavaTypeAdapter(SourceFileAdapter.class)
+    protected String dataProcessingRef;
+    @XmlTransient
+    private DataProcessing dataProcessing;
+    @XmlAttribute
+    @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
-    protected SourceFile sourceFile;
+    protected String sourceFileRef;
+    @XmlTransient
+    private SourceFile sourceFile;
 
     /**
      * Gets the value of the scanList property.
-     *
-     * @return possible object is
-     *         {@link ScanList }
+     * 
+     * @return
+     *     possible object is
+     *     {@link ScanList }
+     *     
      */
     public ScanList getScanList() {
         return scanList;
@@ -89,9 +98,11 @@ public class Spectrum
 
     /**
      * Sets the value of the scanList property.
-     *
-     * @param value allowed object is
-     *              {@link ScanList }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ScanList }
+     *     
      */
     public void setScanList(ScanList value) {
         this.scanList = value;
@@ -99,9 +110,11 @@ public class Spectrum
 
     /**
      * Gets the value of the precursorList property.
-     *
-     * @return possible object is
-     *         {@link PrecursorList }
+     * 
+     * @return
+     *     possible object is
+     *     {@link PrecursorList }
+     *     
      */
     public PrecursorList getPrecursorList() {
         return precursorList;
@@ -109,9 +122,11 @@ public class Spectrum
 
     /**
      * Sets the value of the precursorList property.
-     *
-     * @param value allowed object is
-     *              {@link PrecursorList }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link PrecursorList }
+     *     
      */
     public void setPrecursorList(PrecursorList value) {
         this.precursorList = value;
@@ -119,9 +134,11 @@ public class Spectrum
 
     /**
      * Gets the value of the productList property.
-     *
-     * @return possible object is
-     *         {@link ProductList }
+     * 
+     * @return
+     *     possible object is
+     *     {@link ProductList }
+     *     
      */
     public ProductList getProductList() {
         return productList;
@@ -129,9 +146,11 @@ public class Spectrum
 
     /**
      * Sets the value of the productList property.
-     *
-     * @param value allowed object is
-     *              {@link ProductList }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ProductList }
+     *     
      */
     public void setProductList(ProductList value) {
         this.productList = value;
@@ -139,9 +158,11 @@ public class Spectrum
 
     /**
      * Gets the value of the binaryDataArrayList property.
-     *
-     * @return possible object is
-     *         {@link BinaryDataArrayList }
+     * 
+     * @return
+     *     possible object is
+     *     {@link BinaryDataArrayList }
+     *     
      */
     public BinaryDataArrayList getBinaryDataArrayList() {
         return binaryDataArrayList;
@@ -149,9 +170,11 @@ public class Spectrum
 
     /**
      * Sets the value of the binaryDataArrayList property.
-     *
-     * @param value allowed object is
-     *              {@link BinaryDataArrayList }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BinaryDataArrayList }
+     *     
      */
     public void setBinaryDataArrayList(BinaryDataArrayList value) {
         this.binaryDataArrayList = value;
@@ -159,9 +182,11 @@ public class Spectrum
 
     /**
      * Gets the value of the id property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getId() {
         return id;
@@ -169,9 +194,11 @@ public class Spectrum
 
     /**
      * Sets the value of the id property.
-     *
-     * @param value allowed object is
-     *              {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setId(String value) {
         this.id = value;
@@ -179,9 +206,11 @@ public class Spectrum
 
     /**
      * Gets the value of the spotID property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getSpotID() {
         return spotID;
@@ -189,9 +218,11 @@ public class Spectrum
 
     /**
      * Sets the value of the spotID property.
-     *
-     * @param value allowed object is
-     *              {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setSpotID(String value) {
         this.spotID = value;
@@ -199,9 +230,11 @@ public class Spectrum
 
     /**
      * Gets the value of the index property.
-     *
-     * @return possible object is
-     *         {@link BigInteger }
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
      */
     public BigInteger getIndex() {
         return index;
@@ -209,9 +242,11 @@ public class Spectrum
 
     /**
      * Sets the value of the index property.
-     *
-     * @param value allowed object is
-     *              {@link BigInteger }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
      */
     public void setIndex(BigInteger value) {
         this.index = value;
@@ -219,6 +254,7 @@ public class Spectrum
 
     /**
      * Gets the value of the defaultArrayLength property.
+     * 
      */
     public int getDefaultArrayLength() {
         return defaultArrayLength;
@@ -226,49 +262,80 @@ public class Spectrum
 
     /**
      * Sets the value of the defaultArrayLength property.
+     * 
      */
     public void setDefaultArrayLength(int value) {
         this.defaultArrayLength = value;
     }
 
     /**
-     * Gets the value of the dataProcessing property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * Gets the value of the dataProcessingRef property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
+    public String getDataProcessingRef() {
+        return dataProcessingRef;
+    }
+
+    /**
+     * Sets the value of the dataProcessingRef property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDataProcessingRef(String value) {
+        this.dataProcessingRef = value;
+    }
+
     public DataProcessing getDataProcessing() {
         return dataProcessing;
     }
 
-    /**
-     * Sets the value of the dataProcessing property.
-     *
-     * @param value allowed object is
-     *              {@link String }
-     */
-    public void setDataProcessing(DataProcessing value) {
-        this.dataProcessing = value;
+    public void setDataProcessing(DataProcessing dataProcessing) {
+        this.dataProcessing = dataProcessing;
+        if (dataProcessing != null) {
+            this.dataProcessingRef = dataProcessing.getId();
+        }
     }
 
     /**
-     * Gets the value of the sourceFile property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * Gets the value of the sourceFileRef property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
+    public String getSourceFileRef() {
+        return sourceFileRef;
+    }
+
+    /**
+     * Sets the value of the sourceFileRef property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSourceFileRef(String value) {
+        this.sourceFileRef = value;
+    }
+
     public SourceFile getSourceFile() {
         return sourceFile;
     }
 
-    /**
-     * Sets the value of the sourceFile property.
-     *
-     * @param value allowed object is
-     *              {@link String }
-     */
-    public void setSourceFile(SourceFile value) {
-        this.sourceFile = value;
+    public void setSourceFile(SourceFile sourceFile) {
+        this.sourceFile = sourceFile;
+        if (sourceFile != null) {
+            this.sourceFileRef = sourceFile.getId();
+        }
     }
 
 }

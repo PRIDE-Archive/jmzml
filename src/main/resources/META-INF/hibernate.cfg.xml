@@ -49,6 +49,7 @@
         <mapping resource="hbm/InstrumentConfiguration.hbm.xml"/>
         <mapping resource="hbm/InstrumentConfigurationList.hbm.xml"/>
         <mapping resource="hbm/MzML.hbm.xml"/>
+        <mapping resource="hbm/MzMLObject.hbm.xml"/>
         <mapping resource="hbm/ParamGroup.hbm.xml"/>
         <mapping resource="hbm/Precursor.hbm.xml"/>
         <mapping resource="hbm/PrecursorList.hbm.xml"/>

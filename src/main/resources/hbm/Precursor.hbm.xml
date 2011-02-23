@@ -3,17 +3,15 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="uk.ac.ebi.jmzml.model.mzml.Precursor" table="Precursor">
-        <id name="hid" type="long" access="field">
-            <column name="hid"/>
-            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
-        </id>
+    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.Precursor" table="Precursor" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
         <many-to-one name="isolationWindow" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup" column="IsolationWindow_ParamGroup_hid"/>
         <many-to-one name="selectedIonList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SelectedIonList" column="SelectedIonList_hid"/>
         <many-to-one name="activation" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup" column="Activation_ParamGroup_hid"/>
-        <many-to-one name="spectrum" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Spectrum" column="Spectrum_hid"/>
-        <many-to-one name="sourceFile" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFile" column="SourceFile_hid"/>
+        <property name="spectrumRef" type="string"/>
+        <!--<many-to-one name="spectrum" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Spectrum" column="Spectrum_hid"/>-->
+        <property name="sourceFileRef" type="string"/>
+        <!--<many-to-one name="sourceFile" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFile" column="SourceFile_hid"/>-->
         <property name="externalSpectrumID" type="string"/>
 
-    </class>
+    </union-subclass>
 </hibernate-mapping>
