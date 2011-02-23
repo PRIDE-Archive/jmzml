@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.BinaryDataArray" table="BinaryDataArray"
+                    extends="uk.ac.ebi.jmzml.model.mzml.ParamGroup">
+        <!--We need to force hibernate to create a long raw column to allow values longer than 2KB-->
+        <property name="binary" type="binary" length="30000"/>
+        <property name="arrayLength" type="big_integer"/>
+        <property name="encodedLength" type="big_integer"/>
+
+        <many-to-one name="dataProcessing" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing" column="DataProcessing_hid"/>
+    </union-subclass>
+</hibernate-mapping>

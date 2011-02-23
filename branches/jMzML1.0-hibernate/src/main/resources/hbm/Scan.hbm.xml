@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.Scan" table="Scan" extends="uk.ac.ebi.jmzml.model.mzml.ParamGroup">
+        <many-to-one name="scanWindowList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ScanWindowList" column="ScanWindowList_hid"/>
+
+        <property name="spectrumRef" type="string"/>
+        <many-to-one name="sourceFile" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFile" column="SourceFile_hid"/>
+        <property name="externalSpectrumID" type="string"/>
+        <many-to-one name="instrumentConfiguration" cascade="all"
+                     class="uk.ac.ebi.jmzml.model.mzml.InstrumentConfiguration" column="InstrumentConfiguration_hid"/>
+    </union-subclass>
+</hibernate-mapping>

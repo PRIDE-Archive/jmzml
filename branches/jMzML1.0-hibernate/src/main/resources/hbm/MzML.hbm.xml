@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="uk.ac.ebi.jmzml.model.mzml.MzML" table="MzML">
+        <id name="hid" type="long" access="field">
+            <column name="hid"/>
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
+        </id>
+
+        <many-to-one name="cvList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.CVList" column="CVList_hid"/>
+        <many-to-one name="fileDescription" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.FileDescription" column="FileDescription_hid"/>
+        <many-to-one name="referenceableParamGroupList" cascade="all"
+                    class="uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroupList" column="RefParamGroupList_hid"/>
+        <many-to-one name="sampleList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SampleList" column="SampleList_hid"/>
+        <many-to-one name="softwareList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SoftwareList" column="SoftwareList_hid"/>
+        <many-to-one name="scanSettingsList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ScanSettingsList" column="ScanSettingsList_hid"/>
+        <many-to-one name="instrumentConfigurationList" cascade="all"
+                    class="uk.ac.ebi.jmzml.model.mzml.InstrumentConfigurationList" column="InstrumentConfigList_hid"/>
+        <many-to-one name="dataProcessingList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.DataProcessingList" column="DataProcessingList_hid"/>
+        <many-to-one name="run" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Run" column="Run_hid"/>
+        <property name="accession" type="string"/>
+        <property name="version" type="string"/>
+        <property name="id" type="string"/>
+    </class>
+</hibernate-mapping>

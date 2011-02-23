@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="uk.ac.ebi.jmzml.model.mzml.ComponentList" table="ComponentList">
+        <id name="hid" type="long" access="field">
+            <column name="hid"/>
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
+        </id>
+        <property name="count" type="big_integer"/>
+        <list name="components" access="field" cascade="all" table="ComponentList_Component">
+            <key column="ComponentList_hid"/>
+            <index column="idx"/>
+            <many-to-many column="Component_hid" class="uk.ac.ebi.jmzml.model.mzml.Component"/>
+        </list>
+    </class>
+</hibernate-mapping>
