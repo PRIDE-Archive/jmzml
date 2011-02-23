@@ -1,7 +1,7 @@
+
 package uk.ac.ebi.jmzml.model.mzml;
 
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.InstrumentConfigurationAdapter;
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter;
+import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -10,11 +10,11 @@ import java.io.Serializable;
 
 /**
  * Scan or acquisition from original raw file used to create this peak list, as specified in sourceFile.
- * <p/>
+ * 
  * <p>Java class for ScanType complex type.
- * <p/>
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- * <p/>
+ * 
  * <pre>
  * &lt;complexType name="ScanType">
  *   &lt;complexContent>
@@ -30,35 +30,44 @@ import java.io.Serializable;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ScanType", propOrder = {
-        "scanWindowList"
+    "scanWindowList"
 })
 public class Scan
-        extends ParamGroup
-        implements Serializable {
+    extends ParamGroup
+    implements Serializable
+{
 
     private final static long serialVersionUID = 100L;
     protected ScanWindowList scanWindowList;
     @XmlAttribute
     protected String spectrumRef;
-    @XmlAttribute(name = "sourceFileRef")
-    @XmlJavaTypeAdapter(SourceFileAdapter.class)
+    @XmlAttribute
+    @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
-    protected SourceFile sourceFile;
+    protected String sourceFileRef;
+    @XmlTransient
+    private SourceFile sourceFile;
     @XmlAttribute
     protected String externalSpectrumID;
-    @XmlAttribute(name = "instrumentConfigurationRef")
-    @XmlJavaTypeAdapter(InstrumentConfigurationAdapter.class)
+    @XmlAttribute
+    @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
-    protected InstrumentConfiguration instrumentConfiguration;
+    protected String instrumentConfigurationRef;
+    @XmlTransient
+    private InstrumentConfiguration instrumentConfiguration;
 
     /**
      * Gets the value of the scanWindowList property.
-     *
-     * @return possible object is
-     *         {@link ScanWindowList }
+     * 
+     * @return
+     *     possible object is
+     *     {@link ScanWindowList }
+     *     
      */
     public ScanWindowList getScanWindowList() {
         return scanWindowList;
@@ -66,9 +75,11 @@ public class Scan
 
     /**
      * Sets the value of the scanWindowList property.
-     *
-     * @param value allowed object is
-     *              {@link ScanWindowList }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ScanWindowList }
+     *     
      */
     public void setScanWindowList(ScanWindowList value) {
         this.scanWindowList = value;
@@ -76,9 +87,11 @@ public class Scan
 
     /**
      * Gets the value of the spectrumRef property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getSpectrumRef() {
         return spectrumRef;
@@ -86,39 +99,59 @@ public class Scan
 
     /**
      * Sets the value of the spectrumRef property.
-     *
-     * @param value allowed object is
-     *              {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setSpectrumRef(String value) {
         this.spectrumRef = value;
     }
 
-    /**
-     * Gets the value of the sourceFile property.
-     *
-     * @return possible object is
-     *         {@link String }
-     */
     public SourceFile getSourceFile() {
         return sourceFile;
     }
 
+
+    public void setSourceFile(SourceFile sourceFile) {
+        this.sourceFile = sourceFile;
+        if (sourceFile != null) {
+            this.sourceFileRef = sourceFile.getId();
+        }
+    }
+
     /**
-     * Sets the value of the sourceFile property.
-     *
-     * @param value allowed object is
-     *              {@link String }
+     * Gets the value of the sourceFileRef property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public void setSourceFile(SourceFile value) {
-        this.sourceFile = value;
+    public String getSourceFileRef() {
+        return sourceFileRef;
+    }
+
+    /**
+     * Sets the value of the sourceFileRef property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSourceFileRef(String value) {
+        this.sourceFileRef = value;
     }
 
     /**
      * Gets the value of the externalSpectrumID property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getExternalSpectrumID() {
         return externalSpectrumID;
@@ -126,32 +159,49 @@ public class Scan
 
     /**
      * Sets the value of the externalSpectrumID property.
-     *
-     * @param value allowed object is
-     *              {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setExternalSpectrumID(String value) {
         this.externalSpectrumID = value;
     }
 
     /**
-     * Gets the value of the instrumentConfiguration property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * Gets the value of the instrumentConfigurationRef property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
+    public String getInstrumentConfigurationRef() {
+        return instrumentConfigurationRef;
+    }
+
+    /**
+     * Sets the value of the instrumentConfigurationRef property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setInstrumentConfigurationRef(String value) {
+        this.instrumentConfigurationRef = value;
+    }
+
     public InstrumentConfiguration getInstrumentConfiguration() {
         return instrumentConfiguration;
     }
 
-    /**
-     * Sets the value of the instrumentConfiguration property.
-     *
-     * @param value allowed object is
-     *              {@link String }
-     */
-    public void setInstrumentConfiguration(InstrumentConfiguration value) {
-        this.instrumentConfiguration = value;
-    }
 
+    public void setInstrumentConfiguration(InstrumentConfiguration instrumentConfiguration) {
+        this.instrumentConfiguration = instrumentConfiguration;
+        if (instrumentConfiguration != null) {
+            this.instrumentConfigurationRef = instrumentConfiguration.getId();
+        }
+    }
 }

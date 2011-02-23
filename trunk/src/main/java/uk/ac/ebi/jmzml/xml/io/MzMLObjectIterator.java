@@ -24,9 +24,8 @@ package uk.ac.ebi.jmzml.xml.io;
 
 import org.apache.log4j.Logger;
 import org.xml.sax.InputSource;
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
+import uk.ac.ebi.jmzml.model.mzml.MzMLObject;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.UnmarshallerFactory;
-import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.cache.AdapterObjectCache;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.filters.MzMLNamespaceFilter;
 import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
 
@@ -46,15 +45,15 @@ public class MzMLObjectIterator<X extends MzMLObject> implements Iterator<X> {
     private Iterator<String> innerXpathIterator;
     private String xpath;
     private Class cls;
-    private AdapterObjectCache cache;
+    private MzMLObjectCache cache;
     private boolean useSpectrumCache = true;
 
     //package level constructor!
-    MzMLObjectIterator(String xpath, Class cls, MzMLIndexer index, AdapterObjectCache cache) {
+    MzMLObjectIterator(String xpath, Class cls, MzMLIndexer index, MzMLObjectCache cache) {
         this(xpath, cls, index, cache, true);
     }
 
-    MzMLObjectIterator(String xpath, Class cls, MzMLIndexer index, AdapterObjectCache cache, boolean aUseSpectrumCache) {
+    MzMLObjectIterator(String xpath, Class cls, MzMLIndexer index, MzMLObjectCache cache, boolean aUseSpectrumCache) {
         innerXpathIterator = index.getXmlStringIterator(xpath);
         this.xpath = xpath;
         this.cls = cls;

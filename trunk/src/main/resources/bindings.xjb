@@ -31,8 +31,9 @@
         <!-- the serializable uid should reflect the version number 1.0.0 -->
         <jxb:serializable uid="100"/>
         <!-- this interface will be used to ensure type safety in generified methods -->
-        <xjc:superInterface name="uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject"/>
+        <xjc:superClass name="uk.ac.ebi.jmzml.model.mzml.MzMLObject"/>
         <xjc:javaType name="java.util.Calendar" xmlType="xs:dateTime" adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.CalendarAdapter" />
+        <xjc:javaType name="java.lang.String" xmlType="xs:IDREF" adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter"/>
 
     </jxb:globalBindings>
 
@@ -51,38 +52,38 @@
     <jxb:bindings node="//xs:complexType[@name='BinaryDataArrayType']">
         <jxb:class name="BinaryDataArray"/>
     </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='BinaryDataArrayType']/xs:complexContent/xs:extension/xs:attribute[@name='dataProcessingRef']">
-        <jxb:property name="dataProcessing">
-            <jxb:baseType>
-                <xjc:javaType name="DataProcessing"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
+    <!--<jxb:bindings node="//xs:complexType[@name='BinaryDataArrayType']/xs:complexContent/xs:extension/xs:attribute[@name='dataProcessingRef']">-->
+        <!--<jxb:property name="dataProcessing">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="DataProcessing"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
 
     <jxb:bindings node="//xs:complexType[@name='ChromatogramListType']">
         <jxb:class name="ChromatogramList"/>
     </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='ChromatogramListType']/xs:attribute[@name='defaultDataProcessingRef']">
-        <jxb:property name="defaultDataProcessing">
-            <jxb:baseType>
-                <xjc:javaType name="DataProcessing"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
+    <!--<jxb:bindings node="//xs:complexType[@name='ChromatogramListType']/xs:attribute[@name='defaultDataProcessingRef']">-->
+        <!--<jxb:property name="defaultDataProcessing">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="DataProcessing"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
 
     <jxb:bindings node="//xs:complexType[@name='ChromatogramType']">
         <jxb:class name="Chromatogram"/>
     </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='ChromatogramType']/xs:complexContent/xs:extension/xs:attribute[@name='dataProcessingRef']">
-        <jxb:property name="dataProcessing">
-            <jxb:baseType>
-                <xjc:javaType name="DataProcessing"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
+    <!--<jxb:bindings node="//xs:complexType[@name='ChromatogramType']/xs:complexContent/xs:extension/xs:attribute[@name='dataProcessingRef']">-->
+        <!--<jxb:property name="dataProcessing">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="DataProcessing"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
 
     <jxb:bindings node="//xs:complexType[@name='ComponentListType']">
         <jxb:class name="ComponentList"/>
@@ -113,22 +114,22 @@
     <jxb:bindings node="//xs:complexType[@name='CVParamType']">
         <jxb:class name="CVParam"/>
     </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='CVParamType']/xs:attribute[@name='cvRef']">
-        <jxb:property name="CV">
-            <jxb:baseType>
-                <xjc:javaType name="CV"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.CVAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='CVParamType']/xs:attribute[@name='unitCvRef']">
-        <jxb:property name="unitCV">
-            <jxb:baseType>
-                <xjc:javaType name="CV"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.CVAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
+    <!--<jxb:bindings node="//xs:complexType[@name='CVParamType']/xs:attribute[@name='cvRef']">-->
+        <!--<jxb:property name="CV">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="CV"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.CVAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
+    <!--<jxb:bindings node="//xs:complexType[@name='CVParamType']/xs:attribute[@name='unitCvRef']">-->
+        <!--<jxb:property name="unitCV">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="CV"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.CVAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
 
     <jxb:bindings node="//xs:complexType[@name='CVType']">
         <jxb:class name="CV"/>
@@ -153,14 +154,14 @@
     <jxb:bindings node="//xs:complexType[@name='InstrumentConfigurationType']">
         <jxb:class name="InstrumentConfiguration"/>
     </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='InstrumentConfigurationType']/xs:complexContent/xs:extension/xs:attribute[@name='scanSettingsRef']">
-        <jxb:property name="scanSettings">
-            <jxb:baseType>
-                <xjc:javaType name="ScanSettings"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.ScanSettingsAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
+    <!--<jxb:bindings node="//xs:complexType[@name='InstrumentConfigurationType']/xs:complexContent/xs:extension/xs:attribute[@name='scanSettingsRef']">-->
+        <!--<jxb:property name="scanSettings">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="ScanSettings"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.ScanSettingsAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
 
     <jxb:bindings node="//xs:complexType[@name='mzMLType']">
         <jxb:class name="mzML"/>
@@ -177,22 +178,22 @@
     <jxb:bindings node="//xs:complexType[@name='PrecursorType']">
         <jxb:class name="Precursor"/>
     </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='PrecursorType']/xs:attribute[@name='spectrumRef']">
-        <jxb:property name="spectrum">
-            <jxb:baseType>
-                <xjc:javaType name="Spectrum"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SpectrumAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='PrecursorType']/xs:attribute[@name='sourceFileRef']">
-        <jxb:property name="sourceFile">
-            <jxb:baseType>
-                <xjc:javaType name="SourceFile"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
+    <!--<jxb:bindings node="//xs:complexType[@name='PrecursorType']/xs:attribute[@name='spectrumRef']">-->
+        <!--<jxb:property name="spectrum">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="Spectrum"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SpectrumAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
+    <!--<jxb:bindings node="//xs:complexType[@name='PrecursorType']/xs:attribute[@name='sourceFileRef']">-->
+        <!--<jxb:property name="sourceFile">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="SourceFile"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
 
     <jxb:bindings node="//xs:complexType[@name='ProductListType']">
         <jxb:class name="ProductList"/>
@@ -205,14 +206,14 @@
     <jxb:bindings node="//xs:complexType[@name='ProcessingMethodType']">
         <jxb:class name="ProcessingMethod"/>
     </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='ProcessingMethodType']/xs:complexContent/xs:extension/xs:attribute[@name='softwareRef']">
-        <jxb:property name="software">
-            <jxb:baseType>
-                <xjc:javaType name="Software"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SoftwareAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
+    <!--<jxb:bindings node="//xs:complexType[@name='ProcessingMethodType']/xs:complexContent/xs:extension/xs:attribute[@name='softwareRef']">-->
+        <!--<jxb:property name="software">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="Software"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SoftwareAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
 
     <jxb:bindings node="//xs:complexType[@name='ReferenceableParamGroupListType']">
         <jxb:class name="ReferenceableParamGroupList"/>
@@ -221,14 +222,14 @@
     <jxb:bindings node="//xs:complexType[@name='ReferenceableParamGroupRefType']">
         <jxb:class name="ReferenceableParamGroupRef"/>
     </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='ReferenceableParamGroupRefType']/xs:attribute[@name='ref']">
-        <jxb:property name="referenceableParamGroup">
-            <jxb:baseType>
-                <xjc:javaType name="ReferenceableParamGroup"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.ReferenceableParamGroupAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
+    <!--<jxb:bindings node="//xs:complexType[@name='ReferenceableParamGroupRefType']/xs:attribute[@name='ref']">-->
+        <!--<jxb:property name="referenceableParamGroup">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="ReferenceableParamGroup"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.ReferenceableParamGroupAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
 
     <jxb:bindings node="//xs:complexType[@name='ReferenceableParamGroupType']">
         <jxb:class name="ReferenceableParamGroup"/>
@@ -237,30 +238,30 @@
     <jxb:bindings node="//xs:complexType[@name='RunType']">
         <jxb:class name="Run"/>
     </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='RunType']/xs:complexContent/xs:extension/xs:attribute[@name='defaultInstrumentConfigurationRef']">
-        <jxb:property name="defaultInstrumentConfiguration">
-            <jxb:baseType>
-                <xjc:javaType name="InstrumentConfiguration"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.InstrumentConfigurationAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='RunType']/xs:complexContent/xs:extension/xs:attribute[@name='defaultSourceFileRef']">
-        <jxb:property name="defaultSourceFileRef">
-            <jxb:baseType>
-                <xjc:javaType name="SourceFile"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='RunType']/xs:complexContent/xs:extension/xs:attribute[@name='sampleRef']">
-        <jxb:property name="sample">
-            <jxb:baseType>
-                <xjc:javaType name="Sample"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SampleAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
+    <!--<jxb:bindings node="//xs:complexType[@name='RunType']/xs:complexContent/xs:extension/xs:attribute[@name='defaultInstrumentConfigurationRef']">-->
+        <!--<jxb:property name="defaultInstrumentConfiguration">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="InstrumentConfiguration"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.InstrumentConfigurationAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
+    <!--<jxb:bindings node="//xs:complexType[@name='RunType']/xs:complexContent/xs:extension/xs:attribute[@name='defaultSourceFileRef']">-->
+        <!--<jxb:property name="defaultSourceFileRef">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="SourceFile"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
+    <!--<jxb:bindings node="//xs:complexType[@name='RunType']/xs:complexContent/xs:extension/xs:attribute[@name='sampleRef']">-->
+        <!--<jxb:property name="sample">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="Sample"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SampleAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
 
     <jxb:bindings node="//xs:complexType[@name='SampleListType']">
         <jxb:class name="SampleList"/>
@@ -285,22 +286,22 @@
     <jxb:bindings node="//xs:complexType[@name='ScanType']">
         <jxb:class name="Scan"/>
     </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='ScanType']/xs:complexContent/xs:extension/xs:attribute[@name='sourceFileRef']">
-        <jxb:property name="sourceFile">
-            <jxb:baseType>
-                <xjc:javaType name="SourceFile"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='ScanType']/xs:complexContent/xs:extension/xs:attribute[@name='instrumentConfigurationRef']">
-        <jxb:property name="instrumentConfiguration">
-            <jxb:baseType>
-                <xjc:javaType name="InstrumentConfiguration"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.InstrumentConfigurationAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
+    <!--<jxb:bindings node="//xs:complexType[@name='ScanType']/xs:complexContent/xs:extension/xs:attribute[@name='sourceFileRef']">-->
+        <!--<jxb:property name="sourceFile">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="SourceFile"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
+    <!--<jxb:bindings node="//xs:complexType[@name='ScanType']/xs:complexContent/xs:extension/xs:attribute[@name='instrumentConfigurationRef']">-->
+        <!--<jxb:property name="instrumentConfiguration">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="InstrumentConfiguration"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.InstrumentConfigurationAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
 
     <jxb:bindings node="//xs:complexType[@name='ScanWindowListType']">
         <jxb:class name="ScanWindowList"/>
@@ -317,14 +318,14 @@
     <jxb:bindings node="//xs:complexType[@name='SoftwareRefType']">
         <jxb:class name="SoftwareRef"/>
     </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='SoftwareRefType']/xs:attribute[@name='ref']">
-        <jxb:property name="software">
-            <jxb:baseType>
-                <xjc:javaType name="Software"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SoftwareAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
+    <!--<jxb:bindings node="//xs:complexType[@name='SoftwareRefType']/xs:attribute[@name='ref']">-->
+        <!--<jxb:property name="software">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="Software"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SoftwareAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
 
     <jxb:bindings node="//xs:complexType[@name='SoftwareType']">
         <jxb:class name="Software"/>
@@ -341,14 +342,14 @@
     <jxb:bindings node="//xs:complexType[@name='SourceFileRefType']">
         <jxb:class name="SourceFileRef"/>
     </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='SourceFileRefType']/xs:attribute[@name='ref']">
-        <jxb:property name="sourceFile">
-            <jxb:baseType>
-                <xjc:javaType name="SourceFile"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
+    <!--<jxb:bindings node="//xs:complexType[@name='SourceFileRefType']/xs:attribute[@name='ref']">-->
+        <!--<jxb:property name="sourceFile">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="SourceFile"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
 
     <jxb:bindings node="//xs:complexType[@name='SourceFileType']">
         <jxb:class name="SourceFile"/>
@@ -357,34 +358,34 @@
     <jxb:bindings node="//xs:complexType[@name='SpectrumListType']">
         <jxb:class name="SpectrumList"/>
     </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='SpectrumListType']/xs:attribute[@name='defaultDataProcessingRef']">
-        <jxb:property name="defaultDataProcessing">
-            <jxb:baseType>
-                <xjc:javaType name="DataProcessing"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
+    <!--<jxb:bindings node="//xs:complexType[@name='SpectrumListType']/xs:attribute[@name='defaultDataProcessingRef']">-->
+        <!--<jxb:property name="defaultDataProcessing">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="DataProcessing"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
 
     <jxb:bindings node="//xs:complexType[@name='SpectrumType']">
         <jxb:class name="Spectrum"/>
     </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='SpectrumType']/xs:complexContent/xs:extension/xs:attribute[@name='dataProcessingRef']">
-        <jxb:property name="dataProcessing">
-            <jxb:baseType>
-                <xjc:javaType name="DataProcessing"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='SpectrumType']/xs:complexContent/xs:extension/xs:attribute[@name='sourceFileRef']">
-        <jxb:property name="sourceFile">
-            <jxb:baseType>
-                <xjc:javaType name="SourceFile"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
+    <!--<jxb:bindings node="//xs:complexType[@name='SpectrumType']/xs:complexContent/xs:extension/xs:attribute[@name='dataProcessingRef']">-->
+        <!--<jxb:property name="dataProcessing">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="DataProcessing"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.DataProcessingAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
+    <!--<jxb:bindings node="//xs:complexType[@name='SpectrumType']/xs:complexContent/xs:extension/xs:attribute[@name='sourceFileRef']">-->
+        <!--<jxb:property name="sourceFile">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="SourceFile"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
 
     <jxb:bindings node="//xs:complexType[@name='TargetListType']">
         <jxb:class name="TargetList"/>
@@ -393,14 +394,14 @@
     <jxb:bindings node="//xs:complexType[@name='UserParamType']">
         <jxb:class name="UserParam"/>
     </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='UserParamType']/xs:attribute[@name='unitCvRef']">
-        <jxb:property name="unitCV">
-            <jxb:baseType>
-                <xjc:javaType name="CV"
-                              adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.CVAdapter"/>
-            </jxb:baseType>
-        </jxb:property>
-    </jxb:bindings>
+    <!--<jxb:bindings node="//xs:complexType[@name='UserParamType']/xs:attribute[@name='unitCvRef']">-->
+        <!--<jxb:property name="unitCV">-->
+            <!--<jxb:baseType>-->
+                <!--<xjc:javaType name="CV"-->
+                              <!--adapter="uk.ac.ebi.jmzml.xml.jaxb.adapters.CVAdapter"/>-->
+            <!--</jxb:baseType>-->
+        <!--</jxb:property>-->
+    <!--</jxb:bindings>-->
 
 
     <!-- indexed mzML bindings -->

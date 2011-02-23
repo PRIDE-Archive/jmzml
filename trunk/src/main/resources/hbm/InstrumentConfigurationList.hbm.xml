@@ -3,11 +3,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="uk.ac.ebi.jmzml.model.mzml">
-    <class name="InstrumentConfigurationList" table="InstrumentConfigurationList">
-        <id name="hid" type="long" access="field">
-            <column name="hid"/>
-            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
-        </id>
+    <union-subclass name="InstrumentConfigurationList" table="InstrumentConfigurationList" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
         <property name="count" type="big_integer"/>
         <list name="instrumentConfiguration" access="field" cascade="all">
             <key column="InstrumentConfigList_hid"/>
@@ -15,5 +11,5 @@
             <many-to-many column="InstrumentConfiguration_hid"
                           class="InstrumentConfiguration"/>
         </list>
-    </class>
+    </union-subclass>
 </hibernate-mapping>

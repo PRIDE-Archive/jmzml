@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 import uk.ac.ebi.jmzml.model.mzml.*;
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
+import uk.ac.ebi.jmzml.model.mzml.MzMLObject;
 import uk.ac.ebi.jmzml.xml.io.MzMLMarshaller;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
@@ -270,8 +270,8 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         assertEquals("Exp01", mz.getRun().getId());
 
         // the run has one source file reference
-        SourceFile sf = mz.getRun().getDefaultSourceFileRef();
-        assertEquals("tiny1.RAW", sf.getName());
+        String sf = mz.getRun().getDefaultSourceFileRef();
+        assertEquals("tiny1.RAW", sf);
 
         // check teh default processing method references
         List<ProcessingMethod> pmList = mz.getRun().getSpectrumList().getDefaultDataProcessing().getProcessingMethod();

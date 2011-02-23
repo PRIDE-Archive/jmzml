@@ -1,9 +1,7 @@
 package uk.ac.ebi.jmzml.model.mzml;
 
 import uk.ac.ebi.jmzml.xml.jaxb.adapters.CalendarAdapter;
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.InstrumentConfigurationAdapter;
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.SampleAdapter;
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileAdapter;
+import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
@@ -54,18 +52,24 @@ public class Run
     @XmlID
     @XmlSchemaType(name = "ID")
     protected String id;
-    @XmlAttribute(name = "defaultInstrumentConfigurationRef", required = true)
-    @XmlJavaTypeAdapter(InstrumentConfigurationAdapter.class)
+    @XmlAttribute(required = true)
+    @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
-    protected InstrumentConfiguration defaultInstrumentConfiguration;
+    protected String defaultInstrumentConfigurationRef;
+    @XmlTransient
+    private InstrumentConfiguration defaultInstrumentConfiguration;
     @XmlAttribute
-    @XmlJavaTypeAdapter(SourceFileAdapter.class)
+    @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
-    protected SourceFile defaultSourceFileRef;
-    @XmlAttribute(name = "sampleRef")
-    @XmlJavaTypeAdapter(SampleAdapter.class)
+    protected String defaultSourceFileRef;
+    @XmlTransient
+    private SourceFile defaultSourceFile;
+    @XmlAttribute
+    @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
-    protected Sample sample;
+    protected String sampleRef;
+    @XmlTransient
+    private Sample sample;
     @XmlAttribute
     @XmlJavaTypeAdapter(CalendarAdapter.class)
     @XmlSchemaType(name = "dateTime")
@@ -132,23 +136,34 @@ public class Run
     }
 
     /**
-     * Gets the value of the defaultInstrumentConfiguration property.
+     * Gets the value of the defaultInstrumentConfigurationRef property.
      *
      * @return possible object is
      *         {@link String }
      */
-    public InstrumentConfiguration getDefaultInstrumentConfiguration() {
-        return defaultInstrumentConfiguration;
+    public String getDefaultInstrumentConfigurationRef() {
+        return defaultInstrumentConfigurationRef;
     }
 
     /**
-     * Sets the value of the defaultInstrumentConfiguration property.
+     * Sets the value of the defaultInstrumentConfigurationRef property.
      *
      * @param value allowed object is
      *              {@link String }
      */
-    public void setDefaultInstrumentConfiguration(InstrumentConfiguration value) {
-        this.defaultInstrumentConfiguration = value;
+    public void setDefaultInstrumentConfigurationRef(String value) {
+        this.defaultInstrumentConfigurationRef = value;
+    }
+
+    public InstrumentConfiguration getDefaultInstrumentConfiguration() {
+        return defaultInstrumentConfiguration;
+    }
+
+    public void setDefaultInstrumentConfiguration(InstrumentConfiguration instrumentConfiguration) {
+        this.defaultInstrumentConfiguration = instrumentConfiguration;
+        if (instrumentConfiguration != null) {
+            this.defaultInstrumentConfigurationRef = instrumentConfiguration.getId();
+        }
     }
 
     /**
@@ -157,7 +172,7 @@ public class Run
      * @return possible object is
      *         {@link String }
      */
-    public SourceFile getDefaultSourceFileRef() {
+    public String getDefaultSourceFileRef() {
         return defaultSourceFileRef;
     }
 
@@ -167,28 +182,50 @@ public class Run
      * @param value allowed object is
      *              {@link String }
      */
-    public void setDefaultSourceFileRef(SourceFile value) {
+    public void setDefaultSourceFileRef(String value) {
         this.defaultSourceFileRef = value;
     }
 
+    public SourceFile getDefaultSourceFile(){
+        return defaultSourceFile;
+    }
+
+    public void setDefaultSourceFile(SourceFile sourceFile){
+        this.defaultSourceFile = sourceFile;
+        if(sourceFile != null){
+            this.defaultInstrumentConfigurationRef = sourceFile.getId();
+        }
+    }
+
     /**
-     * Gets the value of the sample property.
+     * Gets the value of the sampleRef property.
      *
      * @return possible object is
      *         {@link String }
      */
-    public Sample getSample() {
-        return sample;
+    public String getSampleRef() {
+        return sampleRef;
     }
 
     /**
-     * Sets the value of the sample property.
+     * Sets the value of the sampleRef property.
      *
      * @param value allowed object is
      *              {@link String }
      */
-    public void setSample(Sample value) {
-        this.sample = value;
+    public void setSampleRef(String value) {
+        this.sampleRef = value;
+    }
+
+    public Sample getSample(){
+        return sample;
+    }
+
+    public void setSample(Sample sample){
+        this.sample = sample;
+        if (sample != null){
+            this.sampleRef = sample.getId();
+        }
     }
 
     /**

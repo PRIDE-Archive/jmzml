@@ -3,17 +3,15 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="uk.ac.ebi.jmzml.model.mzml.ChromatogramList" table="ChromatogramList">
-        <id name="hid" type="long" access="field">
-            <column name="hid"/>
-            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
-        </id>
+    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.ChromatogramList" table="ChromatogramList" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
         <property name="count" type="big_integer"/>
-        <many-to-one name="defaultDataProcessing" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing" column="Default_DataProcessing_hid"/>
+        <property name="defaultDataProcessingRef" type="string"/>
+
+        <!--<many-to-one name="defaultDataProcessing" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing" column="Default_DataProcessing_hid"/>-->
         <list name="chromatogram" access="field" cascade="all" table="ChromatogramList_Chromatogram">
             <key column="ChromatogramList_hid"/>
             <index column="idx"/>
             <many-to-many column="Chromatogram_hid" class="uk.ac.ebi.jmzml.model.mzml.Chromatogram"/>
         </list>
-    </class>
+    </union-subclass>
 </hibernate-mapping>

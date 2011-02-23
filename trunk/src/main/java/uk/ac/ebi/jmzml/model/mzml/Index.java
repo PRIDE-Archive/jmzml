@@ -1,6 +1,5 @@
-package uk.ac.ebi.jmzml.model.mzml;
 
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
+package uk.ac.ebi.jmzml.model.mzml;
 
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
@@ -10,9 +9,9 @@ import java.util.List;
 
 /**
  * <p>Java class for IndexType complex type.
- * <p/>
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- * <p/>
+ * 
  * <pre>
  * &lt;complexType name="IndexType">
  *   &lt;complexContent>
@@ -32,42 +31,45 @@ import java.util.List;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "IndexType", propOrder = {
-        "offset"
+    "offset"
 })
 public class Index
-        implements Serializable, MzMLObject {
+    extends MzMLObject
+    implements Serializable
+{
 
     private final static long serialVersionUID = 100L;
     @XmlElement(required = true)
     protected List<Offset> offset;
     @XmlAttribute(required = true)
     protected String name;
-    
-    @XmlTransient
-    protected long hid;
 
     /**
      * Gets the value of the offset property.
-     * <p/>
-     * <p/>
+     * 
+     * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the offset property.
-     * <p/>
-     * <p/>
+     * 
+     * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getOffset().add(newItem);
      * </pre>
-     * <p/>
-     * <p/>
-     * <p/>
+     * 
+     * 
+     * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Offset }
+     * 
+     * 
      */
     public List<Offset> getOffset() {
         if (offset == null) {
@@ -78,9 +80,11 @@ public class Index
 
     /**
      * Gets the value of the name property.
-     *
-     * @return possible object is
-     *         {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getName() {
         return name;
@@ -88,9 +92,11 @@ public class Index
 
     /**
      * Sets the value of the name property.
-     *
-     * @param value allowed object is
-     *              {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setName(String value) {
         this.name = value;

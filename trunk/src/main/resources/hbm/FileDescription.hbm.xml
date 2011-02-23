@@ -3,11 +3,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="uk.ac.ebi.jmzml.model.mzml.FileDescription" table="FileDescription">
-        <id name="hid" type="long" access="field">
-            <column name="hid"/>
-            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
-        </id>
+    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.FileDescription" table="FileDescription" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
         <many-to-one name="fileContent" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup" column="FileContent_ParamGroup_hid"/>
         <many-to-one name="sourceFileList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFileList" column="SourceFileList_hid"/>
         <list name="contact" access="field" cascade="all" table="FileDescription_ParamGroup">
@@ -15,5 +11,5 @@
             <index column="idx"/>
             <many-to-many column="ParamGroup_hid" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup"/>
         </list>
-    </class>
+    </union-subclass>
 </hibernate-mapping>

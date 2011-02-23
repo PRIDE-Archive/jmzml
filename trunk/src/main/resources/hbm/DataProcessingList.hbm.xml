@@ -3,16 +3,12 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="uk.ac.ebi.jmzml.model.mzml.DataProcessingList" table="DataProcessingList">
-        <id name="hid" type="long" access="field">
-            <column name="hid"/>
-            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
-        </id>
+    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.DataProcessingList" table="DataProcessingList" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
         <property name="count" type="big_integer"/>
         <list name="dataProcessing" access="field" cascade="all">
             <key column="DataProcessingList_hid"/>
             <index column="idx"/>
             <many-to-many column="DataProcessing_hid" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing"/>
         </list>
-    </class>
+    </union-subclass>
 </hibernate-mapping>

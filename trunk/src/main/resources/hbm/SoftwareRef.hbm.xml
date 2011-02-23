@@ -3,12 +3,8 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="uk.ac.ebi.jmzml.model.mzml.SoftwareRef" table="SoftwareRef">
-        <id name="hid" type="long" access="field">
-            <column name="hid"/>
-            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
-        </id>
-        <many-to-one name="software" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Software" column="Software_hid"/>
-
-    </class>
+    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.SoftwareRef" table="SoftwareRef" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
+        <!--<many-to-one name="software" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Software" column="Software_hid"/>-->
+        <property name="ref" type="string"/>
+    </union-subclass>
 </hibernate-mapping>

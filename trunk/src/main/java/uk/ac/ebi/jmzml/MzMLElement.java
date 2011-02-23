@@ -1,8 +1,7 @@
 package uk.ac.ebi.jmzml;
 
-import uk.ac.ebi.jmzml.model.mzml.UserParam;
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
 import uk.ac.ebi.jmzml.model.mzml.*;
+import uk.ac.ebi.jmzml.xml.jaxb.resolver.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -23,73 +22,84 @@ public enum MzMLElement {
     // ToDo: check which elements should be cached
     // ToDo: check for which elements an id map should be generated
 
-    //                               tag name                        xpath                                                                                                                                         class-name
+    //                               tag name      indexed                  xpath    idMapped class-name    refResolving, reference-resolver                                                                                                                                        class-name
     //AdditionalSearchParams
-    AnalyzerComponent("analyzer", "/mzML/instrumentConfigurationList/instrumentConfiguration/componentList/analyzer", AnalyzerComponent.class),
-    BinaryDataArray("binaryDataArray", null /*multiple locations*/, BinaryDataArray.class),
-    BinaryDataArrayList("binaryDataArrayList", null /*multiple locations*/, BinaryDataArrayList.class),
-    Chromatogram("chromatogram","/mzML/run/chromatogramList/chromatogram", Chromatogram.class),
-    ChromatogramList("chromatogramList","/mzML/run/chromatogramList",ChromatogramList.class),
-    Component("component", null /*multiple locations*/, Component.class),
-    ComponentList("componentList","/mzML/instrumentConfigurationList/instrumentConfiguration/componentList", ComponentList.class),
-    CV("cv","/mzML/cvList/cv", CV.class),
-    CVList("cvList", "/mzML/cvList", CVList.class),
-    CVParam("cvParam", null /*multiple locations*/, CVParam.class),
-    DataProcessing("dataProcessing","/mzML/dataProcessingList/dataProcessing", DataProcessing.class),
-    DataProcessingList("dataProcessingList", "/mzML/dataProcessingList", DataProcessingList.class),
-    DetectorComponent("detectorComponent","/mzML/instrumentConfigurationList/instrumentConfiguration/componentList/detectorComponent", DetectorComponent.class),
-    FileDescription("fileDescription","/mzML/fileDescription", FileDescription.class),
-    Index("index","/indexedmzML/indexList/index", Index.class),
-    IndexedmzML("indexedmzML", "/indexedmzML", IndexedmzML.class),
-    IndexList("indexList", "/indexedmzML/indexList/", IndexList.class),
-    InstrumentConfiguration("instrumentConfiguration","/mzML/instrumentConfigurationList/instrumentConfiguration", InstrumentConfiguration.class),
-    InstrumentConfigurationList("instrumentConfigurationList", "/mzML/instrumentConfigurationList", InstrumentConfigurationList.class),
-    MzML("mzML", "/mzML", MzML.class),
-    Offset("offset", "/indexedmzML/indexList/index/offset", Offset.class),
-    ParamGroup("paramGroup", null /*multiple locations*/, ParamGroup.class),
-    Precursor("precursor", "/mzML/run/spectrumList/spectrum/precursorList/precursor", Precursor.class),
-    PrecurosrList("precursorList","/mzML/run/spectrumList/spectrum/precursorList", PrecursorList.class),
-    ProcessingMethod("processingMethod","/mzML/dataProcessingList/dataProcessing/processingMethod", ProcessingMethod.class),
-    Product("product", "/mzML/run/spectrumList/spectrum/productList/product", Product.class),
-    ProductList("productList", "/mzML/run/spectrumList/spectrum/productList", ProductList.class),
-    ReferenceableParamGroup("referenceableParamGroup","/mzML/referenceableParamGroupList/referenceableParamGroup", ReferenceableParamGroup.class),
-    ReferenceableParamGroupList("referenceableParamGroupList","/mzML/referenceableParamGroupList", ReferenceableParamGroupList.class),
-    ReferenceableParamGroupRef("referenceableParamGroupRef", null /*multiple locations*/, ReferenceableParamGroupRef.class),
-    Run("run", "/mzML/run", Run.class),
-    Sample("sample","/mzML/sampleList/sample", Sample.class),
-    SampleList("sampleList", "/mzML/sampleList", SampleList.class),
-    Scan("scan", "/mzML/run/spectrumList/spectrum/scanList/scan", Scan.class),
-    ScanList("scanList", "/mzML/run/spectrumList/spectrum/scanList", ScanList.class),
-    ScanSettings("scanSettings", "/mzML/scanSettingsList/scanSettings", ScanSettings.class),
-    ScanSettingsList("scanSettingsList", "/mzML/scanSettingsList", ScanSettingsList.class),
-    ScanWindowList("scanWindowList", "/mzML/run/spectrumList/spectrum/scanList/scan/scanWindowList", ScanWindowList.class),
-    SelectedIonList("selectedIonList", "/mzML/run/spectrumList/spectrum/precursorList/precursor/selectedIonList", SelectedIonList.class),
-    Software("software", "/mzML/softwareList/software", Software.class),
-    SoftwareList("softwareList", "/mzML/softwareList", SoftwareList.class),
-    SoftwareRef("softwareRef", null /*multiple locations*/, SoftwareRef.class),
-    SourceComponent("sourceComponent", "/mzML/instrumentConfigurationList/instrumentConfiguration/componentList/sourceComponent", SourceComponent.class),
-    SourceFile("sourceFile", "/mzML/fileDescription/sourceFileList/sourceFile", SourceFile.class),
-    SourceFileList("sourceFileList", "/mzML/fileDescription/sourceFileList", SourceFileList.class),
-    SourceFileRefList("sourceFileRefList", null /*multiple locations*/, SourceFileRefList.class),
-    Spectrum("spectrum", "/mzML/run/spectrumList/spectrum", Spectrum.class),
-    SpectrumList("spectrumList", "/mzML/run/spectrumList", SpectrumList.class),
-    TargetList("targetList", "/mzML/scanSettingsList/scanSettings/targetList", TargetList.class),
-    UserParam("userParam", null /*multiple locations*/, UserParam.class);
-
+    AnalyzerComponent("analyzer", true, "/mzML/instrumentConfigurationList/instrumentConfiguration/componentList/analyzer", false, AnalyzerComponent.class, false, null),
+    BinaryDataArray("binaryDataArray", true, null /*multiple locations*/, false, BinaryDataArray.class, false, BinaryDataArrayRefResolver.class),
+    BinaryDataArrayList("binaryDataArrayList", true, null /*multiple locations*/, false, BinaryDataArrayList.class, false, null),
+    Chromatogram("chromatogram", true, "/mzML/run/chromatogramList/chromatogram", false, Chromatogram.class, true, ChromatogramRefResolver.class),
+    ChromatogramList("chromatogramList", true, "/mzML/run/chromatogramList", false, ChromatogramList.class, true, ChromatogramListRefResolver.class),
+    Component("component", true, null /*multiple locations*/, false, Component.class, false, null),
+    ComponentList("componentList", true, "/mzML/instrumentConfigurationList/instrumentConfiguration/componentList", false, ComponentList.class, false, null),
+    CV("cv", true, "/mzML/cvList/cv", false, CV.class, false, null),
+    CVList("cvList", true, "/mzML/cvList", false, CVList.class, false, null),
+    CVParam("cvParam", true, null /*multiple locations*/, false, CVParam.class, true, CVParamRefResolver.class),
+    DataProcessing("dataProcessing", true, "/mzML/dataProcessingList/dataProcessing", false, DataProcessing.class, false, null),
+    DataProcessingList("dataProcessingList", true, "/mzML/dataProcessingList", false, DataProcessingList.class, false, null),
+    DetectorComponent("detectorComponent", true, "/mzML/instrumentConfigurationList/instrumentConfiguration/componentList/detectorComponent", false, DetectorComponent.class, false, null),
+    FileDescription("fileDescription", true, "/mzML/fileDescription", false, FileDescription.class, false, null),
+    Index("index", true, "/indexedmzML/indexList/index", false, Index.class, false, null),
+    IndexedmzML("indexedmzML", true, "/indexedmzML", false, IndexedmzML.class, false, null),
+    IndexList("indexList", true, "/indexedmzML/indexList/", false, IndexList.class, false, null),
+    InstrumentConfiguration("instrumentConfiguration", true, "/mzML/instrumentConfigurationList/instrumentConfiguration", false, InstrumentConfiguration.class, true, InstrumentConfigurationRefResolver.class),
+    InstrumentConfigurationList("instrumentConfigurationList", true, "/mzML/instrumentConfigurationList", false, InstrumentConfigurationList.class, false, null),
+    MzML("mzML", true, "/mzML", false, MzML.class, false, null),
+    Offset("offset", true, "/indexedmzML/indexList/index/offset", false, Offset.class, false, null),
+    ParamGroup("paramGroup", true, null /*multiple locations*/, false, ParamGroup.class, false, null),
+    Precursor("precursor", true, "/mzML/run/spectrumList/spectrum/precursorList/precursor", false, Precursor.class, true, PrecursorRefResolver.class),
+    PrecurosrList("precursorList", true, "/mzML/run/spectrumList/spectrum/precursorList", false, PrecursorList.class, false, null),
+    ProcessingMethod("processingMethod", true, "/mzML/dataProcessingList/dataProcessing/processingMethod", false, ProcessingMethod.class, true, ProcessingMethodRefResolver.class),
+    Product("product", true, "/mzML/run/spectrumList/spectrum/productList/product", false, Product.class, false, null),
+    ProductList("productList", true, "/mzML/run/spectrumList/spectrum/productList", false, ProductList.class, false, null),
+    ReferenceableParamGroup("referenceableParamGroup", true, "/mzML/referenceableParamGroupList/referenceableParamGroup", false, ReferenceableParamGroup.class, false, null),
+    ReferenceableParamGroupList("referenceableParamGroupList", true, "/mzML/referenceableParamGroupList", false, ReferenceableParamGroupList.class, false, null),
+    ReferenceableParamGroupRef("referenceableParamGroupRef", true, null /*multiple locations*/, false, ReferenceableParamGroupRef.class, true, ReferenceableParamGroupRefResolver.class),
+    Run("run", true, "/mzML/run", false, Run.class, false, RunRefResolver.class),
+    Sample("sample", true, "/mzML/sampleList/sample", false, Sample.class, false, null),
+    SampleList("sampleList", true, "/mzML/sampleList", false, SampleList.class, false, null),
+    Scan("scan", true, "/mzML/run/spectrumList/spectrum/scanList/scan", false, Scan.class, true, ScanRefResolver.class),
+    ScanList("scanList", true, "/mzML/run/spectrumList/spectrum/scanList", false, ScanList.class, false, null),
+    ScanSettings("scanSettings", true, "/mzML/scanSettingsList/scanSettings", false, ScanSettings.class, false, null),
+    ScanSettingsList("scanSettingsList", true, "/mzML/scanSettingsList", false, ScanSettingsList.class, false, null),
+    ScanWindowList("scanWindowList", true, "/mzML/run/spectrumList/spectrum/scanList/scan/scanWindowList", false, ScanWindowList.class, false, null),
+    SelectedIonList("selectedIonList", true, "/mzML/run/spectrumList/spectrum/precursorList/precursor/selectedIonList", false, SelectedIonList.class, false, null),
+    Software("software", true, "/mzML/softwareList/software", false, Software.class, false, null),
+    SoftwareList("softwareList", true, "/mzML/softwareList", false, SoftwareList.class, false, null),
+    SoftwareRef("softwareRef", true, null /*multiple locations*/, false, SoftwareRef.class, true, SoftwareRefResolver.class),
+    SourceComponent("sourceComponent", true, "/mzML/instrumentConfigurationList/instrumentConfiguration/componentList/sourceComponent", false, SourceComponent.class, false, null),
+    SourceFile("sourceFile", true, "/mzML/fileDescription/sourceFileList/sourceFile", false, SourceFile.class, false, null),
+    SourceFileList("sourceFileList", true, "/mzML/fileDescription/sourceFileList", false, SourceFileList.class, false, null),
+    SourceFileRefList("sourceFileRefList", true, null /*multiple locations*/, false, SourceFileRefList.class, false, null),
+    SourceFileRef("sourceFileRef", true, "/mzML/fileDescription/sourceFileList/sourceFileRef", false, SourceFileRef.class, true, SourceFileRefResolver.class),
+    Spectrum("spectrum", true, "/mzML/run/spectrumList/spectrum", false, Spectrum.class, true, SpectrumRefResolver.class),
+    SpectrumList("spectrumList", true, "/mzML/run/spectrumList", false, SpectrumList.class, true, SpectrumRefResolver.class),
+    TargetList("targetList", true, "/mzML/scanSettingsList/scanSettings/targetList", false, TargetList.class, false, null),
+    UserParam("userParam", true, null /*multiple locations*/, false, UserParam.class, true, UserParamRefResolver.class);
 
 
     private final String tagName;
+    private final boolean indexed;
     private final String xpath;
+    private final boolean idMapped;
     private final Class clazz;
-
+    private final boolean autoRefResolving;
+    private final Class refResolverClass;
 
     private <T extends MzMLObject> MzMLElement(String tagName,
+                                               boolean indexed,
                                                String xpath,
-                                               Class<T> clazz
-                                               ) {
+                                               boolean idMapped,
+                                               Class<T> clazz,
+                                               boolean autoRefResolving,
+                                               Class refResolverClass
+    ) {
         this.tagName = tagName;
+        this.indexed = indexed;
         this.xpath = xpath;
+        this.idMapped = idMapped;
         this.clazz = clazz;
+        this.autoRefResolving = autoRefResolving;
+        this.refResolverClass = refResolverClass;
 
 
         // ToDo: perhaps statically load properties file to load parameters like caching or indexing?
@@ -101,8 +111,16 @@ public enum MzMLElement {
         return tagName;
     }
 
+    public boolean isIndexed() {
+        return indexed;
+    }
+
     public String getXpath() {
         return xpath;
+    }
+
+    public boolean isIdMapped() {
+        return idMapped;
     }
 
     @SuppressWarnings("unchecked")
@@ -128,6 +146,15 @@ public enum MzMLElement {
         return null;
     }
 
+    public boolean isAutoRefResolving() {
+        return autoRefResolving;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <R extends AbstractReferenceResolver> Class<R> getRefResolverClass() {
+        return refResolverClass;
+    }
+
     @Override
     public String toString() {
         return "MzMLElement{" +
@@ -135,4 +162,4 @@ public enum MzMLElement {
                 ", clazz=" + clazz +
                 '}';
     }
-    }
+}

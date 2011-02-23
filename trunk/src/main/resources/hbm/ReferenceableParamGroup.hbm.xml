@@ -3,10 +3,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroup" table="ReferenceableParamGroup">
-        <id name="hid" column="hid" type="long" access="field">
-            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"/>
-        </id>
+    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroup" table="ReferenceableParamGroup" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
         <property name="id" type="string"/>
         <list name="cvParam" access="field" cascade="all">
             <key column="ReferenceableParamGroup_hid"/>
@@ -18,5 +15,5 @@
             <index column="idx"/>
             <many-to-many column="UserParam_hid" class="uk.ac.ebi.jmzml.model.mzml.UserParam"/>
         </list>
-    </class>
+    </union-subclass>
 </hibernate-mapping>

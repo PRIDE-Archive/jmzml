@@ -1,21 +1,25 @@
+
 package uk.ac.ebi.jmzml.model.mzml;
 
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
-
-import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlType;
 
 
 /**
  * List and descriptions of instrument configurations. At least one instrument configuration must be specified, even if it is only to specify that the instrument is unknown. In that case, the "instrument model" term is used to indicate the unknown instrument in the instrumentConfiguration.
- * <p/>
+ * 
  * <p>Java class for InstrumentConfigurationListType complex type.
- * <p/>
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- * <p/>
+ * 
  * <pre>
  * &lt;complexType name="InstrumentConfigurationListType">
  *   &lt;complexContent>
@@ -28,13 +32,17 @@ import java.util.List;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "InstrumentConfigurationListType", propOrder = {
-        "instrumentConfiguration"
+    "instrumentConfiguration"
 })
 public class InstrumentConfigurationList
-        implements Serializable, MzMLObject {
+    extends MzMLObject
+    implements Serializable
+{
 
     private final static long serialVersionUID = 100L;
     @XmlElement(required = true)
@@ -42,30 +50,28 @@ public class InstrumentConfigurationList
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger count;
-    
-    @XmlTransient
-    protected long hid;
-
 
     /**
      * Gets the value of the instrumentConfiguration property.
-     * <p/>
-     * <p/>
+     * 
+     * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the instrumentConfiguration property.
-     * <p/>
-     * <p/>
+     * 
+     * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getInstrumentConfiguration().add(newItem);
      * </pre>
-     * <p/>
-     * <p/>
-     * <p/>
+     * 
+     * 
+     * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link InstrumentConfiguration }
+     * 
+     * 
      */
     public List<InstrumentConfiguration> getInstrumentConfiguration() {
         if (instrumentConfiguration == null) {
@@ -76,9 +82,11 @@ public class InstrumentConfigurationList
 
     /**
      * Gets the value of the count property.
-     *
-     * @return possible object is
-     *         {@link BigInteger }
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
      */
     public BigInteger getCount() {
         return count;
@@ -86,9 +94,11 @@ public class InstrumentConfigurationList
 
     /**
      * Sets the value of the count property.
-     *
-     * @param value allowed object is
-     *              {@link BigInteger }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
      */
     public void setCount(BigInteger value) {
         this.count = value;

@@ -1,14 +1,19 @@
+
 package uk.ac.ebi.jmzml.model.mzml;
 
-import javax.xml.bind.annotation.*;
 import java.io.Serializable;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlType;
 
 
 /**
  * <p>Java class for ComponentType complex type.
- * <p/>
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- * <p/>
+ * 
  * <pre>
  * &lt;complexType name="ComponentType">
  *   &lt;complexContent>
@@ -18,17 +23,20 @@ import java.io.Serializable;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ComponentType")
 @XmlSeeAlso({
-        DetectorComponent.class,
-        AnalyzerComponent.class,
-        SourceComponent.class
+    SourceComponent.class,
+    DetectorComponent.class,
+    AnalyzerComponent.class
 })
 public class Component
-        extends ParamGroup
-        implements Serializable {
+    extends ParamGroup
+    implements Serializable
+{
 
     private final static long serialVersionUID = 100L;
     @XmlAttribute(required = true)
@@ -36,6 +44,7 @@ public class Component
 
     /**
      * Gets the value of the order property.
+     * 
      */
     public int getOrder() {
         return order;
@@ -43,6 +52,7 @@ public class Component
 
     /**
      * Sets the value of the order property.
+     * 
      */
     public void setOrder(int value) {
         this.order = value;

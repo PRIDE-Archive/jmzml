@@ -124,7 +124,7 @@ public class ParamGroupUpdater {
                 newParam.setCv(param.getCv());
                 newParam.setName(param.getName());
                 newParam.setUnitAccession(param.getUnitAccession());
-                newParam.setUnitCV(param.getUnitCV());
+                newParam.setUnitCv(param.getUnitCv());
                 newParam.setUnitName(param.getUnitName());
                 newParam.setValue(param.getValue());
                 newParam.setInferredFromReferenceableParamGroupRef(param.isInferredFromReferenceableParamGroupRef());

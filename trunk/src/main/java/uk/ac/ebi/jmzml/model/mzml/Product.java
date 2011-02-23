@@ -1,21 +1,19 @@
+
 package uk.ac.ebi.jmzml.model.mzml;
 
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
-
+import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
-import java.io.Serializable;
 
 
 /**
  * The method of product ion selection and activation in a precursor ion scan
- * <p/>
+ * 
  * <p>Java class for ProductType complex type.
- * <p/>
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- * <p/>
+ * 
  * <pre>
  * &lt;complexType name="ProductType">
  *   &lt;complexContent>
@@ -27,25 +25,28 @@ import java.io.Serializable;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ProductType", propOrder = {
-        "isolationWindow"
+    "isolationWindow"
 })
 public class Product
-        implements Serializable, MzMLObject {
+    extends MzMLObject
+    implements Serializable
+{
 
     private final static long serialVersionUID = 100L;
     protected ParamGroup isolationWindow;
 
-    @XmlTransient
-    protected long hid;
-
     /**
      * Gets the value of the isolationWindow property.
-     *
-     * @return possible object is
-     *         {@link ParamGroup }
+     * 
+     * @return
+     *     possible object is
+     *     {@link ParamGroup }
+     *     
      */
     public ParamGroup getIsolationWindow() {
         return isolationWindow;
@@ -53,9 +54,11 @@ public class Product
 
     /**
      * Sets the value of the isolationWindow property.
-     *
-     * @param value allowed object is
-     *              {@link ParamGroup }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ParamGroup }
+     *     
      */
     public void setIsolationWindow(ParamGroup value) {
         this.isolationWindow = value;

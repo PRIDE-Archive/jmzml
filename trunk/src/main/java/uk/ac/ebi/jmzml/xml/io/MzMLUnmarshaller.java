@@ -23,11 +23,8 @@ import org.apache.commons.collections.buffer.CircularFifoBuffer;
 import org.apache.log4j.Logger;
 import org.xml.sax.InputSource;
 import uk.ac.ebi.jmzml.model.mzml.*;
-import uk.ac.ebi.jmzml.model.mzml.interfaces.MzMLObject;
 import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
-import uk.ac.ebi.jmzml.xml.Constants;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.UnmarshallerFactory;
-import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.cache.AdapterObjectCache;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.filters.MzMLNamespaceFilter;
 import uk.ac.ebi.jmzml.xml.xxindex.FileUtils;
 import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
@@ -56,7 +53,8 @@ public class MzMLUnmarshaller {
     private final File mzMLFile;
     private final MzMLIndexer index;
     private final boolean useSpectrumCache;
-    private final AdapterObjectCache cache = new AdapterObjectCache();
+//    private final AdapterObjectCache cache = new AdapterObjectCache();
+    private final MzMLObjectCache cache;
 
     private IndexList indexList = null;
     private boolean fileCorrupted = false;
@@ -80,7 +78,7 @@ public class MzMLUnmarshaller {
      * @param mzMLFile the file to unmarshall
      */
     public MzMLUnmarshaller(File mzMLFile) {
-        this(mzMLFile, true);
+        this(mzMLFile, true, null);
     }
 
     /**
@@ -90,7 +88,7 @@ public class MzMLUnmarshaller {
      * @param aUseSpectrumCache if true the spectra are cached
      */
     public MzMLUnmarshaller(URL mzMLFileURL, boolean aUseSpectrumCache) {
-        this(FileUtils.getFileFromURL(mzMLFileURL), aUseSpectrumCache);
+        this(FileUtils.getFileFromURL(mzMLFileURL), aUseSpectrumCache, null);
     }
 
     /**
@@ -99,10 +97,11 @@ public class MzMLUnmarshaller {
      * @param mzMLFile the file to unmarshall
      * @param aUseSpectrumCache if true the spectra are cached
      */
-    public MzMLUnmarshaller(File mzMLFile, boolean aUseSpectrumCache) {
+    public MzMLUnmarshaller(File mzMLFile, boolean aUseSpectrumCache, MzMLObjectCache cache) {
         this.mzMLFile = mzMLFile;
         index = MzMLIndexerFactory.getInstance().buildIndex(mzMLFile);
         useSpectrumCache = aUseSpectrumCache;
+        this.cache = cache;
     }
 
     /**
@@ -112,7 +111,7 @@ public class MzMLUnmarshaller {
      * @return
      */
     public MzML unmarshall() {
-        return unmarshalFromXpath("", MzML.class);
+        return unmarshalFromXpath("/mzML", MzML.class);
     }
 
     /**
@@ -317,7 +316,7 @@ public class MzMLUnmarshaller {
      */
     public Spectrum getSpectrumById(String aID) throws MzMLUnmarshallerException {
         Spectrum result = null;
-        String xml = index.getXmlString(aID, Constants.ReferencedType.Spectrum);
+        String xml = index.getXmlString(aID, Spectrum.class);
         try {
             //required for the addition of namespaces to top-level objects
             MzMLNamespaceFilter xmlFilter = new MzMLNamespaceFilter();
@@ -342,7 +341,7 @@ public class MzMLUnmarshaller {
      */
     public Chromatogram getChromatogramById(String aID) throws MzMLUnmarshallerException {
         Chromatogram result = null;
-        String xml = index.getXmlString(aID, Constants.ReferencedType.Chromatogram);
+        String xml = index.getXmlString(aID, Chromatogram.class);
         try {
             //required for the addition of namespaces to top-level objects
             MzMLNamespaceFilter xmlFilter = new MzMLNamespaceFilter();
