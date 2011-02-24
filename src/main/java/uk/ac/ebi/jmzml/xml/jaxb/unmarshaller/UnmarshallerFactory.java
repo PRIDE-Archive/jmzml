@@ -104,7 +104,7 @@ public class UnmarshallerFactory {
 //            unmarshaller.setAdapter(new ScanSettingsAdapter(index, cache));
 //            unmarshaller.setEventHandler(new DefaultValidationEventHandler());
 
-            unmarshaller.setListener(new RawXMLListener());
+            unmarshaller.setListener(new RawXMLListener(index,cache));
 
             UnmarshallerHandler uh = unmarshaller.getUnmarshallerHandler();
 

@@ -22,19 +22,41 @@
 
 package uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.listeners;
 
+import org.apache.log4j.Logger;
+import uk.ac.ebi.jmzml.MzMLElement;
 import uk.ac.ebi.jmzml.model.mzml.*;
 import uk.ac.ebi.jmzml.model.mzml.params.*;
 import uk.ac.ebi.jmzml.model.mzml.utilities.ParamGroupUpdater;
+import uk.ac.ebi.jmzml.xml.io.MzMLObjectCache;
+import uk.ac.ebi.jmzml.xml.jaxb.resolver.AbstractReferenceResolver;
+import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
 
 import javax.xml.bind.Unmarshaller;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RawXMLListener extends Unmarshaller.Listener {
 
 
+    private static final Logger log = Logger.getLogger(RawXMLListener.class);
+    private final MzMLIndexer index;
+    private final MzMLObjectCache cache;
+
+    public RawXMLListener(MzMLIndexer index, MzMLObjectCache cache) {
+        this.index = index;
+        this.cache = cache;
+    }
+
     @Override
     public void afterUnmarshal(Object target, Object parent) {
+
+        log.debug("Handling " + target.getClass() + " in afterUnmarshal.");
+        // retrieve the enum type for this class (for the meta data about this class/element)
+        MzMLElement ele = MzMLElement.getType(target.getClass());
+
+        // now perform the automatic reference resolving, if configured to do so
+        referenceResolving(target, parent, ele);
 
         // Here we handle all the referenced ParamGroups
         // Whenever we encounter a ParamGroup, there could be referenced params.
@@ -48,58 +70,58 @@ public class RawXMLListener extends Unmarshaller.Listener {
             ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
             // Update all ParamGroup Subclasses
 
-            if ( target instanceof BinaryDataArray ) {
+            if (target instanceof BinaryDataArray) {
                 ParamGroupUpdater.updateParamGroupSubclasses((BinaryDataArray) target, BinaryDataArrayCVParam.class, BinaryDataArrayUserParam.class);
             }
 
-            if ( target instanceof Chromatogram ) {
+            if (target instanceof Chromatogram) {
                 ParamGroupUpdater.updateParamGroupSubclasses((Chromatogram) target, ChromatogramCVParam.class, ChromatogramUserParam.class);
             }
 
-            if ( target instanceof Component) {
+            if (target instanceof Component) {
                 ParamGroupUpdater.updateParamGroupSubclasses((Component) target, ComponentCVParam.class, ComponentUserParam.class);
             }
 
-            if ( target instanceof InstrumentConfiguration ) {
+            if (target instanceof InstrumentConfiguration) {
                 ParamGroupUpdater.updateParamGroupSubclasses((InstrumentConfiguration) target, InstrumentConfigurationCVParam.class, InstrumentConfigurationUserParam.class);
             }
 
-            if ( target instanceof ProcessingMethod ) {
+            if (target instanceof ProcessingMethod) {
                 ParamGroupUpdater.updateParamGroupSubclasses((ProcessingMethod) target, ProcessingMethodCVParam.class, ProcessingMethodUserParam.class);
             }
 
-            if ( target instanceof Run ) {
+            if (target instanceof Run) {
                 ParamGroupUpdater.updateParamGroupSubclasses((Run) target, RunCVParam.class, RunUserParam.class);
             }
 
-            if ( target instanceof Sample ) {
+            if (target instanceof Sample) {
                 ParamGroupUpdater.updateParamGroupSubclasses((Sample) target, SampleCVParam.class, SampleUserParam.class);
             }
 
-            if ( target instanceof Scan ) {
+            if (target instanceof Scan) {
                 ParamGroupUpdater.updateParamGroupSubclasses((Scan) target, ScanCVParam.class, ScanUserParam.class);
             }
 
-            if ( target instanceof ScanList ) {
+            if (target instanceof ScanList) {
                 ParamGroupUpdater.updateParamGroupSubclasses((ScanList) target, ScanListCVParam.class, ScanListUserParam.class);
             }
 
-            if ( target instanceof ScanSettings ) {
+            if (target instanceof ScanSettings) {
                 ParamGroupUpdater.updateParamGroupSubclasses((ScanSettings) target, ScanSettingsCVParam.class, ScanSettingsUserParam.class);
             }
 
-            if ( target instanceof SourceFile ) {
+            if (target instanceof SourceFile) {
                 ParamGroupUpdater.updateParamGroupSubclasses((SourceFile) target, SourceFileCVParam.class, SourceFileUserParam.class);
             }
 
-            if ( target instanceof Spectrum ) {
+            if (target instanceof Spectrum) {
                 ParamGroupUpdater.updateParamGroupSubclasses((Spectrum) target, SpectrumCVParam.class, SpectrumUserParam.class);
             }
 
             ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
             // Update all classes with ParamGroup members
 
-            if ( target instanceof FileDescription ) {
+            if (target instanceof FileDescription) {
                 FileDescription tmp = (FileDescription) target;
                 // update fileContent (ParamGroup)
                 ParamGroupUpdater.updateParamGroupSubclasses(tmp.getFileContent(), FileDescriptionCVParam.class, FileDescriptionUserParam.class);
@@ -115,7 +137,7 @@ public class RawXMLListener extends Unmarshaller.Listener {
                 }
             }
 
-            if ( target instanceof Precursor ) {
+            if (target instanceof Precursor) {
                 Precursor tmp = (Precursor) target;
                 //update activation (ParamGroup)
                 ParamGroupUpdater.updateParamGroupSubclasses(tmp.getActivation(), ActivationCVParam.class, ActivationUserParam.class);
@@ -123,13 +145,13 @@ public class RawXMLListener extends Unmarshaller.Listener {
                 ParamGroupUpdater.updateParamGroupSubclasses(tmp.getIsolationWindow(), IsolationWindowCVParam.class, IsolationWindowUserParam.class);
             }
 
-            if ( target instanceof Product ) {
+            if (target instanceof Product) {
                 Product tmp = (Product) target;
                 //update isolationWindow (ParamGroup)
                 ParamGroupUpdater.updateParamGroupSubclasses(tmp.getIsolationWindow(), IsolationWindowCVParam.class, IsolationWindowUserParam.class);
             }
 
-            if ( target instanceof SelectedIonList ) {
+            if (target instanceof SelectedIonList) {
                 SelectedIonList tmp = (SelectedIonList) target;
                 if (tmp.getSelectedIon() != null && !tmp.getSelectedIon().isEmpty()) {
                     List<ParamGroup> tmpList = new ArrayList<ParamGroup>();
@@ -142,7 +164,7 @@ public class RawXMLListener extends Unmarshaller.Listener {
                 }
             }
 
-            if ( target instanceof TargetList ) {
+            if (target instanceof TargetList) {
                 TargetList tmp = (TargetList) target;
                 if (tmp.getTarget() != null && !tmp.getTarget().isEmpty()) {
                     List<ParamGroup> tmpList = new ArrayList<ParamGroup>();
@@ -155,7 +177,7 @@ public class RawXMLListener extends Unmarshaller.Listener {
                 }
             }
 
-            if ( target instanceof ScanWindowList ) {
+            if (target instanceof ScanWindowList) {
                 ScanWindowList tmp = (ScanWindowList) target;
                 if (tmp.getScanWindow() != null && !tmp.getScanWindow().isEmpty()) {
                     List<ParamGroup> tmpList = new ArrayList<ParamGroup>();
@@ -175,5 +197,22 @@ public class RawXMLListener extends Unmarshaller.Listener {
         }
 
 
+    }
+
+    private void referenceResolving(Object target, Object parent, MzMLElement ele) {
+        if (ele.isAutoRefResolving()) {
+            Class cls = ele.getRefResolverClass();
+            if (cls == null) {
+                throw new IllegalStateException("Can not auto-resolve references if no reference resolver was defined for class: " + ele.getClazz());
+            }
+            try {
+                Constructor con = cls.getDeclaredConstructor(MzMLIndexer.class, MzMLObjectCache.class);
+                AbstractReferenceResolver resolver = (AbstractReferenceResolver) con.newInstance(index, cache);
+                resolver.afterUnmarshal(target, parent);
+            } catch (Exception e) {
+                log.error("Error trying to instantiate reference resolver: " + cls.getName(), e);
+                throw new IllegalStateException("Could not instantiate reference resolver: " + cls.getName());
+            }
+        }
     }
 }

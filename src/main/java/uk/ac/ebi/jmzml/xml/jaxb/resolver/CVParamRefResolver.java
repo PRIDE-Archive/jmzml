@@ -30,7 +30,7 @@ public class CVParamRefResolver extends AbstractReferenceResolver<CVParam>{
                }
                String refUnit = object.getUnitCvRef();
                if (refUnit != null) {
-                   CV refObject = this.unmarshal(ref, CV.class);
+                   CV refObject = this.unmarshal(refUnit, CV.class);
                    object.setUnitCv(refObject);
                }
            }
