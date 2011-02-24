@@ -7,7 +7,6 @@ import psidev.psi.tools.xxindex.XmlElementExtractor;
 import psidev.psi.tools.xxindex.index.IndexElement;
 import psidev.psi.tools.xxindex.index.XpathIndex;
 import uk.ac.ebi.jmzml.MzMLElement;
-import uk.ac.ebi.jmzml.model.IdentifiableMzMLObject;
 import uk.ac.ebi.jmzml.model.mzml.Chromatogram;
 import uk.ac.ebi.jmzml.model.mzml.Spectrum;
 import uk.ac.ebi.jmzml.xml.Constants;
@@ -53,6 +52,7 @@ public class MzMLIndexerFactory {
         private StandardXpathAccess xpathAccess = null;
         private XmlElementExtractor xmlExtractor = null;
         private XpathIndex index = null;
+        private String root = null;
         private String mzMLAttributeXMLString = null;
         // a unified cache of all the id maps
         private HashMap<Class, HashMap<String, IndexElement>> idMapCache = new HashMap<Class, HashMap<String, IndexElement>>();
@@ -60,7 +60,7 @@ public class MzMLIndexerFactory {
         ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
         // Constructor
 
-        private MzMlIndexerImpl(File xmlFile){
+        private MzMlIndexerImpl(File xmlFile) {
 
             if (xmlFile == null) {
                 throw new IllegalStateException("XML File to index must not be null");
@@ -84,11 +84,15 @@ public class MzMLIndexerFactory {
 
                 // create index
                 index = xpathAccess.getIndex();
-
+                root = "/mzML";
                 // check if the xxindex contains this root
                 if (!index.containsXpath(MzMLElement.MzML.getXpath())) {
-                    logger.info("Index does not contain mzML root! We are not dealing with an mzML file!");
-                    throw new IllegalStateException("Index does not contain mzML root!");
+                    // if not contained in the xxindex, then maybe we have a indexedzmML file
+                    if (!index.containsXpath(MzMLElement.IndexedmzML.getXpath())) {
+                        logger.info("Index does not contain mzML root! We are not dealing with an mzML file!");
+                        throw new IllegalStateException("Index does not contain mzML root!");
+                    }
+                    root = "/indexedmzML/mzML";
                 }
 
                 // initialize the ID maps
@@ -118,16 +122,16 @@ public class MzMLIndexerFactory {
                 if (element.isIdMapped() && element.isIndexed()) {
                     logger.debug("Initialising ID map for " + element.getClazz().getName());
                     // check if the according class is a sub-class of Identifiable
-                    if (!IdentifiableMzMLObject.class.isAssignableFrom(element.getClazz())) {
-                        throw new IllegalStateException("Attempt to create ID map for not Identifiable element: " + element.getClazz());
-                    }
+//                    if (!IdentifiableMzMLObject.class.isAssignableFrom(element.getClazz())) {
+////                        throw new IllegalStateException("Attempt to create ID map for not Identifiable element: " + element.getClazz());
+//                    }
                     // so far so good, now generate the ID map (if not already present) and populate it
                     HashMap<String, IndexElement> map = idMapCache.get(element.getClazz());
                     if (map == null) {
                         map = new HashMap<String, IndexElement>();
                         idMapCache.put(element.getClazz(), map);
                     }
-                    initIdMapCache(map, element.getXpath());
+                    initIdMapCache(map, root + checkRoot(element.getXpath()));
                 }
             }
         }
@@ -136,15 +140,16 @@ public class MzMLIndexerFactory {
             return mzMLAttributeXMLString;
         }
 
-        private String extractMzMLStartTag(File xmlFile) throws IOException {
+        private String extractMzMLStartTag(File xmlFile) throws IOException {    
             // get start position of the mzML element
-            List<IndexElement> ie = index.getElements(MzMLElement.MzML.getXpath());
+
+            List<IndexElement> ie = index.getElements(root + checkRoot(MzMLElement.MzML.getXpath()));
             // there is only one root
             long startPos = ie.get(0).getStart();
 
             // get end position of the mzML start tag
             // this is the start position of the next tag (cvList)
-            ie = index.getElements(MzMLElement.CVList.getXpath());
+            ie = index.getElements(root + checkRoot(MzMLElement.CVList.getXpath()));
             // there will always be one and only one cvList
             long stopPos = ie.get(0).getStart() - 1;
 
@@ -161,7 +166,6 @@ public class MzMLIndexerFactory {
          * This method initializes the specified ID (and optionally the specified Index) Map(s)
          * for the given XPath. The index map is optional, because although most elements have an ID,
          * only some have an index.
-         *
          */
         private void initIdMapCache(HashMap<String, IndexElement> idMap, String xpath) throws IOException {
             List<IndexElement> ranges = index.getElements(xpath);
@@ -206,6 +210,7 @@ public class MzMLIndexerFactory {
         }
 
         // TODO: do we need those 2 methods ??
+
         public Set<BigInteger> getSpectrumIndexes() {
             return null;
 //            return spectrumIndexToIDMap.keySet();
@@ -213,7 +218,7 @@ public class MzMLIndexerFactory {
 
         public String getSpectrumIDFromSpectrumIndex(BigInteger aIndex) {
 //            return spectrumIndexToIDMap.get(aIndex);
-              return null;
+            return null;
         }
 
         public Set<String> getChromatogramIDs() {
@@ -222,13 +227,32 @@ public class MzMLIndexerFactory {
         }
 
         public Iterator<String> getXmlStringIterator(String xpathExpression) {
-            if (index.containsXpath(xpathExpression)) {
-                return xpathAccess.getXmlSnippetIterator(xpathExpression);
+           if (xpathExpression.contains("indexList") || xpathExpression.contains("fileChecksum")) {
+                // we can not use the root "mzML", since the mzML index list is outside the mzML!
+                return xpathAccess.getXmlSnippetIterator(checkRoot(root + xpathExpression));
             } else {
-                return null;
+                // Note: ! root is always the mzML element (even if we are dealing with indexedmzML) !
+                return xpathAccess.getXmlSnippetIterator(root + checkRoot(xpathExpression));
             }
         }
 
+        private String checkRoot(String xpathExpression) {
+            // since we're appending the root we've already checked, make
+            // sure that the xpath doesn't erroneously contain that root
+
+            // get rid of possible '/indexedmzML' root
+            String unrootedXpath = xpathExpression;
+            if (unrootedXpath.startsWith("/indexedmzML")) {
+                unrootedXpath = unrootedXpath.substring("/indexedmzML".length());
+                logger.debug("removed /indexedmzML root expression");
+            }
+            // get rid of possible '/mzML' root
+            if (unrootedXpath.startsWith("/mzML")) {
+                unrootedXpath = unrootedXpath.substring("/mzML".length());
+                logger.debug("removed /mzML root expression");
+            }
+            return unrootedXpath;
+        }
         // ToDo: maybe generify to <T extends IdentifiableMzMLObject>  Class<T>  ??
 
         public String getXmlString(String ID, Class clazz) {
@@ -280,14 +304,12 @@ public class MzMLIndexerFactory {
          *         if no elements were found for the specified xpath.
          */
         public int getCount(String xpathExpression) {
-            int retValue = -1;
-            if (index.containsXpath(xpathExpression)) {
-                List<IndexElement> tmpList = index.getElements(xpathExpression);
-                if (tmpList != null) {
-                    retValue = tmpList.size();
-                }
+            int retval = -1;
+             List<IndexElement> tmpList = index.getElements(root + checkRoot(xpathExpression));
+            if (tmpList != null){
+                retval = tmpList.size();
             }
-            return retValue;
+            return retval;
         }
 
         public String getXmlString(String xpath, long offset) {

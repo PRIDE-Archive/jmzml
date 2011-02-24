@@ -22,6 +22,7 @@ package uk.ac.ebi.jmzml.xml.io;
 import org.apache.commons.collections.buffer.CircularFifoBuffer;
 import org.apache.log4j.Logger;
 import org.xml.sax.InputSource;
+import uk.ac.ebi.jmzml.MzMLElement;
 import uk.ac.ebi.jmzml.model.mzml.*;
 import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.UnmarshallerFactory;
@@ -111,7 +112,7 @@ public class MzMLUnmarshaller {
      * @return
      */
     public MzML unmarshall() {
-        return unmarshalFromXpath("/mzML", MzML.class);
+        return unmarshalFromXpath("", MzML.class);
     }
 
     /**
@@ -187,6 +188,14 @@ public class MzMLUnmarshaller {
         // ToDo: only unmarshalls first element in xxindex!! Document this!
         T retval = null;
         try {
+            //we want to unmarshal the whole file
+            if (xpath.equals("")){
+                xpath = MzMLElement.MzML.getXpath();
+                if (isIndexedmzML()){
+                    xpath = MzMLElement.IndexedmzML.getXpath().concat(xpath);
+                }
+
+            }
             Iterator<String> xpathIter = index.getXmlStringIterator(xpath);
 
             if (xpathIter.hasNext()) {

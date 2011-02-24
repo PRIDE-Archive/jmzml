@@ -31,7 +31,7 @@ public class ScanRefResolver extends AbstractReferenceResolver<Scan> {
             }
             String refInstrument = object.getInstrumentConfigurationRef();
             if (refInstrument != null){
-                InstrumentConfiguration refObject = this.unmarshal(ref, InstrumentConfiguration.class);
+                InstrumentConfiguration refObject = this.unmarshal(refInstrument, InstrumentConfiguration.class);
                 object.setInstrumentConfiguration(refObject);
             }
         }
