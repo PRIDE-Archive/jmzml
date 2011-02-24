@@ -1,12 +1,14 @@
 
 package uk.ac.ebi.jmzml.model.mzml;
 
+import uk.ac.ebi.jmzml.xml.jaxb.adapters.BinaryDataArrayListAdapter;
 import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.List;
 
 
 /**
@@ -49,16 +51,23 @@ public class Chromatogram
 
     private final static long serialVersionUID = 100L;
     protected Precursor precursor;
+
     protected Product product;
+
     @XmlElement(required = true)
-    protected BinaryDataArrayList binaryDataArrayList;
+    @XmlJavaTypeAdapter(value = BinaryDataArrayListAdapter.class)
+    protected List<BinaryDataArray> binaryDataArrayList;
+
     @XmlAttribute(required = true)
     protected String id;
+
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger index;
+
     @XmlAttribute(required = true)
     protected int defaultArrayLength;
+
     @XmlAttribute
     @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
@@ -123,21 +132,10 @@ public class Chromatogram
      *     {@link BinaryDataArrayList }
      *     
      */
-    public BinaryDataArrayList getBinaryDataArrayList() {
+    public List<BinaryDataArray> getBinaryDataArrayList() {
         return binaryDataArrayList;
     }
 
-    /**
-     * Sets the value of the binaryDataArrayList property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BinaryDataArrayList }
-     *     
-     */
-    public void setBinaryDataArrayList(BinaryDataArrayList value) {
-        this.binaryDataArrayList = value;
-    }
 
     /**
      * Gets the value of the id property.
