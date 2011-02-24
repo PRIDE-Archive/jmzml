@@ -1,6 +1,8 @@
 
 package uk.ac.ebi.jmzml.model.mzml;
 
+import uk.ac.ebi.jmzml.xml.jaxb.adapters.SourceFileListAdapter;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +10,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
@@ -47,7 +50,8 @@ public class FileDescription
     private final static long serialVersionUID = 100L;
     @XmlElement(required = true)
     protected ParamGroup fileContent;
-    protected SourceFileList sourceFileList;
+    @XmlJavaTypeAdapter(value = SourceFileListAdapter.class)
+    protected List<SourceFile> sourceFileList;
     protected List<ParamGroup> contact;
 
     /**
@@ -82,20 +86,8 @@ public class FileDescription
      *     {@link SourceFileList }
      *     
      */
-    public SourceFileList getSourceFileList() {
+    public List<SourceFile> getSourceFileList() {
         return sourceFileList;
-    }
-
-    /**
-     * Sets the value of the sourceFileList property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SourceFileList }
-     *     
-     */
-    public void setSourceFileList(SourceFileList value) {
-        this.sourceFileList = value;
     }
 
     /**
