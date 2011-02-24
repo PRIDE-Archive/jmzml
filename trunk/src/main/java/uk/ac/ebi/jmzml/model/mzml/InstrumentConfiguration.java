@@ -1,12 +1,14 @@
 
 package uk.ac.ebi.jmzml.model.mzml;
 
+import uk.ac.ebi.jmzml.xml.jaxb.adapters.ComponentListAdapter;
 import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
+import java.util.List;
 
 
 /**
@@ -44,13 +46,17 @@ public class InstrumentConfiguration
 {
 
     private final static long serialVersionUID = 100L;
-    protected ComponentList componentList;
+    @XmlJavaTypeAdapter(value = ComponentListAdapter.class)
+    protected List<Component> componentList;
+
     protected SoftwareRef softwareRef;
+
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlID
     @XmlSchemaType(name = "ID")
     protected String id;
+
     @XmlAttribute
     @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
@@ -67,21 +73,10 @@ public class InstrumentConfiguration
      *     {@link ComponentList }
      *     
      */
-    public ComponentList getComponentList() {
+    public List<Component> getComponentList() {
         return componentList;
     }
 
-    /**
-     * Sets the value of the componentList property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ComponentList }
-     *     
-     */
-    public void setComponentList(ComponentList value) {
-        this.componentList = value;
-    }
 
     /**
      * Gets the value of the softwareRef property.
