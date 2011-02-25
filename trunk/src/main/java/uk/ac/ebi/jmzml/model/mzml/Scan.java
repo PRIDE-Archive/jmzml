@@ -2,10 +2,12 @@
 package uk.ac.ebi.jmzml.model.mzml;
 
 import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
+import uk.ac.ebi.jmzml.xml.jaxb.adapters.ScanWindowListAdapter;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
+import java.util.List;
 
 
 /**
@@ -43,7 +45,10 @@ public class Scan
 {
 
     private final static long serialVersionUID = 100L;
-    protected ScanWindowList scanWindowList;
+
+    @XmlJavaTypeAdapter(value = ScanWindowListAdapter.class)
+    protected List<ParamGroup> scanWindowList;
+
     @XmlAttribute
     protected String spectrumRef;
     @XmlAttribute
@@ -63,26 +68,9 @@ public class Scan
 
     /**
      * Gets the value of the scanWindowList property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ScanWindowList }
-     *     
      */
-    public ScanWindowList getScanWindowList() {
+    public List<ParamGroup> getScanWindowList() {
         return scanWindowList;
-    }
-
-    /**
-     * Sets the value of the scanWindowList property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ScanWindowList }
-     *     
-     */
-    public void setScanWindowList(ScanWindowList value) {
-        this.scanWindowList = value;
     }
 
     /**

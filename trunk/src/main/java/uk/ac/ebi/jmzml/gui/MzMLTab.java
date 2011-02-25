@@ -147,7 +147,7 @@ public class MzMLTab extends JPanel {
 
         try {
             Spectrum spectrum = iUnmarshaller.getSpectrumById(aSpecID);
-            List<BinaryDataArray> bdal = spectrum.getBinaryDataArrayList().getBinaryDataArray();
+            List<BinaryDataArray> bdal = spectrum.getBinaryDataArrayList();
             BinaryDataArray mzBinaryDataArray = (BinaryDataArray) bdal.get(0);
             Number[] mzNumbers = mzBinaryDataArray.getBinaryDataAsNumberArray();
             if (mzNumbers.length < 1) {
@@ -168,14 +168,16 @@ public class MzMLTab extends JPanel {
             for (int i = 0; i < intNumbers.length; i++) {
                 intensities[i] = intNumbers[i].doubleValue();
             }
-            PrecursorList plist = spectrum.getPrecursorList();
+            //PrecursorList plist = spectrum.getPrecursorList();
+            List<Precursor> plist = spectrum.getPrecursorList();
             double precursorMz = 0.0;
             String precursorCharge = "?";
             if (plist != null) {
-                if (plist.getCount().intValue() == 1) {
-                    SelectedIonList sIonList = plist.getPrecursor().get(0).getSelectedIonList();
+                if (plist.size() == 1) {
+                    //SelectedIonList sIonList = plist.getPrecursor().get(0).getSelectedIonList();
+                    List<ParamGroup> sIonList = plist.get(0).getSelectedIonList();
                     if (sIonList != null) {
-                        List<CVParam> cvParams = sIonList.getSelectedIon().get(0).getCvParam();
+                        List<CVParam> cvParams = sIonList.get(0).getCvParam();
                         for (Object cvParam : cvParams) {
                             CVParam lCVParam = (CVParam) cvParam;
                             if (lCVParam.getAccession().equals("MS:1000744")) {
@@ -216,7 +218,7 @@ public class MzMLTab extends JPanel {
 
         try {
             Chromatogram chromatogram = iUnmarshaller.getChromatogramById(aChromatogramID);
-            List<BinaryDataArray> bdal = chromatogram.getBinaryDataArrayList().getBinaryDataArray();
+            List<BinaryDataArray> bdal = chromatogram.getBinaryDataArrayList();
             BinaryDataArray xAxisBinaryDataArray = (BinaryDataArray) bdal.get(0);
             Number[] xAxisNumbers = xAxisBinaryDataArray.getBinaryDataAsNumberArray();
             double[] xAxis = new double[xAxisNumbers.length];
