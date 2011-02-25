@@ -1,21 +1,21 @@
-
 package uk.ac.ebi.jmzml.model.mzml;
 
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
+import uk.ac.ebi.jmzml.xml.jaxb.adapters.*;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.List;
 
 
 /**
  * The structure that captures the generation of a peak list (including the underlying acquisitions). Also describes some of the parameters for the mass spectrometer for a given acquisition (or list of acquisitions).
- * 
+ * <p/>
  * <p>Java class for SpectrumType complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType name="SpectrumType">
  *   &lt;complexContent>
@@ -42,151 +42,94 @@ import java.math.BigInteger;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SpectrumType", propOrder = {
-    "scanList",
-    "precursorList",
-    "productList",
-    "binaryDataArrayList"
+        "scanList",
+        "precursorList",
+        "productList",
+        "binaryDataArrayList"
 })
 public class Spectrum
-    extends ParamGroup
-    implements Serializable
-{
+        extends ParamGroup
+        implements Serializable {
 
     private final static long serialVersionUID = 100L;
-    protected ScanList scanList;
-    protected PrecursorList precursorList;
-    protected ProductList productList;
-    protected BinaryDataArrayList binaryDataArrayList;
+
+    @XmlJavaTypeAdapter(value = ScanListAdapter.class)
+    protected List<Scan> scanList;
+
+    @XmlJavaTypeAdapter(value = PrecursorListAdapter.class)
+    protected List<Precursor> precursorList;
+
+    @XmlJavaTypeAdapter(value = ProductListAdapter.class)
+    protected List<Product> productList;
+
+    @XmlJavaTypeAdapter(value = BinaryDataArrayListAdapter.class)
+    protected List<BinaryDataArray> binaryDataArrayList;
+
     @XmlAttribute(required = true)
     protected String id;
+
     @XmlAttribute
     protected String spotID;
+
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger index;
+
     @XmlAttribute(required = true)
     protected int defaultArrayLength;
+
     @XmlAttribute
     @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
     protected String dataProcessingRef;
+
     @XmlTransient
     private DataProcessing dataProcessing;
+
     @XmlAttribute
     @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
     protected String sourceFileRef;
+
     @XmlTransient
     private SourceFile sourceFile;
 
     /**
      * Gets the value of the scanList property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ScanList }
-     *     
      */
-    public ScanList getScanList() {
+    public List<Scan> getScanList() {
         return scanList;
     }
 
     /**
-     * Sets the value of the scanList property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ScanList }
-     *     
-     */
-    public void setScanList(ScanList value) {
-        this.scanList = value;
-    }
-
-    /**
      * Gets the value of the precursorList property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link PrecursorList }
-     *     
      */
-    public PrecursorList getPrecursorList() {
+    public List<Precursor> getPrecursorList() {
         return precursorList;
     }
 
     /**
-     * Sets the value of the precursorList property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link PrecursorList }
-     *     
-     */
-    public void setPrecursorList(PrecursorList value) {
-        this.precursorList = value;
-    }
-
-    /**
      * Gets the value of the productList property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ProductList }
-     *     
      */
-    public ProductList getProductList() {
+    public List<Product> getProductList() {
         return productList;
     }
 
     /**
-     * Sets the value of the productList property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ProductList }
-     *     
-     */
-    public void setProductList(ProductList value) {
-        this.productList = value;
-    }
-
-    /**
      * Gets the value of the binaryDataArrayList property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BinaryDataArrayList }
-     *     
      */
-    public BinaryDataArrayList getBinaryDataArrayList() {
+    public List<BinaryDataArray> getBinaryDataArrayList() {
         return binaryDataArrayList;
     }
 
     /**
-     * Sets the value of the binaryDataArrayList property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BinaryDataArrayList }
-     *     
-     */
-    public void setBinaryDataArrayList(BinaryDataArrayList value) {
-        this.binaryDataArrayList = value;
-    }
-
-    /**
      * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public String getId() {
         return id;
@@ -194,11 +137,9 @@ public class Spectrum
 
     /**
      * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setId(String value) {
         this.id = value;
@@ -206,11 +147,9 @@ public class Spectrum
 
     /**
      * Gets the value of the spotID property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public String getSpotID() {
         return spotID;
@@ -218,11 +157,9 @@ public class Spectrum
 
     /**
      * Sets the value of the spotID property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setSpotID(String value) {
         this.spotID = value;
@@ -230,11 +167,9 @@ public class Spectrum
 
     /**
      * Gets the value of the index property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @return possible object is
+     *         {@link BigInteger }
      */
     public BigInteger getIndex() {
         return index;
@@ -242,11 +177,9 @@ public class Spectrum
 
     /**
      * Sets the value of the index property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setIndex(BigInteger value) {
         this.index = value;
@@ -254,7 +187,6 @@ public class Spectrum
 
     /**
      * Gets the value of the defaultArrayLength property.
-     * 
      */
     public int getDefaultArrayLength() {
         return defaultArrayLength;
@@ -262,7 +194,6 @@ public class Spectrum
 
     /**
      * Sets the value of the defaultArrayLength property.
-     * 
      */
     public void setDefaultArrayLength(int value) {
         this.defaultArrayLength = value;
@@ -270,11 +201,9 @@ public class Spectrum
 
     /**
      * Gets the value of the dataProcessingRef property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public String getDataProcessingRef() {
         return dataProcessingRef;
@@ -282,11 +211,9 @@ public class Spectrum
 
     /**
      * Sets the value of the dataProcessingRef property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setDataProcessingRef(String value) {
         this.dataProcessingRef = value;
@@ -305,11 +232,9 @@ public class Spectrum
 
     /**
      * Gets the value of the sourceFileRef property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public String getSourceFileRef() {
         return sourceFileRef;
@@ -317,11 +242,9 @@ public class Spectrum
 
     /**
      * Sets the value of the sourceFileRef property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setSourceFileRef(String value) {
         this.sourceFileRef = value;

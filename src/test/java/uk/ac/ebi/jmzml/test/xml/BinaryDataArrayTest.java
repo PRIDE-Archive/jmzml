@@ -224,9 +224,9 @@ public class BinaryDataArrayTest extends TestCase {
         Spectrum spectrum = getSpectrum(mzMLFileUrl, id);
 
         // check that we have binary data
-        BinaryDataArrayList bdal = spectrum.getBinaryDataArrayList();
-        assertNotNull(bdal);
-        List<BinaryDataArray> dataArray = bdal.getBinaryDataArray();
+        //BinaryDataArrayList bdal = spectrum.getBinaryDataArrayList();
+        //assertNotNull(bdal);
+        List<BinaryDataArray> dataArray = spectrum.getBinaryDataArrayList();//bdal.getBinaryDataArray();
         Iterator<BinaryDataArray> iter = dataArray.iterator();
         if (prec == BinaryDataArray.Precision.FLOAT32BIT) { iter.next(); } // get the second BinaryDataArray
         BinaryDataArray data = iter.next(); // get the first BinaryDataArray
