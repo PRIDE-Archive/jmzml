@@ -27,7 +27,7 @@ public class SessionFactoryTest {
     SessionFactory factory = null;
     Session session = null;
     MzML mzML = null;
-    String fileName = "tiny.pwiz.mzML";
+    String fileName = "xxx.mzML";
 
     public void createSessionFactory() {
 
