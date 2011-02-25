@@ -144,6 +144,7 @@ public class XMLTest extends TestCase {
         assertEquals("Not expected number of instrument configuration entries.", 1, mz.getInstrumentConfigurationList().size());
         // note: here we test the manual modification of the JAXB generated ComponentList class to allow direct retrieval of source/analyzer/detector
         //ComponentList cpl = mz.getInstrumentConfigurationList().getInstrumentConfiguration().iterator().next().getComponentList();
+        //ComponentList cpl = mz.getInstrumentConfigurationList().get(0).getComponentList();
         ComponentList cpl = mz.getInstrumentConfigurationList().get(0).getComponentList();
         assertNotNull(cpl);
         assertEquals("Not expected number of component elements!", 3, cpl.getComponents().size());

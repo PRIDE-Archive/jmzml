@@ -5,7 +5,6 @@ import uk.ac.ebi.jmzml.model.mzml.SampleList;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

@@ -1,23 +1,20 @@
-
 package uk.ac.ebi.jmzml.model.mzml;
 
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.ComponentListAdapter;
 import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
-import java.util.List;
 
 
 /**
  * Description of a particular hardware configuration of a mass spectrometer. Each configuration must have one (and only one) of the three different components used for an analysis. For hybrid instruments, such as an LTQ-FT, there must be one configuration for each permutation of the components that is used in the document. For software configuration, use a ReferenceableParamGroup element.
- * 
+ * <p/>
  * <p>Java class for InstrumentConfigurationType complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType name="InstrumentConfigurationType">
  *   &lt;complexContent>
@@ -32,31 +29,24 @@ import java.util.List;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "InstrumentConfigurationType", propOrder = {
-    "componentList",
-    "softwareRef"
+        "componentList",
+        "softwareRef"
 })
 public class InstrumentConfiguration
-    extends ParamGroup
-    implements Serializable
-{
+        extends ParamGroup
+        implements Serializable {
 
     private final static long serialVersionUID = 100L;
-    @XmlJavaTypeAdapter(value = ComponentListAdapter.class)
-    protected List<Component> componentList;
-
+    protected ComponentList componentList;
     protected SoftwareRef softwareRef;
-
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlID
     @XmlSchemaType(name = "ID")
     protected String id;
-
     @XmlAttribute
     @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
@@ -67,24 +57,29 @@ public class InstrumentConfiguration
 
     /**
      * Gets the value of the componentList property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ComponentList }
-     *     
+     *
+     * @return possible object is
+     *         {@link ComponentList }
      */
-    public List<Component> getComponentList() {
+    public ComponentList getComponentList() {
         return componentList;
     }
 
+    /**
+     * Sets the value of the componentList property.
+     *
+     * @param value allowed object is
+     *              {@link ComponentList }
+     */
+    public void setComponentList(ComponentList value) {
+        this.componentList = value;
+    }
 
     /**
      * Gets the value of the softwareRef property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SoftwareRef }
-     *     
+     *
+     * @return possible object is
+     *         {@link SoftwareRef }
      */
     public SoftwareRef getSoftwareRef() {
         return softwareRef;
@@ -92,11 +87,9 @@ public class InstrumentConfiguration
 
     /**
      * Sets the value of the softwareRef property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SoftwareRef }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link SoftwareRef }
      */
     public void setSoftwareRef(SoftwareRef value) {
         this.softwareRef = value;
@@ -104,11 +97,9 @@ public class InstrumentConfiguration
 
     /**
      * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public String getId() {
         return id;
@@ -116,11 +107,9 @@ public class InstrumentConfiguration
 
     /**
      * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setId(String value) {
         this.id = value;
@@ -128,11 +117,9 @@ public class InstrumentConfiguration
 
     /**
      * Gets the value of the scanSettingsRef property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public String getScanSettingsRef() {
         return scanSettingsRef;
@@ -140,11 +127,9 @@ public class InstrumentConfiguration
 
     /**
      * Sets the value of the scanSettingsRef property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setScanSettingsRef(String value) {
         this.scanSettingsRef = value;

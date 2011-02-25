@@ -1,12 +1,12 @@
 
 package uk.ac.ebi.jmzml.model.mzml;
 
+import uk.ac.ebi.jmzml.xml.jaxb.adapters.IndexListAdapter;
+
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import java.util.List;
 
 
 /**
@@ -45,12 +45,17 @@ public class IndexedmzML
 {
 
     private final static long serialVersionUID = 100L;
+
     @XmlElement(required = true)
     protected MzML mzML;
+
     @XmlElement(required = true)
-    protected IndexList indexList;
+    @XmlJavaTypeAdapter(value = IndexListAdapter.class)
+    protected List<Index> indexList;
+
     @XmlElement(required = true, type = Long.class, nillable = true)
     protected Long indexListOffset;
+
     @XmlElement(required = true)
     protected String fileChecksum;
 
@@ -80,26 +85,9 @@ public class IndexedmzML
 
     /**
      * Gets the value of the indexList property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link IndexList }
-     *     
      */
-    public IndexList getIndexList() {
+    public List<Index> getIndexList() {
         return indexList;
-    }
-
-    /**
-     * Sets the value of the indexList property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link IndexList }
-     *     
-     */
-    public void setIndexList(IndexList value) {
-        this.indexList = value;
     }
 
     /**
