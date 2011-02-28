@@ -263,15 +263,15 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         }
 
         // the specified CVs
-        assertEquals("MS", mz.getCvList().get(0).getId());
-        assertEquals("UO", mz.getCvList().get(1).getId());
+        assertEquals("MS", mz.getCvList().getCv().get(0).getId());
+        assertEquals("UO", mz.getCvList().getCv().get(1).getId());
 
         // the run id
         assertEquals("Exp01", mz.getRun().getId());
 
         // the run has one source file reference
         String sf = mz.getRun().getDefaultSourceFileRef();
-        assertEquals("tiny1.RAW", sf);
+        assertEquals("sf1", sf);
 
         // check teh default processing method references
         List<ProcessingMethod> pmList = mz.getRun().getSpectrumList().getDefaultDataProcessing().getProcessingMethod();
@@ -304,7 +304,7 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         // (this is not an extensive test, only a few example values are checked)
 
         // number of specified CVs
-        assertEquals(mz_1.getCvList().size(), mz_2.getCvList().size());
+        assertEquals(mz_1.getCvList().getCv().size(), mz_2.getCvList().getCv().size());
 
         // the run id
         assertEquals(mz_1.getRun().getId(), mz_2.getRun().getId());
