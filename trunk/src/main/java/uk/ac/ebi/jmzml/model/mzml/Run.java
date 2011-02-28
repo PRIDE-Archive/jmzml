@@ -193,7 +193,7 @@ public class Run
     public void setDefaultSourceFile(SourceFile sourceFile){
         this.defaultSourceFile = sourceFile;
         if(sourceFile != null){
-            this.defaultInstrumentConfigurationRef = sourceFile.getId();
+            this.defaultSourceFileRef = sourceFile.getId();
         }
     }
 
