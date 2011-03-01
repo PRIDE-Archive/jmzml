@@ -121,10 +121,10 @@ public class ParamGroupUpdater {
                 //copy fields
                 //it will be essential that any changes to the base CVParamClass be propagated here!!!
                 newParam.setAccession(param.getAccession());
-                newParam.setCv(param.getCv());
+                newParam.setCvRef(param.getCvRef());
                 newParam.setName(param.getName());
                 newParam.setUnitAccession(param.getUnitAccession());
-                newParam.setUnitCv(param.getUnitCv());
+                newParam.setUnitCvRef(param.getUnitCvRef());
                 newParam.setUnitName(param.getUnitName());
                 newParam.setValue(param.getValue());
                 newParam.setInferredFromReferenceableParamGroupRef(param.isInferredFromReferenceableParamGroupRef());
