@@ -5,8 +5,16 @@
 <hibernate-mapping>
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.ScanSettings" table="ScanSettings"
                     extends="uk.ac.ebi.jmzml.model.mzml.ParamGroup">
-        <many-to-one name="sourceFileRefList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFileRefList" column="SourceFileRefList_hid"/>
-        <many-to-one name="targetList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.TargetList" column="TargetList_hid"/>
+        <many-to-one name="sourceFileRefList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFileRefList"
+                     column="SourceFileRefList_hid"/>
+
+        <list name="targetList" access="field" cascade="all" table="TargetList">
+            <key column="Target_hid"/>
+            <index column="Target_idx"/>
+            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.ParamGroup"/>
+        </list>
+
+
         <property name="id" type="string"/>
     </union-subclass>
 </hibernate-mapping>

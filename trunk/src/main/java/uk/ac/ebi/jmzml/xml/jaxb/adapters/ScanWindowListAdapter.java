@@ -21,6 +21,7 @@ public class ScanWindowListAdapter extends XmlAdapter<ScanWindowList, List<Param
 
     @Override
     public ScanWindowList marshal(List<ParamGroup> paramGroups) throws Exception {
+        if (paramGroups == null) return null;
         ScanWindowList scanWindowList = new ScanWindowList();
         scanWindowList.getScanWindow().addAll(paramGroups);
         scanWindowList.setCount(paramGroups.size());

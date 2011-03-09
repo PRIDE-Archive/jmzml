@@ -22,6 +22,7 @@ public class PrecursorListAdapter extends XmlAdapter<PrecursorList, List<Precurs
 
     @Override
     public PrecursorList marshal(List<Precursor> precursors) throws Exception {
+        if(precursors == null) return null;
         PrecursorList precursorList = new PrecursorList();
         precursorList.getPrecursor().addAll(precursors);
         precursorList.setCount(new BigInteger(String.valueOf(precursors.size())));

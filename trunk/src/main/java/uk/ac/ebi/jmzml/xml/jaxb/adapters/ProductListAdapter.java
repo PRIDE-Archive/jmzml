@@ -22,6 +22,7 @@ public class ProductListAdapter extends XmlAdapter<ProductList, List<Product>> {
 
     @Override
     public ProductList marshal(List<Product> products) throws Exception {
+        if(products == null) return null;
         ProductList productList = new ProductList();
         productList.getProduct().addAll(products);
         productList.setCount(new BigInteger(String.valueOf(products.size())));
