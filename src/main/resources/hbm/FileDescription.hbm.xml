@@ -5,10 +5,15 @@
 <hibernate-mapping>
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.FileDescription" table="FileDescription" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
         <many-to-one name="fileContent" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup" column="FileContent_ParamGroup_hid"/>
-        <many-to-one name="sourceFileList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFileList" column="SourceFileList_hid"/>
+        <list name="sourceFileList" access="field" cascade="all" table="SourceFile">
+            <key column="FD_hid"/>
+            <index column="FD_idx"/>
+            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.SourceFile"/>
+        </list>
+        <!--<many-to-one name="sourceFileList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFileList" column="SourceFileList_hid"/>-->
         <list name="contact" access="field" cascade="all" table="FileDescription_ParamGroup">
-            <key column="FileDescription_hid"/>
-            <index column="idx"/>
+            <key column="FD_hid"/>
+            <index column="FD_idx"/>
             <many-to-many column="ParamGroup_hid" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup"/>
         </list>
     </union-subclass>

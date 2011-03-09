@@ -1,6 +1,5 @@
 package persistence;
 
-import hbm.namingStrategy.OracleNamingStrategy;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -12,6 +11,7 @@ import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
 import java.io.FileWriter;
 import java.io.Writer;
 import java.net.URL;
+import java.util.List;
 
 
 /**
@@ -27,12 +27,12 @@ public class SessionFactoryTest {
     SessionFactory factory = null;
     Session session = null;
     MzML mzML = null;
-    String fileName = "xxx.mzML";
+    String fileName = "sample_small.mzML";
 
     public void createSessionFactory() {
 
         //Build session factory
-        cfg = new Configuration().configure("META-INF/hibernate.cfg.xml").setNamingStrategy(new OracleNamingStrategy());
+        cfg = new Configuration().configure("META-INF/hibernate.cfg.xml");//.setNamingStrategy(new OracleNamingStrategy());
         factory = cfg.buildSessionFactory();
         session = factory.openSession();
     }
@@ -313,6 +313,33 @@ public class SessionFactoryTest {
     }
 
     @Test
+    public void testBinaryDataArray() throws Exception {
+        createSessionFactory();
+        unmarshallMzML(fileName);
+        List<BinaryDataArray> binaryDataArray = mzML.getRun().getChromatogramList().getChromatogram().get(0).getBinaryDataArrayList();
+        // Persist object
+        session.getTransaction().begin();
+        session.persist(binaryDataArray.get(0));
+        session.getTransaction().commit();
+        //now, retrieve it
+        long id = 1;
+        session.getTransaction().begin();
+
+        BinaryDataArray binaryDataArrayNew = (BinaryDataArray) session.get(BinaryDataArray.class,1L);
+
+        if (binaryDataArrayNew == null) {
+            System.out.println("Entity not found " + id);
+        }
+        session.getTransaction().commit();
+
+        Writer writer = new FileWriter("output_test_BinaryDataArray.xml");
+        //Check marshaling back into a file
+        MzMLMarshaller marshaller = new MzMLMarshaller();
+        marshaller.marshall(binaryDataArrayNew, writer);
+        closeSessionFactory();
+    }
+
+    @Test
     public void testRun() throws Exception{
         createSessionFactory();
         unmarshallMzML(fileName);
@@ -345,7 +372,8 @@ public class SessionFactoryTest {
         unmarshallMzML(fileName);
         // Persist object
         session.getTransaction().begin();
-        session.persist(mzML);
+        Long id = (Long)session.save(mzML);
+        //session.persist(mzML);
         session.getTransaction().commit();
         long MzML_id = 1;
         session.getTransaction().begin();

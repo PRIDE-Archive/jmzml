@@ -5,10 +5,31 @@
 <hibernate-mapping>
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.Spectrum" table="Spectrum"
                     extends="uk.ac.ebi.jmzml.model.mzml.ParamGroup">
-        <many-to-one name="scanList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ScanList" column="ScanList_hid"/>
-        <many-to-one name="precursorList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.PrecursorList" column="PrecursorList_hid"/>
-        <many-to-one name="productList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ProductList" column="ProductList_hid"/>
-        <many-to-one name="binaryDataArrayList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.BinaryDataArrayList" column="BinaryDataArrayList_hid"/>
+
+        <list name="scanList" access="field" cascade="all" table="Scan">
+            <key column="Spectrum_hid"/>
+            <index column="Spectrum_idx"/>
+            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.Scan"/>
+        </list>
+
+        <list name="precursorList" access="field" cascade="all" table="Precursor">
+            <key column="Spectrum_hid"/>
+            <index column="Spectrum_idx"/>
+            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.Precursor"/>
+        </list>
+
+        <list name="productList" access="field" cascade="all" table="Product">
+            <key column="Spectrum_hid"/>
+            <index column="Spectrum_idx"/>
+            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.Product"/>
+        </list>
+
+        <list name="binaryDataArrayList" access="field" cascade="all" table="BinaryDataArray">
+            <key column="Spectrum_hid"/>
+            <index column="Spectrum_idx"/>
+            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.BinaryDataArray"/>
+        </list>
+
 
         <property name="id" type="string"/>
         <property name="spotID" type="string"/>

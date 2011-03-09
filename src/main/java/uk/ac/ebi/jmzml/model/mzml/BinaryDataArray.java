@@ -1,5 +1,6 @@
 package uk.ac.ebi.jmzml.model.mzml;
 
+import org.apache.log4j.Logger;
 import uk.ac.ebi.jmzml.model.mzml.params.BinaryDataArrayCVParam;
 import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
 
@@ -48,6 +49,8 @@ import java.util.zip.Inflater;
 public class BinaryDataArray
         extends ParamGroup
         implements Serializable {
+
+    private static final Logger logger = Logger.getLogger(BinaryDataArray.class);
 
     /**
      * Defines the number of bytes required in an UNENCODED byte array to hold
@@ -667,7 +670,7 @@ public class BinaryDataArray
            try {
                bos.close();
            } catch (IOException e) {
-               // ToDo: add logging
+               logger.error("ERROR in BinaryDataArray decompress " + e.getMessage());
                e.printStackTrace();
            }
            // Get the decompressed data

@@ -4,7 +4,13 @@
 
 <hibernate-mapping>
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.Scan" table="Scan" extends="uk.ac.ebi.jmzml.model.mzml.ParamGroup">
-        <many-to-one name="scanWindowList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ScanWindowList" column="ScanWindowList_hid"/>
+
+        <list name="scanWindowList" access="field" cascade="all" table="ScanWindowList">
+            <key column="SW_hid"/>
+            <index column="SW_idx"/>
+            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.ParamGroup"/>
+        </list>
+
 
         <property name="spectrumRef" type="string"/>
         <property name="sourceFileRef" type="string"/>

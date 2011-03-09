@@ -5,8 +5,15 @@
 <hibernate-mapping>
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.Precursor" table="Precursor" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
         <many-to-one name="isolationWindow" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup" column="IsolationWindow_ParamGroup_hid"/>
-        <many-to-one name="selectedIonList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SelectedIonList" column="SelectedIonList_hid"/>
+
+        <list name="selectedIonList" access="field" cascade="all" table="SelectedIonList">
+            <key column="SI_hid"/>
+            <index column="SI_idx"/>
+            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.ParamGroup"/>
+        </list>
+
         <many-to-one name="activation" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup" column="Activation_ParamGroup_hid"/>
+
         <property name="spectrumRef" type="string"/>
         <!--<many-to-one name="spectrum" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Spectrum" column="Spectrum_hid"/>-->
         <property name="sourceFileRef" type="string"/>

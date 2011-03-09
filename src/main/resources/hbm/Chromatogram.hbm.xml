@@ -8,7 +8,11 @@
 
         <many-to-one name="precursor" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Precursor" column="Precursor_hid"/>
         <many-to-one name="product" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Product" column="Product_hid"/>
-        <many-to-one name="binaryDataArrayList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.BinaryDataArrayList" column="BinaryDataArrayList_hid"/>
+        <list name="binaryDataArrayList" access="field" cascade="all" table="BinaryDataArray">
+            <key column="Chromatogram_hid"/>
+            <index column="Chromatogram_idx"/>
+            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.BinaryDataArray"/>
+        </list>
 
         <property name="id" type="string"/>
         <property name="index" column="order_index" type="big_integer"/>

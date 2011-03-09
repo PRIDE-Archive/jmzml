@@ -161,41 +161,41 @@
                 </executions>
             </plugin>
 
-                        <plugin>
-                            <!-- you can use this plugin to generate the jaxb object model from
-                                 the schema and binding files specified below. Note: this will
-                                 need an explicit maven goal call, since it is not intergrated
-                                 into the standard mvn lifecycle. The goal to use is:
-                                 org.jvnet.jaxb2.maven2:maven-jaxb2-plugin:0.6.3:generate
+            <plugin>
+                <!-- you can use this plugin to generate the jaxb object model from
+                    the schema and binding files specified below. Note: this will
+                    need an explicit maven goal call, since it is not intergrated
+                    into the standard mvn lifecycle. The goal to use is:
+                    org.jvnet.jaxb2.maven2:maven-jaxb2-plugin:0.6.3:generate
 
-                                 NOTE: the code generation may overwrite existing classes, so care
-                                       should be taken with files that were manually modified. Such
-                                       files are in the current version (0.6): CVParam, UserParam,
-                                       ParamGroup, BinaryDataArray and ComponentList.
-                             -->
-                            <groupId>org.jvnet.jaxb2.maven2</groupId>
-                            <artifactId>maven-jaxb2-plugin</artifactId>
-                            <version>0.6.3</version>
-                            <configuration>
-                                <extension>true</extension>
-                                <schemaDirectory>src/main/resources</schemaDirectory>
-                                <schemaIncludes>
-                                    <include>mzML1.1.1-idx.xsd</include>
-                                </schemaIncludes>
-                                <bindingDirectory>src/main/resources</bindingDirectory>
-                                <bindingIncludes>
-                                    <include>bindings.xjb</include>
-                                </bindingIncludes>
-                                <generateDirectory>src/main/java</generateDirectory>
-                                <removeOldOutput>false</removeOldOutput>
-                                <forceRegenerate>true</forceRegenerate>
-                                <verbose>true</verbose>
-                                <args>
-                                    <arg>-no-header</arg>
-                                </args>
-                            </configuration>
-                        </plugin>
-            
+                    NOTE: the code generation may overwrite existing classes, so care
+                          should be taken with files that were manually modified. Such
+                          files are in the current version (0.6): CVParam, UserParam,
+                          ParamGroup, BinaryDataArray and ComponentList.
+                -->
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+                <version>0.6.3</version>
+                <configuration>
+                    <extension>true</extension>
+                    <schemaDirectory>src/main/resources</schemaDirectory>
+                    <schemaIncludes>
+                        <include>mzML1.1.1-idx.xsd</include>
+                    </schemaIncludes>
+                    <bindingDirectory>src/main/resources</bindingDirectory>
+                    <bindingIncludes>
+                        <include>bindings.xjb</include>
+                    </bindingIncludes>
+                    <generateDirectory>src/main/java</generateDirectory>
+                    <removeOldOutput>false</removeOldOutput>
+                    <forceRegenerate>true</forceRegenerate>
+                    <verbose>true</verbose>
+                    <args>
+                        <arg>-no-header</arg>
+                    </args>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 
@@ -224,7 +224,7 @@
             <artifactId>log4j</artifactId>
             <version>1.2.13</version>
         </dependency>
-                <dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.6.1</version>
@@ -282,6 +282,12 @@
             <version>10.2.0.3.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.14</version>
+        </dependency>
+
         <!-- Hibernate Dependencies -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -290,10 +296,12 @@
         </dependency>
 
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-annotations</artifactId>
-            <version>3.5.6-Final</version>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.14.0-GA</version>
+            <classifier>sources</classifier>
         </dependency>
+
 
         <dependency>
             <groupId>org.hibernate</groupId>
