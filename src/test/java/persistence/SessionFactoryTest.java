@@ -93,6 +93,36 @@ public class SessionFactoryTest {
     }
 
     @Test
+    public void testSampleList() throws Exception{
+
+        createSessionFactory();
+        unmarshallMzML(fileName);
+        List<Sample> sampleList = mzML.getSampleList();
+        // Persist object
+        session.getTransaction().begin();
+        session.persist(mzML);
+        session.getTransaction().commit();
+        //now, retrieve it
+        long MzML_id = 1;
+        session.getTransaction().begin();
+
+        List<Sample> SampleList_out = ((MzML) session.get(MzML.class, MzML_id)).getSampleList();
+
+        if (SampleList_out == null) {
+            System.out.println("Entity not found " + MzML_id);
+        }
+        session.getTransaction().commit();
+        closeSessionFactory();
+        int i = 0;
+        for (Sample sample : SampleList_out) {
+            if(!sample.equals(sampleList.get(i))){
+                assert false;
+            }
+            i ++;
+        }
+    }
+
+    @Test
     public void testmzML() throws Exception {
         createSessionFactory();
         unmarshallMzML(fileName);
