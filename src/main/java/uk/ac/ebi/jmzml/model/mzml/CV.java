@@ -1,24 +1,18 @@
-
 package uk.ac.ebi.jmzml.model.mzml;
 
-import java.io.Serializable;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.io.Serializable;
 
 
 /**
  * Information about an ontology or CV source and a short 'lookup' tag to refer to.
- * 
+ * <p/>
  * <p>Java class for CVType complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType name="CVType">
  *   &lt;complexContent>
@@ -31,15 +25,12 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CVType")
 public class CV
-    extends MzMLObject
-    implements Serializable
-{
+        extends MzMLObject
+        implements Serializable {
 
     private final static long serialVersionUID = 100L;
     @XmlAttribute(required = true)
@@ -57,11 +48,9 @@ public class CV
 
     /**
      * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public String getId() {
         return id;
@@ -69,11 +58,9 @@ public class CV
 
     /**
      * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setId(String value) {
         this.id = value;
@@ -81,11 +68,9 @@ public class CV
 
     /**
      * Gets the value of the fullName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public String getFullName() {
         return fullName;
@@ -93,11 +78,9 @@ public class CV
 
     /**
      * Sets the value of the fullName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setFullName(String value) {
         this.fullName = value;
@@ -105,11 +88,9 @@ public class CV
 
     /**
      * Gets the value of the version property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public String getVersion() {
         return version;
@@ -117,11 +98,9 @@ public class CV
 
     /**
      * Sets the value of the version property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setVersion(String value) {
         this.version = value;
@@ -129,11 +108,9 @@ public class CV
 
     /**
      * Gets the value of the uri property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public String getURI() {
         return uri;
@@ -141,14 +118,25 @@ public class CV
 
     /**
      * Sets the value of the uri property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setURI(String value) {
         this.uri = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CV cv = (CV) o;
+
+        if (fullName != null ? !fullName.equals(cv.fullName) : cv.fullName != null) return false;
+        if (id != null ? !id.equals(cv.id) : cv.id != null) return false;
+
+        return true;
     }
 
 }
