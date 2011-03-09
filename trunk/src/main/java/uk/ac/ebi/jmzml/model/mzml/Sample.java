@@ -1,15 +1,10 @@
 
 package uk.ac.ebi.jmzml.model.mzml;
 
-import java.io.Serializable;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.io.Serializable;
 
 
 /**
@@ -94,6 +89,19 @@ public class Sample
      */
     public void setName(String value) {
         this.name = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Sample sample = (Sample) o;
+
+        if (id != null ? !id.equals(sample.id) : sample.id != null) return false;
+        if (name != null ? !name.equals(sample.name) : sample.name != null) return false;
+
+        return true;
     }
 
 }
