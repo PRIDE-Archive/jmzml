@@ -202,7 +202,6 @@
                 <version>2.8</version>
                 <configuration>
                     <excludes>
-                        <exclude>**/PersistentTest.java</exclude>
                         <exclude>**/SessionFactoryTest.java</exclude>
                     </excludes>
                 </configuration>
