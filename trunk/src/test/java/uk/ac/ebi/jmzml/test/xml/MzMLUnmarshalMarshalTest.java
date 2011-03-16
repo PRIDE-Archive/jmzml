@@ -3,6 +3,7 @@ package uk.ac.ebi.jmzml.test.xml;
 import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
+import uk.ac.ebi.jmzml.MzMLElement;
 import uk.ac.ebi.jmzml.model.mzml.*;
 import uk.ac.ebi.jmzml.model.mzml.MzMLObject;
 import uk.ac.ebi.jmzml.xml.io.MzMLMarshaller;
@@ -273,14 +274,20 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         String sf = mz.getRun().getDefaultSourceFileRef();
         assertEquals("sf1", sf);
 
-        // check teh default processing method references
-        List<ProcessingMethod> pmList = mz.getRun().getSpectrumList().getDefaultDataProcessing().getProcessingMethod();
-        assertEquals(1, pmList.size());
+        // check the default processing method references
+        SpectrumList sList = mz.getRun().getSpectrumList();
+        if (MzMLElement.SpectrumList.isAutoRefResolving() && sList.getDefaultDataProcessingRef() != null) {
+            DataProcessing dp = sList.getDefaultDataProcessing();
+            List<ProcessingMethod> pmList = dp.getProcessingMethod();
+            assertEquals(1, pmList.size());
+            ProcessingMethod pm = pmList.get(0);
+            assertNotNull(pm);
+            assertEquals("pwiz", pm.getSoftware().getId());
+        } else {
+            logger.warn("SpectrumList is not auto-resolving or does not contain a DefaultDataProcessing reference!");
+        }
 
         // check the software id of the default data processing method
-        ProcessingMethod pm = pmList.get(0);
-        assertNotNull(pm);
-        assertEquals("pwiz", pm.getSoftware().getId());
 
         // ToDo: maybe add more cases
     }
