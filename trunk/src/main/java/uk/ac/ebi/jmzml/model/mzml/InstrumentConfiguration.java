@@ -1,6 +1,7 @@
 package uk.ac.ebi.jmzml.model.mzml;
 
 import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
+import uk.ac.ebi.jmzml.xml.jaxb.adapters.SoftwareRefAdapter;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
@@ -41,7 +42,12 @@ public class InstrumentConfiguration
 
     private final static long serialVersionUID = 100L;
     protected ComponentList componentList;
-    protected SoftwareRef softwareRef;
+    @XmlJavaTypeAdapter(SoftwareRefAdapter.class)
+    protected String softwareRef;
+
+    @XmlTransient
+    private Software software;
+
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlID
@@ -81,7 +87,7 @@ public class InstrumentConfiguration
      * @return possible object is
      *         {@link SoftwareRef }
      */
-    public SoftwareRef getSoftwareRef() {
+    public String getSoftwareRef() {
         return softwareRef;
     }
 
@@ -91,10 +97,21 @@ public class InstrumentConfiguration
      * @param value allowed object is
      *              {@link SoftwareRef }
      */
-    public void setSoftwareRef(SoftwareRef value) {
+    public void setSoftwareRef(String value) {
         this.softwareRef = value;
     }
 
+
+    public void setSoftware(Software soft){
+        this.software = soft;
+        if (soft != null){
+            this.softwareRef = soft.getId();
+        }
+    }
+
+    public Software getSoftware(){
+        return software;
+    }
     /**
      * Gets the value of the id property.
      *

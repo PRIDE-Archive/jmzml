@@ -41,7 +41,9 @@ import java.net.URL;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -63,6 +65,7 @@ public class MzMLUnmarshaller {
     private final Pattern ID_PATTERN = Pattern.compile("id *= *\"([^\"]*)?\"", Pattern.CASE_INSENSITIVE);
     private final Pattern AC_PATTERN = Pattern.compile("accession *= *\"([^\"]*)?\"", Pattern.CASE_INSENSITIVE);
     private final Pattern VERSION_PATTERN = Pattern.compile("version *= *\"([^\"]*)?\"",Pattern.CASE_INSENSITIVE);
+    private static final Pattern XML_ATT_PATTERN = Pattern.compile("\\s+([A-Za-z:]+)\\s*=\\s*[\"']([^\"'>]+?)[\"']", Pattern.DOTALL);
 
     /**
      * Creates a new MzMLUnmarshaller object from a URL
@@ -163,6 +166,32 @@ public class MzMLUnmarshaller {
         }
     }
 
+    public Map<String, String> getSingleElementAttributes(String xpath) {
+        Map<String, String> attributes = new HashMap<String, String>();
+        // retrieve the start tag of the corresponding XML element
+        //single Element should appear once in the file
+        String tag = index.getStartTag(xpath);
+        if (tag == null) {
+            return null;
+        }
+
+        // parse the tag for attributes
+        Matcher match = XML_ATT_PATTERN.matcher(tag);
+        while (match.find()) {
+            if (match.groupCount() == 2) {
+                // found name - value pair
+                String name = match.group(1);
+                String value = match.group(2);
+                // stick the found attributes in the map
+                attributes.put(name, value);
+            } else {
+                // not a name - value pair, something is wrong!
+                System.out.println("Unexpected number of groups for XML attribute: " + match.groupCount() + " in tag: " + tag);
+            }
+
+        }
+        return attributes;
+    }
     /**
      * Returns the number of elements for a given path.
      *
@@ -708,4 +737,5 @@ public class MzMLUnmarshaller {
 
         return retval;
     }
+
 }

@@ -22,9 +22,10 @@
 
 package uk.ac.ebi.jmzml.xml;
 
+import uk.ac.ebi.jmzml.MzMLElement;
+
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 public class Constants {
@@ -52,45 +53,20 @@ public class Constants {
     private static Set<String> xpathsToIndex = new HashSet<String>();
 
     static {
-        // Create the index inclusion list.
-        // Note that both the '/mzML' and 'indexedmzML/mzML' versions are included.
-        xpathsToIndex.add("/mzML");
-        xpathsToIndex.add("/mzML/cvList");
-        xpathsToIndex.add("/mzML/cvList/cv");
-        xpathsToIndex.add("/mzML/fileDescription");
-        xpathsToIndex.add("/mzML/fileDescription/sourceFileList/sourceFile");
-        xpathsToIndex.add("/mzML/referenceableParamGroupList");
-        xpathsToIndex.add("/mzML/referenceableParamGroupList/referenceableParamGroup");
-        xpathsToIndex.add("/mzML/sampleList");
-        xpathsToIndex.add("/mzML/sampleList/sample");
-        xpathsToIndex.add("/mzML/scanSettingsList");
-        xpathsToIndex.add("/mzML/scanSettingsList/scanSettings");
-        xpathsToIndex.add("/mzML/softwareList");
-        xpathsToIndex.add("/mzML/softwareList/software");
-        xpathsToIndex.add("/mzML/instrumentConfigurationList");
-        xpathsToIndex.add("/mzML/instrumentConfigurationList/instrumentConfiguration");
-        xpathsToIndex.add("/mzML/dataProcessingList");
-        xpathsToIndex.add("/mzML/dataProcessingList/dataProcessing");
-        xpathsToIndex.add("/mzML/acquisitionSettingsList");
-        xpathsToIndex.add("/mzML/run");
-        xpathsToIndex.add("/mzML/run/spectrumList/spectrum");
-        xpathsToIndex.add("/mzML/run/chromatogramList/chromatogram");
+        for (MzMLElement element : MzMLElement.values()) {
+            if (element.isIndexed()) {
+                xpathsToIndex.add(element.getXpath());
+                //need to include indexedmzML elements as well
+                if (!element.getXpath().startsWith("/indexedmzML")) {
 
-        //ensure that all /mzml keys are duplicated for /indexedmzML
-        HashSet<String> mzmlKeys = new HashSet<String>(xpathsToIndex);
-        for (Iterator<String> iterator = mzmlKeys.iterator(); iterator.hasNext();) {
-            String mzmlString = iterator.next();
-            xpathsToIndex.add("/indexedmzML" + mzmlString);
+                    xpathsToIndex.add("/indexedmzML" + element.getXpath());
+                }
+            }
         }
-
-        // add indexedmzML specific xpathes
-        xpathsToIndex.add("/indexedmzML");
-        xpathsToIndex.add("/indexedmzML/indexList");
-        xpathsToIndex.add("/indexedmzML/fileChecksum");
-
         // finally make the set unmodifiable
         xpathsToIndex = Collections.unmodifiableSet(xpathsToIndex);
     }
+
 
     public static final Set<String> XML_INDEXED_XPATHS = xpathsToIndex;
 

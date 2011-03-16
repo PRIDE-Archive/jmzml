@@ -14,10 +14,7 @@ import uk.ac.ebi.jmzml.xml.Constants;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -55,7 +52,7 @@ public class MzMLIndexerFactory {
         private String root = null;
         private String mzMLAttributeXMLString = null;
         // a unified cache of all the id maps
-        private HashMap<Class, HashMap<String, IndexElement>> idMapCache = new HashMap<Class, HashMap<String, IndexElement>>();
+        private HashMap<Class, LinkedHashMap<String, IndexElement>> idMapCache = new HashMap<Class, LinkedHashMap<String, IndexElement>>();
 
         ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
         // Constructor
@@ -126,9 +123,9 @@ public class MzMLIndexerFactory {
 ////                        throw new IllegalStateException("Attempt to create ID map for not Identifiable element: " + element.getClazz());
 //                    }
                     // so far so good, now generate the ID map (if not already present) and populate it
-                    HashMap<String, IndexElement> map = idMapCache.get(element.getClazz());
+                    LinkedHashMap<String, IndexElement> map = idMapCache.get(element.getClazz());
                     if (map == null) {
-                        map = new HashMap<String, IndexElement>();
+                        map = new LinkedHashMap<String, IndexElement>();
                         idMapCache.put(element.getClazz(), map);
                     }
                     initIdMapCache(map, root + checkRoot(element.getXpath()));
@@ -140,7 +137,7 @@ public class MzMLIndexerFactory {
             return mzMLAttributeXMLString;
         }
 
-        private String extractMzMLStartTag(File xmlFile) throws IOException {    
+        private String extractMzMLStartTag(File xmlFile) throws IOException {
             // get start position of the mzML element
 
             List<IndexElement> ie = index.getElements(root + checkRoot(MzMLElement.MzML.getXpath()));
@@ -160,6 +157,19 @@ public class MzMLIndexerFactory {
                 startTag = startTag.replace("\n", "");
             }
             return startTag;
+        }
+
+        public String getStartTag(String xpath) {
+            List<IndexElement> elements = index.getElements(root + checkRoot(xpath));
+            String tag = "";
+            //tag will be unique within the file
+            try {
+                tag = xpathAccess.getStartTag(elements.get(0));
+            } catch (IOException e) {
+                // ToDo: proper handling
+                e.printStackTrace();
+            }
+            return tag;
         }
 
         /**
@@ -227,7 +237,7 @@ public class MzMLIndexerFactory {
         }
 
         public Iterator<String> getXmlStringIterator(String xpathExpression) {
-           if (xpathExpression.contains("indexList") || xpathExpression.contains("fileChecksum")) {
+            if (xpathExpression.contains("indexList") || xpathExpression.contains("fileChecksum")) {
                 // we can not use the root "mzML", since the mzML index list is outside the mzML!
                 return xpathAccess.getXmlSnippetIterator(checkRoot(root + xpathExpression));
             } else {
@@ -305,8 +315,8 @@ public class MzMLIndexerFactory {
          */
         public int getCount(String xpathExpression) {
             int retval = -1;
-             List<IndexElement> tmpList = index.getElements(root + checkRoot(xpathExpression));
-            if (tmpList != null){
+            List<IndexElement> tmpList = index.getElements(root + checkRoot(xpathExpression));
+            if (tmpList != null) {
                 retval = tmpList.size();
             }
             return retval;

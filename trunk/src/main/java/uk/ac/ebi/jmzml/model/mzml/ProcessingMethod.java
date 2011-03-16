@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.jmzml.model.mzml;
 
 import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
@@ -11,9 +10,9 @@ import java.math.BigInteger;
 
 /**
  * <p>Java class for ProcessingMethodType complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType name="ProcessingMethodType">
  *   &lt;complexContent>
@@ -24,15 +23,12 @@ import java.math.BigInteger;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ProcessingMethodType")
 public class ProcessingMethod
-    extends ParamGroup
-    implements Serializable
-{
+        extends ParamGroup
+        implements Serializable {
 
     private final static long serialVersionUID = 100L;
     @XmlAttribute(required = true)
@@ -49,11 +45,9 @@ public class ProcessingMethod
 
     /**
      * Gets the value of the order property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @return possible object is
+     *         {@link BigInteger }
      */
     public BigInteger getOrder() {
         return order;
@@ -61,11 +55,9 @@ public class ProcessingMethod
 
     /**
      * Sets the value of the order property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setOrder(BigInteger value) {
         this.order = value;
@@ -73,11 +65,9 @@ public class ProcessingMethod
 
     /**
      * Gets the value of the softwareRef property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     *         {@link String }
      */
     public String getSoftwareRef() {
         return softwareRef;
@@ -85,11 +75,9 @@ public class ProcessingMethod
 
     /**
      * Sets the value of the softwareRef property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setSoftwareRef(String value) {
         this.softwareRef = value;
@@ -105,5 +93,4 @@ public class ProcessingMethod
             this.softwareRef = software.getId();
         }
     }
-
 }
