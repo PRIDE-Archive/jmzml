@@ -196,6 +196,19 @@
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.8</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/PersistentTest.java</exclude>
+                        <exclude>**/SessionFactoryTest.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+
         </plugins>
     </build>
 
