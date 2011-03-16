@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 import uk.ac.ebi.jmzml.MzMLElement;
 import uk.ac.ebi.jmzml.model.mzml.*;
-import uk.ac.ebi.jmzml.model.mzml.MzMLObject;
 import uk.ac.ebi.jmzml.xml.io.MzMLMarshaller;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
@@ -122,7 +121,6 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         logger.info("Marshalling mzML is valid.");
 
 
-
         ///// ///// ///// ///// RE-READ WRITTEN mzML ///// ///// ///// /////
         MzMLUnmarshaller um_2 = new MzMLUnmarshaller(tmpFile);
         MzML mz_2 = um_2.unmarshall();
@@ -179,7 +177,6 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         logger.info("Marshalling mzML is valid.");
 
 
-
         ///// ///// ///// ///// RE-READ WRITTEN mzML ///// ///// ///// /////
         MzMLUnmarshaller um_2 = new MzMLUnmarshaller(tmpFile);
         MzML mz_2 = um_2.unmarshall();
@@ -210,7 +207,7 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         // Note: not checking against external schema, because of performance and availability (internet connection) issues 
 //        try {
 //            if (indexed) {
-                schemaLocation = this.getClass().getClassLoader().getResource("mzML1.1.1-idx.xsd");
+        schemaLocation = this.getClass().getClassLoader().getResource("mzML1.1.1-idx.xsd");
 //                schemaLocation = new URL("http://psidev.cvs.sourceforge.net/*checkout*/psidev/psi/psi-ms/mzML/schema/mzML1.1.0_idx.xsd");
 //            } else {
 //                schemaLocation = this.getClass().getClassLoader().getResource("mzML1.1.0.xsd");
@@ -256,9 +253,9 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
 
         MzML mz;
         if (mo instanceof MzML) {
-            mz = (MzML)mo;
+            mz = (MzML) mo;
         } else if (mo instanceof IndexedmzML) {
-            mz = ((IndexedmzML)mo).getMzML();
+            mz = ((IndexedmzML) mo).getMzML();
         } else {
             throw new IllegalStateException("Can not check the MzML content for objects other than MzML or IndexemzML!");
         }
@@ -297,11 +294,11 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         MzML mz_1;
         MzML mz_2;
         if (mo_1 instanceof MzML && mo_2 instanceof MzML) {
-            mz_1 = (MzML)mo_1;
-            mz_2 = (MzML)mo_2;
+            mz_1 = (MzML) mo_1;
+            mz_2 = (MzML) mo_2;
         } else if (mo_1 instanceof IndexedmzML && mo_2 instanceof IndexedmzML) {
-            mz_1 = ((IndexedmzML)mo_1).getMzML();
-            mz_2 = ((IndexedmzML)mo_2).getMzML();
+            mz_1 = ((IndexedmzML) mo_1).getMzML();
+            mz_2 = ((IndexedmzML) mo_2).getMzML();
             // ToDo: add index specific check
         } else {
             throw new IllegalStateException("Can not compare objects of different type. Only MzML or IndexedmzML types are supported.");
@@ -317,9 +314,16 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         assertEquals(mz_1.getRun().getId(), mz_2.getRun().getId());
 
         // check the software id of the default data processing for the spectra
-        ProcessingMethod pm_1 = mz_1.getRun().getSpectrumList().getDefaultDataProcessing().getProcessingMethod().get(0);
-        ProcessingMethod pm_2 = mz_2.getRun().getSpectrumList().getDefaultDataProcessing().getProcessingMethod().get(0);
-        assertEquals(pm_1.getSoftware().getId(), pm_2.getSoftware().getId());
+        SpectrumList sList_1 = mz_1.getRun().getSpectrumList();
+        SpectrumList sList_2 = mz_2.getRun().getSpectrumList();
+        if (MzMLElement.SpectrumList.isAutoRefResolving() && sList_1.getDefaultDataProcessingRef() != null && sList_2.getDefaultDataProcessingRef() != null) {
+            ProcessingMethod pm_1 = sList_1.getDefaultDataProcessing().getProcessingMethod().get(0);
+            ProcessingMethod pm_2 = sList_2.getDefaultDataProcessing().getProcessingMethod().get(0);
+            assertEquals(pm_1.getSoftware().getId(), pm_2.getSoftware().getId());
+
+        } else {
+            logger.warn("SpectrumList is not auto-resolving or does not contain a DefaultDataProcessing reference!");
+        }
 
     }
 
