@@ -14,4 +14,8 @@ public abstract class MzMLObject {
 
     @XmlTransient
     protected long hid;
+
+    public long getHid(){
+        return hid;
+    }
 }

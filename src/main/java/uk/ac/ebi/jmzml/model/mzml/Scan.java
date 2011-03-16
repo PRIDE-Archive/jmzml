@@ -51,6 +51,8 @@ public class Scan
 
     @XmlAttribute
     protected String spectrumRef;
+    @XmlTransient
+    protected Spectrum spectrum;
     @XmlAttribute
     @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
@@ -95,6 +97,17 @@ public class Scan
      */
     public void setSpectrumRef(String value) {
         this.spectrumRef = value;
+    }
+
+    public void setSpectrum(Spectrum spectrum){
+        this.spectrum = spectrum;
+        if (spectrum != null){
+            this.spectrumRef = spectrum.getId();
+        }
+    }
+
+    public Spectrum getSpectrum(){
+        return spectrum;
     }
 
     public SourceFile getSourceFile() {

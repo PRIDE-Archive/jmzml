@@ -70,8 +70,6 @@ public class ParamGroup
     @XmlTransient
     private List<UserParam> userParamsSkippedDuringMarshalling = new ArrayList<UserParam>();
 
-    @XmlTransient
-    protected long hid;
 
     /**
      * Gets the value of the referenceableParamGroupRef property.

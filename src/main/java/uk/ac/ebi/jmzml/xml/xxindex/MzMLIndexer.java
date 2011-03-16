@@ -52,4 +52,8 @@ public interface MzMLIndexer {
     public Set<String> getChromatogramIDs();
 
     public String getMzMLAttributeXMLString();
+
+    public String getStartTag(String xpath);
+
+
 }
