@@ -43,7 +43,7 @@ public class ReferenceableParamGroupHandlingTest extends TestCase {
                 // skip this spectrum, since it does not contain scan data
             } else {
                 if (spectrum.getScanList() != null) {
-                    Scan scan = spectrum.getScanList().get(0); // get first scan
+                    Scan scan = spectrum.getScanList().getScan().get(0); // get first scan
                     if(scan != null) {
                         Assert.assertEquals(5, scan.getCvParam().size());
                         Assert.assertEquals(2, scan.getUserParam().size());
@@ -58,7 +58,7 @@ public class ReferenceableParamGroupHandlingTest extends TestCase {
                 // skip this spectrum, since it does not contain scan data
             } else {
                 if (spectrum.getScanList() != null) {
-                    Scan scan = spectrum.getScanList().get(0); // get first scan
+                    Scan scan = spectrum.getScanList().getScan().get(0); // get first scan
                     if(scan != null) {
                         Assert.assertEquals(5, scan.getCvParam().size());
                         Assert.assertEquals(2, scan.getUserParam().size());
@@ -86,7 +86,7 @@ public class ReferenceableParamGroupHandlingTest extends TestCase {
                 // skip this spectrum, since it does not contain scan data
             } else {
                 if (spectrum.getScanList() != null) {
-                    Scan scan = spectrum.getScanList().get(0); // get first scan
+                    Scan scan = spectrum.getScanList().getScan().get(0); // get first scan
                     if(scan != null) {
                         Assert.assertEquals(5, scan.getCvParam().size());
                         Assert.assertEquals(2, scan.getUserParam().size());
@@ -102,7 +102,7 @@ public class ReferenceableParamGroupHandlingTest extends TestCase {
                 // skip this spectrum, since it does not contain scan data
             } else {
                 if (spectrum.getScanList() != null) {
-                    Scan scan = spectrum.getScanList().get(0); // get first scan
+                    Scan scan = spectrum.getScanList().getScan().get(0); // get first scan
                     if(scan != null) {
                         Assert.assertEquals(5, scan.getCvParam().size());
                         Assert.assertEquals(2, scan.getUserParam().size());
@@ -139,7 +139,7 @@ public class ReferenceableParamGroupHandlingTest extends TestCase {
                     // skip this spectrum, since it does not contain scan data
                 } else {
                     if (spectrum.getScanList() != null) {
-                        Scan scan = spectrum.getScanList().get(0); // get first scan
+                        Scan scan = spectrum.getScanList().getScan().get(0); // get first scan
                         if(scan != null) {
                             Assert.assertEquals(5, scan.getCvParam().size());
                             Assert.assertEquals(2, scan.getUserParam().size());
@@ -157,7 +157,7 @@ public class ReferenceableParamGroupHandlingTest extends TestCase {
                     // skip this spectrum, since it does not contain scan data
                 } else {
                     if (spectrum.getScanList() != null) {
-                        Scan scan = spectrum.getScanList().get(0); // get first scan
+                        Scan scan = spectrum.getScanList().getScan().get(0); // get first scan
                         if(scan != null) {
                             Assert.assertEquals(5, scan.getCvParam().size());
                             Assert.assertEquals(2, scan.getUserParam().size());
@@ -193,7 +193,7 @@ public class ReferenceableParamGroupHandlingTest extends TestCase {
                     // skip this spectrum, since it does not contain scan data
                 } else {
                     if (spectrum.getScanList() != null) {
-                        Scan scan = spectrum.getScanList().get(0); // get first scan
+                        Scan scan = spectrum.getScanList().getScan().get(0); // get first scan
                         if(scan != null) {
                             Assert.assertEquals(5, scan.getCvParam().size());
                             Assert.assertEquals(2, scan.getUserParam().size());
@@ -211,7 +211,7 @@ public class ReferenceableParamGroupHandlingTest extends TestCase {
                     // skip this spectrum, since it does not contain scan data
                 } else {
                     if (spectrum.getScanList() != null) {
-                        Scan scan = spectrum.getScanList().get(0); // get first scan
+                        Scan scan = spectrum.getScanList().getScan().get(0); // get first scan
                         if(scan != null) {
                             Assert.assertEquals(5, scan.getCvParam().size());
                             Assert.assertEquals(2, scan.getUserParam().size());
@@ -253,7 +253,7 @@ public class ReferenceableParamGroupHandlingTest extends TestCase {
                     // skip this spectrum, since it does not contain scan data
                 } else {
                     if (spectrum.getScanList() != null) {
-                        Scan scan = spectrum.getScanList().get(0); // get first scan
+                        Scan scan = spectrum.getScanList().getScan().get(0); // get first scan
                         if(scan != null) {
                             Assert.assertEquals(5, scan.getCvParam().size());
                             Assert.assertEquals(2, scan.getUserParam().size());
@@ -271,7 +271,7 @@ public class ReferenceableParamGroupHandlingTest extends TestCase {
                     // skip this spectrum, since it does not contain scan data
                 } else {
                     if (spectrum.getScanList() != null) {
-                        Scan scan = spectrum.getScanList().get(0); // get first scan
+                        Scan scan = spectrum.getScanList().getScan().get(0); // get first scan
                         if(scan != null) {
                             Assert.assertEquals(5, scan.getCvParam().size());
                             Assert.assertEquals(2, scan.getUserParam().size());
@@ -307,7 +307,7 @@ public class ReferenceableParamGroupHandlingTest extends TestCase {
                     // skip this spectrum, since it does not contain scan data
                 } else {
                     if (spectrum.getScanList() != null) {
-                        Scan scan = spectrum.getScanList().get(0); // get first scan
+                        Scan scan = spectrum.getScanList().getScan().get(0); // get first scan
                         if(scan != null) {
                             Assert.assertEquals(5, scan.getCvParam().size());
                             Assert.assertEquals(2, scan.getUserParam().size());
@@ -325,7 +325,7 @@ public class ReferenceableParamGroupHandlingTest extends TestCase {
                     // skip this spectrum, since it does not contain scan data
                 } else {
                     if (spectrum.getScanList() != null) {
-                        Scan scan = spectrum.getScanList().get(0); // get first scan
+                        Scan scan = spectrum.getScanList().getScan().get(0); // get first scan
                         if(scan != null) {
                             Assert.assertEquals(5, scan.getCvParam().size());
                             Assert.assertEquals(2, scan.getUserParam().size());
