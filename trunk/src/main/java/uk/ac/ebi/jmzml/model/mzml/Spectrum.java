@@ -56,8 +56,7 @@ public class Spectrum
 
     private final static long serialVersionUID = 100L;
 
-    @XmlJavaTypeAdapter(value = ScanListAdapter.class)
-    protected List<Scan> scanList;
+   protected ScanList scanList;
 
     @XmlJavaTypeAdapter(value = PrecursorListAdapter.class)
     protected List<Precursor> precursorList;
@@ -100,8 +99,12 @@ public class Spectrum
     /**
      * Gets the value of the scanList property.
      */
-    public List<Scan> getScanList() {
+    public ScanList getScanList() {
         return scanList;
+    }
+
+    public void setScanList(ScanList scanList){
+        this.scanList = scanList;
     }
 
     /**
