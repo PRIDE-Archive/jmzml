@@ -67,7 +67,7 @@ public class SessionFactoryTest {
 
         createSessionFactory();
         unmarshallMzML(fileName);
-        List<CV> cvList = mzML.getCvList();
+        List<CV> cvList = mzML.getCvList().getCv();
         // Persist object
         session.getTransaction().begin();
         session.persist(mzML);
@@ -76,7 +76,7 @@ public class SessionFactoryTest {
         long MzML_id = 1;
         session.getTransaction().begin();
 
-        List<CV> CVList_out = ((MzML) session.get(MzML.class, MzML_id)).getCvList();
+        List<CV> CVList_out = ((MzML) session.get(MzML.class, MzML_id)).getCvList().getCv();
 
         if (CVList_out == null) {
             System.out.println("Entity not found " + MzML_id);
@@ -97,7 +97,7 @@ public class SessionFactoryTest {
 
         createSessionFactory();
         unmarshallMzML(fileName);
-        List<Sample> sampleList = mzML.getSampleList();
+        List<Sample> sampleList = mzML.getSampleList().getSample();
         // Persist object
         session.getTransaction().begin();
         session.persist(mzML);
@@ -106,7 +106,7 @@ public class SessionFactoryTest {
         long MzML_id = 1;
         session.getTransaction().begin();
 
-        List<Sample> SampleList_out = ((MzML) session.get(MzML.class, MzML_id)).getSampleList();
+        List<Sample> SampleList_out = ((MzML) session.get(MzML.class, MzML_id)).getSampleList().getSample();
 
         if (SampleList_out == null) {
             System.out.println("Entity not found " + MzML_id);
