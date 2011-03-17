@@ -2,12 +2,10 @@
 package uk.ac.ebi.jmzml.model.mzml;
 
 import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.SelectedIonListAdapter;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
-import java.util.List;
 
 
 /**
@@ -49,9 +47,7 @@ public class Precursor
 
     private final static long serialVersionUID = 100L;
     protected ParamGroup isolationWindow;
-
-    @XmlJavaTypeAdapter(value = SelectedIonListAdapter.class)
-    protected List<ParamGroup> selectedIonList;
+    protected SelectedIonList selectedIonList;
 
     @XmlElement(required = true)
     protected ParamGroup activation;
@@ -99,12 +95,27 @@ public class Precursor
 
     /**
      * Gets the value of the selectedIonList property.
-     *     
+     *
+     * @return
+     *     possible object is
+     *     {@link SelectedIonList }
+     *
      */
-    public List<ParamGroup> getSelectedIonList() {
+    public SelectedIonList getSelectedIonList() {
         return selectedIonList;
     }
 
+    /**
+     * Sets the value of the selectedIonList property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link SelectedIonList }
+     *
+     */
+    public void setSelectedIonList(SelectedIonList value) {
+        this.selectedIonList = value;
+    }
 
     /**
      * Gets the value of the activation property.

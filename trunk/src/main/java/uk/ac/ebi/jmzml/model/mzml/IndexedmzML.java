@@ -1,12 +1,8 @@
 
 package uk.ac.ebi.jmzml.model.mzml;
 
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.IndexListAdapter;
-
 import javax.xml.bind.annotation.*;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
-import java.util.List;
 
 
 /**
@@ -50,8 +46,7 @@ public class IndexedmzML
     protected MzML mzML;
 
     @XmlElement(required = true)
-    @XmlJavaTypeAdapter(value = IndexListAdapter.class)
-    protected List<Index> indexList;
+    protected IndexList indexList;
 
     @XmlElement(required = true, type = Long.class, nillable = true)
     protected Long indexListOffset;
@@ -85,9 +80,26 @@ public class IndexedmzML
 
     /**
      * Gets the value of the indexList property.
+     *
+     * @return
+     *     possible object is
+     *     {@link IndexList }
+     *
      */
-    public List<Index> getIndexList() {
+    public IndexList getIndexList() {
         return indexList;
+    }
+
+    /**
+     * Sets the value of the indexList property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link IndexList }
+     *
+     */
+    public void setIndexList(IndexList value) {
+        this.indexList = value;
     }
 
     /**

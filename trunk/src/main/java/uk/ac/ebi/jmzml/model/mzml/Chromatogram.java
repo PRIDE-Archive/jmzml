@@ -1,14 +1,12 @@
 
 package uk.ac.ebi.jmzml.model.mzml;
 
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.BinaryDataArrayListAdapter;
 import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.List;
 
 
 /**
@@ -55,8 +53,7 @@ public class Chromatogram
     protected Product product;
 
     @XmlElement(required = true)
-    @XmlJavaTypeAdapter(value = BinaryDataArrayListAdapter.class)
-    protected List<BinaryDataArray> binaryDataArrayList;
+    protected BinaryDataArrayList binaryDataArrayList;
 
     @XmlAttribute(required = true)
     protected String id;
@@ -132,10 +129,21 @@ public class Chromatogram
      *     {@link BinaryDataArrayList }
      *     
      */
-    public List<BinaryDataArray> getBinaryDataArrayList() {
+    public BinaryDataArrayList getBinaryDataArrayList() {
         return binaryDataArrayList;
     }
 
+    /**
+     * Sets the value of the binaryDataArrayList property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link BinaryDataArrayList }
+     *
+     */
+    public void setBinaryDataArrayList(BinaryDataArrayList value) {
+        this.binaryDataArrayList = value;
+    }
 
     /**
      * Gets the value of the id property.

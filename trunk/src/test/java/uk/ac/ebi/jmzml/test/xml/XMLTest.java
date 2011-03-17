@@ -98,12 +98,12 @@ public class XMLTest extends TestCase {
         // two CVs
         //assertEquals("The cvList does not have the same number of entries as stated in its counter attribute!", mz.getCvList().getCount().intValue(), mz.getCvList().getCv().size());
         //assertEquals("The cvList doen not have as many entries as expected.", 2, mz.getCvList().getCount().intValue());
-        assertEquals("The cvList doen not have as many entries as expected.", 2, mz.getCvList().size());
+        assertEquals("The cvList doen not have as many entries as expected.", 2, mz.getCvList().getCv().size());
 
         // two source files
         //assertEquals("SourceFileList count does not equal real number of entries.", mz.getFileDescription().getSourceFileList().getCount().intValue(), mz.getFileDescription().getSourceFileList().getSourceFile().size());
         //assertEquals("", 2, mz.getFileDescription().getSourceFileList().getCount().intValue());
-        assertEquals("", 2, mz.getFileDescription().getSourceFileList().size());
+        assertEquals("", 2, mz.getFileDescription().getSourceFileList().getSourceFile().size());
 
         // one contact
         assertEquals("Not expected number of contacts.", 1, mz.getFileDescription().getContact().size());
@@ -111,41 +111,41 @@ public class XMLTest extends TestCase {
         // two referencable param groups
         //assertEquals("ReferencableParamGroupList count does not equal real number of entries.", mz.getReferenceableParamGroupList().getCount().intValue(), mz.getReferenceableParamGroupList().getReferenceableParamGroup().size());
         //assertEquals("Not expected number of referencable param groups.", 2, mz.getReferenceableParamGroupList().getCount().intValue());
-        assertEquals("Not expected number of referencable param groups.", 2, mz.getReferenceableParamGroupList().size());
+        assertEquals("Not expected number of referencable param groups.", 2, mz.getReferenceableParamGroupList().getReferenceableParamGroup().size());
 
         // one sample
         //assertEquals("SampleList count does not equal real number of entries.", mz.getSampleList().getCount().intValue(), mz.getSampleList().getSample().size());
         //assertEquals("Not expected number of samples.", 1, mz.getSampleList().getCount().intValue());
-        assertEquals("Not expected number of samples.", 1, mz.getSampleList().size());
+        assertEquals("Not expected number of samples.", 1, mz.getSampleList().getSample().size());
 
         // three software entries
         //assertEquals("SoftwareList count does not equal real number of entries.", mz.getSoftwareList().getCount().intValue(), mz.getSoftwareList().getSoftware().size());
         //assertEquals("Not expected number of softwares.", 3, mz.getSoftwareList().getCount().intValue());
-        assertEquals("Not expected number of softwares.", 3, mz.getSoftwareList().size());
+        assertEquals("Not expected number of softwares.", 3, mz.getSoftwareList().getSoftware().size());
 
         // one scanSetting
         //assertEquals("ScanSettingList count does not equal real number of entries.", mz.getScanSettingsList().getCount().intValue(), mz.getScanSettingsList().getScanSettings().size());
         //assertEquals("Not expected number of scanSettings.", 1, mz.getScanSettingsList().getCount().intValue());
-        assertEquals("Not expected number of scanSettings.", 1, mz.getScanSettingsList().size());
+        assertEquals("Not expected number of scanSettings.", 1, mz.getScanSettingsList().getScanSettings().size());
 
         // one instrumentConfiguration
         //assertEquals("InstrumentConfigurationList count does not equal real number of entries.", mz.getInstrumentConfigurationList().getCount().intValue(), mz.getInstrumentConfigurationList().getInstrumentConfiguration().size());
         //assertEquals("Not expected number of InstrumentConfigurations.", 1, mz.getInstrumentConfigurationList().getCount().intValue());
-        assertEquals("Not expected number of InstrumentConfigurations.", 1, mz.getInstrumentConfigurationList().size());
+        assertEquals("Not expected number of InstrumentConfigurations.", 1, mz.getInstrumentConfigurationList().getInstrumentConfiguration().size());
 
         // two dataProcessing entries
         //assertEquals("DataProcessingList count does not equal real number of entries.", mz.getDataProcessingList().getCount().intValue(), mz.getDataProcessingList().getDataProcessing().size());
         //assertEquals("Not expected number of data processing entries.", 2, mz.getDataProcessingList().getCount().intValue());
-        assertEquals("Not expected number of data processing entries.", 2, mz.getDataProcessingList().size());
+        assertEquals("Not expected number of data processing entries.", 2, mz.getDataProcessingList().getDataProcessing().size());
 
         // one instrumentConfiguration
         //assertEquals("InstrumentConfigurationList count does not equal real number of entries.", mz.getInstrumentConfigurationList().getCount().intValue(), mz.getInstrumentConfigurationList().getInstrumentConfiguration().size());
         //assertEquals("Not expected number of instrument configuration entries.", 1, mz.getInstrumentConfigurationList().getCount().intValue());
-        assertEquals("Not expected number of instrument configuration entries.", 1, mz.getInstrumentConfigurationList().size());
+        assertEquals("Not expected number of instrument configuration entries.", 1, mz.getInstrumentConfigurationList().getInstrumentConfiguration().size());
         // note: here we test the manual modification of the JAXB generated ComponentList class to allow direct retrieval of source/analyzer/detector
         //ComponentList cpl = mz.getInstrumentConfigurationList().getInstrumentConfiguration().iterator().next().getComponentList();
         //ComponentList cpl = mz.getInstrumentConfigurationList().get(0).getComponentList();
-        ComponentList cpl = mz.getInstrumentConfigurationList().get(0).getComponentList();
+        ComponentList cpl = mz.getInstrumentConfigurationList().getInstrumentConfiguration().get(0).getComponentList();
         assertNotNull(cpl);
         assertEquals("Not expected number of component elements!", 3, cpl.getComponents().size());
         assertEquals("Not expected number of component elements!", cpl.getCount().intValue(), cpl.getComponents().size());
