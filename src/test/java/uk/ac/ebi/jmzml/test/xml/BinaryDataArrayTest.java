@@ -226,7 +226,7 @@ public class BinaryDataArrayTest extends TestCase {
         // check that we have binary data
         //BinaryDataArrayList bdal = spectrum.getBinaryDataArrayList();
         //assertNotNull(bdal);
-        List<BinaryDataArray> dataArray = spectrum.getBinaryDataArrayList();
+        List<BinaryDataArray> dataArray = spectrum.getBinaryDataArrayList().getBinaryDataArray();
         Iterator<BinaryDataArray> iter = dataArray.iterator();
         if (prec == BinaryDataArray.Precision.FLOAT32BIT) { iter.next(); } // get the second BinaryDataArray
         BinaryDataArray data = iter.next(); // get the first BinaryDataArray

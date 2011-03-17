@@ -1,12 +1,9 @@
 package uk.ac.ebi.jmzml.model.mzml;
 
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.TargetListAdapter;
-
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
-import java.util.List;
 
 
 /**
@@ -42,9 +39,7 @@ public class ScanSettings
     private final static long serialVersionUID = 100L;
 
     protected SourceFileRefList sourceFileRefList;
-
-    @XmlJavaTypeAdapter(value = TargetListAdapter.class)
-    protected List<ParamGroup> targetList;
+    protected TargetList targetList;
 
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
@@ -74,9 +69,26 @@ public class ScanSettings
 
     /**
      * Gets the value of the targetList property.
+     *
+     * @return
+     *     possible object is
+     *     {@link TargetList }
+     *
      */
-    public List<ParamGroup> getTargetList() {
+    public TargetList getTargetList() {
         return targetList;
+    }
+
+    /**
+     * Sets the value of the targetList property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link TargetList }
+     *
+     */
+    public void setTargetList(TargetList value) {
+        this.targetList = value;
     }
 
     /**

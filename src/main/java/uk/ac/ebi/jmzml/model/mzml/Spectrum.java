@@ -56,16 +56,10 @@ public class Spectrum
 
     private final static long serialVersionUID = 100L;
 
-   protected ScanList scanList;
-
-    @XmlJavaTypeAdapter(value = PrecursorListAdapter.class)
-    protected List<Precursor> precursorList;
-
-    @XmlJavaTypeAdapter(value = ProductListAdapter.class)
-    protected List<Product> productList;
-
-    @XmlJavaTypeAdapter(value = BinaryDataArrayListAdapter.class)
-    protected List<BinaryDataArray> binaryDataArrayList;
+    protected ScanList scanList;
+    protected PrecursorList precursorList;
+    protected ProductList productList;
+    protected BinaryDataArrayList binaryDataArrayList;
 
     @XmlAttribute(required = true)
     protected String id;
@@ -98,34 +92,98 @@ public class Spectrum
 
     /**
      * Gets the value of the scanList property.
+     *
+     * @return
+     *     possible object is
+     *     {@link ScanList }
+     *
      */
     public ScanList getScanList() {
         return scanList;
     }
 
-    public void setScanList(ScanList scanList){
-        this.scanList = scanList;
+    /**
+     * Sets the value of the scanList property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link ScanList }
+     *
+     */
+    public void setScanList(ScanList value) {
+        this.scanList = value;
     }
 
     /**
      * Gets the value of the precursorList property.
+     *
+     * @return
+     *     possible object is
+     *     {@link PrecursorList }
+     *
      */
-    public List<Precursor> getPrecursorList() {
+    public PrecursorList getPrecursorList() {
         return precursorList;
     }
 
     /**
-     * Gets the value of the productList property.
+     * Sets the value of the precursorList property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link PrecursorList }
+     *
      */
-    public List<Product> getProductList() {
+    public void setPrecursorList(PrecursorList value) {
+        this.precursorList = value;
+    }
+
+    /**
+     * Gets the value of the productList property.
+     *
+     * @return
+     *     possible object is
+     *     {@link ProductList }
+     *
+     */
+    public ProductList getProductList() {
         return productList;
     }
 
     /**
-     * Gets the value of the binaryDataArrayList property.
+     * Sets the value of the productList property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link ProductList }
+     *
      */
-    public List<BinaryDataArray> getBinaryDataArrayList() {
+    public void setProductList(ProductList value) {
+        this.productList = value;
+    }
+
+    /**
+     * Gets the value of the binaryDataArrayList property.
+     *
+     * @return
+     *     possible object is
+     *     {@link BinaryDataArrayList }
+     *
+     */
+    public BinaryDataArrayList getBinaryDataArrayList() {
         return binaryDataArrayList;
+    }
+
+    /**
+     * Sets the value of the binaryDataArrayList property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link BinaryDataArrayList }
+     *
+     */
+    public void setBinaryDataArrayList(BinaryDataArrayList value) {
+        this.binaryDataArrayList = value;
     }
 
     /**

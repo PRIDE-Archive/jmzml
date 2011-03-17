@@ -147,7 +147,7 @@ public class MzMLTab extends JPanel {
 
         try {
             Spectrum spectrum = iUnmarshaller.getSpectrumById(aSpecID);
-            List<BinaryDataArray> bdal = spectrum.getBinaryDataArrayList();
+            List<BinaryDataArray> bdal = spectrum.getBinaryDataArrayList().getBinaryDataArray();
             BinaryDataArray mzBinaryDataArray = (BinaryDataArray) bdal.get(0);
             Number[] mzNumbers = mzBinaryDataArray.getBinaryDataAsNumberArray();
             if (mzNumbers.length < 1) {
@@ -169,13 +169,13 @@ public class MzMLTab extends JPanel {
                 intensities[i] = intNumbers[i].doubleValue();
             }
             //PrecursorList plist = spectrum.getPrecursorList();
-            List<Precursor> plist = spectrum.getPrecursorList();
+            List<Precursor> plist = spectrum.getPrecursorList().getPrecursor();
             double precursorMz = 0.0;
             String precursorCharge = "?";
             if (plist != null) {
                 if (plist.size() == 1) {
                     //SelectedIonList sIonList = plist.getPrecursor().get(0).getSelectedIonList();
-                    List<ParamGroup> sIonList = plist.get(0).getSelectedIonList();
+                    List<ParamGroup> sIonList = plist.get(0).getSelectedIonList().getSelectedIon();
                     if (sIonList != null) {
                         List<CVParam> cvParams = sIonList.get(0).getCvParam();
                         for (Object cvParam : cvParams) {
@@ -218,7 +218,7 @@ public class MzMLTab extends JPanel {
 
         try {
             Chromatogram chromatogram = iUnmarshaller.getChromatogramById(aChromatogramID);
-            List<BinaryDataArray> bdal = chromatogram.getBinaryDataArrayList();
+            List<BinaryDataArray> bdal = chromatogram.getBinaryDataArrayList().getBinaryDataArray();
             BinaryDataArray xAxisBinaryDataArray = (BinaryDataArray) bdal.get(0);
             Number[] xAxisNumbers = xAxisBinaryDataArray.getBinaryDataAsNumberArray();
             double[] xAxis = new double[xAxisNumbers.length];
