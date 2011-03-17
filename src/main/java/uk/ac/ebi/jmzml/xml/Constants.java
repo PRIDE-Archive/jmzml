@@ -63,6 +63,10 @@ public class Constants {
                 }
             }
         }
+
+        // add some additional xpath that are not mapped to a class and therefore not represented in the MzMLElement enumeration
+        xpathsToIndex.add("/indexedmzML/fileChecksum");
+
         // finally make the set unmodifiable
         xpathsToIndex = Collections.unmodifiableSet(xpathsToIndex);
     }
