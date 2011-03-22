@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping>
+<hibernate-mapping default-lazy="false">
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.Product" table="Product" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
         <many-to-one name="isolationWindow" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup" column="IsolationWindow_ParamGroup_hid"/>
     </union-subclass>

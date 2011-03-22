@@ -2,22 +2,18 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping>
+<hibernate-mapping default-lazy="false">
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.Scan" table="Scan" extends="uk.ac.ebi.jmzml.model.mzml.ParamGroup">
 
-        <list name="scanWindowList" access="field" cascade="all" table="ScanWindowList">
-            <key column="SW_hid"/>
-            <index column="SW_idx"/>
-            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.ParamGroup"/>
-        </list>
-
+        <many-to-one name="scanWindowList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ScanWindowList" column="scanWindowList_hid"/>
 
         <property name="spectrumRef" type="string"/>
+        <many-to-one name="spectrum" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Spectrum" column="spectrum_hid" access="field"/>
         <property name="sourceFileRef" type="string"/>
-        <!--<many-to-one name="sourceFile" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFile" column="SourceFile_hid"/>-->
+        <many-to-one name="sourceFile" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFile" column="SourceFile_hid" access="field"/>
         <property name="externalSpectrumID" type="string"/>
         <property name="instrumentConfigurationRef" type="string"/>
-        <!--<many-to-one name="instrumentConfiguration" cascade="all"-->
-                     <!--class="uk.ac.ebi.jmzml.model.mzml.InstrumentConfiguration" column="InstrumentConfiguration_hid"/>-->
+        <many-to-one name="instrumentConfiguration" cascade="all"
+                     class="uk.ac.ebi.jmzml.model.mzml.InstrumentConfiguration" column="InstrumentConfiguration_hid" access="field"/>
     </union-subclass>
 </hibernate-mapping>

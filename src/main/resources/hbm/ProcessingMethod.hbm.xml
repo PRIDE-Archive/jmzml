@@ -2,11 +2,11 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping>
+<hibernate-mapping default-lazy="false">
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.ProcessingMethod" table="ProcessingMethod"
                     extends="uk.ac.ebi.jmzml.model.mzml.ParamGroup">
         <property name="order" column="order_index" type="big_integer"/>
-        <property name="softwareRef" type="string"/>
-        <!--<many-to-one name="software" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Software" column="Software_hid"/>-->
+        <property name="softwareRef" type="string" access="field"/>
+        <many-to-one name="software" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Software" column="Software_hid"/>
     </union-subclass>
 </hibernate-mapping>

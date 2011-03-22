@@ -2,8 +2,8 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping>
-    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.SampleList" table="SampleList" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
+<hibernate-mapping default-lazy="false">
+    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.SampleList" table="SampleList" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject" proxy="uk.ac.ebi.jmzml.model.mzml.SampleList">
         <property name="count" type="big_integer"/>
         <list name="sample" access="field" cascade="all" table="SampleList_Sample">
             <key column="SampleList_hid"/>

@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping default-access="property">
+<hibernate-mapping default-access="property" default-lazy="false">
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.UserParam" table="UserParam" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
         <property name="name" type="string" not-null="true"/>
         <property name="type" type="string"/>
@@ -11,6 +11,6 @@
         <property name="unitName" type="string"/>
 
         <property name="unitCvRef" type="string"/>
-        <!--<many-to-one name="unitCV" class="uk.ac.ebi.jmzml.model.mzml.CV" cascade="all" column="Unit_CV_hid"/>-->
+        <many-to-one name="unitCv" class="uk.ac.ebi.jmzml.model.mzml.CV" cascade="all" column="UnitCV_hid" access="field"/>
     </union-subclass>
 </hibernate-mapping>

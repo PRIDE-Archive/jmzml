@@ -2,10 +2,10 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping>
+<hibernate-mapping default-lazy="false">
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.CVParam" table="CVParam" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
         <property name="cvRef" type="string"/>
-        <!--<many-to-one name="cv" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.CV" access="field" column="CV_hid"/>-->
+        <many-to-one name="cv" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.CV" access="field" column="CV_hid"/>
 
         <property name="accession" type="string"/>
         <property name="value" type="string"/>
@@ -14,6 +14,6 @@
         <property name="unitName" type="string"/>
 
         <property name="unitCvRef" type="string"/>
-        <!--<many-to-one name="unitCV" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.CV" column="Unit_CV_hid"/>-->
+        <many-to-one name="unitCv" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.CV" column="unitCV_hid" access="field"/>
     </union-subclass>
 </hibernate-mapping>

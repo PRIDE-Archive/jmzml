@@ -2,22 +2,17 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping>
+<hibernate-mapping default-lazy="false">
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.Precursor" table="Precursor" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
         <many-to-one name="isolationWindow" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup" column="IsolationWindow_ParamGroup_hid"/>
 
-        <list name="selectedIonList" access="field" cascade="all" table="SelectedIonList">
-            <key column="SI_hid"/>
-            <index column="SI_idx"/>
-            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.ParamGroup"/>
-        </list>
-
+        <many-to-one name="selectedIonList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SelectedIonList" column="selectedIonList_hid"/>
         <many-to-one name="activation" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ParamGroup" column="Activation_ParamGroup_hid"/>
 
         <property name="spectrumRef" type="string"/>
-        <!--<many-to-one name="spectrum" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Spectrum" column="Spectrum_hid"/>-->
+        <many-to-one name="spectrum" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Spectrum" column="Spectrum_hid"/>
         <property name="sourceFileRef" type="string"/>
-        <!--<many-to-one name="sourceFile" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFile" column="SourceFile_hid"/>-->
+        <many-to-one name="sourceFile" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFile" column="SourceFile_hid"/>
         <property name="externalSpectrumID" type="string"/>
 
     </union-subclass>

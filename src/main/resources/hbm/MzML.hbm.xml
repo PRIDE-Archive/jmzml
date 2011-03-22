@@ -2,46 +2,16 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping>
+<hibernate-mapping default-lazy="false">
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.MzML" table="MzML" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
 
-        <!--<many-to-one name="cvList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.CVList" column="CVList_hid"/>-->
-        <list name="cvList" access="field" cascade="all" table="CV">
-            <key column="MzML_hid"/>
-            <index column="MzML_idx"/>
-            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.CV"/>
-        </list>
-        <list name="softwareList" access="field" cascade="all" table="Software">
-            <key column="MzML_hid"/>
-            <index column="MzML_idx"/>
-            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.Software"/>
-        </list>
-        <list name="sampleList" access="field" cascade="all" table="Sample">
-            <key column="MzML_hid"/>
-            <index column="MzML_idx"/>
-            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.Sample"/>
-        </list>
-        <list name="instrumentConfigurationList" access="field" cascade="all" table="InstrumentConfiguration">
-            <key column="MzML_hid"/>
-            <index column="MzML_idx"/>
-            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.InstrumentConfiguration"/>
-        </list>
-        <list name="referenceableParamGroupList" access="field" cascade="all" table="ReferenceableParamGroup">
-            <key column="MzML_hid"/>
-            <index column="MzML_idx"/>
-            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroup"/>
-        </list>
-        <list name="scanSettingsList" access="field" cascade="all" table="ScanSettings">
-            <key column="MzML_hid"/>
-            <index column="MzML_idx"/>
-            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.ScanSettings"/>
-        </list>
-        <list name="dataProcessingList" access="field" cascade="all" table="DataProcessing">
-            <key column="MzML_hid"/>
-            <index column="MzML_idx"/>
-            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.DataProcessing"/>
-        </list>
-
+        <many-to-one name="cvList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.CVList" column="CVList_hid"/>
+        <many-to-one name="softwareList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SoftwareList" column="softwareList_hid"/>
+        <many-to-one name="sampleList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SampleList" column="sampleList_hid"/>
+        <many-to-one name="instrumentConfigurationList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.InstrumentConfigurationList" column="instrumentConfigList_hid"/>
+        <many-to-one name="referenceableParamGroupList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroupList" column="refParamGroupList_hid"/>
+        <many-to-one name="scanSettingsList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ScanSettingsList" column="scanSettingsList_hid"/>
+        <many-to-one name="dataProcessingList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.DataProcessingList"/>
         <many-to-one name="fileDescription" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.FileDescription" column="FileDescription_hid"/>
 
         <many-to-one name="run" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Run" column="Run_hid"/>

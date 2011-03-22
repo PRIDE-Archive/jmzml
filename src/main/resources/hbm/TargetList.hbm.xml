@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping default-access="property">
+<hibernate-mapping default-access="property" default-lazy="false">
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.TargetList" table="TargetList" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
       <property name="count" type="big_integer" not-null="true"/>
         <list name="target" access="field" cascade="all" table="TargetList_ParamGroup">
