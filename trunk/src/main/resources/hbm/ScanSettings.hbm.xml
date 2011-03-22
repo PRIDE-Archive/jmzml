@@ -2,19 +2,13 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping>
+<hibernate-mapping default-lazy="false">
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.ScanSettings" table="ScanSettings"
                     extends="uk.ac.ebi.jmzml.model.mzml.ParamGroup">
         <many-to-one name="sourceFileRefList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SourceFileRefList"
                      column="SourceFileRefList_hid"/>
 
-        <list name="targetList" access="field" cascade="all" table="TargetList">
-            <key column="Target_hid"/>
-            <index column="Target_idx"/>
-            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.ParamGroup"/>
-        </list>
-
-
+        <many-to-one name="targetList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.TargetList" column="targetList_hid"/>
         <property name="id" type="string"/>
     </union-subclass>
 </hibernate-mapping>

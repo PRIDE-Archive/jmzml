@@ -2,8 +2,9 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping>
-    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroupList" table="ReferenceableParamGroupList" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
+<hibernate-mapping default-lazy="false">
+    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroupList" table="ReferenceableParamGroupList" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject"
+            proxy="uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroupList">
         <property name="count" type="big_integer"/>
         <list name="referenceableParamGroup" access="field" cascade="all">
             <key column="ReferenceableParaGrupList_hid"/>

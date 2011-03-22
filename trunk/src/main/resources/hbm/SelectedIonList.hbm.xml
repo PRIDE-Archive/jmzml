@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping>
+<hibernate-mapping default-lazy="false">
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.SelectedIonList" table="SelectedIonList" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
         <property name="count" type="big_integer"/>
         <list name="selectedIon" access="field" cascade="all" table="SelectedIonList_ParamGroup">

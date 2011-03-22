@@ -2,12 +2,12 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping>
+<hibernate-mapping default-lazy="false">
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.ChromatogramList" table="ChromatogramList" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
         <property name="count" type="big_integer"/>
         <property name="defaultDataProcessingRef" type="string"/>
 
-        <!--<many-to-one name="defaultDataProcessing" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing" column="Default_DataProcessing_hid"/>-->
+        <many-to-one name="defaultDataProcessing" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing" column="Default_DataProcessing_hid" access="field"/>
         <list name="chromatogram" access="field" cascade="all" table="ChromatogramList_Chromatogram">
             <key column="ChromatogramList_hid"/>
             <index column="idx"/>

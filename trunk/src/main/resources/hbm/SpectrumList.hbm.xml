@@ -2,8 +2,8 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping default-access="property">
-    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.SpectrumList" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
+<hibernate-mapping default-access="property" default-lazy="false">
+    <union-subclass name="uk.ac.ebi.jmzml.model.mzml.SpectrumList" table="SpectrumList" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
        <list name="spectrum" access="field" cascade="all" table="SpectrumList_Spectrum">
             <key column="SpectrumList_hid"/>
             <index column="idx"/>
@@ -13,6 +13,6 @@
         <property name="count" type="big_integer"/>
 
         <property name="defaultDataProcessingRef" type="string"/>
-        <!--<many-to-one name="defaultDataProcessing" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing" cascade="all" column="Default_DataProcessing_hid"/>-->
+        <many-to-one name="defaultDataProcessing" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing" cascade="all" column="Default_DataProcessing_hid" access="field"/>
     </union-subclass>
 </hibernate-mapping>

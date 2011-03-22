@@ -2,22 +2,18 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping>
+<hibernate-mapping default-lazy="false">
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.Chromatogram" table="Chromatogram"
                     extends="uk.ac.ebi.jmzml.model.mzml.ParamGroup">
 
         <many-to-one name="precursor" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Precursor" column="Precursor_hid"/>
         <many-to-one name="product" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Product" column="Product_hid"/>
-        <list name="binaryDataArrayList" access="field" cascade="all" table="BinaryDataArray">
-            <key column="Chromatogram_hid"/>
-            <index column="Chromatogram_idx"/>
-            <one-to-many class="uk.ac.ebi.jmzml.model.mzml.BinaryDataArray"/>
-        </list>
+        <many-to-one name="binaryDataArrayList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.BinaryDataArrayList" column="BinaryDataArrayList_hid"/>
 
         <property name="id" type="string"/>
         <property name="index" column="order_index" type="big_integer"/>
         <property name="defaultArrayLength" type="integer"/>
         <property name="dataProcessingRef" type="string"/>
-        <!--<many-to-one name="dataProcessing" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing" column="DataProcessing_hid"/>-->
+        <many-to-one name="dataProcessing" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.DataProcessing" column="DataProcessing_hid" access="field"/>
     </union-subclass>
 </hibernate-mapping>
