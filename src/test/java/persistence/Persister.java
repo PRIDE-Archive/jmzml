@@ -1,10 +1,12 @@
 package persistence;
 
-import org.hibernate.CacheMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import uk.ac.ebi.jmzml.MzMLElement;
 import uk.ac.ebi.jmzml.model.mzml.*;
+import uk.ac.ebi.jmzml.model.mzml.params.RunCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.RunUserParam;
+import uk.ac.ebi.jmzml.model.mzml.utilities.ParamGroupUpdater;
 import uk.ac.ebi.jmzml.xml.io.MzMLObjectIterator;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
@@ -33,7 +35,7 @@ public class Persister {
     Map<String, Long> instrumentConfigurationMap = new HashMap<String, Long>();
     Map<String, Long> spectrumMap = new HashMap<String, Long>();
     //number of Spectrum to be persisted in one go, should reduce memory usage
-    public static final int BATCH_SPECTRUM = 100;
+    public static final int BATCH_SPECTRUM = 50;
 
     public Persister(SessionFactory factory) {
         openSessionFactory(factory);
@@ -59,7 +61,6 @@ public class Persister {
         //order to persist elements in mzML
         try {
             URL xmlFileURL = this.getClass().getClassLoader().getResource(fileName);
-//            session.setCacheMode(CacheMode.IGNORE);
             session.getTransaction().begin();
             if (xmlFileURL == null) {
                 System.out.println("File not found");
@@ -67,7 +68,6 @@ public class Persister {
             } else {
                 // 1. parse file
                 MzMLUnmarshaller unmarshaller = new MzMLUnmarshaller(xmlFileURL);
-//                session.getTransaction().begin();
                 //persists CVList and get Map with CV id->hid for future reference
                 cvList = persistCVList(unmarshaller);
                 //need to persiste ReferenceableParamGroup and RefParamGroup id->hid for future reference
@@ -108,7 +108,6 @@ public class Persister {
                 if (attributes.containsKey("id")) {
                     mzML.setId(attributes.get("id"));
                 }
-                CacheMode cache = session.getCacheMode();
                 session.save(mzML);
 
                 mzML_hid = mzML.getHid();
@@ -118,6 +117,7 @@ public class Persister {
             closeSessionFactory();
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            throw new IllegalStateException("Problems when persisting data...");
         }
         return mzML_hid;
     }
@@ -169,7 +169,34 @@ public class Persister {
             throw new IllegalStateException("InstrumentConfiguration Ref not present in database!: " + attributes.get("defaultInstrumentConfigurationRef"));
         }
         //finally, update the RefParam and CV
-        //TODO: how to extract info RefParam and CvParam from XML for Run ??
+        //extract CVParam, UserParam and RefParam from XML
+        MzMLObjectIterator<CVParam> cvParams = unmarshaller.unmarshalCollectionFromXpath("/mzML/run/cvParam", MzMLElement.CVParam.getClazz());
+        while (cvParams.hasNext()) {
+            run.getCvParam().add(cvParams.next());
+        }
+        MzMLObjectIterator<UserParam> userParams = unmarshaller.unmarshalCollectionFromXpath("/mzML/run/userParam", MzMLElement.UserParam.getClazz());
+        while (userParams.hasNext()) {
+            run.getUserParam().add(userParams.next());
+        }
+        MzMLObjectIterator<ReferenceableParamGroupRef> refParamGroupRefs = unmarshaller.unmarshalCollectionFromXpath("/mzML/run/referenceableParamGroupRef", MzMLElement.ReferenceableParamGroupRef.getClazz());
+        while (refParamGroupRefs.hasNext()) {
+            run.getReferenceableParamGroupRef().add(refParamGroupRefs.next());
+        }
+        try {
+            ParamGroupUpdater.updateParamGroupSubclasses(run, RunCVParam.class, RunUserParam.class);
+
+        } catch (InstantiationException e) {
+            throw new RuntimeException(this.getClass().getName() + "Updating run params: " + e.getMessage());
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(this.getClass().getName() + "Updating run params: " + e.getMessage());
+        }
+        //and update internal references
+        if (!run.getCvParam().isEmpty()) {
+            updateCVParam(run.getCvParam());
+        }
+        if (!run.getReferenceableParamGroupRef().isEmpty()) {
+            updateParamGroupRef(run.getReferenceableParamGroupRef());
+        }
         session.persist(run);
         session.flush();
         session.clear();
@@ -182,7 +209,7 @@ public class Persister {
         //should contain proxy objects for the spectrumList
         List<Spectrum> spectrumArray = new ArrayList<Spectrum>();
         //should contain spectrum that couldn't be stored in database because are referencing a spectrum not in database yet
-        Map<String, Spectrum> missedSpectrum = new HashMap<String, Spectrum>();
+        List<Spectrum> missedSpectrum = new ArrayList<Spectrum>();
         //unmarshal the batch of spectrum
         //first, get all spectrumIds
         String[] spectrumIds = Arrays.copyOf(unmarshaller.getSpectrumIDs().toArray(), unmarshaller.getSpectrumIDs().size(), String[].class);
@@ -199,7 +226,7 @@ public class Persister {
                         spectrumMap.put(spectrum.getId(), spectrum.getHid());
                     } else {
                         //if it couldn't be updated all references, add it to the missed ones for later persistance
-                        missedSpectrum.put(spectrum.getId(), spectrum);
+                        missedSpectrum.add(spectrum);
 
                     }
                 } catch (MzMLUnmarshallerException ex) {
@@ -212,8 +239,10 @@ public class Persister {
             session.clear();
 //            session.evict();
         }
-        //TODO:: check if the missed spectrum can be now persisted
-//        persistMissedSpectrum();
+        if (!missedSpectrum.isEmpty()) {
+            //recursive method, will run while we can persist Spectrum from the list
+            persistMissedSpectrum(missedSpectrum);
+        }
         //finally, persist the spectrumList
         spectrumList = new SpectrumList();
         //add the persisted proxy objects to the array to be stored
@@ -234,6 +263,75 @@ public class Persister {
         }
         session.persist(spectrumList);
         return (SpectrumList) session.load(SpectrumList.class, spectrumList.getHid());
+    }
+
+    private void persistMissedSpectrum(List<Spectrum> missedSpectrum) {
+
+        int previous_size = missedSpectrum.size();
+        List<Spectrum> copyOrigSpectrum = new ArrayList<Spectrum>();
+        Iterator it = missedSpectrum.iterator();
+        while (it.hasNext()) {
+            Spectrum spectrum = (Spectrum) it.next();
+            //method to update all references in the Spectrum object
+            if (updateMissedSpectrum(spectrum)) {
+                //if all could be replaced, persist the object and add the id->hid to the cache
+                spectrum = (Spectrum) session.merge(spectrum);
+                session.persist(spectrum);
+                session.flush();
+                session.clear();
+                spectrumMap.put(spectrum.getId(), spectrum.getHid());
+                it.remove();
+            }
+        }
+        if (previous_size == missedSpectrum.size()) {
+            //we didn't manage to persist a single spectrum, throw an error
+            Iterator it1 = missedSpectrum.iterator();
+            List<String> missedList = new ArrayList<String>();
+            while (it1.hasNext()) {
+                missedList.add(((Spectrum) it1.next()).getId());
+            }
+            throw new IllegalStateException("The file contains references to Spectrum that cannot be resolved, check those Spectrums ids !!" + missedList);
+        }
+        if (!missedSpectrum.isEmpty()) {
+            //there are still some spectrum to persist, try them
+            persistMissedSpectrum(missedSpectrum);
+        }
+    }
+
+    //this method will take a Spectrum that could not be persisted before (Scan or Precursor spectrum ref missing), and try to replace now those references
+    private boolean updateMissedSpectrum(Spectrum spectrum) {
+        boolean referencesUpdated = true;
+        //check if there is any Scan with a Spectrum ref not replaced yet
+        if (spectrum.getScanList() != null) {
+            for (Scan scan : spectrum.getScanList().getScan()) {
+                //this reference was not repalced, do it now
+                if (scan.getSpectrumRef() != null && scan.getSpectrum() == null) {
+                    if (spectrumMap.containsKey(scan.getSpectrumRef())) {
+                        Spectrum spectrumProxy = (Spectrum) session.load(Spectrum.class, spectrumMap.get(scan.getSpectrumRef()));
+                        scan.setSpectrum(spectrumProxy);
+                    } else {
+                        referencesUpdated = false; //spectrum not in database yet
+                    }
+                }
+            }
+        }
+
+        //do the same for the precursor
+        if (spectrum.getPrecursorList() != null) {
+            for (Precursor precursor : spectrum.getPrecursorList().getPrecursor()) {
+                //this reference was not repalced, do it now
+                if (precursor.getSpectrumRef() != null && precursor.getSpectrum() == null) {
+                    if (spectrumMap.containsKey(precursor.getSpectrumRef())) {
+                        Spectrum spectrumProxy = (Spectrum) session.load(Spectrum.class, spectrumMap.get(precursor.getSpectrumRef()));
+                        precursor.setSpectrum(spectrumProxy);
+                    } else {
+                        referencesUpdated = false; //spectrum not in database yet
+                    }
+                }
+            }
+        }
+
+        return referencesUpdated;
     }
 
     //method will update all references to other objects, if spectrum_ref could be updated as well, will return true, false otherwise
