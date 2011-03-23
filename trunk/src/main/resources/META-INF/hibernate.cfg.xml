@@ -7,21 +7,22 @@
     <session-factory>
         <!-- Database connection settings -->
         <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+        <!--local database-->
         <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:XE</property>
-        <!-- property name="hibernate.connection.driver_class" / -->
         <property name="hibernate.connection.username">mzml</property>
         <property name="hibernate.connection.password">mzml</property>
-        <!-- Hibernate specific configuration  -->
         <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
+         <!--Hibernate specific configuration  -->
+
         <property name="hibernate.max_fetch_depth">3</property>
-     
+
         <!-- Auto detect annotation model classes -->
         <property name="hibernate.archive.autodetection">class</property>
 
         <!-- Disable the second-level cache  -->
         <property name="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
-        
-        <property name="hibernate.jdbc.batch_size">100</property>
+
+        <property name="hibernate.jdbc.batch_size">50</property>
 
         <!-- Echo all executed SQL to stdout -->
         <property name="use_sql_comments">true</property>
@@ -82,46 +83,48 @@
         <mapping resource="hbm/Spectrum.hbm.xml"/>
         <mapping resource="hbm/SpectrumList.hbm.xml"/>
         <mapping resource="hbm/TargetList.hbm.xml"/>
-        <mapping resource="hbm/UserParam.hbm.xml" />
+        <mapping resource="hbm/UserParam.hbm.xml"/>
 
         <!-- params mapping file -->
         <mapping resource="hbm/params/ActivationCVParam.hbm.xml"/>
         <mapping resource="hbm/params/ActivationUserParam.hbm.xml"/>
         <mapping resource="hbm/params/BinaryDataArrayCVParam.hbm.xml"/>
-        <mapping resource="hbm/params/BinaryDataArrayUserParam.hbm.xml" />
-        <mapping resource="hbm/params/ChromatogramCVParam.hbm.xml" />
-        <mapping resource="hbm/params/ChromatogramUserParam.hbm.xml" />
-        <mapping resource="hbm/params/ComponentCVParam.hbm.xml" />
-        <mapping resource="hbm/params/ComponentUserParam.hbm.xml" />
-        <mapping resource="hbm/params/ContactCVParam.hbm.xml" />
-        <mapping resource="hbm/params/ContactUserParam.hbm.xml" />
-        <mapping resource="hbm/params/FileDescriptionCVParam.hbm.xml" />
-        <mapping resource="hbm/params/FileDescriptionUserParam.hbm.xml" />
-        <mapping resource="hbm/params/InstrumentConfigurationCVParam.hbm.xml" />
-        <mapping resource="hbm/params/InstrumentConfigurationUserParam.hbm.xml" />
-        <mapping resource="hbm/params/IsolationWindowCVParam.hbm.xml" />
-        <mapping resource="hbm/params/IsolationWindowUserParam.hbm.xml" />
-        <mapping resource="hbm/params/ProcessingMethodCVParam.hbm.xml" />
-        <mapping resource="hbm/params/ProcessingMethodUserParam.hbm.xml" />
-        <mapping resource="hbm/params/RunCVParam.hbm.xml" />
-        <mapping resource="hbm/params/RunUserParam.hbm.xml" />
-        <mapping resource="hbm/params/SampleCVParam.hbm.xml" />
-        <mapping resource="hbm/params/SampleUserParam.hbm.xml" />
-        <mapping resource="hbm/params/ScanCVParam.hbm.xml" />
-        <mapping resource="hbm/params/ScanUserParam.hbm.xml" />
-        <mapping resource="hbm/params/ScanListCVParam.hbm.xml" />
-        <mapping resource="hbm/params/ScanListUserParam.hbm.xml" />
-        <mapping resource="hbm/params/ScanSettingsCVParam.hbm.xml" />
-        <mapping resource="hbm/params/ScanSettingsUserParam.hbm.xml" />
-        <mapping resource="hbm/params/ScanWindowCVParam.hbm.xml" />
-        <mapping resource="hbm/params/ScanWindowUserParam.hbm.xml" />
-        <mapping resource="hbm/params/SelectedIonCVParam.hbm.xml" />
-        <mapping resource="hbm/params/SelectedIonUserParam.hbm.xml" />
-        <mapping resource="hbm/params/SourceFileCVParam.hbm.xml" />
-        <mapping resource="hbm/params/SourceFileUserParam.hbm.xml" />
-        <mapping resource="hbm/params/SpectrumCVParam.hbm.xml" />
-        <mapping resource="hbm/params/SpectrumUserParma.hbm.xml" />
-        <mapping resource="hbm/params/TargetCVParam.hbm.xml" />
-        <mapping resource="hbm/params/TargetUserParam.hbm.xml" />
+        <mapping resource="hbm/params/BinaryDataArrayUserParam.hbm.xml"/>
+        <mapping resource="hbm/params/ChromatogramCVParam.hbm.xml"/>
+        <mapping resource="hbm/params/ChromatogramUserParam.hbm.xml"/>
+        <mapping resource="hbm/params/ComponentCVParam.hbm.xml"/>
+        <mapping resource="hbm/params/ComponentUserParam.hbm.xml"/>
+        <mapping resource="hbm/params/ContactCVParam.hbm.xml"/>
+        <mapping resource="hbm/params/ContactUserParam.hbm.xml"/>
+        <mapping resource="hbm/params/FileDescriptionCVParam.hbm.xml"/>
+        <mapping resource="hbm/params/FileDescriptionUserParam.hbm.xml"/>
+        <mapping resource="hbm/params/InstrumentConfigurationCVParam.hbm.xml"/>
+        <mapping resource="hbm/params/InstrumentConfigurationUserParam.hbm.xml"/>
+        <mapping resource="hbm/params/IsolationWindowCVParam.hbm.xml"/>
+        <mapping resource="hbm/params/IsolationWindowUserParam.hbm.xml"/>
+        <mapping resource="hbm/params/ProcessingMethodCVParam.hbm.xml"/>
+        <mapping resource="hbm/params/ProcessingMethodUserParam.hbm.xml"/>
+        <mapping resource="hbm/params/RunCVParam.hbm.xml"/>
+        <mapping resource="hbm/params/RunUserParam.hbm.xml"/>
+        <mapping resource="hbm/params/SampleCVParam.hbm.xml"/>
+        <mapping resource="hbm/params/SampleUserParam.hbm.xml"/>
+        <mapping resource="hbm/params/ScanCVParam.hbm.xml"/>
+        <mapping resource="hbm/params/ScanUserParam.hbm.xml"/>
+        <mapping resource="hbm/params/ScanListCVParam.hbm.xml"/>
+        <mapping resource="hbm/params/ScanListUserParam.hbm.xml"/>
+        <mapping resource="hbm/params/ScanSettingsCVParam.hbm.xml"/>
+        <mapping resource="hbm/params/ScanSettingsUserParam.hbm.xml"/>
+        <mapping resource="hbm/params/ScanWindowCVParam.hbm.xml"/>
+        <mapping resource="hbm/params/ScanWindowUserParam.hbm.xml"/>
+        <mapping resource="hbm/params/SelectedIonCVParam.hbm.xml"/>
+        <mapping resource="hbm/params/SelectedIonUserParam.hbm.xml"/>
+        <mapping resource="hbm/params/SoftwareCVParam.hbm.xml"/>
+        <mapping resource="hbm/params/SoftwareUserParam.hbm.xml"/>
+        <mapping resource="hbm/params/SourceFileCVParam.hbm.xml"/>
+        <mapping resource="hbm/params/SourceFileUserParam.hbm.xml"/>
+        <mapping resource="hbm/params/SpectrumCVParam.hbm.xml"/>
+        <mapping resource="hbm/params/SpectrumUserParma.hbm.xml"/>
+        <mapping resource="hbm/params/TargetCVParam.hbm.xml"/>
+        <mapping resource="hbm/params/TargetUserParam.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

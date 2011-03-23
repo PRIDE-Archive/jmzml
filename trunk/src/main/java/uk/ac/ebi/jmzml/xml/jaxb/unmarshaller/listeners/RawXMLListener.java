@@ -118,6 +118,10 @@ public class RawXMLListener extends Unmarshaller.Listener {
                 ParamGroupUpdater.updateParamGroupSubclasses((Spectrum) target, SpectrumCVParam.class, SpectrumUserParam.class);
             }
 
+            if (target instanceof Software){
+                ParamGroupUpdater.updateParamGroupSubclasses((Software) target, SoftwareCVParam.class, SoftwareUserParam.class);
+            }
+
             ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
             // Update all classes with ParamGroup members
 
