@@ -53,6 +53,7 @@ public class MzMLIndexerFactory {
         private String mzMLAttributeXMLString = null;
         // a unified cache of all the id maps
         private HashMap<Class, LinkedHashMap<String, IndexElement>> idMapCache = new HashMap<Class, LinkedHashMap<String, IndexElement>>();
+        private HashMap<BigInteger, String> spectrumIndexToIDMap = new HashMap<BigInteger, String>();
 
         ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
         // Constructor
@@ -118,6 +119,7 @@ public class MzMLIndexerFactory {
                 // only for elements were a ID map is needed and a xpath is given
                 if (element.isIdMapped() && element.isIndexed()) {
                     logger.debug("Initialising ID map for " + element.getClazz().getName());
+
                     // check if the according class is a sub-class of Identifiable
 //                    if (!IdentifiableMzMLObject.class.isAssignableFrom(element.getClazz())) {
 ////                        throw new IllegalStateException("Attempt to create ID map for not Identifiable element: " + element.getClazz());
@@ -187,6 +189,12 @@ public class MzMLIndexerFactory {
                 } else {
                     throw new IllegalStateException("Error initializing ID cache: No id attribute found for element " + xml);
                 }
+                if ( xpath.equalsIgnoreCase( root + checkRoot(MzMLElement.Spectrum.getXpath()) ) ) {
+                    BigInteger index = getIndexFromRawXML(xml);
+                    if (index != null) {
+                        spectrumIndexToIDMap.put(index, id);
+                    }
+                }
             }
         }
 
@@ -222,13 +230,13 @@ public class MzMLIndexerFactory {
         // TODO: do we need those 2 methods ??
 
         public Set<BigInteger> getSpectrumIndexes() {
-            return null;
-//            return spectrumIndexToIDMap.keySet();
+//            return null;
+            return spectrumIndexToIDMap.keySet();
         }
 
         public String getSpectrumIDFromSpectrumIndex(BigInteger aIndex) {
-//            return spectrumIndexToIDMap.get(aIndex);
-            return null;
+            return spectrumIndexToIDMap.get(aIndex);
+//            return null;
         }
 
         public Set<String> getChromatogramIDs() {
