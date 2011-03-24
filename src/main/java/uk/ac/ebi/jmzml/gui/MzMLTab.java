@@ -44,7 +44,7 @@ public class MzMLTab extends JPanel {
     private JmzMLViewer iParent = null;
     private JSplitPane spltMain = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
     /**
-     * The maximum padding allowed in the spectrum and chromatogram panels. 
+     * The maximum padding allowed in the spectrum and chromatogram panels.
      * Increase if font size on the y-axis becomes too small.
      */
     private int spectrumPanelMaxPadding = 80;
@@ -52,7 +52,7 @@ public class MzMLTab extends JPanel {
     /**
      * Creates a new MzMLTab JPanel.
      *
-     * @param aParent a reference to the parent JmzMLViewer
+     * @param aParent       a reference to the parent JmzMLViewer
      * @param aUnmarshaller the unmarshaller of the mzML file
      */
     public MzMLTab(JmzMLViewer aParent, MzMLUnmarshaller aUnmarshaller) {
@@ -169,21 +169,26 @@ public class MzMLTab extends JPanel {
                 intensities[i] = intNumbers[i].doubleValue();
             }
             //PrecursorList plist = spectrum.getPrecursorList();
-            List<Precursor> plist = spectrum.getPrecursorList().getPrecursor();
             double precursorMz = 0.0;
             String precursorCharge = "?";
-            if (plist != null) {
-                if (plist.size() == 1) {
-                    //SelectedIonList sIonList = plist.getPrecursor().get(0).getSelectedIonList();
-                    List<ParamGroup> sIonList = plist.get(0).getSelectedIonList().getSelectedIon();
-                    if (sIonList != null) {
-                        List<CVParam> cvParams = sIonList.get(0).getCvParam();
-                        for (Object cvParam : cvParams) {
-                            CVParam lCVParam = (CVParam) cvParam;
-                            if (lCVParam.getAccession().equals("MS:1000744")) {
-                                precursorMz = Double.parseDouble(lCVParam.getValue().trim());
-                            } else if (lCVParam.getAccession().equals("MS:1000041")) {
-                                precursorCharge = lCVParam.getValue();
+            if (spectrum.getPrecursorList() != null) {
+                List<Precursor> plist = spectrum.getPrecursorList().getPrecursor();
+
+                if (plist != null) {
+                    if (plist.size() == 1) {
+                        //SelectedIonList sIonList = plist.getPrecursor().get(0).getSelectedIonList()
+                        if (plist.get(0).getSelectedIonList() != null) {
+                            List<ParamGroup> sIonList = plist.get(0).getSelectedIonList().getSelectedIon();
+                            if (sIonList != null) {
+                                List<CVParam> cvParams = sIonList.get(0).getCvParam();
+                                for (Object cvParam : cvParams) {
+                                    CVParam lCVParam = (CVParam) cvParam;
+                                    if (lCVParam.getAccession().equals("MS:1000744")) {
+                                        precursorMz = Double.parseDouble(lCVParam.getValue().trim());
+                                    } else if (lCVParam.getAccession().equals("MS:1000041")) {
+                                        precursorCharge = lCVParam.getValue();
+                                    }
+                                }
                             }
                         }
                     }
