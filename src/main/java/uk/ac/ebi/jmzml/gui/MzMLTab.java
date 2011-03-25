@@ -207,7 +207,7 @@ public class MzMLTab extends JPanel {
                 }
             }
             JPanel specPanel = new SpectrumPanel(
-                    mz, intensities, precursorMz, precursorCharge, aSpecID, spectrumPanelMaxPadding, false, true, true, true, msLevel, !isCentroid);
+                    mz, intensities, precursorMz, precursorCharge, aSpecID, spectrumPanelMaxPadding, true, true, true, msLevel, !isCentroid);
             spltMain.setBottomComponent(specPanel);
         } catch (MzMLUnmarshallerException mue) {
             iParent.seriousProblem("Unable to access file: " + mue.getMessage(), "Problem reading spectrum!");
