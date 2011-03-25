@@ -6,9 +6,7 @@
  */
 package uk.ac.ebi.jmzml;
 
-import com.jgoodies.looks.plastic.PlasticLookAndFeel;
-import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
-import com.jgoodies.looks.plastic.theme.SkyKrupp;
+import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
 import org.xml.sax.SAXException;
 import uk.ac.ebi.jmzml.gui.HelpWindow;
 import uk.ac.ebi.jmzml.gui.MzMLTab;
@@ -143,8 +141,7 @@ public class JmzMLViewer extends JFrame implements ProgressDialogParent {
 
         // Set the Java Look and Feel
         try {
-            PlasticLookAndFeel.setPlasticTheme(new SkyKrupp());
-            UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
+            UIManager.setLookAndFeel(new NimbusLookAndFeel());
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
