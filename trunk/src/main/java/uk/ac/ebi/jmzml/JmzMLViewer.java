@@ -6,7 +6,6 @@
  */
 package uk.ac.ebi.jmzml;
 
-import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
 import org.xml.sax.SAXException;
 import uk.ac.ebi.jmzml.gui.HelpWindow;
 import uk.ac.ebi.jmzml.gui.MzMLTab;
@@ -29,6 +28,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.UIManager.LookAndFeelInfo;
 /*
  * CVS information:
  *
@@ -141,9 +141,14 @@ public class JmzMLViewer extends JFrame implements ProgressDialogParent {
 
         // Set the Java Look and Feel
         try {
-            UIManager.setLookAndFeel(new NimbusLookAndFeel());
-        } catch (UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // ignore error, use the default look and feel
         }
 
         JmzMLViewer jmzMLViewer = null;
