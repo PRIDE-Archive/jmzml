@@ -1,9 +1,9 @@
 package uk.ac.ebi.jmzml.xml.jaxb.resolver;
 
 import uk.ac.ebi.jmzml.MzMLElement;
-import uk.ac.ebi.jmzml.model.mzml.DataProcessing;
 import uk.ac.ebi.jmzml.model.mzml.InstrumentConfiguration;
 import uk.ac.ebi.jmzml.model.mzml.ScanSettings;
+import uk.ac.ebi.jmzml.model.mzml.Software;
 import uk.ac.ebi.jmzml.xml.io.MzMLObjectCache;
 import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
 
@@ -29,6 +29,11 @@ public class InstrumentConfigurationRefResolver extends AbstractReferenceResolve
                 ScanSettings refObject = this.unmarshal(ref, ScanSettings.class);
                 object.setScanSettings(refObject);
             }
+            String refSoftware = object.getSoftwareRef();
+            if (refSoftware != null){
+                Software softwareObject = this.unmarshal(refSoftware, Software.class);
+                object.setSoftware(softwareObject);
+            }
         }
     }
 
@@ -43,7 +48,7 @@ public class InstrumentConfigurationRefResolver extends AbstractReferenceResolve
     @Override
     public void checkRefID(InstrumentConfiguration object) {
         // if there is a referenced object and its ID does not correspond to the refID, then there is something wrong
-        if (object.getScanSettings() != null && !object.getScanSettingsRef().equals(object.getScanSettings().getId())) {
+        if (object.getScanSettings() != null && !object.getScanSettingsRef().equals(object.getScanSettings().getId()) && object.getSoftware() != null && !object.getSoftwareRef().equals(object.getSoftware().getId())) {
             throw new IllegalStateException("Reference ID and referenced object ID do not match!");
         }
     }
