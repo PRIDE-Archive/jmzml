@@ -7,12 +7,13 @@
     <session-factory>
         <!-- Database connection settings -->
         <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+
         <!--local database-->
         <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:XE</property>
         <property name="hibernate.connection.username">mzml</property>
         <property name="hibernate.connection.password">mzml</property>
         <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
-         <!--Hibernate specific configuration  -->
+        <!--Hibernate specific configuration  -->
 
         <property name="hibernate.max_fetch_depth">3</property>
 
