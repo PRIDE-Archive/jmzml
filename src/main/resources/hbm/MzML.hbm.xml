@@ -2,19 +2,19 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping default-lazy="false">
+<hibernate-mapping default-lazy="false" >
+
     <union-subclass name="uk.ac.ebi.jmzml.model.mzml.MzML" table="MzML" extends="uk.ac.ebi.jmzml.model.mzml.MzMLObject">
+        <many-to-one name="cvList" class="uk.ac.ebi.jmzml.model.mzml.CVList" column="CVList_hid" fetch="join"/>
+        <many-to-one name="softwareList" class="uk.ac.ebi.jmzml.model.mzml.SoftwareList" column="softwareList_hid" fetch="join"/>
+        <many-to-one name="sampleList" class="uk.ac.ebi.jmzml.model.mzml.SampleList" column="sampleList_hid" fetch="join"/>
+        <many-to-one name="instrumentConfigurationList" class="uk.ac.ebi.jmzml.model.mzml.InstrumentConfigurationList" column="instrumentConfigList_hid" fetch="join"/>
+        <many-to-one name="referenceableParamGroupList" class="uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroupList" column="refParamGroupList_hid" fetch="join"/>
+        <many-to-one name="scanSettingsList" class="uk.ac.ebi.jmzml.model.mzml.ScanSettingsList" column="scanSettingsList_hid" fetch="join"/>
+        <many-to-one name="dataProcessingList" class="uk.ac.ebi.jmzml.model.mzml.DataProcessingList" fetch="join"/>
+        <many-to-one name="fileDescription" class="uk.ac.ebi.jmzml.model.mzml.FileDescription" column="FileDescription_hid" fetch="join"/>
 
-        <many-to-one name="cvList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.CVList" column="CVList_hid"/>
-        <many-to-one name="softwareList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SoftwareList" column="softwareList_hid"/>
-        <many-to-one name="sampleList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.SampleList" column="sampleList_hid"/>
-        <many-to-one name="instrumentConfigurationList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.InstrumentConfigurationList" column="instrumentConfigList_hid"/>
-        <many-to-one name="referenceableParamGroupList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroupList" column="refParamGroupList_hid"/>
-        <many-to-one name="scanSettingsList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.ScanSettingsList" column="scanSettingsList_hid"/>
-        <many-to-one name="dataProcessingList" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.DataProcessingList"/>
-        <many-to-one name="fileDescription" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.FileDescription" column="FileDescription_hid"/>
-
-        <many-to-one name="run" cascade="all" class="uk.ac.ebi.jmzml.model.mzml.Run" column="Run_hid"/>
+        <many-to-one name="run" class="uk.ac.ebi.jmzml.model.mzml.Run" column="Run_hid" fetch="join"/>
 
         <property name="accession" type="string"/>
         <property name="version" type="string"/>
