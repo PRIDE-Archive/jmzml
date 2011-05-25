@@ -6,7 +6,7 @@
 
     <groupId>uk.ac.ebi.jmzml.gui</groupId>
     <artifactId>jmzmlGUI</artifactId>
-    <version>1.0</version>
+    <version>1.6.6</version>
 
     <name>Graphical user interface for MzML</name>
     <url>http://www.ebi.ac.uk/pride</url>
