@@ -17,7 +17,7 @@
 
     <!-- Set the version number for the whole project -->
     <properties>
-        <version.number>1.6.6</version.number>
+        <version.number>1.6.7-SNAPSHOT</version.number>
     </properties>
 
 
