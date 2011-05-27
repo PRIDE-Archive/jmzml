@@ -36,7 +36,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.sax.SAXSource;
 import java.io.*;
-import java.math.BigInteger;
 import java.net.URL;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
@@ -462,11 +461,11 @@ public class MzMLUnmarshaller {
     /**
      * Returns the spectrum with a given index.
      *
-     * @param aIndex BigInteger with the index for the desired spectrum
+     * @param aIndex Integer with the index for the desired spectrum
      * @return the spectrum with the given index, or 'null' if none is found.
      * @throws MzMLUnmarshallerException
      */
-    public Spectrum getSpectrumByScanTime(BigInteger aIndex) throws MzMLUnmarshallerException {
+    public Spectrum getSpectrumByScanTime(Integer aIndex) throws MzMLUnmarshallerException {
         // Resolve the index to an ID.
         String specID = index.getSpectrumIDFromSpectrumIndex(aIndex);
 
@@ -510,7 +509,7 @@ public class MzMLUnmarshaller {
      *
      * @return a set containing all spectrum indexes
      */
-    public Set<BigInteger> getSpectrumIndexes() {
+    public Set<Integer> getSpectrumIndexes() {
         return this.index.getSpectrumIndexes();
     }
 
@@ -518,11 +517,11 @@ public class MzMLUnmarshaller {
      * This method returns the spectrum ID for a given spectrum index, or 'null'
      * if the specified index could not be found.
      *
-     * @param aIndex    BigInteger with the spectrum index to retrieve
+     * @param aIndex    Integer with the spectrum index to retrieve
      *                  the spectrum ID for
      * @return  String  with the spectrum ID, or 'null' if the index could not be found.
      */
-    public String getSpectrumIDFromSpectrumIndex(BigInteger aIndex) {
+    public String getSpectrumIDFromSpectrumIndex(Integer aIndex) {
         return index.getSpectrumIDFromSpectrumIndex(aIndex);
     }
 

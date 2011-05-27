@@ -9,7 +9,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
@@ -119,7 +118,7 @@ public class BinaryDataArray
     protected byte[] binary;
     @XmlAttribute
     @XmlSchemaType(name = "nonNegativeInteger")
-    protected BigInteger arrayLength;
+    protected Integer arrayLength;
     @XmlAttribute
     @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
@@ -130,7 +129,7 @@ public class BinaryDataArray
 
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "nonNegativeInteger")
-    protected BigInteger encodedLength;
+    protected Integer encodedLength;
 
 
     /**
@@ -157,9 +156,9 @@ public class BinaryDataArray
      * Gets the value of the arrayLength property.
      *
      * @return possible object is
-     *         {@link BigInteger }
+     *         {@link Integer }
      */
-    public BigInteger getArrayLength() {
+    public Integer getArrayLength() {
         return arrayLength;
     }
 
@@ -167,9 +166,9 @@ public class BinaryDataArray
      * Sets the value of the arrayLength property.
      *
      * @param value allowed object is
-     *              {@link BigInteger }
+     *              {@link Integer }
      */
-    public void setArrayLength(BigInteger value) {
+    public void setArrayLength(Integer value) {
         this.arrayLength = value;
     }
 
@@ -228,9 +227,9 @@ public class BinaryDataArray
      * Gets the value of the encodedLength property.
      *
      * @return possible object is
-     *         {@link BigInteger }
+     *         {@link Integer }
      */
-    public BigInteger getEncodedLength() {
+    public Integer getEncodedLength() {
         return encodedLength;
     }
 
@@ -238,9 +237,9 @@ public class BinaryDataArray
      * Sets the value of the encodedLength property.
      *
      * @param value allowed object is
-     *              {@link BigInteger }
+     *              {@link Integer }
      */
-    public void setEncodedLength(BigInteger value) {
+    public void setEncodedLength(Integer value) {
         this.encodedLength = value;
     }
 

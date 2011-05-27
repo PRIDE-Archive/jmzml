@@ -5,7 +5,6 @@ import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +43,7 @@ public class ChromatogramList
     protected List<Chromatogram> chromatogram;
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "nonNegativeInteger")
-    protected BigInteger count;
+    protected Integer count;
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
@@ -84,9 +83,9 @@ public class ChromatogramList
      * Gets the value of the count property.
      *
      * @return possible object is
-     *         {@link BigInteger }
+     *         {@link Integer }
      */
-    public BigInteger getCount() {
+    public Integer getCount() {
         return count;
     }
 
@@ -94,9 +93,9 @@ public class ChromatogramList
      * Sets the value of the count property.
      *
      * @param value allowed object is
-     *              {@link BigInteger }
+     *              {@link Integer }
      */
-    public void setCount(BigInteger value) {
+    public void setCount(Integer value) {
         this.count = value;
     }
 

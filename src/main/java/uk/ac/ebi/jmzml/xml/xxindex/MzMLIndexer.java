@@ -24,7 +24,6 @@ package uk.ac.ebi.jmzml.xml.xxindex;
 
 import psidev.psi.tools.xxindex.index.IndexElement;
 
-import java.math.BigInteger;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -45,9 +44,9 @@ public interface MzMLIndexer {
 
     public Set<String> getSpectrumIDs();
 
-    public Set<BigInteger> getSpectrumIndexes();
+    public Set<Integer> getSpectrumIndexes();
 
-    public String getSpectrumIDFromSpectrumIndex(BigInteger index);
+    public String getSpectrumIDFromSpectrumIndex(Integer index);
 
     public Set<String> getChromatogramIDs();
 

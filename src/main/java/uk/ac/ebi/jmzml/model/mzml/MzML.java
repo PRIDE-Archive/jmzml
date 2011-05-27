@@ -1,11 +1,8 @@
 package uk.ac.ebi.jmzml.model.mzml;
 
-import uk.ac.ebi.jmzml.xml.jaxb.adapters.*;
 
 import javax.xml.bind.annotation.*;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
-import java.util.List;
 
 
 /**
