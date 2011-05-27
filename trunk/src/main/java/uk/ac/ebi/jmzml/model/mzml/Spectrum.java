@@ -5,8 +5,6 @@ import uk.ac.ebi.jmzml.xml.jaxb.adapters.*;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.util.List;
 
 
 /**
@@ -69,7 +67,7 @@ public class Spectrum
 
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "nonNegativeInteger")
-    protected BigInteger index;
+    protected Integer index;
 
     @XmlAttribute(required = true)
     protected int defaultArrayLength;
@@ -230,9 +228,9 @@ public class Spectrum
      * Gets the value of the index property.
      *
      * @return possible object is
-     *         {@link BigInteger }
+     *         {@link Integer }
      */
-    public BigInteger getIndex() {
+    public Integer getIndex() {
         return index;
     }
 
@@ -240,9 +238,9 @@ public class Spectrum
      * Sets the value of the index property.
      *
      * @param value allowed object is
-     *              {@link BigInteger }
+     *              {@link Integer }
      */
-    public void setIndex(BigInteger value) {
+    public void setIndex(Integer value) {
         this.index = value;
     }
 

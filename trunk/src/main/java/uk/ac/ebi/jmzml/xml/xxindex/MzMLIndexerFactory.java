@@ -13,7 +13,7 @@ import uk.ac.ebi.jmzml.xml.Constants;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigInteger;
+
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,7 +53,7 @@ public class MzMLIndexerFactory {
         private String mzMLAttributeXMLString = null;
         // a unified cache of all the id maps
         private HashMap<Class, LinkedHashMap<String, IndexElement>> idMapCache = new HashMap<Class, LinkedHashMap<String, IndexElement>>();
-        private HashMap<BigInteger, String> spectrumIndexToIDMap = new HashMap<BigInteger, String>();
+        private HashMap<Integer, String> spectrumIndexToIDMap = new HashMap<Integer, String>();
 
         ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
         // Constructor
@@ -190,7 +190,7 @@ public class MzMLIndexerFactory {
                     throw new IllegalStateException("Error initializing ID cache: No id attribute found for element " + xml);
                 }
                 if ( xpath.equalsIgnoreCase( root + checkRoot(MzMLElement.Spectrum.getXpath()) ) ) {
-                    BigInteger index = getIndexFromRawXML(xml);
+                    Integer index = getIndexFromRawXML(xml);
                     if (index != null) {
                         spectrumIndexToIDMap.put(index, id);
                     }
@@ -207,12 +207,12 @@ public class MzMLIndexerFactory {
             }
         }
 
-        private BigInteger getIndexFromRawXML(String xml) {
+        private Integer getIndexFromRawXML(String xml) {
             Matcher match = INDEX_PATTERN.matcher(xml);
             if (match.find()) {
                 String result = match.group(1).intern();
                 try {
-                    BigInteger biResult = new BigInteger(result);
+                    Integer biResult = new Integer(result);
                     return biResult;
                 } catch (NumberFormatException nfe) {
                     throw new IllegalStateException("Index attribute could not be parsed into an integer in xml: " + xml);
@@ -229,12 +229,12 @@ public class MzMLIndexerFactory {
 
         // TODO: do we need those 2 methods ??
 
-        public Set<BigInteger> getSpectrumIndexes() {
+        public Set<Integer> getSpectrumIndexes() {
 //            return null;
             return spectrumIndexToIDMap.keySet();
         }
 
-        public String getSpectrumIDFromSpectrumIndex(BigInteger aIndex) {
+        public String getSpectrumIDFromSpectrumIndex(Integer aIndex) {
             return spectrumIndexToIDMap.get(aIndex);
 //            return null;
         }

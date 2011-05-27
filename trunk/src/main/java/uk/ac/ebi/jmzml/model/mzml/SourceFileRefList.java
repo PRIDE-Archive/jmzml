@@ -1,15 +1,10 @@
 
 package uk.ac.ebi.jmzml.model.mzml;
 
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
 
 
 /**
@@ -45,7 +40,7 @@ public class SourceFileRefList
     protected List<SourceFileRef> sourceFileRef;
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "nonNegativeInteger")
-    protected BigInteger count;
+    protected Integer count;
 
     /**
      * Gets the value of the sourceFileRef property.
@@ -81,10 +76,10 @@ public class SourceFileRefList
      * 
      * @return
      *     possible object is
-     *     {@link BigInteger }
+     *     {@link Integer }
      *     
      */
-    public BigInteger getCount() {
+    public Integer getCount() {
         return count;
     }
 
@@ -93,10 +88,10 @@ public class SourceFileRefList
      * 
      * @param value
      *     allowed object is
-     *     {@link BigInteger }
+     *     {@link Integer }
      *     
      */
-    public void setCount(BigInteger value) {
+    public void setCount(Integer value) {
         this.count = value;
     }
 

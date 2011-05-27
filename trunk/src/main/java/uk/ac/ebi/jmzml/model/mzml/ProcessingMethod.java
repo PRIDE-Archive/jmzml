@@ -5,7 +5,6 @@ import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
-import java.math.BigInteger;
 
 
 /**
@@ -33,7 +32,7 @@ public class ProcessingMethod
     private final static long serialVersionUID = 100L;
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "nonNegativeInteger")
-    protected BigInteger order;
+    protected Integer order;
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(IdRefAdapter.class)
     @XmlSchemaType(name = "IDREF")
@@ -47,9 +46,9 @@ public class ProcessingMethod
      * Gets the value of the order property.
      *
      * @return possible object is
-     *         {@link BigInteger }
+     *         {@link Integer }
      */
-    public BigInteger getOrder() {
+    public Integer getOrder() {
         return order;
     }
 
@@ -57,9 +56,9 @@ public class ProcessingMethod
      * Sets the value of the order property.
      *
      * @param value allowed object is
-     *              {@link BigInteger }
+     *              {@link Integer }
      */
-    public void setOrder(BigInteger value) {
+    public void setOrder(Integer value) {
         this.order = value;
     }
 
