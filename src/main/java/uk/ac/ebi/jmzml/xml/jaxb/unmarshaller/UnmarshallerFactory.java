@@ -118,7 +118,7 @@ public class UnmarshallerFactory {
             xmlFilter.setParent(xmlReader);
             xmlFilter.setContentHandler(uh);
 
-            logger.info("Unmarshaller Initialized");
+            logger.debug("Unmarshaller Initialized");
 
             return unmarshaller;
 
