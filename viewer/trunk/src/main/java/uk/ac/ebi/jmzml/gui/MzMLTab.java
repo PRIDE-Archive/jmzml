@@ -19,9 +19,7 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
 import java.awt.*;
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 /*
@@ -67,16 +65,15 @@ public class MzMLTab extends JPanel {
     private void initDisplay() {
 
         // Sort spectra by index, but display by ID.
-        TreeSet<BigInteger> specIndexes = new TreeSet<BigInteger>(iUnmarshaller.getSpectrumIndexes());
-        ArrayList<String> specIDs = new ArrayList(specIndexes.size());
+        TreeSet<Integer> specIndexes = new TreeSet<Integer>(iUnmarshaller.getSpectrumIndexes());
+        ArrayList<String> specIDs = new ArrayList<String>(specIndexes.size());
 
-        Iterator<BigInteger> iter = specIndexes.iterator();
-        while (iter.hasNext()) {
-            specIDs.add(iUnmarshaller.getSpectrumIDFromSpectrumIndex(iter.next()));
+        for (Integer specIndex : specIndexes) {
+            specIDs.add(iUnmarshaller.getSpectrumIDFromSpectrumIndex(specIndex));
         }
 
         // A tree with spectra on the left, and a spectrum viewer on the right.
-        ArrayList<String> chromIDs = new ArrayList(iUnmarshaller.getChromatogramIDs());
+        ArrayList<String> chromIDs = new ArrayList<String>(iUnmarshaller.getChromatogramIDs());
         final JTree tree = new JTree(new MzmlTreeModel(specIDs, chromIDs));
 
         tree.addTreeSelectionListener(new TreeSelectionListener() {
@@ -148,7 +145,7 @@ public class MzMLTab extends JPanel {
         try {
             Spectrum spectrum = iUnmarshaller.getSpectrumById(aSpecID);
             List<BinaryDataArray> bdal = spectrum.getBinaryDataArrayList().getBinaryDataArray();
-            BinaryDataArray mzBinaryDataArray = (BinaryDataArray) bdal.get(0);
+            BinaryDataArray mzBinaryDataArray = bdal.get(0);
             Number[] mzNumbers = mzBinaryDataArray.getBinaryDataAsNumberArray();
             if (mzNumbers.length < 1) {
                 // no biinary data found, so no spectrum can be created!
@@ -162,7 +159,7 @@ public class MzMLTab extends JPanel {
             for (int i = 0; i < mzNumbers.length; i++) {
                 mz[i] = mzNumbers[i].doubleValue();
             }
-            BinaryDataArray intBinaryDataArray = (BinaryDataArray) bdal.get(1);
+            BinaryDataArray intBinaryDataArray = bdal.get(1);
             Number[] intNumbers = intBinaryDataArray.getBinaryDataAsNumberArray();
             double[] intensities = new double[intNumbers.length];
             for (int i = 0; i < intNumbers.length; i++) {
@@ -197,8 +194,7 @@ public class MzMLTab extends JPanel {
             int msLevel = -1;
             boolean isCentroid = false;
             List<CVParam> specParams = spectrum.getCvParam();
-            for (Iterator lCVParamIterator = specParams.iterator(); lCVParamIterator.hasNext();) {
-                CVParam lCVParam = (CVParam) lCVParamIterator.next();
+            for (CVParam lCVParam : specParams) {
                 if (lCVParam.getAccession().equals("MS:1000511")) {
                     msLevel = Integer.parseInt(lCVParam.getValue().trim());
                 }
@@ -224,7 +220,7 @@ public class MzMLTab extends JPanel {
         try {
             Chromatogram chromatogram = iUnmarshaller.getChromatogramById(aChromatogramID);
             List<BinaryDataArray> bdal = chromatogram.getBinaryDataArrayList().getBinaryDataArray();
-            BinaryDataArray xAxisBinaryDataArray = (BinaryDataArray) bdal.get(0);
+            BinaryDataArray xAxisBinaryDataArray = bdal.get(0);
             Number[] xAxisNumbers = xAxisBinaryDataArray.getBinaryDataAsNumberArray();
             double[] xAxis = new double[xAxisNumbers.length];
             for (int i = 0; i < xAxisNumbers.length; i++) {
@@ -232,13 +228,12 @@ public class MzMLTab extends JPanel {
             }
             String xAxisLabel = null;
             List<CVParam> xArrayParams = xAxisBinaryDataArray.getCvParam();
-            for (Iterator lCVParamIterator = xArrayParams.iterator(); lCVParamIterator.hasNext();) {
-                CVParam lCVParam = (CVParam) lCVParamIterator.next();
+            for (CVParam lCVParam : xArrayParams) {
                 if (lCVParam.getUnitAccession() != null) {
                     xAxisLabel = lCVParam.getName() + " (" + lCVParam.getUnitName() + ")";
                 }
             }
-            BinaryDataArray yAxisBinaryDataArray = (BinaryDataArray) bdal.get(1);
+            BinaryDataArray yAxisBinaryDataArray = bdal.get(1);
             Number[] yAxisNumbers = yAxisBinaryDataArray.getBinaryDataAsNumberArray();
             double[] yAxis = new double[yAxisNumbers.length];
             for (int i = 0; i < yAxisNumbers.length; i++) {
@@ -246,8 +241,7 @@ public class MzMLTab extends JPanel {
             }
             String yAxisLabel = null;
             List<CVParam> yArrayParams = yAxisBinaryDataArray.getCvParam();
-            for (Iterator lCVParamIterator = yArrayParams.iterator(); lCVParamIterator.hasNext();) {
-                CVParam lCVParam = (CVParam) lCVParamIterator.next();
+            for (CVParam lCVParam : yArrayParams) {
                 // @TODO parse out relevant bits.
                 if (lCVParam.getUnitAccession() != null) {
                     yAxisLabel = lCVParam.getName() + " (" + lCVParam.getUnitName() + ")";
