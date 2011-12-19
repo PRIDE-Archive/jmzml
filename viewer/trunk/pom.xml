@@ -107,7 +107,7 @@
         <dependency>
             <groupId>uk.ac.ebi.jmzml</groupId>
             <artifactId>jmzml</artifactId>
-            <version>1.6.6</version>
+            <version>1.6.7</version>
         </dependency>
         <dependency>
             <groupId>com.jgoodies</groupId>
