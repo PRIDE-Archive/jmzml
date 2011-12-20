@@ -144,67 +144,71 @@ public class MzMLTab extends JPanel {
 
         try {
             Spectrum spectrum = iUnmarshaller.getSpectrumById(aSpecID);
-            List<BinaryDataArray> bdal = spectrum.getBinaryDataArrayList().getBinaryDataArray();
-            BinaryDataArray mzBinaryDataArray = bdal.get(0);
-            Number[] mzNumbers = mzBinaryDataArray.getBinaryDataAsNumberArray();
-            if (mzNumbers.length < 1) {
-                // no biinary data found, so no spectrum can be created!
-                // reset the view and give some feedback to the user
-                JPanel noBinaryErrorPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-                noBinaryErrorPanel.add(new Label("No binary data for selected Item!"));
-                spltMain.setBottomComponent(noBinaryErrorPanel);
-                return; // no need to look for SpectrumPanel data, as there is no binary data!
-            }
-            double[] mz = new double[mzNumbers.length];
-            for (int i = 0; i < mzNumbers.length; i++) {
-                mz[i] = mzNumbers[i].doubleValue();
-            }
-            BinaryDataArray intBinaryDataArray = bdal.get(1);
-            Number[] intNumbers = intBinaryDataArray.getBinaryDataAsNumberArray();
-            double[] intensities = new double[intNumbers.length];
-            for (int i = 0; i < intNumbers.length; i++) {
-                intensities[i] = intNumbers[i].doubleValue();
-            }
-            //PrecursorList plist = spectrum.getPrecursorList();
-            double precursorMz = 0.0;
-            String precursorCharge = "?";
-            if (spectrum.getPrecursorList() != null) {
-                List<Precursor> plist = spectrum.getPrecursorList().getPrecursor();
+            if (spectrum.getBinaryDataArrayList() != null) {
+                List<BinaryDataArray> bdal = spectrum.getBinaryDataArrayList().getBinaryDataArray();
+                BinaryDataArray mzBinaryDataArray = bdal.get(0);
+                Number[] mzNumbers = mzBinaryDataArray.getBinaryDataAsNumberArray();
+                if (mzNumbers.length < 1) {
+                    // no biinary data found, so no spectrum can be created!
+                    // reset the view and give some feedback to the user
+                    JPanel noBinaryErrorPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                    noBinaryErrorPanel.add(new Label("No binary data for selected Item!"));
+                    spltMain.setBottomComponent(noBinaryErrorPanel);
+                    return; // no need to look for SpectrumPanel data, as there is no binary data!
+                }
+                double[] mz = new double[mzNumbers.length];
+                for (int i = 0; i < mzNumbers.length; i++) {
+                    mz[i] = mzNumbers[i].doubleValue();
+                }
+                BinaryDataArray intBinaryDataArray = bdal.get(1);
+                Number[] intNumbers = intBinaryDataArray.getBinaryDataAsNumberArray();
+                double[] intensities = new double[intNumbers.length];
+                for (int i = 0; i < intNumbers.length; i++) {
+                    intensities[i] = intNumbers[i].doubleValue();
+                }
+                //PrecursorList plist = spectrum.getPrecursorList();
+                double precursorMz = 0.0;
+                String precursorCharge = "?";
+                if (spectrum.getPrecursorList() != null) {
+                    List<Precursor> plist = spectrum.getPrecursorList().getPrecursor();
 
-                if (plist != null) {
-                    if (plist.size() == 1) {
-                        //SelectedIonList sIonList = plist.getPrecursor().get(0).getSelectedIonList()
-                        if (plist.get(0).getSelectedIonList() != null) {
-                            List<ParamGroup> sIonList = plist.get(0).getSelectedIonList().getSelectedIon();
-                            if (sIonList != null) {
-                                List<CVParam> cvParams = sIonList.get(0).getCvParam();
-                                for (Object cvParam : cvParams) {
-                                    CVParam lCVParam = (CVParam) cvParam;
-                                    if (lCVParam.getAccession().equals("MS:1000744")) {
-                                        precursorMz = Double.parseDouble(lCVParam.getValue().trim());
-                                    } else if (lCVParam.getAccession().equals("MS:1000041")) {
-                                        precursorCharge = lCVParam.getValue();
+                    if (plist != null) {
+                        if (plist.size() == 1) {
+                            //SelectedIonList sIonList = plist.getPrecursor().get(0).getSelectedIonList()
+                            if (plist.get(0).getSelectedIonList() != null) {
+                                List<ParamGroup> sIonList = plist.get(0).getSelectedIonList().getSelectedIon();
+                                if (sIonList != null) {
+                                    List<CVParam> cvParams = sIonList.get(0).getCvParam();
+                                    for (Object cvParam : cvParams) {
+                                        CVParam lCVParam = (CVParam) cvParam;
+                                        if (lCVParam.getAccession().equals("MS:1000744")) {
+                                            precursorMz = Double.parseDouble(lCVParam.getValue().trim());
+                                        } else if (lCVParam.getAccession().equals("MS:1000041")) {
+                                            precursorCharge = lCVParam.getValue();
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
-            }
-            int msLevel = -1;
-            boolean isCentroid = false;
-            List<CVParam> specParams = spectrum.getCvParam();
-            for (CVParam lCVParam : specParams) {
-                if (lCVParam.getAccession().equals("MS:1000511")) {
-                    msLevel = Integer.parseInt(lCVParam.getValue().trim());
+                int msLevel = -1;
+                boolean isCentroid = false;
+                List<CVParam> specParams = spectrum.getCvParam();
+                for (CVParam lCVParam : specParams) {
+                    if (lCVParam.getAccession().equals("MS:1000511")) {
+                        msLevel = Integer.parseInt(lCVParam.getValue().trim());
+                    }
+                    if (lCVParam.getAccession().equals("MS:1000127")) {
+                        isCentroid = true;
+                    }
                 }
-                if (lCVParam.getAccession().equals("MS:1000127")) {
-                    isCentroid = true;
-                }
+                JPanel specPanel = new SpectrumPanel(
+                        mz, intensities, precursorMz, precursorCharge, aSpecID, spectrumPanelMaxPadding, false, true, true, true, msLevel, !isCentroid);
+                spltMain.setBottomComponent(specPanel);
+            } else { // no binary data arrays found!
+                iParent.showErrorMsg("No binary spectra data (peak list) could be found for spectra '" + spectrum.getId() + "'", "Error reading spectrum");
             }
-            JPanel specPanel = new SpectrumPanel(
-                    mz, intensities, precursorMz, precursorCharge, aSpecID, spectrumPanelMaxPadding, false, true, true, true, msLevel, !isCentroid);
-            spltMain.setBottomComponent(specPanel);
         } catch (MzMLUnmarshallerException mue) {
             iParent.seriousProblem("Unable to access file: " + mue.getMessage(), "Problem reading spectrum!");
         }

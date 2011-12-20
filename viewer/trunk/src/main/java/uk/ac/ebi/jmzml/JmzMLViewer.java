@@ -344,6 +344,16 @@ public class JmzMLViewer extends JFrame implements ProgressDialogParent {
     }
 
     /**
+     * Opens a dialog with an error message to show the user.
+     *
+     * @param aMessage the message to display
+     * @param aTitle the title of the dialog
+     */
+    public void showErrorMsg(String aMessage, String aTitle) {
+        JOptionPane.showMessageDialog(this, new String[]{aMessage, "", "Please check your mzML file."}, aTitle, JOptionPane.ERROR_MESSAGE);
+    }
+
+    /**
      * Closes the JmzMLViewer and terminates the JVM.
      *
      * @param aStatus exit status
