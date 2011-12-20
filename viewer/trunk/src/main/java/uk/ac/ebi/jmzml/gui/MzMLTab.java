@@ -223,37 +223,41 @@ public class MzMLTab extends JPanel {
 
         try {
             Chromatogram chromatogram = iUnmarshaller.getChromatogramById(aChromatogramID);
-            List<BinaryDataArray> bdal = chromatogram.getBinaryDataArrayList().getBinaryDataArray();
-            BinaryDataArray xAxisBinaryDataArray = bdal.get(0);
-            Number[] xAxisNumbers = xAxisBinaryDataArray.getBinaryDataAsNumberArray();
-            double[] xAxis = new double[xAxisNumbers.length];
-            for (int i = 0; i < xAxisNumbers.length; i++) {
-                xAxis[i] = xAxisNumbers[i].doubleValue();
-            }
-            String xAxisLabel = null;
-            List<CVParam> xArrayParams = xAxisBinaryDataArray.getCvParam();
-            for (CVParam lCVParam : xArrayParams) {
-                if (lCVParam.getUnitAccession() != null) {
-                    xAxisLabel = lCVParam.getName() + " (" + lCVParam.getUnitName() + ")";
+            if (chromatogram.getBinaryDataArrayList() != null) {
+                List<BinaryDataArray> bdal = chromatogram.getBinaryDataArrayList().getBinaryDataArray();
+                BinaryDataArray xAxisBinaryDataArray = bdal.get(0);
+                Number[] xAxisNumbers = xAxisBinaryDataArray.getBinaryDataAsNumberArray();
+                double[] xAxis = new double[xAxisNumbers.length];
+                for (int i = 0; i < xAxisNumbers.length; i++) {
+                    xAxis[i] = xAxisNumbers[i].doubleValue();
                 }
-            }
-            BinaryDataArray yAxisBinaryDataArray = bdal.get(1);
-            Number[] yAxisNumbers = yAxisBinaryDataArray.getBinaryDataAsNumberArray();
-            double[] yAxis = new double[yAxisNumbers.length];
-            for (int i = 0; i < yAxisNumbers.length; i++) {
-                yAxis[i] = yAxisNumbers[i].doubleValue();
-            }
-            String yAxisLabel = null;
-            List<CVParam> yArrayParams = yAxisBinaryDataArray.getCvParam();
-            for (CVParam lCVParam : yArrayParams) {
-                // @TODO parse out relevant bits.
-                if (lCVParam.getUnitAccession() != null) {
-                    yAxisLabel = lCVParam.getName() + " (" + lCVParam.getUnitName() + ")";
+                String xAxisLabel = null;
+                List<CVParam> xArrayParams = xAxisBinaryDataArray.getCvParam();
+                for (CVParam lCVParam : xArrayParams) {
+                    if (lCVParam.getUnitAccession() != null) {
+                        xAxisLabel = lCVParam.getName() + " (" + lCVParam.getUnitName() + ")";
+                    }
                 }
+                BinaryDataArray yAxisBinaryDataArray = bdal.get(1);
+                Number[] yAxisNumbers = yAxisBinaryDataArray.getBinaryDataAsNumberArray();
+                double[] yAxis = new double[yAxisNumbers.length];
+                for (int i = 0; i < yAxisNumbers.length; i++) {
+                    yAxis[i] = yAxisNumbers[i].doubleValue();
+                }
+                String yAxisLabel = null;
+                List<CVParam> yArrayParams = yAxisBinaryDataArray.getCvParam();
+                for (CVParam lCVParam : yArrayParams) {
+                    // @TODO parse out relevant bits.
+                    if (lCVParam.getUnitAccession() != null) {
+                        yAxisLabel = lCVParam.getName() + " (" + lCVParam.getUnitName() + ")";
+                    }
+                }
+                ChromatogramPanel chromPanel = new ChromatogramPanel(xAxis, yAxis, xAxisLabel, yAxisLabel);
+                chromPanel.setMaxPadding(spectrumPanelMaxPadding);
+                spltMain.setBottomComponent(chromPanel);
+            } else { // no binary data arrays found!
+                iParent.showErrorMsg("No binary chromatogram data could be found for spectra '" + chromatogram.getId() + "'", "Error reading chromatogram");
             }
-            ChromatogramPanel chromPanel = new ChromatogramPanel(xAxis, yAxis, xAxisLabel, yAxisLabel);
-            chromPanel.setMaxPadding(spectrumPanelMaxPadding);
-            spltMain.setBottomComponent(chromPanel);
         } catch (MzMLUnmarshallerException mue) {
             iParent.seriousProblem("Unable to access file: " + mue.getMessage(), "Problem reading spectrum!");
         }
