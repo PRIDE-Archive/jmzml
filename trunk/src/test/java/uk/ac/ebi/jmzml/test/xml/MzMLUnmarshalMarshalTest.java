@@ -6,6 +6,7 @@ import org.xml.sax.SAXException;
 import uk.ac.ebi.jmzml.MzMLElement;
 import uk.ac.ebi.jmzml.model.mzml.*;
 import uk.ac.ebi.jmzml.xml.io.MzMLMarshaller;
+import uk.ac.ebi.jmzml.xml.io.MzMLObjectIterator;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
 
@@ -19,6 +20,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -75,6 +77,41 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         // note: there is a whole test class to check that the index is handled correctly
         assertEquals("spectrum", idxl.getIndex().get(0).getName());
         assertEquals("chromatogram", idxl.getIndex().get(1).getName());
+
+    }
+
+    /**
+     * Checking the instrument components, since they are special cases
+     * (the Class name does not reflect the XML element name).
+     *
+     * @throws MzMLUnmarshallerException in case of problems with the unmarshalling of XML elements.
+     */
+    public void testComponents() throws MzMLUnmarshallerException {
+        assertTrue(isValidMzML(mzMLFile));
+        logger.info("zmML file is valid.");
+
+        MzMLUnmarshaller um = new MzMLUnmarshaller(mzMLFile);
+        assertNotNull(um);
+
+        int sourceCnt = um.getObjectCountForXpath("/mzML/instrumentConfigurationList/instrumentConfiguration/componentList/source");
+        assertEquals("Expected number of 'source' elements.", 1, sourceCnt);
+        MzMLObjectIterator<SourceComponent> sourceIter = um.unmarshalCollectionFromXpath("/mzML/instrumentConfigurationList/instrumentConfiguration/componentList/source", SourceComponent.class);
+        assertNotNull(sourceIter);
+        assertNotNull(sourceIter.next());
+
+        int analyzerCnt = um.getObjectCountForXpath("/mzML/instrumentConfigurationList/instrumentConfiguration/componentList/analyzer");
+        assertEquals("Expected number of 'analyzer' elements.", 1, analyzerCnt);
+        MzMLObjectIterator<AnalyzerComponent> analyzerIter = um.unmarshalCollectionFromXpath("/mzML/instrumentConfigurationList/instrumentConfiguration/componentList/analyzer", AnalyzerComponent.class);
+        assertNotNull(analyzerIter);
+        assertNotNull(analyzerIter.next());
+
+        int detectorCnt = um.getObjectCountForXpath("/mzML/instrumentConfigurationList/instrumentConfiguration/componentList/detector");
+        assertEquals("Expected number of 'detector' elements.", 1, detectorCnt);
+        MzMLObjectIterator<DetectorComponent> detectorIter = um.unmarshalCollectionFromXpath("/mzML/instrumentConfigurationList/instrumentConfiguration/componentList/detector", DetectorComponent.class);
+        assertNotNull(detectorIter);
+        assertNotNull(detectorIter.next());
+
+
 
     }
 
