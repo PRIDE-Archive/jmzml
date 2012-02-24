@@ -191,6 +191,44 @@ public class MzMLUnmarshaller {
         }
         return attributes;
     }
+
+    /**
+     * Method to retrieve attribute name-value pairs for a XML element
+     * defined by it's id and Class.
+     *
+     * @param id the value of the 'id' attribute of the XML element.
+     * @param clazz the Class representing the XML element.
+     * @return A map of all the found name-value attribute pairs or
+     *         null if no element with the specified id was found.
+     */
+    public Map<String, String> getElementAttributes(String id, Class clazz) {
+        Map<String, String> attributes = new HashMap<String, String>();
+        // retrieve the start tag of the corresponding XML element
+        String tag = index.getStartTag(id, clazz);
+        if (tag == null) {
+            return null;
+        }
+
+        // parse the tag for attributes
+        Matcher match = XML_ATT_PATTERN.matcher(tag);
+        while (match.find()) {
+            if (match.groupCount() == 2) {
+                // found name - value pair
+                String name = match.group(1);
+                String value = match.group(2);
+                // stick the found attributes in the map
+                attributes.put(name, value);
+            } else {
+                // not a name - value pair, something is wrong!
+                // ToDo: proper handling! exception
+                System.out.println("Unexpected number of groups for XML attribute: " + match.groupCount() + " in tag: " + tag);
+            }
+
+        }
+        return attributes;
+    }
+
+
     /**
      * Returns the number of elements for a given path.
      *
