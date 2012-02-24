@@ -174,6 +174,30 @@ public class MzMLIndexerFactory {
             return tag;
         }
 
+
+        public String getStartTag(String id, Class clazz) {
+            logger.debug("Getting start tag of element with id: " + id + " for class: " + clazz);
+            String tag = null;
+
+            Map<String, IndexElement> idMap = idMapCache.get(clazz);
+            if (idMap != null) {
+                IndexElement element = idMap.get(id);
+                if (element != null) {
+                    try {
+                        tag = xpathAccess.getStartTag(element);
+                    } catch (IOException e) {
+                        // ToDo: proper handling
+                        e.printStackTrace();
+                    }
+                } else {
+                    // ToDo: what if the element exists, but its id was not cached?
+                    // ToDo: throw checked exception?
+                }
+            }
+            return tag;
+        }
+
+
         /**
          * This method initializes the specified ID (and optionally the specified Index) Map(s)
          * for the given XPath. The index map is optional, because although most elements have an ID,
