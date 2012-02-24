@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 import uk.ac.ebi.jmzml.MzMLElement;
 import uk.ac.ebi.jmzml.model.mzml.*;
+import uk.ac.ebi.jmzml.model.mzml.MzMLObject;
 import uk.ac.ebi.jmzml.xml.io.MzMLMarshaller;
 import uk.ac.ebi.jmzml.xml.io.MzMLObjectIterator;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
@@ -20,7 +21,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -225,6 +226,31 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         // and compare the two versions (they have to have the same values!)
         checkEqual(mz_1, mz_2);
         logger.info("Re-unmarshalling mzML is OK.");
+
+    }
+
+    public void testSpectrumIteration() {
+        assertTrue(isValidMzML(mzMLFile));
+
+        MzMLUnmarshaller um = new MzMLUnmarshaller(mzMLFile);
+
+        Iterator<Spectrum> iterator = um.unmarshalCollectionFromXpath(MzMLElement.Spectrum.getXpath(), Spectrum.class);
+
+        // count the number of spectra we are iterating over
+        logger.debug("Iterating over all spectra...");
+        int spectrumCnt = 0;
+        while (iterator.hasNext()) {
+            Spectrum spectrum = iterator.next();
+            if (logger.isDebugEnabled()) {
+                logger.debug("Spectrum: " + spectrum.getId());
+            }
+            spectrumCnt++;
+        }
+
+        // get the number of spectra entries in the index
+        int spectrumNo = um.getObjectCountForXpath(MzMLElement.Spectrum.getXpath());
+        // compare the two spectra counts
+        assertEquals(spectrumNo, spectrumCnt);
 
     }
 
