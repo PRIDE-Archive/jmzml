@@ -55,7 +55,7 @@ public class MzMLUnmarshaller {
     private final File mzMLFile;
     private final MzMLIndexer index;
     private final boolean useSpectrumCache;
-//    private final AdapterObjectCache cache = new AdapterObjectCache();
+    //    private final AdapterObjectCache cache = new AdapterObjectCache();
     private final MzMLObjectCache cache;
 
     private IndexList indexList = null;
@@ -63,7 +63,7 @@ public class MzMLUnmarshaller {
 
     private final Pattern ID_PATTERN = Pattern.compile("id *= *\"([^\"]*)?\"", Pattern.CASE_INSENSITIVE);
     private final Pattern AC_PATTERN = Pattern.compile("accession *= *\"([^\"]*)?\"", Pattern.CASE_INSENSITIVE);
-    private final Pattern VERSION_PATTERN = Pattern.compile("version *= *\"([^\"]*)?\"",Pattern.CASE_INSENSITIVE);
+    private final Pattern VERSION_PATTERN = Pattern.compile("version *= *\"([^\"]*)?\"", Pattern.CASE_INSENSITIVE);
     private static final Pattern XML_ATT_PATTERN = Pattern.compile("\\s+([A-Za-z:]+)\\s*=\\s*[\"']([^\"'>]+?)[\"']", Pattern.DOTALL);
 
     /**
@@ -87,7 +87,7 @@ public class MzMLUnmarshaller {
     /**
      * Creates a new MzMLUnmarshaller object from a URL
      *
-     * @param mzMLFileURL the URL to unmarshall
+     * @param mzMLFileURL       the URL to unmarshall
      * @param aUseSpectrumCache if true the spectra are cached
      */
     public MzMLUnmarshaller(URL mzMLFileURL, boolean aUseSpectrumCache) {
@@ -97,7 +97,7 @@ public class MzMLUnmarshaller {
     /**
      * Creates a new MzMLUnmarshaller object from a file
      *
-     * @param mzMLFile the file to unmarshall
+     * @param mzMLFile          the file to unmarshall
      * @param aUseSpectrumCache if true the spectra are cached
      */
     public MzMLUnmarshaller(File mzMLFile, boolean aUseSpectrumCache, MzMLObjectCache cache) {
@@ -122,11 +122,11 @@ public class MzMLUnmarshaller {
      *
      * @return the mzML version, null if not found
      */
-    public String getMzMLVersion(){
+    public String getMzMLVersion() {
 
         Matcher match = VERSION_PATTERN.matcher(index.getMzMLAttributeXMLString());
 
-        if (match.find()){
+        if (match.find()) {
             return match.group(1);
         } else {
             return null;
@@ -138,11 +138,11 @@ public class MzMLUnmarshaller {
      *
      * @return the mzML accession number, null if not found
      */
-    public String getMzMLAccession(){
+    public String getMzMLAccession() {
 
         Matcher match = AC_PATTERN.matcher(index.getMzMLAttributeXMLString());
 
-        if (match.find()){
+        if (match.find()) {
             return match.group(1);
         } else {
             return null;
@@ -154,11 +154,11 @@ public class MzMLUnmarshaller {
      *
      * @return the mzML ID, null if not found
      */
-    public String getMzMLId(){
+    public String getMzMLId() {
 
         Matcher match = ID_PATTERN.matcher(index.getMzMLAttributeXMLString());
 
-        if (match.find()){
+        if (match.find()) {
             return match.group(1);
         } else {
             return null;
@@ -196,7 +196,7 @@ public class MzMLUnmarshaller {
      * Method to retrieve attribute name-value pairs for a XML element
      * defined by it's id and Class.
      *
-     * @param id the value of the 'id' attribute of the XML element.
+     * @param id    the value of the 'id' attribute of the XML element.
      * @param clazz the Class representing the XML element.
      * @return A map of all the found name-value attribute pairs or
      *         null if no element with the specified id was found.
@@ -241,13 +241,13 @@ public class MzMLUnmarshaller {
 
     /**
      * Retrieves the list of elements of the given class at the selected path.
-     *
+     * <p/>
      * Exp.: CVList cvList = unmarshaller.unmarshallFromXPath("/cvList", CVList.class);
-     *       Retrieves the cvList from element of the mzML file, given it's XPath
+     * Retrieves the cvList from element of the mzML file, given it's XPath
      *
      * @param <T>
      * @param xpath the path to search
-     * @param cls the class type to retrieve
+     * @param cls   the class type to retrieve
      * @return the list of elements of the given class at the selected path
      */
     public <T extends MzMLObject> T unmarshalFromXpath(String xpath, Class cls) {
@@ -255,9 +255,9 @@ public class MzMLUnmarshaller {
         T retval = null;
         try {
             //we want to unmarshal the whole file
-            if (xpath.equals("")){
+            if (xpath.equals("")) {
                 xpath = MzMLElement.MzML.getXpath();
-                if (isIndexedmzML()){
+                if (isIndexedmzML()) {
                     xpath = MzMLElement.IndexedmzML.getXpath().concat(xpath);
                 }
 
@@ -298,7 +298,7 @@ public class MzMLUnmarshaller {
      *
      * @param <T>
      * @param xpath the path to search
-     * @param cls the class type to retrieve
+     * @param cls   the class type to retrieve
      * @return the collection of elements of the given class at the selected path
      */
     public <T extends MzMLObject> MzMLObjectIterator<T> unmarshalCollectionFromXpath(String xpath, Class cls) {
@@ -400,7 +400,7 @@ public class MzMLUnmarshaller {
             //unmarshall the desired object
             JAXBElement<Spectrum> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(xml))), Spectrum.class);
             result = holder.getValue();
-        } catch(JAXBException je) {
+        } catch (JAXBException je) {
             logger.error("MzMLUnmarshaller.getSpectrumByID", je);
             throw new IllegalStateException("Could not unmarshal spectrum with ID: " + aID);
         }
@@ -425,7 +425,7 @@ public class MzMLUnmarshaller {
             //unmarshall the desired object
             JAXBElement<Chromatogram> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(xml))), Chromatogram.class);
             result = holder.getValue();
-        } catch(JAXBException je) {
+        } catch (JAXBException je) {
             logger.error("MzMLUnmarshaller.getChromatogramByID", je);
             throw new IllegalStateException("Could not unmarshal chromatogram with ID: " + aID);
         }
@@ -445,8 +445,8 @@ public class MzMLUnmarshaller {
 
         // find the offset for the specified refId
         for (Offset offset : aIndexEntry.getOffset()) {
-            if ( offset.getIdRef().equalsIgnoreCase(refId) ) {
-                return  getElementByOffset("spectrum", offset.getValue());
+            if (offset.getIdRef().equalsIgnoreCase(refId)) {
+                return getElementByOffset("spectrum", offset.getValue());
             }
         }
 
@@ -466,8 +466,8 @@ public class MzMLUnmarshaller {
 
         // find the offset for the specified spotId
         for (Offset offset : aIndexEntry.getOffset()) {
-            if ( offset.getSpotID() != null && offset.getSpotID().equalsIgnoreCase(spotId) ) {
-                return  getElementByOffset("spectrum", offset.getValue());
+            if (offset.getSpotID() != null && offset.getSpotID().equalsIgnoreCase(spotId)) {
+                return getElementByOffset("spectrum", offset.getValue());
             }
         }
 
@@ -487,8 +487,8 @@ public class MzMLUnmarshaller {
 
         // find the offset for the specified scanTime
         for (Offset offset : aIndexEntry.getOffset()) {
-            if (offset.getScanTime() != null && offset.getScanTime() == scanTime ) {
-                return  getElementByOffset("spectrum", offset.getValue());
+            if (offset.getScanTime() != null && offset.getScanTime() == scanTime) {
+                return getElementByOffset("spectrum", offset.getValue());
             }
         }
 
@@ -524,8 +524,8 @@ public class MzMLUnmarshaller {
         // find the offset for the specified refId
         for (Offset offset : aIndexEntry.getOffset()) {
             // we are only interested in a particular refId
-            if ( offset.getIdRef().equalsIgnoreCase(refId) ) {
-                return  getElementByOffset("chromatogram", offset.getValue());
+            if (offset.getIdRef().equalsIgnoreCase(refId)) {
+                return getElementByOffset("chromatogram", offset.getValue());
             }
         }
 
@@ -555,9 +555,9 @@ public class MzMLUnmarshaller {
      * This method returns the spectrum ID for a given spectrum index, or 'null'
      * if the specified index could not be found.
      *
-     * @param aIndex    Integer with the spectrum index to retrieve
-     *                  the spectrum ID for
-     * @return  String  with the spectrum ID, or 'null' if the index could not be found.
+     * @param aIndex Integer with the spectrum index to retrieve
+     *               the spectrum ID for
+     * @return String  with the spectrum ID, or 'null' if the index could not be found.
      */
     public String getSpectrumIDFromSpectrumIndex(Integer aIndex) {
         return index.getSpectrumIDFromSpectrumIndex(aIndex);
@@ -615,7 +615,7 @@ public class MzMLUnmarshaller {
         // until we come within a certain limit of the end of the file
         long limit = mzMLFile.length() - 200L;
         logger.debug("Looking for fileChecksum tag between byte " + limit +
-                     " and byte " + mzMLFile.length() + " (the end) of the mzML file.");
+                " and byte " + mzMLFile.length() + " (the end) of the mzML file.");
 
         // initialize the hash algorithm
         MessageDigest hash;
@@ -715,7 +715,7 @@ public class MzMLUnmarshaller {
         IndexList list = getMzMLIndex();
 
         for (Index entry : list.getIndex()) {
-            if ( entry.getName().equalsIgnoreCase(elementName) ) {
+            if (entry.getName().equalsIgnoreCase(elementName)) {
                 return entry;
             }
         }
@@ -738,7 +738,7 @@ public class MzMLUnmarshaller {
         for (String xxindexPath : index.getXpath()) {
             // we are looking for a xpath that ends in the elementName (e.g. points to
             // an element with the requested name)
-            if ( xxindexPath.endsWith(elementName) ) {
+            if (xxindexPath.endsWith(elementName)) {
                 aXpath = xxindexPath;
             }
         }
@@ -775,4 +775,12 @@ public class MzMLUnmarshaller {
         return retval;
     }
 
+    /**
+     * Returns the mzML XXIndex Wrapper for raw access. This is usually a developer-level method.
+     *
+     * @return
+     */
+    public MzMLIndexer getMzMLIndexer() {
+        return index;
+    }
 }
