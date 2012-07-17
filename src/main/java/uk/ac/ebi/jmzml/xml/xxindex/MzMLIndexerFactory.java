@@ -13,7 +13,6 @@ import uk.ac.ebi.jmzml.xml.Constants;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -213,7 +212,7 @@ public class MzMLIndexerFactory {
                 } else {
                     throw new IllegalStateException("Error initializing ID cache: No id attribute found for element " + xml);
                 }
-                if ( xpath.equalsIgnoreCase( root + checkRoot(MzMLElement.Spectrum.getXpath()) ) ) {
+                if (xpath.equalsIgnoreCase(root + checkRoot(MzMLElement.Spectrum.getXpath()))) {
                     Integer index = getIndexFromRawXML(xml);
                     if (index != null) {
                         spectrumIndexToIDMap.put(index, id);
@@ -312,6 +311,20 @@ public class MzMLIndexerFactory {
             }
             return xmlSnippet;
 
+        }
+
+        /**
+         * Returns an XML string based on an index element
+         *
+         * @param indexElement
+         * @return
+         */
+        public String getXmlString(IndexElement indexElement) {
+            String xmlSnippet = null;
+            if (indexElement != null) {
+                xmlSnippet = readXML(indexElement);
+            }
+            return xmlSnippet;
         }
 
         private String readXML(IndexElement byteRange) {

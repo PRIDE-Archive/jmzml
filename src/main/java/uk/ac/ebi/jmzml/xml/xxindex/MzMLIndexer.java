@@ -34,6 +34,8 @@ public interface MzMLIndexer {
 
     public String getXmlString(String ID, Class clazz);
 
+    public String getXmlString(IndexElement indexElement);
+
     public int getCount(String xpathExpression);
 
     public String getXmlString(String xpath, long offset);
@@ -55,8 +57,7 @@ public interface MzMLIndexer {
     public String getStartTag(String xpath);
 
     /**
-     *
-     * @param id the unique ID (from the id attribute) of an XML element.
+     * @param id    the unique ID (from the id attribute) of an XML element.
      * @param clazz the Java Class representing the element.
      * @return the complete start tag for the XML element with all specified attributes.
      */
