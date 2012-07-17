@@ -22,6 +22,7 @@ package uk.ac.ebi.jmzml.xml.io;
 import org.apache.commons.collections.buffer.CircularFifoBuffer;
 import org.apache.log4j.Logger;
 import org.xml.sax.InputSource;
+import psidev.psi.tools.xxindex.index.IndexElement;
 import uk.ac.ebi.jmzml.MzMLElement;
 import uk.ac.ebi.jmzml.model.mzml.*;
 import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
@@ -765,6 +766,37 @@ public class MzMLUnmarshaller {
             Unmarshaller unmarshaller = UnmarshallerFactory.getInstance().initializeUnmarshaller(index, xmlFilter, cache, useSpectrumCache);
             // unmarshall the desired object
             Class cls = ModelConstants.getClassForElementName(elementName);
+            JAXBElement<T> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(xmlSnippet))), cls);
+            retval = holder.getValue();
+        } catch (JAXBException e) {
+            logger.error("MzMLUnmarshaller.getObjectFromXml", e);
+            throw new IllegalStateException("Could not unmarshal object from XML string:" + xmlSnippet);
+        }
+
+        return retval;
+    }
+
+    /**
+     * TODO: Javadoc missing
+     *
+     * @param <T>
+     * @param element
+     * @return
+     * @throws MzMLUnmarshallerException
+     */
+    public <T extends MzMLObject> T unmarshalFromIndexElement(IndexElement element, Class cls) throws MzMLUnmarshallerException {
+
+        // now that we have the xpath to use for the requested element, check if the xxindex
+        // contains an element start position that matches the offset of the desired element
+        String xmlSnippet = index.getXmlString(element);
+
+        T retval;
+        try {
+            // ToDo: check this!! try to replace with standard unmarshaller!
+            MzMLNamespaceFilter xmlFilter = new MzMLNamespaceFilter();
+            // initializeUnmarshaller will assign the proper reader to the xmlFilter
+            Unmarshaller unmarshaller = UnmarshallerFactory.getInstance().initializeUnmarshaller(index, xmlFilter, cache, useSpectrumCache);
+            // unmarshall the desired object
             JAXBElement<T> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(xmlSnippet))), cls);
             retval = holder.getValue();
         } catch (JAXBException e) {
