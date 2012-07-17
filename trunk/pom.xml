@@ -17,7 +17,7 @@
 
     <!-- Set the version number for the whole project -->
     <properties>
-        <version.number>1.6.8-SNAPSHOT</version.number>
+        <version.number>1.6.8</version.number>
     </properties>
 
 
@@ -287,27 +287,27 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>com.compomics</groupId>-->
-            <!--<artifactId>utilities</artifactId>-->
-            <!--<version>3.0.16</version>-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<artifactId>xtandem-parser</artifactId>-->
-                    <!--<groupId>de.proteinms.xtandemparser</groupId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<artifactId>omssa-parser</artifactId>-->
-                    <!--<groupId>de.proteinms.omxparser</groupId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<artifactId>mascotdatfile</artifactId>-->
-                    <!--<groupId>com.compomics</groupId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<artifactId>servlet-api</artifactId>-->
-                    <!--<groupId>javax.servlet</groupId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
+        <!--<groupId>com.compomics</groupId>-->
+        <!--<artifactId>utilities</artifactId>-->
+        <!--<version>3.0.16</version>-->
+        <!--<exclusions>-->
+        <!--<exclusion>-->
+        <!--<artifactId>xtandem-parser</artifactId>-->
+        <!--<groupId>de.proteinms.xtandemparser</groupId>-->
+        <!--</exclusion>-->
+        <!--<exclusion>-->
+        <!--<artifactId>omssa-parser</artifactId>-->
+        <!--<groupId>de.proteinms.omxparser</groupId>-->
+        <!--</exclusion>-->
+        <!--<exclusion>-->
+        <!--<artifactId>mascotdatfile</artifactId>-->
+        <!--<groupId>com.compomics</groupId>-->
+        <!--</exclusion>-->
+        <!--<exclusion>-->
+        <!--<artifactId>servlet-api</artifactId>-->
+        <!--<groupId>javax.servlet</groupId>-->
+        <!--</exclusion>-->
+        <!--</exclusions>-->
         <!--</dependency>-->
 
     </dependencies>
@@ -348,7 +348,7 @@
     </repositories>
 
     <!-- PluginRepositores -->
-	<pluginRepositories>
+    <pluginRepositories>
         <pluginRepository>
             <id>maven2-repository.dev.java.net</id>
             <url>http://download.java.net/maven/2</url>
