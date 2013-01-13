@@ -5,21 +5,13 @@
     <groupId>uk.ac.ebi.jmzml</groupId>
     <artifactId>jmzml</artifactId>
     <packaging>jar</packaging>
-    <version>${version.number}</version>
-    <!-- version number is set below -->
+    <version>1.6.8</version>
     <name>MzML Java core API</name>
     <url>http://www.ebi.ac.uk/pride</url>
     <description>
         JAXB implementation of the mzML 1.1 standard as made available from the Proteomics Standards Initiative. This
         object model can be used to serialize/deserialize properly formed mzML XML files.
     </description>
-
-
-    <!-- Set the version number for the whole project -->
-    <properties>
-        <version.number>1.6.8</version.number>
-    </properties>
-
 
     <!-- License -->
     <licenses>
@@ -72,24 +64,28 @@
         <!-- Copy the resources required during building -->
         <resources>
             <resource>
-                <directory>./</directory>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
                 <includes>
                     <include>jmzML.properties</include>
                 </includes>
-                <filtering>true</filtering>
             </resource>
             <resource>
-                <directory>src/main/resources/</directory>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>jmzML.properties</exclude>
+                </excludes>
             </resource>
         </resources>
-
-
+        
         <plugins>
 
             <!-- Compiler plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5</version>
                 <configuration>
                     <source>1.5</source>
                     <target>1.5</target>
