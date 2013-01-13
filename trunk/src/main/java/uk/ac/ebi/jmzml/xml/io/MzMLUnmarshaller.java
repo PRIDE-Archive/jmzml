@@ -112,7 +112,7 @@ public class MzMLUnmarshaller {
      * USE WITH CAUTION - This will unmarshall a complete MzML object and
      * will likely cause an OutOfMemoryError for very large files.
      *
-     * @return
+     * @return an MzML object
      */
     public MzML unmarshall() {
         return unmarshalFromXpath("", MzML.class);
@@ -810,7 +810,7 @@ public class MzMLUnmarshaller {
     /**
      * Returns the mzML XXIndex Wrapper for raw access. This is usually a developer-level method.
      *
-     * @return
+     * @return the mzML XXIndex Wrapper for raw acces
      */
     public MzMLIndexer getMzMLIndexer() {
         return index;
