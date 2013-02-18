@@ -441,7 +441,7 @@ public class MzMLUnmarshaller {
      * @throws MzMLUnmarshallerException
      */
     public Spectrum getSpectrumByRefId(String refId) throws MzMLUnmarshallerException {
-        // get the index entry for 'chromatogram'
+        // get the index entry for 'spectrum'
         Index aIndexEntry = getIndex("spectrum");
 
         // find the offset for the specified refId

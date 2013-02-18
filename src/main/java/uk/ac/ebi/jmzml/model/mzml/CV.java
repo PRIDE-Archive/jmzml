@@ -59,6 +59,12 @@ public class CV
     /**
      * Sets the value of the id property.
      *
+     * Note: the id attribute is restricted by the XML schema data type 'ID'.
+     * Valid values follow the NCName definition.
+     * See also:
+     *  http://www.w3.org/TR/2000/CR-xmlschema-2-20001024/#ID
+     *  http://www.w3.org/TR/REC-xml-names/#NT-NCName
+     *
      * @param value allowed object is
      *              {@link String }
      */

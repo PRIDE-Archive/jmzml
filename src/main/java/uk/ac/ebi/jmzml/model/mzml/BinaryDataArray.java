@@ -61,6 +61,10 @@ public class BinaryDataArray
     public static final int BYTES_32_PRECISION = 4;
 
     // PSI-MS controlled vocabulary terms and accessions
+    public static final String MS_INTENSITY_AC = "MS:1000515";
+    public static final String MS_INTENSITY_NAME = "intensity array";
+    public static final String MS_MZ_VALUE_AC = "MS:1000514";
+    public static final String MS_MZ_VALUE_NAME = "m/z array";
     public static final String MS_COMPRESSED_AC = "MS:1000574";
     public static final String MS_COMPRESSED_NAME = "zlib compression";
     public static final String MS_UNCOMPRESSED_AC = "MS:1000576";
@@ -112,6 +116,28 @@ public class BinaryDataArray
         NTSTRING
     }
 
+    /**
+     * Enumeration defining the data types that can/should be present in
+     * the binary data arrays.
+     */
+    public enum DataType {
+        /**
+         * Based on the constant MS_INTENSITY_AC to define the intensities related to the m/z values of a spectrum.
+         */
+        INTENSITY,
+
+        /**
+         * Based on the constant MS_MZ_VALUE_AC to define the m/z values of a spectrum.
+         */
+        MZ_VALUES,
+
+        /**
+         * Used if no other DataType could be determined.
+         * Possible reasons: other data encoded, other vocabulary terms used, data not present, ...
+         */
+        UNKNOWN
+
+    }
 
     private final static long serialVersionUID = 100L;
     @XmlElement(required = true)
@@ -595,6 +621,23 @@ public class BinaryDataArray
         return uncompress;
     }
 
+    /**
+     * Reads the List of CVParams of this BinaryDataArray and tries to determine the type of data encoded within it.
+     * @return the DataType that corresponds to the data in the binary data array.
+     */
+    public DataType getDataType() {
+        // for all registered CV parameters
+        for (CVParam param : this.getCvParam()) {
+            // find the param that defines what the data represents
+            if (param.getAccession().equals(MS_MZ_VALUE_AC)) {
+                return DataType.MZ_VALUES;
+            } else if (param.getAccession().equals(MS_INTENSITY_AC)) {
+                return DataType.INTENSITY;
+            } // else go on to the next cv param
+        }
+        // if we haven't found a recognised DataType yet, we can't say what the data represents
+        return DataType.UNKNOWN;
+    }
 
     ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
     // private helper methods

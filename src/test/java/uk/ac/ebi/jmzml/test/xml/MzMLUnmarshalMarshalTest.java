@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 import uk.ac.ebi.jmzml.MzMLElement;
 import uk.ac.ebi.jmzml.model.mzml.*;
-import uk.ac.ebi.jmzml.model.mzml.MzMLObject;
 import uk.ac.ebi.jmzml.xml.io.MzMLMarshaller;
 import uk.ac.ebi.jmzml.xml.io.MzMLObjectIterator;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
@@ -252,6 +251,28 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         // compare the two spectra counts
         assertEquals(spectrumNo, spectrumCnt);
 
+
+        // additionally check one spectrum if we can detect binary arrays for  m/z values and intensities
+        String spectrumId = null;
+        try {
+            spectrumId = um.getSpectrumIDs().iterator().next();
+            Spectrum testSpectrum = um.getSpectrumById(spectrumId);
+            boolean mzDataFound = false;
+            boolean intensityDataFound = false;
+            for (BinaryDataArray binaryDataArray : testSpectrum.getBinaryDataArrayList().getBinaryDataArray()) {
+                BinaryDataArray.DataType type = binaryDataArray.getDataType();
+                if (type.equals(BinaryDataArray.DataType.MZ_VALUES)) {
+                    mzDataFound = true;
+                }
+                if (type.equals(BinaryDataArray.DataType.INTENSITY)) {
+                    intensityDataFound = true;
+                }
+            }
+            assertTrue("m/z values not found!", mzDataFound);
+            assertTrue("intensity values not found!", intensityDataFound);
+        } catch (MzMLUnmarshallerException e) {
+            logger.error("Error reading binary data arrays for spectrum " + spectrumId, e);
+        }
     }
 
 
