@@ -28,6 +28,7 @@ import uk.ac.ebi.jmzml.model.mzml.*;
 import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.UnmarshallerFactory;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.filters.MzMLNamespaceFilter;
+import uk.ac.ebi.jmzml.xml.util.EscapingXMLUtilities;
 import uk.ac.ebi.jmzml.xml.xxindex.FileUtils;
 import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
 import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexerFactory;
@@ -269,8 +270,11 @@ public class MzMLUnmarshaller {
 
                 String xmlSt = xpathIter.next();
 
+                //need to clean up XML to ensure that there are no weird control characters
+                String cleanXML = EscapingXMLUtilities.escapeCharacters(xmlSt);
+
                 if (logger.isDebugEnabled()) {
-                    logger.trace("XML to unmarshal: " + xmlSt);
+                    logger.trace("XML to unmarshal: " + cleanXML);
                 }
 
                 //required for the addition of namespaces to top-level objects
@@ -278,7 +282,7 @@ public class MzMLUnmarshaller {
                 //initializeUnmarshaller will assign the proper reader to the xmlFilter
                 Unmarshaller unmarshaller = UnmarshallerFactory.getInstance().initializeUnmarshaller(index, xmlFilter, cache, useSpectrumCache);
                 //unmarshall the desired object
-                JAXBElement<T> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(xmlSt))), cls);
+                JAXBElement<T> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(cleanXML))), cls);
                 retval = holder.getValue();
 
                 if (logger.isDebugEnabled()) {
@@ -394,12 +398,14 @@ public class MzMLUnmarshaller {
         Spectrum result = null;
         String xml = index.getXmlString(aID, Spectrum.class);
         try {
+            //need to clean up XML to ensure that there are no weird control characters
+            String cleanXML = EscapingXMLUtilities.escapeCharacters(xml);
             //required for the addition of namespaces to top-level objects
             MzMLNamespaceFilter xmlFilter = new MzMLNamespaceFilter();
             //initializeUnmarshaller will assign the proper reader to the xmlFilter
             Unmarshaller unmarshaller = UnmarshallerFactory.getInstance().initializeUnmarshaller(index, xmlFilter, cache, useSpectrumCache);
             //unmarshall the desired object
-            JAXBElement<Spectrum> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(xml))), Spectrum.class);
+            JAXBElement<Spectrum> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(cleanXML))), Spectrum.class);
             result = holder.getValue();
         } catch (JAXBException je) {
             logger.error("MzMLUnmarshaller.getSpectrumByID", je);
@@ -419,12 +425,14 @@ public class MzMLUnmarshaller {
         Chromatogram result = null;
         String xml = index.getXmlString(aID, Chromatogram.class);
         try {
+            //need to clean up XML to ensure that there are no weird control characters
+            String cleanXML = EscapingXMLUtilities.escapeCharacters(xml);
             //required for the addition of namespaces to top-level objects
             MzMLNamespaceFilter xmlFilter = new MzMLNamespaceFilter();
             //initializeUnmarshaller will assign the proper reader to the xmlFilter
             Unmarshaller unmarshaller = UnmarshallerFactory.getInstance().initializeUnmarshaller(index, xmlFilter, cache, useSpectrumCache);
             //unmarshall the desired object
-            JAXBElement<Chromatogram> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(xml))), Chromatogram.class);
+            JAXBElement<Chromatogram> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(cleanXML))), Chromatogram.class);
             result = holder.getValue();
         } catch (JAXBException je) {
             logger.error("MzMLUnmarshaller.getChromatogramByID", je);
@@ -761,12 +769,14 @@ public class MzMLUnmarshaller {
         T retval;
         try {
             // ToDo: check this!! try to replace with standard unmarshaller!
+            //need to clean up XML to ensure that there are no weird control characters
+            String cleanXML = EscapingXMLUtilities.escapeCharacters(xmlSnippet);
             MzMLNamespaceFilter xmlFilter = new MzMLNamespaceFilter();
             // initializeUnmarshaller will assign the proper reader to the xmlFilter
             Unmarshaller unmarshaller = UnmarshallerFactory.getInstance().initializeUnmarshaller(index, xmlFilter, cache, useSpectrumCache);
             // unmarshall the desired object
             Class cls = ModelConstants.getClassForElementName(elementName);
-            JAXBElement<T> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(xmlSnippet))), cls);
+            JAXBElement<T> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(cleanXML))), cls);
             retval = holder.getValue();
         } catch (JAXBException e) {
             logger.error("MzMLUnmarshaller.getObjectFromXml", e);
@@ -793,11 +803,12 @@ public class MzMLUnmarshaller {
         T retval;
         try {
             // ToDo: check this!! try to replace with standard unmarshaller!
+            String cleanXML = EscapingXMLUtilities.escapeCharacters(xmlSnippet);
             MzMLNamespaceFilter xmlFilter = new MzMLNamespaceFilter();
             // initializeUnmarshaller will assign the proper reader to the xmlFilter
             Unmarshaller unmarshaller = UnmarshallerFactory.getInstance().initializeUnmarshaller(index, xmlFilter, cache, useSpectrumCache);
             // unmarshall the desired object
-            JAXBElement<T> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(xmlSnippet))), cls);
+            JAXBElement<T> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(cleanXML))), cls);
             retval = holder.getValue();
         } catch (JAXBException e) {
             logger.error("MzMLUnmarshaller.getObjectFromXml", e);

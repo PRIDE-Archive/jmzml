@@ -77,7 +77,10 @@ public class MzMLIndexerFactory {
 
                 // create xml element extractor
                 xmlExtractor = new SimpleXmlElementExtractor();
-                xmlExtractor.setEncoding(xmlExtractor.detectFileEncoding(xmlFile.toURI().toURL()));
+                String encoding = xmlExtractor.detectFileEncoding(xmlFile.toURI().toURL());
+                if (encoding != null){
+                    xmlExtractor.setEncoding(encoding);
+                }
 
                 // create index
                 index = xpathAccess.getIndex();

@@ -27,6 +27,7 @@ import org.xml.sax.InputSource;
 import uk.ac.ebi.jmzml.model.mzml.MzMLObject;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.UnmarshallerFactory;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.filters.MzMLNamespaceFilter;
+import uk.ac.ebi.jmzml.xml.util.EscapingXMLUtilities;
 import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
 
 import javax.xml.bind.JAXBElement;
@@ -72,8 +73,11 @@ public class MzMLObjectIterator<X extends MzMLObject> implements Iterator<X> {
         try {
             String xmlSt = innerXpathIterator.next();
 
+            //need to clean up XML to ensure that there are no weird control characters
+            String cleanXML = EscapingXMLUtilities.escapeCharacters(xmlSt);
+
             if (logger.isDebugEnabled()) {
-                logger.trace("XML to unmarshal: " + xmlSt);
+                logger.trace("XML to unmarshal: " + cleanXML);
             }
 
             //required for the addition of namespaces to top-level objects
@@ -81,7 +85,7 @@ public class MzMLObjectIterator<X extends MzMLObject> implements Iterator<X> {
             //initializeUnmarshaller will assign the proper reader to the xmlFilter
             Unmarshaller unmarshaller = UnmarshallerFactory.getInstance().initializeUnmarshaller(index, xmlFilter, cache, useSpectrumCache);
             //unmarshall the desired object
-            JAXBElement<X> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(xmlSt))), cls);
+            JAXBElement<X> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(cleanXML))), cls);
 
             X retval = holder.getValue();
 

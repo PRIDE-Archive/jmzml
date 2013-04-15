@@ -408,10 +408,7 @@ public class BinaryDataArrayTest extends TestCase {
 
         MzMLMarshaller m = new MzMLMarshaller();
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        m.marshall(bda, baos);
-
-        String c64bitTest = new String(baos.toByteArray());
+        String c64bitTest = m.marshall(bda);
 
         if (VERBOSE) {
             System.out.println("\n----- testMarshaller -----------------------------------------");
