@@ -120,7 +120,7 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         ///// ///// ///// ///// FIRST READ ///// ///// ///// /////
         // check if the instance file is valid
         assertTrue(isValidMzML(mzMLFile));
-        logger.info("zmML file is valid.");
+        logger.info("mzmML file is valid.");
 
         MzMLUnmarshaller um_1 = new MzMLUnmarshaller(mzMLFile);
         MzML mz_1 = um_1.unmarshall();
@@ -142,7 +142,7 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
         FileWriter fw;
         File tmpFile;
         try {
-            tmpFile = File.createTempFile("tmpMzML", "xml");
+            tmpFile = File.createTempFile("tmpMzML", ".xml");
             tmpFile.deleteOnExit();
             fw = new FileWriter(tmpFile);
         } catch (IOException e) {

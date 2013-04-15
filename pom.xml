@@ -5,7 +5,7 @@
     <groupId>uk.ac.ebi.jmzml</groupId>
     <artifactId>jmzml</artifactId>
     <packaging>jar</packaging>
-    <version>1.6.8</version>
+    <version>1.7.0</version>
     <name>MzML Java core API</name>
     <url>http://www.ebi.ac.uk/pride</url>
     <description>
@@ -282,29 +282,12 @@
             <version>1.1</version>
         </dependency>
 
-        <!--<dependency>-->
-        <!--<groupId>com.compomics</groupId>-->
-        <!--<artifactId>utilities</artifactId>-->
-        <!--<version>3.0.16</version>-->
-        <!--<exclusions>-->
-        <!--<exclusion>-->
-        <!--<artifactId>xtandem-parser</artifactId>-->
-        <!--<groupId>de.proteinms.xtandemparser</groupId>-->
-        <!--</exclusion>-->
-        <!--<exclusion>-->
-        <!--<artifactId>omssa-parser</artifactId>-->
-        <!--<groupId>de.proteinms.omxparser</groupId>-->
-        <!--</exclusion>-->
-        <!--<exclusion>-->
-        <!--<artifactId>mascotdatfile</artifactId>-->
-        <!--<groupId>com.compomics</groupId>-->
-        <!--</exclusion>-->
-        <!--<exclusion>-->
-        <!--<artifactId>servlet-api</artifactId>-->
-        <!--<groupId>javax.servlet</groupId>-->
-        <!--</exclusion>-->
-        <!--</exclusions>-->
-        <!--</dependency>-->
+        <!-- needed for EscapingXMLStreamWriter to cope with ASCII control characters that are not properly escaped in JAXB -->
+        <dependency>
+            <groupId>it.unimi.dsi</groupId>
+            <artifactId>fastutil</artifactId>
+            <version>6.5.1</version>
+        </dependency>
 
     </dependencies>
 
