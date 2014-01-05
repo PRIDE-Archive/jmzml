@@ -169,6 +169,16 @@ public class Spectrum
      *
      */
     public BinaryDataArrayList getBinaryDataArrayList() {
+        // Before returning the BinaryDataArrayList, set the array length
+        // of the each BinaryDataArray if null from the defaultArrayLength
+        if (binaryDataArrayList != null) {
+            for (BinaryDataArray dataArray : binaryDataArrayList.getBinaryDataArray()) {
+                if (dataArray.getArrayLength() == null) {
+                    dataArray.setArrayLength(this.getDefaultArrayLength());
+                }
+            }
+        }
+        
         return binaryDataArrayList;
     }
 
