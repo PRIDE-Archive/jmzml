@@ -1,3 +1,24 @@
+/*
+ * Date: 13/12/2013 
+ * File: uk.ac.ebi.jmzml.model.mzml.BinaryDataArray
+ *
+ * jmzml is Copyright 2008 The European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ *
+ */
+
 package uk.ac.ebi.jmzml.model.mzml;
 
 import uk.ac.ebi.jmzml.model.mzml.params.BinaryDataArrayCVParam;
@@ -720,18 +741,27 @@ public class BinaryDataArray
         return decompressedData;
     }
 
+    /**
+     * Compressed source data using the Deflate algorithm.
+     * @param uncompressedData Data to be compressed
+     * @return Compressed data
+     */
     private byte[] compress(byte[] uncompressedData) {
-        byte[] data;// Decompress the data
+        byte[] data = null; // Decompress the data
 
         // create a temporary byte array big enough to hold the compressed data
         // with the worst compression (the length of the initial (uncompressed) data)
-        byte[] temp = new byte[uncompressedData.length];
+        // EDIT: worst compression can be bigger than source data when source
+        // data is small, so byte array initialiser now takes take of this.
+        byte[] temp = new byte[uncompressedData.length <= 50 ? 100 : uncompressedData.length];
+        
         // compress
         Deflater compresser = new Deflater();
         compresser.setInput(uncompressedData);
         compresser.finish();
         int cdl = compresser.deflate(temp);
-        // create a new array with the size of the compressed data (cdl)
+        
+        // create a new array with the size of the compressed data (cdl)        
         data = new byte[cdl];
         System.arraycopy(temp, 0, data, 0, cdl);
 
