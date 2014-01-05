@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
+import uk.ac.ebi.jmzml.model.mzml.utilities.MSNumpressCodec;
 
 
 /**
@@ -89,7 +90,7 @@ public class BinaryDataArray
     public static final String MS_COMPRESSED_AC = "MS:1000574";
     public static final String MS_COMPRESSED_NAME = "zlib compression";
     public static final String MS_UNCOMPRESSED_AC = "MS:1000576";
-    public static final String MS_UNCOMPRESSED_NAME = "no compression";
+    public static final String MS_UNCOMPRESSED_NAME = "no compression";    
     public static final String MS_FLOAT32BIT_AC = "MS:1000521";
     public static final String MS_FLOAT32BIT_NAME = "32-bit float";
     public static final String MS_FLOAT64BIT_AC = "MS:1000523";
@@ -314,9 +315,17 @@ public class BinaryDataArray
         } else {
             data = binary;
         }
+        
+        Number[] dataArray = null;
+        
+        // 3a. if data has been numpress compressed then do the decompression...
+        String numpressAccession = null;
+        if ((numpressAccession = MSNumpressCodec.getMSNumpressEncodingAccession(this.cvParam)) != null) {
+            dataArray = MSNumpressCodec.decode(numpressAccession, data, this.arrayLength);
+            return dataArray;
+        }
 
-        // 3. apply the specified precision when converting into numeric values
-        Number[] dataArray;
+        // 3b. ...if not then apply the specified precision when converting into numeric values        
         switch (getPrecision()) {
             case FLOAT64BIT:
                 dataArray = convertData(data, Precision.FLOAT64BIT);
