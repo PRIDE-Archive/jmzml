@@ -321,7 +321,11 @@ public class BinaryDataArray
         // 3a. if data has been numpress compressed then do the decompression...
         String numpressAccession = null;
         if ((numpressAccession = MSNumpressCodec.getMSNumpressEncodingAccession(this.cvParam)) != null) {
-            dataArray = MSNumpressCodec.decode(numpressAccession, data, this.arrayLength);
+            dataArray = MSNumpressCodec.decode(numpressAccession, data);
+            if (this.arrayLength != null && dataArray.length != this.arrayLength) {
+                throw new IllegalStateException("Error: Decoded array length does not match array length property.");
+            }
+            
             return dataArray;
         }
 
@@ -419,6 +423,33 @@ public class BinaryDataArray
 
         return dataLength;
     }
+    
+    /**
+     * Sets the value of the binary property for data in double values.
+     * Note that double values imply a precision of 64 bit.
+     * @param value the data as double array.
+     * @param compress flag whether or not the data should be compressed (zlib).
+     * @param cv The CV that will be used as reference CV for the generated compression and CVParams.
+     * @param numpressParam The CVParam detailing the MSNumpress compression algorithm to use.
+     * @return an int value specifying the length of the byte[] that was stored as binary data.
+     */
+    public int set64BitFloatArrayAsBinaryData(double[] value, boolean compress, CV cv, CVParam numpressParam) {
+        byte[] numpressEncodedBytes = MSNumpressCodec.encode(value, numpressParam.getAccession());
+        int dataLength = numpressEncodedBytes.length;
+        setBinaryData(numpressEncodedBytes, compress, cv);
+        numpressParam.setCv(cv);
+        this.getCvParam().add(numpressParam);
+        
+        CVParam cvParam = new BinaryDataArrayCVParam();
+        cvParam.setAccession(MS_FLOAT64BIT_AC);
+        cvParam.setName(MS_FLOAT64BIT_NAME);
+        cvParam.setCv(cv);
+        this.getCvParam().add(cvParam);
+        
+        this.arrayLength = value.length;
+        
+        return dataLength;
+    }
 
     /**
      * Sets the value of the binary property for data in float values.
@@ -449,6 +480,19 @@ public class BinaryDataArray
         this.getCvParam().add(cvParam);
 
         return dataLength;
+    }
+    
+    /**
+     * Sets the value of the binary property for data in float values.
+     * Note that float values imply a precision of 32 bit, the data stored will be 64 bit doubles.
+     * @param value the data as float array.
+     * @param compress flag whether or not the data should be compressed (zlib).
+     * @param cv The CV that will be used as reference CV for the generated compression and CVParams.
+     * @param numpressParam The CVParam detailing the MSNumpress compression algorithm to use.
+     * @return an int value specifying the length of the byte[] that was stored as binary data.
+     */
+    public int set32BitFloatArrayAsBinaryData(float[] value, boolean compress, CV cv, CVParam numpressParam) {
+        return set64BitFloatArrayAsBinaryData(convertFloatToDoubleArray(value), compress, cv, numpressParam);
     }
 
     /**
@@ -483,6 +527,19 @@ public class BinaryDataArray
     }
 
     /**
+     * Sets the value of the binary property for data in int values.
+     * Note that int values imply a precision of 32 bit, the data will stored will be 64 bit doubles.
+     * @param value the data as int array.
+     * @param compress flag whether or not the data should be compressed (zlib).
+     * @param cv The CV that will be used as reference CV for the generated compression and CVParams.
+     * @param numpressParam The CVParam detailing the MSNumpress compression algorithm to use.
+     * @return an int value specifying the length of the byte[] that was stored as binary data.
+     */
+    public int set32BitIntArrayAsBinaryData(int[] array, boolean compress, CV cv, CVParam numpressParam) {
+        return set64BitFloatArrayAsBinaryData(convertIntToDoubleArray(array), compress, cv, numpressParam);
+    }
+    
+    /**
      * Sets the value of the binary property for data in long values.
      * Note that long values imply a precision of 64 bit.
      *
@@ -513,6 +570,19 @@ public class BinaryDataArray
         return dataLength;
     }
 
+    /**
+     * Sets the value of the binary property for data in long values.
+     * Note that long values imply a precision of 64 bit, the data will stored will be 64 bit doubles.
+     * @param value the data as long array.
+     * @param compress flag whether or not the data should be compressed (zlib).
+     * @param cv The CV that will be used as reference CV for the generated compression and CVParams.
+     * @param numpressParam The CVParam detailing the MSNumpress compression algorithm to use.
+     * @return an int value specifying the length of the byte[] that was stored as binary data.
+     */
+    public int set64BitIntArrayAsBinaryData(long[] array, boolean compress, CV cv, CVParam numpressParam) {
+        return set64BitFloatArrayAsBinaryData(convertLongToDoubleArray(array), compress, cv, numpressParam);
+    }
+    
     /**
      * Sets the value of the binary property for data represented as String.
      * Note: since Java does not have the concept of "null terminated strings",
@@ -805,6 +875,30 @@ public class BinaryDataArray
         long[] result = new long[array.length];
         for (int i = 0; i < array.length; i++) {
             result[i] = array[i].longValue();
+        }
+        return result;
+    }
+    
+    private double[] convertFloatToDoubleArray(final float[] array) {
+        double[] result = new double[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = array[i];
+        }
+        return result;
+    }
+    
+    private double[] convertIntToDoubleArray(final int[] array) {
+        double[] result = new double[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = array[i];
+        }
+        return result;
+    }
+    
+    private double[] convertLongToDoubleArray(final long[] array) {
+        double[] result = new double[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = array[i];
         }
         return result;
     }

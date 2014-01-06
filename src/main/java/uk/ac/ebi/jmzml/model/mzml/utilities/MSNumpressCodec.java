@@ -42,8 +42,12 @@ public final class MSNumpressCodec {
         return null;
     }
     
-    public static Double[] decode(String numpressAccession, byte[] data, int dataSize) {
-        return MSNumpress.decode(numpressAccession, data, dataSize);
+    public static Double[] decode(String numpressAccession, byte[] data) {
+        return MSNumpress.decode(numpressAccession, data);
+    }
+    
+    public static byte[] encode(double[] data, String numpressParamAccession) {
+        return MSNumpress.encode(data, numpressParamAccession);
     }
     
     private static List<String> getMSNumpressACs() {
