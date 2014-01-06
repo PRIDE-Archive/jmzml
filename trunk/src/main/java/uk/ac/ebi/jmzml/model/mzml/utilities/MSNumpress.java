@@ -19,6 +19,8 @@
 
 package uk.ac.ebi.jmzml.model.mzml.utilities;
 
+import java.util.Arrays;
+
 /**
  *
  * @author fgonzalez, jteleman, sperkins
@@ -30,6 +32,23 @@ public class MSNumpress {
         public static final String ACC_NUMPRESS_PIC = "MS:1002313";
         public static final String ACC_NUMPRESS_SLOF = "MS:1002314";
         
+        public static byte[] encode(double[] data, String cvAccession) {
+            if (cvAccession.equals(ACC_NUMPRESS_LINEAR)) {
+                byte[] buffer = new byte[8 + (data.length * 5)];
+                int encodedBytes = MSNumpress.encodeLinear(data, data.length, buffer, MSNumpress.optimalLinearFixedPoint(data, data.length));                
+                return Arrays.copyOf(buffer, encodedBytes);
+            } else if (cvAccession.equals(ACC_NUMPRESS_SLOF)) {
+                byte[] buffer = new byte[8 + (data.length * 2)];
+                int encodedBytes = MSNumpress.encodeSlof(data, data.length, buffer, MSNumpress.optimalSlofFixedPoint(data, data.length));
+                return Arrays.copyOf(buffer, encodedBytes);
+            } else if (cvAccession.equals(ACC_NUMPRESS_PIC)) {
+                byte[] buffer = new byte[data.length * 5];
+                int encodedBytes = MSNumpress.encodePic(data, data.length, buffer);                
+                return Arrays.copyOf(buffer, encodedBytes);
+            }
+            
+            throw new IllegalArgumentException("'"+cvAccession+"' is not a numpress compression term");
+        }
         
         /**
          * Convenience function for decoding binary data encoded by MSNumpress. If
@@ -46,27 +65,23 @@ public class MSNumpress {
          * @dataSize                number of doubles from data to encode
          * @return                        The decoded doubles
          */
-        public static Double[] decode(
-                        String cvAccession,
-                        byte[] data,
-                        int dataSize
-        ) {
+        public static Double[] decode(String cvAccession, byte[] data) {
                 
                 if (cvAccession.equals(ACC_NUMPRESS_LINEAR)) {
-                        Double[] buffer         = new Double[dataSize * 2];
-                        int nbrOfDoubles         = MSNumpress.decodeLinear(data, dataSize, buffer);
+                        Double[] buffer         = new Double[data.length * 2];
+                        int nbrOfDoubles         = MSNumpress.decodeLinear(data, data.length, buffer);
                         Double[] result         = new Double[nbrOfDoubles];
                         System.arraycopy(buffer, 0, result, 0, nbrOfDoubles);
                         return result;
                         
                 } else if (cvAccession.equals(ACC_NUMPRESS_SLOF)) {
-                        Double[] result         = new Double[dataSize / 2];
-                        MSNumpress.decodeSlof(data, dataSize, result);
+                        Double[] result         = new Double[data.length / 2];
+                        MSNumpress.decodeSlof(data, data.length, result);
                         return result;
                         
                 } else if (cvAccession.equals(ACC_NUMPRESS_PIC)) {
-                        Double[] buffer         = new Double[dataSize * 2];
-                        int nbrOfDoubles         = MSNumpress.decodePic(data, dataSize, buffer);
+                        Double[] buffer         = new Double[data.length * 2];
+                        int nbrOfDoubles         = MSNumpress.decodePic(data, data.length, buffer);
                         Double[] result         = new Double[nbrOfDoubles];
                         System.arraycopy(buffer, 0, result, 0, nbrOfDoubles);
                         return result;
