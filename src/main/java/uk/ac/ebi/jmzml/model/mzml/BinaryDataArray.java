@@ -792,6 +792,7 @@ public class BinaryDataArray
 
         // using a ByteArrayOutputStream to not having to define the result array size beforehand
         Inflater decompressor = new Inflater();
+
         decompressor.setInput(compressedData);
         // Create an expandable byte array to hold the decompressed data
         ByteArrayOutputStream bos = new ByteArrayOutputStream(compressedData.length);
@@ -799,6 +800,9 @@ public class BinaryDataArray
         while (!decompressor.finished()) {
             try {
                 int count = decompressor.inflate(buf);
+                if (count == 0 && decompressor.needsInput()) {
+                    break;
+                }
                 bos.write(buf, 0, count);
             } catch (DataFormatException e) {
                 throw new IllegalStateException("Encountered wrong data format " +
