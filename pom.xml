@@ -5,7 +5,7 @@
     <groupId>uk.ac.ebi.jmzml</groupId>
     <artifactId>jmzml</artifactId>
     <packaging>jar</packaging>
-    <version>1.7.1</version>
+    <version>1.7.2-SNAPSHOT</version>
     <name>MzML Java core API</name>
     <url>http://www.ebi.ac.uk/pride</url>
     <description>
@@ -57,6 +57,9 @@
         </developer>
     </developers>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <!-- Build -->
     <build>
@@ -337,15 +340,13 @@
     <!-- Distribution management -->
     <distributionManagement>
         <repository>
-            <id>ebi-repo</id>
-            <name>EBI Repository</name>
-            <url>scp://lobster.ebi.ac.uk/homes/maven/public_html/m2repo</url>
+            <id>nexus-ebi-repo</id>
+            <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo</url>
         </repository>
+        <!-- EBI SNAPSHOT repo -->
         <snapshotRepository>
-            <uniqueVersion>false</uniqueVersion>
-            <id>ebi-repo-snapshots</id>
-            <name>EBI Snapshots Repository</name>
-            <url>scp://lobster.ebi.ac.uk/homes/maven/public_html/m2repo_snapshots</url>
+            <id>nexus-ebi-repo-snapshots</id>
+            <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo-snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
