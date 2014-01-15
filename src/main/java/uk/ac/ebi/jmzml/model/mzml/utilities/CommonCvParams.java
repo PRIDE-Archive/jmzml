@@ -81,7 +81,7 @@ public class CommonCvParams {
     
     private static BinaryDataArrayCVParam initMSNumpressSlofCompressionParam() {
         BinaryDataArrayCVParam param = new BinaryDataArrayCVParam();
-        param.setAccession("MS:1002312");
+        param.setAccession("MS:1002314");
         param.setName("MS-Numpress short logged float compression");
         return param;
     }
