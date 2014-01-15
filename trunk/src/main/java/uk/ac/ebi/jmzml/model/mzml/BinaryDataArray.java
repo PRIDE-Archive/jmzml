@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
+import uk.ac.ebi.jmzml.model.mzml.utilities.CommonCvParams;
 import uk.ac.ebi.jmzml.model.mzml.utilities.MSNumpressCodec;
 
 
@@ -713,9 +714,14 @@ public class BinaryDataArray
             uncompress = true;
         } else if (cvs.contains(MS_UNCOMPRESSED_AC)) {
             uncompress = false;
+        } else if (cvs.contains(CommonCvParams.MSNUMPRESS_LINEAR_COMPRESSION_PARAM.getAccession())) {    
+            uncompress = false;
+        } else if (cvs.contains(CommonCvParams.MSNUMPRESS_SLOF_COMPRESSION_PARAM.getAccession())) {
+            uncompress = false;
+        } else if (cvs.contains(CommonCvParams.MSNUMPRESS_PIC_COMPRESSION_PARAM.getAccession())) {
+            uncompress = false;        
         } else {
-            throw new IllegalStateException("Required compression CV parameter ('" + MS_COMPRESSED_NAME
-                    + "' or '" + MS_UNCOMPRESSED_NAME + "') not found in BinaryDataArray!");
+            throw new IllegalStateException("Required compression CV parameter not found in BinaryDataArray!");
         }
 
         return uncompress;

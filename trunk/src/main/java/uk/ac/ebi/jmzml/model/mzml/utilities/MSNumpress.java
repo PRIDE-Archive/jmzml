@@ -75,8 +75,10 @@ public class MSNumpress {
                         return result;
                         
                 } else if (cvAccession.equals(ACC_NUMPRESS_SLOF)) {
-                        Double[] result         = new Double[data.length / 2];
-                        MSNumpress.decodeSlof(data, data.length, result);
+                        Double[] buffer         = new Double[data.length / 2];
+                        int nbrOfDoubles = MSNumpress.decodeSlof(data, data.length, buffer);
+                        Double[] result = new Double[nbrOfDoubles];
+                        System.arraycopy(buffer, 0, result, 0, nbrOfDoubles);
                         return result;
                         
                 } else if (cvAccession.equals(ACC_NUMPRESS_PIC)) {
