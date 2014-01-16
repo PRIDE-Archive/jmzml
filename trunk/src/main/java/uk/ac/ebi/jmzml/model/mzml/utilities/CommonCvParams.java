@@ -21,6 +21,7 @@ public class CommonCvParams {
     public static final BinaryDataArrayCVParam MSNUMPRESS_LINEAR_COMPRESSION_PARAM = initMSNumpressLinearCompressionParam();
     public static final BinaryDataArrayCVParam MSNUMPRESS_SLOF_COMPRESSION_PARAM = initMSNumpressSlofCompressionParam();
     public static final BinaryDataArrayCVParam MSNUMPRESS_PIC_COMPRESSION_PARAM = initMSNumpressPicCompressionParam();
+    public static final BinaryDataArrayCVParam TIME_PARAM = initTimeParam();
 
     /**
      * Private constructor to prevent instantiation.
@@ -90,6 +91,17 @@ public class CommonCvParams {
         BinaryDataArrayCVParam param = new BinaryDataArrayCVParam();
         param.setAccession("MS:1002313");
         param.setName("MS-Numpress positive integer compression");
+        return param;
+    }
+    
+    private static BinaryDataArrayCVParam initTimeParam() {
+        BinaryDataArrayCVParam param = new BinaryDataArrayCVParam();
+        param.setAccession("MS:1000595");
+        param.setName("time array");
+        param.setCvRef("MS");
+        param.setUnitCvRef("UO");
+        param.setUnitAccession("UO:0000031");
+        param.setUnitName("minute");
         return param;
     }
 }
