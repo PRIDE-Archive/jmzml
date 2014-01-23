@@ -323,10 +323,7 @@ public class BinaryDataArray
         String numpressAccession = null;
         if ((numpressAccession = MSNumpressCodec.getMSNumpressEncodingAccession(this.cvParam)) != null) {
             dataArray = MSNumpressCodec.decode(numpressAccession, data);
-            if (this.arrayLength != null && dataArray.length != this.arrayLength) {
-                throw new IllegalStateException("Error: Decoded array length does not match array length property.");
-            }
-            
+            this.arrayLength = dataArray.length;            
             return dataArray;
         }
 
@@ -825,7 +822,7 @@ public class BinaryDataArray
         decompressedData = bos.toByteArray();
 
         if (decompressedData == null) {
-            throw new IllegalStateException("Decompression of binary data prodeuced no result (null)!");
+            throw new IllegalStateException("Decompression of binary data produced no result (null)!");
         }
         return decompressedData;
     }
@@ -841,8 +838,8 @@ public class BinaryDataArray
         // create a temporary byte array big enough to hold the compressed data
         // with the worst compression (the length of the initial (uncompressed) data)
         // EDIT: worst compression can be bigger than source data when source
-        // data is small, so byte array initialiser now takes take of this.
-        byte[] temp = new byte[uncompressedData.length <= 50 ? 100 : uncompressedData.length];
+        // data is small or highly non-repetitive, so byte array initialiser now takes take of this.
+        byte[] temp = new byte[uncompressedData.length <= 5000 ? 10000 : uncompressedData.length];
         
         // compress
         Deflater compresser = new Deflater();
