@@ -5,6 +5,7 @@ import uk.ac.ebi.jmzml.xml.jaxb.adapters.IdRefAdapter;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
+import java.util.List;
 
 
 /**
@@ -264,7 +265,21 @@ public class CVParam
     public boolean isInferredFromReferenceableParamGroupRef() {
         return isInferredFromReferenceableParamGroupRef;
     }
-
+    
+    /**
+     * Checks whether this CVParam is contained by the supplied list.
+     * @param paramList List of CVParam objects.
+     * @return Whether CVParam is contained by list.
+     */
+    public boolean isContainedBy(List<CVParam> paramList) {
+        for (CVParam param : paramList) {
+            if (this.getAccession().equals(param.getAccession())) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 
     /**
      * You can set this boolean to indicate whether this CVParam was inferred from
