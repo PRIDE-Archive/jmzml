@@ -837,19 +837,21 @@ public class BinaryDataArray
 
         // create a temporary byte array big enough to hold the compressed data
         // with the worst compression (the length of the initial (uncompressed) data)
-        // EDIT: worst compression can be bigger than source data when source
-        // data is small or highly non-repetitive, so byte array initialiser now takes take of this.
-        byte[] temp = new byte[uncompressedData.length <= 5000 ? 10000 : uncompressedData.length];
+        // EDIT: if it turns out this byte array was not big enough, then double its size and try again.
+        byte[] temp = new byte[uncompressedData.length / 2];
+        int compressedBytes = temp.length;
+        while (compressedBytes == temp.length) {
+            // compress
+            temp = new byte[temp.length * 2];
+            Deflater compresser = new Deflater();
+            compresser.setInput(uncompressedData);
+            compresser.finish();
+            compressedBytes = compresser.deflate(temp);
+        }      
         
-        // compress
-        Deflater compresser = new Deflater();
-        compresser.setInput(uncompressedData);
-        compresser.finish();
-        int cdl = compresser.deflate(temp);
-        
-        // create a new array with the size of the compressed data (cdl)        
-        data = new byte[cdl];
-        System.arraycopy(temp, 0, data, 0, cdl);
+        // create a new array with the size of the compressed data (compressedBytes)        
+        data = new byte[compressedBytes];
+        System.arraycopy(temp, 0, data, 0, compressedBytes);
 
         return data;
     }
