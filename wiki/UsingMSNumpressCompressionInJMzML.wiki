@@ -40,7 +40,7 @@ array.set64BitIntArrayAsBinaryData(mzValues, doZlibCompression, cv, numpressPara
 It can be seen in this example that the chosen MSNumpress CVParam is the one for linear prediction compression (numLin).
 Algorithms numSlof and numPic could be chosen by changing from `CommonCvParams.MSNUMPRESS_LINEAR_COMPRESSION_PARAM` to `CommonCvParams.MSNUMPRESS_SLOF_COMPRESSION_PARAM` or `CommonCvParams.MSNUMPRESS_PIC_COMPRESSION_PARAM`
 
-_CommonCvParams_ is a new utility class that provides a single instance of a given CVParam, cutting down on memory costs and removing some user error from the system.
+`CommonCvParams` is a new utility class that provides a single instance of a given CVParam, cutting down on memory costs and removing some user error from the system.
 
 It is important to note that the MSNumpress algorithms are designed to work with 64-bit double precision data. There are convenience methods for the _float_, _int_ and _long_ types that allow these compression methods to be used with non 64-bit data. However storing 32 bit values using a method designed for 64-bit values may not be very efficient. You should consider your source data before employing any particular compression algorithm.
 
