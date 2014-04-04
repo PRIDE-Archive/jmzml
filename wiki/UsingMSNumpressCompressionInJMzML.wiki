@@ -15,7 +15,7 @@ This type of compression is less appropriate than both numLin and numSlof for al
 
 = Writing data with MSNumpress compression  =
 
-It is the data within a BinaryDataArray that is compressible. BinaryDataArray is used in spectra and chromatograms, and here we will cover writing MSNumpress compressed data in both.
+It is the data within a `BinaryDataArray` that is compressible. `BinaryDataArray` is used in spectra and chromatograms, and here we will cover writing MSNumpress compressed data in both.
 
 Before the MSNumpress implementation was developed in jmzML, data was compressible with zlib like so:
 
