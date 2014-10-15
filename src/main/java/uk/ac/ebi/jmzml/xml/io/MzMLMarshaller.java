@@ -96,7 +96,13 @@ public class MzMLMarshaller {
             // before marshalling out, wrap in a Custom XMLStreamWriter
             // to fix a JAXB bug: http://java.net/jira/browse/JAXB-614
             // also wrapping in IndentingXMLStreamWriter to generate formatted XML
-            XMLStreamWriter xmlStreamWriter = XMLOutputFactory.newInstance().createXMLStreamWriter(out);
+            //XMLStreamWriter xmlStreamWriter = XMLOutputFactory.newInstance().createXMLStreamWriter(out);
+            System.setProperty("javax.xml.stream.XMLOutputFactory", "com.sun.xml.internal.stream.XMLOutputFactoryImpl");
+
+//            XMLOutputFactory factory = XMLOutputFactory.newFactory("com.sun.xml.internal.stream.XMLOutputFactoryImpl", null);
+            XMLOutputFactory factory = XMLOutputFactory.newFactory();
+            XMLStreamWriter xmlStreamWriter = factory.createXMLStreamWriter(out);
+
             IndentingXMLStreamWriter writer = new IndentingXMLStreamWriter(new EscapingXMLStreamWriter(xmlStreamWriter));
             marshaller.marshal( new JAXBElement(aQName, object.getClass(), object), writer );
 
