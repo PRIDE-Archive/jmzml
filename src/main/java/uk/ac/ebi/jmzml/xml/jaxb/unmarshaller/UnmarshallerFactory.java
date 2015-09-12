@@ -28,6 +28,7 @@
  */
 package uk.ac.ebi.jmzml.xml.jaxb.unmarshaller;
 
+import com.ctc.wstx.sax.WstxSAXParserFactory;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -109,7 +110,14 @@ public class UnmarshallerFactory {
             UnmarshallerHandler uh = unmarshaller.getUnmarshallerHandler();
 
             // Create a new XML parser
-            SAXParserFactory factory = SAXParserFactory.newInstance();
+            //SAXParserFactory factory = SAXParserFactory.newInstance();
+
+//            WstxInputFactory inputFactory = new WstxInputFactory();
+//            inputFactory.configureForSpeed();
+//            SAXParserFactory factory = new WstxSAXParserFactory(inputFactory);
+
+            SAXParserFactory factory = new WstxSAXParserFactory();
+
             factory.setNamespaceAware(true);
             SAXParser parser = factory.newSAXParser();
             XMLReader xmlReader = parser.getXMLReader();
