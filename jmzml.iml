@@ -20,7 +20,7 @@
     <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-xjc:2.1.7" level="project" />
     <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-impl:2.1.7" level="project" />
     <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.1" level="project" />
-    <orderEntry type="module" module-name="xxindex" />
+    <orderEntry type="library" name="Maven: psidev.psi.tools:xxindex:0.15" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.4" level="project" />
     <orderEntry type="library" name="Maven: cpdetector:cpdetector:1.0.7" level="project" />
     <orderEntry type="library" name="Maven: org.antlr:com.springsource.antlr:2.7.7" level="project" />
