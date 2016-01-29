@@ -22,24 +22,27 @@
 
 package uk.ac.ebi.jmzml.xml.io;
 
-import org.apache.log4j.Logger;
+import java.io.StringReader;
+import java.util.Iterator;
+
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.sax.SAXSource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
+
 import uk.ac.ebi.jmzml.model.mzml.MzMLObject;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.UnmarshallerFactory;
 import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.filters.MzMLNamespaceFilter;
 import uk.ac.ebi.jmzml.xml.util.EscapingXMLUtilities;
 import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.sax.SAXSource;
-import java.io.StringReader;
-import java.util.Iterator;
-
 public class MzMLObjectIterator<X extends MzMLObject> implements Iterator<X> {
 
-    private static Logger logger = Logger.getLogger(MzMLObjectIterator.class);
+    private static Logger logger = LoggerFactory.getLogger(MzMLObjectIterator.class);
 
     private MzMLIndexer index;
 

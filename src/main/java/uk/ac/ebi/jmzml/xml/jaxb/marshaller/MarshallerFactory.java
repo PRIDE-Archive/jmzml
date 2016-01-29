@@ -23,18 +23,20 @@
 
 package uk.ac.ebi.jmzml.xml.jaxb.marshaller;
 
-import org.apache.log4j.Logger;
-import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
-import uk.ac.ebi.jmzml.xml.Constants;
-import uk.ac.ebi.jmzml.xml.jaxb.marshaller.listeners.ObjectClassListener;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
+import uk.ac.ebi.jmzml.xml.Constants;
+import uk.ac.ebi.jmzml.xml.jaxb.marshaller.listeners.ObjectClassListener;
+
 public class MarshallerFactory {
 
-    private static final Logger logger = Logger.getLogger(MarshallerFactory.class);
+    private static final Logger logger = LoggerFactory.getLogger(MarshallerFactory.class);
     private static MarshallerFactory instance = new MarshallerFactory();
     private static JAXBContext jc = null;
 
@@ -61,7 +63,7 @@ public class MarshallerFactory {
             // See: ParamAlternative.beforeMarshalOperation and ParamAlternativeList.beforeMarshalOperation
             marshaller.setListener(new ObjectClassListener());
 
-            logger.info("Marshaller initialized");
+            logger.debug("Marshaller initialized");
 
             return marshaller;
 

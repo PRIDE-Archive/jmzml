@@ -1,15 +1,69 @@
 package uk.ac.ebi.jmzml;
 
-import org.apache.log4j.Logger;
-import uk.ac.ebi.jmzml.model.mzml.*;
-import uk.ac.ebi.jmzml.model.mzml.utilities.MzMLElementConfig;
-import uk.ac.ebi.jmzml.model.mzml.utilities.MzMLElementProperties;
-import uk.ac.ebi.jmzml.xml.jaxb.resolver.*;
-
-import javax.xml.bind.JAXB;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.xml.bind.JAXB;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import uk.ac.ebi.jmzml.model.mzml.AnalyzerComponent;
+import uk.ac.ebi.jmzml.model.mzml.BinaryDataArray;
+import uk.ac.ebi.jmzml.model.mzml.BinaryDataArrayList;
+import uk.ac.ebi.jmzml.model.mzml.CV;
+import uk.ac.ebi.jmzml.model.mzml.CVList;
+import uk.ac.ebi.jmzml.model.mzml.CVParam;
+import uk.ac.ebi.jmzml.model.mzml.Chromatogram;
+import uk.ac.ebi.jmzml.model.mzml.ChromatogramList;
+import uk.ac.ebi.jmzml.model.mzml.Component;
+import uk.ac.ebi.jmzml.model.mzml.ComponentList;
+import uk.ac.ebi.jmzml.model.mzml.DataProcessing;
+import uk.ac.ebi.jmzml.model.mzml.DataProcessingList;
+import uk.ac.ebi.jmzml.model.mzml.DetectorComponent;
+import uk.ac.ebi.jmzml.model.mzml.FileDescription;
+import uk.ac.ebi.jmzml.model.mzml.Index;
+import uk.ac.ebi.jmzml.model.mzml.IndexList;
+import uk.ac.ebi.jmzml.model.mzml.IndexedmzML;
+import uk.ac.ebi.jmzml.model.mzml.InstrumentConfiguration;
+import uk.ac.ebi.jmzml.model.mzml.InstrumentConfigurationList;
+import uk.ac.ebi.jmzml.model.mzml.MzML;
+import uk.ac.ebi.jmzml.model.mzml.MzMLObject;
+import uk.ac.ebi.jmzml.model.mzml.Offset;
+import uk.ac.ebi.jmzml.model.mzml.ParamGroup;
+import uk.ac.ebi.jmzml.model.mzml.Precursor;
+import uk.ac.ebi.jmzml.model.mzml.PrecursorList;
+import uk.ac.ebi.jmzml.model.mzml.ProcessingMethod;
+import uk.ac.ebi.jmzml.model.mzml.Product;
+import uk.ac.ebi.jmzml.model.mzml.ProductList;
+import uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroup;
+import uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroupList;
+import uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroupRef;
+import uk.ac.ebi.jmzml.model.mzml.Run;
+import uk.ac.ebi.jmzml.model.mzml.Sample;
+import uk.ac.ebi.jmzml.model.mzml.SampleList;
+import uk.ac.ebi.jmzml.model.mzml.Scan;
+import uk.ac.ebi.jmzml.model.mzml.ScanList;
+import uk.ac.ebi.jmzml.model.mzml.ScanSettings;
+import uk.ac.ebi.jmzml.model.mzml.ScanSettingsList;
+import uk.ac.ebi.jmzml.model.mzml.ScanWindowList;
+import uk.ac.ebi.jmzml.model.mzml.SelectedIonList;
+import uk.ac.ebi.jmzml.model.mzml.Software;
+import uk.ac.ebi.jmzml.model.mzml.SoftwareList;
+import uk.ac.ebi.jmzml.model.mzml.SoftwareRef;
+import uk.ac.ebi.jmzml.model.mzml.SourceComponent;
+import uk.ac.ebi.jmzml.model.mzml.SourceFile;
+import uk.ac.ebi.jmzml.model.mzml.SourceFileList;
+import uk.ac.ebi.jmzml.model.mzml.SourceFileRef;
+import uk.ac.ebi.jmzml.model.mzml.SourceFileRefList;
+import uk.ac.ebi.jmzml.model.mzml.Spectrum;
+import uk.ac.ebi.jmzml.model.mzml.SpectrumList;
+import uk.ac.ebi.jmzml.model.mzml.TargetList;
+import uk.ac.ebi.jmzml.model.mzml.UserParam;
+import uk.ac.ebi.jmzml.model.mzml.utilities.MzMLElementConfig;
+import uk.ac.ebi.jmzml.model.mzml.utilities.MzMLElementProperties;
+import uk.ac.ebi.jmzml.xml.jaxb.resolver.AbstractReferenceResolver;
 
 /**
  * @author Florian
@@ -542,7 +596,7 @@ public enum MzMLElement {
      */
     public static void loadProperties() {
 
-        Logger logger = Logger.getLogger(MzMLElement.class);
+        Logger logger = LoggerFactory.getLogger(MzMLElement.class);
 
         //check to see if we have a project-specific configuration file
         URL xmlFileURL = MzMLElement.class.getClassLoader().getResource("MzMLElement.cfg.xml");

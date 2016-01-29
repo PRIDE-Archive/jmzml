@@ -22,14 +22,20 @@
 
 package uk.ac.ebi.jmzml.xml.xxindex;
 
-import org.apache.log4j.Logger;
-
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FileUtils {
 
-    private static Logger logger = Logger.getLogger(FileUtils.class);
+    private static Logger logger = LoggerFactory.getLogger(FileUtils.class);
 
     public static File getFileFromURL(URL url) {
 
