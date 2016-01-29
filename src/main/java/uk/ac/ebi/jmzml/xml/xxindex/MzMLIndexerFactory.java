@@ -1,7 +1,19 @@
 package uk.ac.ebi.jmzml.xml.xxindex;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.log4j.Logger;
-import psidev.psi.tools.xxindex.SimpleXmlElementExtractor;
+
+import psidev.psi.tools.xxindex.FastXmlElementExtractor;
 import psidev.psi.tools.xxindex.StandardXpathAccess;
 import psidev.psi.tools.xxindex.XmlElementExtractor;
 import psidev.psi.tools.xxindex.index.IndexElement;
@@ -10,12 +22,6 @@ import uk.ac.ebi.jmzml.MzMLElement;
 import uk.ac.ebi.jmzml.model.mzml.Chromatogram;
 import uk.ac.ebi.jmzml.model.mzml.Spectrum;
 import uk.ac.ebi.jmzml.xml.Constants;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * User: rcote
@@ -76,7 +82,7 @@ public class MzMLIndexerFactory {
                 logger.debug("done!");
 
                 // create xml element extractor
-                xmlExtractor = new SimpleXmlElementExtractor();
+                xmlExtractor = new FastXmlElementExtractor(xmlFile);
                 String encoding = xmlExtractor.detectFileEncoding(xmlFile.toURI().toURL());
                 if (encoding != null){
                     xmlExtractor.setEncoding(encoding);
