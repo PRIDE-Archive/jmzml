@@ -22,14 +22,22 @@
 
 package uk.ac.ebi.jmzml.test.xml;
 
+import java.net.URL;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import junit.framework.TestCase;
-import org.apache.log4j.Logger;
-import uk.ac.ebi.jmzml.model.mzml.*;
+import uk.ac.ebi.jmzml.model.mzml.Chromatogram;
+import uk.ac.ebi.jmzml.model.mzml.ChromatogramList;
+import uk.ac.ebi.jmzml.model.mzml.ComponentList;
+import uk.ac.ebi.jmzml.model.mzml.DataProcessing;
+import uk.ac.ebi.jmzml.model.mzml.FileDescription;
+import uk.ac.ebi.jmzml.model.mzml.MzML;
+import uk.ac.ebi.jmzml.model.mzml.Run;
 import uk.ac.ebi.jmzml.xml.io.MzMLMarshaller;
 import uk.ac.ebi.jmzml.xml.io.MzMLObjectIterator;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
-
-import java.net.URL;
 
 public class XMLTest extends TestCase {
 
@@ -39,7 +47,7 @@ public class XMLTest extends TestCase {
      * todo - map to database layer
      */
 
-    Logger logger = Logger.getLogger(XMLTest.class);
+    Logger logger = LoggerFactory.getLogger(XMLTest.class);
 
     public void testXMLIndex() throws Exception {
 

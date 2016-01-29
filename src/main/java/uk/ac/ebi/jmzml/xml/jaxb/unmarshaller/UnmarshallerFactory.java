@@ -28,16 +28,6 @@
  */
 package uk.ac.ebi.jmzml.xml.jaxb.unmarshaller;
 
-import com.ctc.wstx.sax.WstxSAXParserFactory;
-import org.apache.log4j.Logger;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
-import uk.ac.ebi.jmzml.xml.io.MzMLObjectCache;
-import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.filters.MzMLNamespaceFilter;
-import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.listeners.RawXMLListener;
-import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -46,9 +36,22 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+
+import com.ctc.wstx.sax.WstxSAXParserFactory;
+
+import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
+import uk.ac.ebi.jmzml.xml.io.MzMLObjectCache;
+import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.filters.MzMLNamespaceFilter;
+import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.listeners.RawXMLListener;
+import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
+
 public class UnmarshallerFactory {
 
-    private static final Logger logger = Logger.getLogger(UnmarshallerFactory.class);
+    private static final Logger logger = LoggerFactory.getLogger(UnmarshallerFactory.class);
 
     private static UnmarshallerFactory instance = new UnmarshallerFactory();
     private static JAXBContext jc = null;

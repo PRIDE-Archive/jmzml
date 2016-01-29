@@ -1,20 +1,5 @@
 package uk.ac.ebi.jmzml.test.xml;
 
-import junit.framework.TestCase;
-import org.apache.log4j.Logger;
-import org.xml.sax.SAXException;
-import uk.ac.ebi.jmzml.MzMLElement;
-import uk.ac.ebi.jmzml.model.mzml.*;
-import uk.ac.ebi.jmzml.xml.io.MzMLMarshaller;
-import uk.ac.ebi.jmzml.xml.io.MzMLObjectIterator;
-import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
-import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
-
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -23,13 +8,42 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
+
+import junit.framework.TestCase;
+import uk.ac.ebi.jmzml.MzMLElement;
+import uk.ac.ebi.jmzml.model.mzml.AnalyzerComponent;
+import uk.ac.ebi.jmzml.model.mzml.BinaryDataArray;
+import uk.ac.ebi.jmzml.model.mzml.DataProcessing;
+import uk.ac.ebi.jmzml.model.mzml.DetectorComponent;
+import uk.ac.ebi.jmzml.model.mzml.IndexList;
+import uk.ac.ebi.jmzml.model.mzml.IndexedmzML;
+import uk.ac.ebi.jmzml.model.mzml.MzML;
+import uk.ac.ebi.jmzml.model.mzml.MzMLObject;
+import uk.ac.ebi.jmzml.model.mzml.ProcessingMethod;
+import uk.ac.ebi.jmzml.model.mzml.SourceComponent;
+import uk.ac.ebi.jmzml.model.mzml.Spectrum;
+import uk.ac.ebi.jmzml.model.mzml.SpectrumList;
+import uk.ac.ebi.jmzml.xml.io.MzMLMarshaller;
+import uk.ac.ebi.jmzml.xml.io.MzMLObjectIterator;
+import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
+import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
+
 /**
  * @author Florian Reisinger
  * @since 0.4
  */
 public class MzMLUnmarshalMarshalTest extends TestCase {
 
-    private static final Logger logger = Logger.getLogger(MzMLUnmarshalMarshalTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(MzMLUnmarshalMarshalTest.class);
 
     private File mzMLFile;
     private File indexedmzMLFile;

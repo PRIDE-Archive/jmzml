@@ -1,12 +1,18 @@
 
 package uk.ac.ebi.jmzml.model.mzml;
 
-import org.apache.log4j.Logger;
-
-import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -58,7 +64,7 @@ public class ParamGroup
     implements Serializable
 {
 
-    private static final Logger logger = Logger.getLogger(ParamGroup.class);
+    private static final Logger logger = LoggerFactory.getLogger(ParamGroup.class);
 
     private final static long serialVersionUID = 100L;
     protected List<ReferenceableParamGroupRef> referenceableParamGroupRef;

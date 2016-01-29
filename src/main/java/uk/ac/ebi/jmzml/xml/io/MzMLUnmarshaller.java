@@ -19,25 +19,12 @@
 
 package uk.ac.ebi.jmzml.xml.io;
 
-import org.apache.commons.collections.buffer.CircularFifoBuffer;
-import org.apache.log4j.Logger;
-import org.xml.sax.InputSource;
-import psidev.psi.tools.xxindex.index.IndexElement;
-import uk.ac.ebi.jmzml.MzMLElement;
-import uk.ac.ebi.jmzml.model.mzml.*;
-import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
-import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.UnmarshallerFactory;
-import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.filters.MzMLNamespaceFilter;
-import uk.ac.ebi.jmzml.xml.util.EscapingXMLUtilities;
-import uk.ac.ebi.jmzml.xml.xxindex.FileUtils;
-import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
-import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexerFactory;
-
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.sax.SAXSource;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.StringReader;
 import java.net.URL;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
@@ -49,9 +36,36 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.sax.SAXSource;
+
+import org.apache.commons.collections.buffer.CircularFifoBuffer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xml.sax.InputSource;
+
+import psidev.psi.tools.xxindex.index.IndexElement;
+import uk.ac.ebi.jmzml.MzMLElement;
+import uk.ac.ebi.jmzml.model.mzml.Chromatogram;
+import uk.ac.ebi.jmzml.model.mzml.Index;
+import uk.ac.ebi.jmzml.model.mzml.IndexList;
+import uk.ac.ebi.jmzml.model.mzml.MzML;
+import uk.ac.ebi.jmzml.model.mzml.MzMLObject;
+import uk.ac.ebi.jmzml.model.mzml.Offset;
+import uk.ac.ebi.jmzml.model.mzml.Spectrum;
+import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
+import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.UnmarshallerFactory;
+import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.filters.MzMLNamespaceFilter;
+import uk.ac.ebi.jmzml.xml.util.EscapingXMLUtilities;
+import uk.ac.ebi.jmzml.xml.xxindex.FileUtils;
+import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
+import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexerFactory;
+
 public class MzMLUnmarshaller {
 
-    private static final Logger logger = Logger.getLogger(MzMLUnmarshaller.class);
+    private static final Logger logger = LoggerFactory.getLogger(MzMLUnmarshaller.class);
     private static final char[] HEX_CHARS = "0123456789abcdef".toCharArray();
 
     private final File mzMLFile;
@@ -187,7 +201,7 @@ public class MzMLUnmarshaller {
                 attributes.put(name, value);
             } else {
                 // not a name - value pair, something is wrong!
-                System.out.println("Unexpected number of groups for XML attribute: " + match.groupCount() + " in tag: " + tag);
+                logger.debug("Unexpected number of groups for XML attribute: " + match.groupCount() + " in tag: " + tag);
             }
 
         }
@@ -223,7 +237,7 @@ public class MzMLUnmarshaller {
             } else {
                 // not a name - value pair, something is wrong!
                 // ToDo: proper handling! exception
-                System.out.println("Unexpected number of groups for XML attribute: " + match.groupCount() + " in tag: " + tag);
+                logger.debug("Unexpected number of groups for XML attribute: " + match.groupCount() + " in tag: " + tag);
             }
 
         }
@@ -349,9 +363,9 @@ public class MzMLUnmarshaller {
 
         // ok, now compare the two checksums (provided and calculated)
         String indexChecksum = getFileChecksumFromIndex();
-        logger.info("provided checksum (index)  : " + indexChecksum);
+        logger.debug("provided checksum (index)  : " + indexChecksum);
         String calcChecksum = calculateChecksum();
-        logger.info("calculated checksum (jmzml): " + calcChecksum);
+        logger.debug("calculated checksum (jmzml): " + calcChecksum);
         boolean checkSumOK = indexChecksum.equals(calcChecksum);
 //        boolean checkSumOK = true;
 

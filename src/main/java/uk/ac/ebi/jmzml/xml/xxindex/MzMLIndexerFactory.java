@@ -11,7 +11,20 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import psidev.psi.tools.xxindex.FastXmlElementExtractor;
 import psidev.psi.tools.xxindex.StandardXpathAccess;
@@ -31,7 +44,7 @@ import uk.ac.ebi.jmzml.xml.Constants;
  */
 public class MzMLIndexerFactory {
 
-    private static final Logger logger = Logger.getLogger(MzMLIndexerFactory.class);
+    private static final Logger logger = LoggerFactory.getLogger(MzMLIndexerFactory.class);
 
     private static final MzMLIndexerFactory instance = new MzMLIndexerFactory();
     private static final Pattern ID_PATTERN = Pattern.compile("\\sid\\s*=\\s*['\"]([^'\"]*)['\"]", Pattern.CASE_INSENSITIVE);
@@ -77,7 +90,7 @@ public class MzMLIndexerFactory {
 
             try {
                 // generate XXINDEX
-                logger.info("Creating index: ");
+                logger.debug("Creating index: ");
                 xpathAccess = new StandardXpathAccess(xmlFile, Constants.XML_INDEXED_XPATHS);
                 logger.debug("done!");
 
@@ -95,7 +108,7 @@ public class MzMLIndexerFactory {
                 if (!index.containsXpath(MzMLElement.MzML.getXpath())) {
                     // if not contained in the xxindex, then maybe we have a indexedzmML file
                     if (!index.containsXpath(MzMLElement.IndexedmzML.getXpath())) {
-                        logger.info("Index does not contain mzML root! We are not dealing with an mzML file!");
+                        logger.error("Index does not contain mzML root! We are not dealing with an mzML file!");
                         throw new IllegalStateException("Index does not contain mzML root!");
                     }
                     root = "/indexedmzML/mzML";
