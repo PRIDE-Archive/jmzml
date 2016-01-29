@@ -266,7 +266,7 @@
         <dependency>
             <groupId>psidev.psi.tools</groupId>
             <artifactId>xxindex</artifactId>
-            <version>0.15</version>
+            <version>0.16</version>
         </dependency>
         <dependency>
             <groupId>commons-collections</groupId>
