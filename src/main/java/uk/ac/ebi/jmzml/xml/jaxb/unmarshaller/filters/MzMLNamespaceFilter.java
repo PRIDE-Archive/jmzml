@@ -22,11 +22,13 @@
 
 package uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.filters;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLFilterImpl;
+
 import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
 
 
@@ -40,7 +42,7 @@ public class MzMLNamespaceFilter extends XMLFilterImpl {
         will replace the empty uri with the namespace defined for the mzML schema.
      */
 
-    private static final Logger logger = Logger.getLogger(MzMLNamespaceFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(MzMLNamespaceFilter.class);
 
     public MzMLNamespaceFilter() {
         logger.debug("MzMLNamespaceFilter created. Remember to call setParent(XMLReader)");

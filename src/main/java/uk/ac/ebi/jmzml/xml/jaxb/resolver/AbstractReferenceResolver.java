@@ -1,18 +1,21 @@
 package uk.ac.ebi.jmzml.xml.jaxb.resolver;
 
-import org.apache.log4j.Logger;
-import org.xml.sax.InputSource;
-import uk.ac.ebi.jmzml.model.mzml.MzMLObject;
-import uk.ac.ebi.jmzml.xml.io.MzMLObjectCache;
-import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.UnmarshallerFactory;
-import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.filters.MzMLNamespaceFilter;
-import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
+import java.io.StringReader;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.sax.SAXSource;
-import java.io.StringReader;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xml.sax.InputSource;
+
+import uk.ac.ebi.jmzml.model.mzml.MzMLObject;
+import uk.ac.ebi.jmzml.xml.io.MzMLObjectCache;
+import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.UnmarshallerFactory;
+import uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.filters.MzMLNamespaceFilter;
+import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
 
 /**
  * Abstract base class for the reference resolver classes.
@@ -25,7 +28,7 @@ import java.io.StringReader;
  */
 public abstract class AbstractReferenceResolver<T extends MzMLObject> extends Unmarshaller.Listener {
 
-    private static final Logger log = Logger.getLogger(AbstractReferenceResolver.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractReferenceResolver.class);
 
     // ToDo: check if we need the cache here or if we can handle this from another level (e.g. the MzMLUnmarshaller)
     private MzMLIndexer index = null;

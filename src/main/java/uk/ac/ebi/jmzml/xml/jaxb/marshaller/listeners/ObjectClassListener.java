@@ -22,14 +22,16 @@
 
 package uk.ac.ebi.jmzml.xml.jaxb.marshaller.listeners;
 
-import org.apache.log4j.Logger;
-import uk.ac.ebi.jmzml.model.mzml.ParamGroup;
-
 import javax.xml.bind.Marshaller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import uk.ac.ebi.jmzml.model.mzml.ParamGroup;
 
 public class ObjectClassListener extends Marshaller.Listener {
 
-    private static final Logger logger = Logger.getLogger(ObjectClassListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(ObjectClassListener.class);
 
     public void beforeMarshal(Object source) {
         //this class will only be associated with a Marshaller when

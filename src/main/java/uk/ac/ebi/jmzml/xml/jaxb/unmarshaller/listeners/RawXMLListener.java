@@ -22,24 +22,85 @@
 
 package uk.ac.ebi.jmzml.xml.jaxb.unmarshaller.listeners;
 
-import org.apache.log4j.Logger;
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.Unmarshaller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.ac.ebi.jmzml.MzMLElement;
-import uk.ac.ebi.jmzml.model.mzml.*;
-import uk.ac.ebi.jmzml.model.mzml.params.*;
+import uk.ac.ebi.jmzml.model.mzml.BinaryDataArray;
+import uk.ac.ebi.jmzml.model.mzml.Chromatogram;
+import uk.ac.ebi.jmzml.model.mzml.Component;
+import uk.ac.ebi.jmzml.model.mzml.FileDescription;
+import uk.ac.ebi.jmzml.model.mzml.InstrumentConfiguration;
+import uk.ac.ebi.jmzml.model.mzml.ParamGroup;
+import uk.ac.ebi.jmzml.model.mzml.Precursor;
+import uk.ac.ebi.jmzml.model.mzml.ProcessingMethod;
+import uk.ac.ebi.jmzml.model.mzml.Product;
+import uk.ac.ebi.jmzml.model.mzml.Run;
+import uk.ac.ebi.jmzml.model.mzml.Sample;
+import uk.ac.ebi.jmzml.model.mzml.Scan;
+import uk.ac.ebi.jmzml.model.mzml.ScanList;
+import uk.ac.ebi.jmzml.model.mzml.ScanSettings;
+import uk.ac.ebi.jmzml.model.mzml.ScanWindowList;
+import uk.ac.ebi.jmzml.model.mzml.SelectedIonList;
+import uk.ac.ebi.jmzml.model.mzml.Software;
+import uk.ac.ebi.jmzml.model.mzml.SourceFile;
+import uk.ac.ebi.jmzml.model.mzml.Spectrum;
+import uk.ac.ebi.jmzml.model.mzml.TargetList;
+import uk.ac.ebi.jmzml.model.mzml.params.ActivationCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.ActivationUserParam;
+import uk.ac.ebi.jmzml.model.mzml.params.BinaryDataArrayCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.BinaryDataArrayUserParam;
+import uk.ac.ebi.jmzml.model.mzml.params.ChromatogramCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.ChromatogramUserParam;
+import uk.ac.ebi.jmzml.model.mzml.params.ComponentCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.ComponentUserParam;
+import uk.ac.ebi.jmzml.model.mzml.params.ContactCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.ContactUserParam;
+import uk.ac.ebi.jmzml.model.mzml.params.FileDescriptionCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.FileDescriptionUserParam;
+import uk.ac.ebi.jmzml.model.mzml.params.InstrumentConfigurationCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.InstrumentConfigurationUserParam;
+import uk.ac.ebi.jmzml.model.mzml.params.IsolationWindowCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.IsolationWindowUserParam;
+import uk.ac.ebi.jmzml.model.mzml.params.ProcessingMethodCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.ProcessingMethodUserParam;
+import uk.ac.ebi.jmzml.model.mzml.params.RunCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.RunUserParam;
+import uk.ac.ebi.jmzml.model.mzml.params.SampleCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.SampleUserParam;
+import uk.ac.ebi.jmzml.model.mzml.params.ScanCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.ScanListCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.ScanListUserParam;
+import uk.ac.ebi.jmzml.model.mzml.params.ScanSettingsCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.ScanSettingsUserParam;
+import uk.ac.ebi.jmzml.model.mzml.params.ScanUserParam;
+import uk.ac.ebi.jmzml.model.mzml.params.ScanWindowCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.ScanWindowUserParam;
+import uk.ac.ebi.jmzml.model.mzml.params.SelectedIonCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.SelectedIonUserParam;
+import uk.ac.ebi.jmzml.model.mzml.params.SoftwareCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.SoftwareUserParam;
+import uk.ac.ebi.jmzml.model.mzml.params.SourceFileCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.SourceFileUserParam;
+import uk.ac.ebi.jmzml.model.mzml.params.SpectrumCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.SpectrumUserParam;
+import uk.ac.ebi.jmzml.model.mzml.params.TargetCVParam;
+import uk.ac.ebi.jmzml.model.mzml.params.TargetUserParam;
 import uk.ac.ebi.jmzml.model.mzml.utilities.ParamGroupUpdater;
 import uk.ac.ebi.jmzml.xml.io.MzMLObjectCache;
 import uk.ac.ebi.jmzml.xml.jaxb.resolver.AbstractReferenceResolver;
 import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;
 
-import javax.xml.bind.Unmarshaller;
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.List;
-
 public class RawXMLListener extends Unmarshaller.Listener {
 
 
-    private static final Logger log = Logger.getLogger(RawXMLListener.class);
+    private static final Logger log = LoggerFactory.getLogger(RawXMLListener.class);
     private final MzMLIndexer index;
     private final MzMLObjectCache cache;
 
