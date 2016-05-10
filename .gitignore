@@ -19,7 +19,8 @@
 *.rar
 *.tar
 *.zip
-  
+release.properties
+ 
 # Logs and databases #
 ######################
 *.log
