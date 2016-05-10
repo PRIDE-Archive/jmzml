@@ -65,6 +65,16 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jboss.version>1.3.0.Final</jboss.version>
+        <slf4j.version>1.7.12</slf4j.version>
+        <junit.version>4.8.2</junit.version>
+        <jaxb.version>2.1.7</jaxb.version>
+        <xxindex.version>0.17</xxindex.version>
+        <commons.collections.version>3.2.1</commons.collections.version>
+        <commons.code.version>1.3</commons.code.version>
+        <jaxv.activation>1.1</jaxv.activation>
+        <woodstox.core.version>4.3.0</woodstox.core.version>
+        <fast.util.version>6.5.1</fast.util.version>
     </properties>
 
     <!-- Build -->
@@ -233,96 +243,82 @@
 
     <!-- Dependencies -->
     <dependencies>
-        <!--<dependency>-->
-        <!--<groupId>hibernate</groupId>-->
-        <!--<artifactId>hibernate</artifactId>-->
-        <!--<version>3.1rc2</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.jboss.jsfunit</groupId>
             <artifactId>jboss-jsfunit-microdeployer</artifactId>
-            <version>1.3.0.Final</version>
+            <version>${jboss.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.12</version>
+            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.8.2</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-xjc</artifactId>
-            <version>2.1.7</version>
+            <version>${jaxb.version}</version>
         </dependency>
         <dependency>
             <groupId>psidev.psi.tools</groupId>
             <artifactId>xxindex</artifactId>
-            <version>0.16</version>
+            <version>${xxindex.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
-            <version>3.2.1</version>
+            <version>${commons.collections.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.3</version>
+            <version>${commons.code.version}</version>
         </dependency>
 
         <dependency>
             <groupId>javax.activation</groupId>
             <artifactId>activation</artifactId>
-            <version>1.1</version>
+            <version>${jaxv.activation}</version>
         </dependency>
 
         <dependency>
             <groupId>org.codehaus.woodstox</groupId>
             <artifactId>woodstox-core-asl</artifactId>
-            <version>4.3.0</version>
+            <version>${woodstox.core.version}</version>
         </dependency>
 
         <!-- needed for EscapingXMLStreamWriter to cope with ASCII control characters that are not properly escaped in JAXB -->
         <dependency>
             <groupId>it.unimi.dsi</groupId>
             <artifactId>fastutil</artifactId>
-            <version>6.5.1</version>
+            <version>${fast.util.version}</version>
         </dependency>
-
     </dependencies>
 
 
-    <!-- Repositores -->
     <repositories>
-
-        <!-- EBI repositories -->
         <repository>
-            <id>ebi-repo</id>
-            <name>The EBI internal repository</name>
-            <url>http://www.ebi.ac.uk/~maven/m2repo</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
+            <id>nexus-ebi-repo-old</id>
+            <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo/</url>
         </repository>
         <repository>
-            <id>ebi-snapshot-repo</id>
-            <name>The EBI internal snapshot repository</name>
-            <url>http://www.ebi.ac.uk/~maven/m2repo_snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
+            <id>nexus-ebi-release-repo</id>
+            <url>http://www.ebi.ac.uk/Tools/maven/repos/content/groups/ebi-repo/</url>
+        </repository>
+        <repository>
+            <id>nexus-ebi-snapshot-repo</id>
+            <url>http://www.ebi.ac.uk/Tools/maven/repos/content/groups/ebi-snapshots/</url>
+        </repository>
+        <repository>
+            <id>springsource-repo</id>
+            <name>SpringSource Repository</name>
+            <url>http://repo.springsource.org/release</url>
         </repository>
 
         <repository>
@@ -340,16 +336,20 @@
         </pluginRepository>
     </pluginRepositories>
 
-    <!-- Distribution management -->
+    <!-- Overwrites the previous repositories-->
     <distributionManagement>
+        <!-- EBI repo -->
         <repository>
-            <id>nexus-ebi-repo</id>
-            <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo</url>
+            <id>pst-release</id>
+            <name>EBI Nexus Repository</name>
+            <url>http://www.ebi.ac.uk/Tools/maven/repos/content/repositories/pst-release</url>
         </repository>
         <!-- EBI SNAPSHOT repo -->
         <snapshotRepository>
-            <id>nexus-ebi-repo-snapshots</id>
-            <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo-snapshots</url>
+            <uniqueVersion>false</uniqueVersion>
+            <id>pst-snapshots</id>
+            <name>EBI Nexus Snapshots Repository</name>
+            <url>http://www.ebi.ac.uk/Tools/maven/repos/content/repositories/pst-snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
