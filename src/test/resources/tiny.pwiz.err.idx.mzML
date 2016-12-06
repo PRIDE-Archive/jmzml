@@ -294,16 +294,16 @@
   </mzML>
   <indexList count="2">
     <index name="spectrum">
-      <offset idRef="scan=19">5747</offset>
+      <offset idRef="scan=19">5850</offset>
       <offset idRef="scan=20">8763</offset> <!-- manual error introduced -->
-      <offset idRef="scan=21">12570</offset>
-      <offset idRef="scan=22" spotID="A1,42x42,4242x4242">13960</offset>
+      <offset idRef="scan=21">12764</offset>
+      <offset idRef="scan=22" spotID="A1,42x42,4242x4242">14178</offset>
     </index>
     <index name="chromatogram">
-      <offset idRef="tic">16993</offset>
-      <offset idRef="sic">18448</offset>
+      <offset idRef="tic">17250</offset>
+      <offset idRef="sic">18722</offset>
     </index>
   </indexList>
   <indexListOffset>19935</indexListOffset>
-  <fileChecksum>ade2594df703a0b30e79d90251e10465f72a7f8e</fileChecksum>
+  <fileChecksum>a3c19f93d2e5f7db46d703c23024b87398d4f215</fileChecksum>
 </indexedmzML>
