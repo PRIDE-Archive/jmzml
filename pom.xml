@@ -4,7 +4,7 @@
     <groupId>uk.ac.ebi.jmzml</groupId>
     <artifactId>jmzml</artifactId>
     <packaging>jar</packaging>
-    <version>1.7.6-SNAPSHOT</version>
+    <version>1.7.6</version>
     <name>MzML Java core API</name>
     <url>https://github.com/PRIDE-Utilities/jmzml</url>
 
@@ -354,7 +354,7 @@
         <connection>scm:git:github.com/PRIDE-Utilities/jmzml.git</connection>
         <developerConnection>scm:git:git@github.com:PRIDE-Utilities/jmzml.git</developerConnection>
         <url>https://github.com/PRIDE-Utilities/jmzml.git</url>
-        <tag>HEAD</tag>
+        <tag>jmzml-1.7.6</tag>
     </scm>
 
 </project>
