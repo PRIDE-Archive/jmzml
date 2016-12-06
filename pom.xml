@@ -351,8 +351,8 @@
 
     <!--scm git config-->
     <scm>
-        <connection>scm:git:github.com/PRIDE-Utilities/jmzml.git</connection>
-        <developerConnection>scm:git:git@github.com:PRIDE-Utilities/jmzml.git</developerConnection>
+        <connection>scm:git:https://github.com/PRIDE-Utilities/jmzml.git</connection>
+        <developerConnection>scm:git:https://github.com/PRIDE-Utilities/jmzml.git</developerConnection>
         <url>https://github.com/PRIDE-Utilities/jmzml.git</url>
         <tag>HEAD</tag>
     </scm>
