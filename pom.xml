@@ -69,7 +69,7 @@
         <slf4j.version>1.7.12</slf4j.version>
         <junit.version>4.8.2</junit.version>
         <jaxb.version>2.1.7</jaxb.version>
-        <xxindex.version>0.17</xxindex.version>
+        <xxindex.version>0.18</xxindex.version>
         <commons.collections.version>3.2.2</commons.collections.version>
         <commons.code.version>1.3</commons.code.version>
         <jaxv.activation>1.1</jaxv.activation>
