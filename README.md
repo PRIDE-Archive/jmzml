@@ -1,12 +1,6 @@
 About jmzML
 -----------
 
-[![Build Status](https://travis-ci.org/PRIDE-Utilities/jmzml.svg?branch=master)](https://travis-ci.org/PRIDE-Utilities/jmzml)
-
-------
-
-
-
 jmzML provides a portable and lightweight JAXB-based implementation of the full mzML 1.1 standard format (note that the jmzML version number has no relation to the mzML version number), with considerable tweaks to make the processing of files memory efficient. In particular, mzML files are effectively indexed on the fly and used as swap files, with only requested snippets of data loaded from a file when accessing it. Additionally, internal references in the mzML XML are resolved automatically by jmzML, giving you direct access in the object model to entities that are only referenced by ID in the actual XML file.
 
 Apart from reading indexed and non-indexed mzML files, jmzML also allows writing of non-indexed mzML files.
