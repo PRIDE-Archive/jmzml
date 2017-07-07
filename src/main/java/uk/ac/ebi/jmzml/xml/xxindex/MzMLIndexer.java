@@ -30,37 +30,37 @@ import java.util.Set;
 
 public interface MzMLIndexer {
 
-    public Iterator<String> getXmlStringIterator(String xpathExpression);
+    Iterator<String> getXmlStringIterator(String xpathExpression);
 
-    public String getXmlString(String ID, Class clazz);
+    String getXmlString(String ID, Class clazz);
 
-    public String getXmlString(IndexElement indexElement);
+    String getXmlString(IndexElement indexElement);
 
-    public int getCount(String xpathExpression);
+    int getCount(String xpathExpression);
 
-    public String getXmlString(String xpath, long offset);
+    String getXmlString(String xpath, long offset);
 
-    public List<IndexElement> getIndexElements(String xpathExpression);
+    List<IndexElement> getIndexElements(String xpathExpression);
 
-    public Set<String> getXpath();
+    Set<String> getXpath();
 
-    public Set<String> getSpectrumIDs();
+    Set<String> getSpectrumIDs();
 
-    public Set<Integer> getSpectrumIndexes();
+    Set<Integer> getSpectrumIndexes();
 
-    public String getSpectrumIDFromSpectrumIndex(Integer index);
+    String getSpectrumIDFromSpectrumIndex(Integer index);
 
-    public Set<String> getChromatogramIDs();
+    Set<String> getChromatogramIDs();
 
-    public String getMzMLAttributeXMLString();
+    String getMzMLAttributeXMLString();
 
-    public String getStartTag(String xpath);
+    String getStartTag(String xpath);
 
     /**
      * @param id    the unique ID (from the id attribute) of an XML element.
      * @param clazz the Java Class representing the element.
      * @return the complete start tag for the XML element with all specified attributes.
      */
-    public String getStartTag(String id, Class clazz);
+    String getStartTag(String id, Class clazz);
 
 }

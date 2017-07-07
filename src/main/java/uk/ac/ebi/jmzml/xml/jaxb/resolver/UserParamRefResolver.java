@@ -2,7 +2,6 @@ package uk.ac.ebi.jmzml.xml.jaxb.resolver;
 
 import uk.ac.ebi.jmzml.MzMLElement;
 import uk.ac.ebi.jmzml.model.mzml.CV;
-import uk.ac.ebi.jmzml.model.mzml.DataProcessing;
 import uk.ac.ebi.jmzml.model.mzml.UserParam;
 import uk.ac.ebi.jmzml.xml.io.MzMLObjectCache;
 import uk.ac.ebi.jmzml.xml.xxindex.MzMLIndexer;

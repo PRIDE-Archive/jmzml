@@ -436,7 +436,7 @@ public class MzMLUnmarshaller {
      * @throws MzMLUnmarshallerException
      */
     public Chromatogram getChromatogramById(String aID) throws MzMLUnmarshallerException {
-        Chromatogram result = null;
+        Chromatogram result;
         String xml = index.getXmlString(aID, Chromatogram.class);
         try {
             //need to clean up XML to ensure that there are no weird control characters
@@ -467,10 +467,13 @@ public class MzMLUnmarshaller {
         Index aIndexEntry = getIndex("spectrum");
 
         // find the offset for the specified refId
-        for (Offset offset : aIndexEntry.getOffset()) {
-            if (offset.getIdRef().equalsIgnoreCase(refId)) {
-                return getElementByOffset("spectrum", offset.getValue());
+        if(aIndexEntry != null && aIndexEntry.getOffset() != null){
+            for (Offset offset : aIndexEntry.getOffset()) {
+                if (offset.getIdRef().equalsIgnoreCase(refId)) {
+                    return getElementByOffset("spectrum", offset.getValue());
+                }
             }
+
         }
 
         return null;
@@ -488,11 +491,14 @@ public class MzMLUnmarshaller {
         Index aIndexEntry = getIndex("spectrum");
 
         // find the offset for the specified spotId
-        for (Offset offset : aIndexEntry.getOffset()) {
-            if (offset.getSpotID() != null && offset.getSpotID().equalsIgnoreCase(spotId)) {
-                return getElementByOffset("spectrum", offset.getValue());
+        if(aIndexEntry != null && aIndexEntry.getOffset() != null){
+            for (Offset offset : aIndexEntry.getOffset()) {
+                if (offset.getSpotID() != null && offset.getSpotID().equalsIgnoreCase(spotId)) {
+                    return getElementByOffset("spectrum", offset.getValue());
+                }
             }
         }
+
 
         return null;
     }
@@ -509,12 +515,13 @@ public class MzMLUnmarshaller {
         Index aIndexEntry = getIndex("spectrum");
 
         // find the offset for the specified scanTime
-        for (Offset offset : aIndexEntry.getOffset()) {
-            if (offset.getScanTime() != null && offset.getScanTime() == scanTime) {
-                return getElementByOffset("spectrum", offset.getValue());
+        if(aIndexEntry != null && aIndexEntry.getOffset() != null){
+            for (Offset offset : aIndexEntry.getOffset()) {
+                if (offset.getScanTime() != null && offset.getScanTime() == scanTime) {
+                    return getElementByOffset("spectrum", offset.getValue());
+                }
             }
         }
-
         return null;
     }
 
@@ -545,13 +552,14 @@ public class MzMLUnmarshaller {
         Index aIndexEntry = getIndex("chromatogram");
 
         // find the offset for the specified refId
-        for (Offset offset : aIndexEntry.getOffset()) {
-            // we are only interested in a particular refId
-            if (offset.getIdRef().equalsIgnoreCase(refId)) {
-                return getElementByOffset("chromatogram", offset.getValue());
+        if(aIndexEntry != null && aIndexEntry.getOffset() != null ){
+            for (Offset offset : aIndexEntry.getOffset()) {
+                // we are only interested in a particular refId
+                if (offset.getIdRef().equalsIgnoreCase(refId)) {
+                    return getElementByOffset("chromatogram", offset.getValue());
+                }
             }
         }
-
         return null;
     }
 

@@ -33,19 +33,23 @@ public class MSNumpress {
         public static final String ACC_NUMPRESS_SLOF = "MS:1002314";
         
         public static byte[] encode(double[] data, String cvAccession) {
-            if (cvAccession.equals(ACC_NUMPRESS_LINEAR)) {
-                byte[] buffer = new byte[8 + (data.length * 5)];
-                int encodedBytes = MSNumpress.encodeLinear(data, data.length, buffer, MSNumpress.optimalLinearFixedPoint(data, data.length));                
-                return Arrays.copyOf(buffer, encodedBytes);
-            } else if (cvAccession.equals(ACC_NUMPRESS_SLOF)) {
-                byte[] buffer = new byte[8 + (data.length * 2)];
-                int encodedBytes = MSNumpress.encodeSlof(data, data.length, buffer, MSNumpress.optimalSlofFixedPoint(data, data.length));
-                return Arrays.copyOf(buffer, encodedBytes);
-            } else if (cvAccession.equals(ACC_NUMPRESS_PIC)) {
-                byte[] buffer = new byte[data.length * 5];
-                int encodedBytes = MSNumpress.encodePic(data, data.length, buffer);                
-                return Arrays.copyOf(buffer, encodedBytes);
-            }
+                switch (cvAccession) {
+                        case ACC_NUMPRESS_LINEAR: {
+                                byte[] buffer = new byte[8 + (data.length * 5)];
+                                int encodedBytes = MSNumpress.encodeLinear(data, data.length, buffer, MSNumpress.optimalLinearFixedPoint(data, data.length));
+                                return Arrays.copyOf(buffer, encodedBytes);
+                        }
+                        case ACC_NUMPRESS_SLOF: {
+                                byte[] buffer = new byte[8 + (data.length * 2)];
+                                int encodedBytes = MSNumpress.encodeSlof(data, data.length, buffer, MSNumpress.optimalSlofFixedPoint(data, data.length));
+                                return Arrays.copyOf(buffer, encodedBytes);
+                        }
+                        case ACC_NUMPRESS_PIC: {
+                                byte[] buffer = new byte[data.length * 5];
+                                int encodedBytes = MSNumpress.encodePic(data, data.length, buffer);
+                                return Arrays.copyOf(buffer, encodedBytes);
+                        }
+                }
             
             throw new IllegalArgumentException("'"+cvAccession+"' is not a numpress compression term");
         }
@@ -66,28 +70,32 @@ public class MSNumpress {
          * @return                        The decoded doubles
          */
         public static Double[] decode(String cvAccession, byte[] data) {
-                
-                if (cvAccession.equals(ACC_NUMPRESS_LINEAR)) {
-                        Double[] buffer         = new Double[data.length * 2];
-                        int nbrOfDoubles         = MSNumpress.decodeLinear(data, data.length, buffer);
-                        Double[] result         = new Double[nbrOfDoubles];
-                        System.arraycopy(buffer, 0, result, 0, nbrOfDoubles);
-                        return result;
-                        
-                } else if (cvAccession.equals(ACC_NUMPRESS_SLOF)) {
-                        Double[] buffer         = new Double[data.length / 2];
-                        int nbrOfDoubles = MSNumpress.decodeSlof(data, data.length, buffer);
-                        Double[] result = new Double[nbrOfDoubles];
-                        System.arraycopy(buffer, 0, result, 0, nbrOfDoubles);
-                        return result;
-                        
-                } else if (cvAccession.equals(ACC_NUMPRESS_PIC)) {
-                        Double[] buffer         = new Double[data.length * 2];
-                        int nbrOfDoubles         = MSNumpress.decodePic(data, data.length, buffer);
-                        Double[] result         = new Double[nbrOfDoubles];
-                        System.arraycopy(buffer, 0, result, 0, nbrOfDoubles);
-                        return result;
-                        
+
+                switch (cvAccession) {
+                        case ACC_NUMPRESS_LINEAR: {
+                                Double[] buffer = new Double[data.length * 2];
+                                int nbrOfDoubles = MSNumpress.decodeLinear(data, data.length, buffer);
+                                Double[] result = new Double[nbrOfDoubles];
+                                System.arraycopy(buffer, 0, result, 0, nbrOfDoubles);
+                                return result;
+
+                        }
+                        case ACC_NUMPRESS_SLOF: {
+                                Double[] buffer = new Double[data.length / 2];
+                                int nbrOfDoubles = MSNumpress.decodeSlof(data, data.length, buffer);
+                                Double[] result = new Double[nbrOfDoubles];
+                                System.arraycopy(buffer, 0, result, 0, nbrOfDoubles);
+                                return result;
+
+                        }
+                        case ACC_NUMPRESS_PIC: {
+                                Double[] buffer = new Double[data.length * 2];
+                                int nbrOfDoubles = MSNumpress.decodePic(data, data.length, buffer);
+                                Double[] result = new Double[nbrOfDoubles];
+                                System.arraycopy(buffer, 0, result, 0, nbrOfDoubles);
+                                return result;
+
+                        }
                 }
                 
                 throw new IllegalArgumentException("'"+cvAccession+"' is not a numpress compression term");

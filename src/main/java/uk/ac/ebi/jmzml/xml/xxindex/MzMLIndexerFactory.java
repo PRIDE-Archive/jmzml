@@ -245,8 +245,7 @@ public class MzMLIndexerFactory {
             if (match.find()) {
                 String result = match.group(1).intern();
                 try {
-                    Integer biResult = new Integer(result);
-                    return biResult;
+                    return new Integer(result);
                 } catch (NumberFormatException nfe) {
                     throw new IllegalStateException("Index attribute could not be parsed into an integer in xml: " + xml);
                 }

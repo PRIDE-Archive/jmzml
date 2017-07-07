@@ -110,10 +110,7 @@ public class MzMLMarshaller {
             IndentingXMLStreamWriter writer = new IndentingXMLStreamWriter(new EscapingXMLStreamWriter(xmlStreamWriter));
             marshaller.marshal( new JAXBElement(aQName, object.getClass(), object), writer );
 
-        } catch (JAXBException e) {
-            logger.error("MzMLMarshaller.marshall", e);
-            throw new IllegalStateException("Error while marshalling object:" + object.toString());
-        } catch (XMLStreamException e) {
+        } catch (JAXBException | XMLStreamException e) {
             logger.error("MzMLMarshaller.marshall", e);
             throw new IllegalStateException("Error while marshalling object:" + object.toString());
         }

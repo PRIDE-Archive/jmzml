@@ -198,7 +198,7 @@ public class BinaryDataArray
      *              byte[]
      */
     public void setBinary(byte[] value) {
-        this.binary = ((byte[]) value);
+        this.binary = value;
     }
 
     /**
@@ -317,10 +317,10 @@ public class BinaryDataArray
             data = binary;
         }
         
-        Number[] dataArray = null;
+        Number[] dataArray;
         
         // 3a. if data has been numpress compressed then do the decompression...
-        String numpressAccession = null;
+        String numpressAccession;
         if ((numpressAccession = MSNumpressCodec.getMSNumpressEncodingAccession(this.cvParam)) != null) {
             dataArray = MSNumpressCodec.decode(numpressAccession, data);
             this.arrayLength = dataArray.length;            
@@ -833,7 +833,7 @@ public class BinaryDataArray
      * @return Compressed data
      */
     private byte[] compress(byte[] uncompressedData) {
-        byte[] data = null; // Decompress the data
+        byte[] data; // Decompress the data
 
         // create a temporary byte array big enough to hold the compressed data
         // with the worst compression (the length of the initial (uncompressed) data)

@@ -255,9 +255,7 @@ public class RawXMLListener extends Unmarshaller.Listener {
                 }
             }
 
-        } catch (InstantiationException e) {
-            throw new RuntimeException(this.getClass().getName() + ".afterUnmarshall: " + e.getMessage());
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(this.getClass().getName() + ".afterUnmarshall: " + e.getMessage());
         }
 

@@ -37,7 +37,7 @@ public class Constants {
     public static final String JAXB_FRAGMENT_PROPERTY = "jaxb.fragment";
 
     // ToDo: check if all necessary types are present
-    public static enum ReferencedType {
+    public enum ReferencedType {
         CV,
         DataProcessing,
         InstrumentConfiguration,

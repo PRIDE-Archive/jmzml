@@ -43,7 +43,7 @@ public abstract class AbstractReferenceResolver<T extends MzMLObject> extends Un
 
 
     public <R extends MzMLObject> R unmarshal(String refId, Class<R> cls) {
-        R retVal = null;
+        R retVal;
 
         // check if we have a cache to look up, if so see if it contains the referenced object already
 //        if (cache != null) {
@@ -52,37 +52,34 @@ public abstract class AbstractReferenceResolver<T extends MzMLObject> extends Un
 
         // if the referenced object/element is not yet in the cache (or no cache
         // is available) create it from the XML using the index and ID maps
-        if (retVal == null) {
 
-            log.debug("AbstractReferenceResolver.unmarshal for id: " + refId);
-            // first retrieve the XML snippet representing the referenced object/element
-            String xml;
+        log.debug("AbstractReferenceResolver.unmarshal for id: " + refId);
+        // first retrieve the XML snippet representing the referenced object/element
+        String xml;
 
-            xml = index.getXmlString(refId, cls);
+        xml = index.getXmlString(refId, cls);
 
 
-            try {
-                // required for the addition of namespaces to top-level objects
-                MzMLNamespaceFilter xmlFilter = new MzMLNamespaceFilter();
+        try {
+            // required for the addition of namespaces to top-level objects
+            MzMLNamespaceFilter xmlFilter = new MzMLNamespaceFilter();
 
-                // initializeUnmarshaller will assign the proper reader to the xmlFilter
-                Unmarshaller unmarshaller = UnmarshallerFactory.getInstance().initializeUnmarshaller(index, cache, xmlFilter);
+            // initializeUnmarshaller will assign the proper reader to the xmlFilter
+            Unmarshaller unmarshaller = UnmarshallerFactory.getInstance().initializeUnmarshaller(index, cache, xmlFilter);
 
-                // need to do it this way because snippet does not have a XmlRootElement annotation
-                JAXBElement<R> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(xml))), cls);
-                retVal = holder.getValue();
+            // need to do it this way because snippet does not have a XmlRootElement annotation
+            JAXBElement<R> holder = unmarshaller.unmarshal(new SAXSource(xmlFilter, new InputSource(new StringReader(xml))), cls);
+            retVal = holder.getValue();
 
-                // add it to the cache, if we there is one (as it was not in there)
-                // the cache may accept this object or not depending on the settings in MzIdentMLElement
+            // add it to the cache, if we there is one (as it was not in there)
+            // the cache may accept this object or not depending on the settings in MzIdentMLElement
 //                if (cache != null) {
 //                    cache.putInCache(refId, retVal);
 //                }
 
-            } catch (JAXBException e) {
-                log.error("AbstractReferenceResolver.unmarshal", e);
-                throw new IllegalStateException("Could not unmarshall refId: " + refId + " for element type: " + cls);
-            }
-
+        } catch (JAXBException e) {
+            log.error("AbstractReferenceResolver.unmarshal", e);
+            throw new IllegalStateException("Could not unmarshall refId: " + refId + " for element type: " + cls);
         }
 
         // finally return the referenced object

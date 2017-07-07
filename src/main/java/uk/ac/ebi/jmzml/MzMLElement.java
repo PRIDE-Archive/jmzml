@@ -560,17 +560,17 @@ public enum MzMLElement {
     /**
      * This should be called first in order to retrieve configuration from a file and populate cfgMap.
      */
-    private <T extends MzMLObject> MzMLElement() {
+    <T extends MzMLObject> MzMLElement() {
         loadProperties();
     }
 
-    private <T extends MzMLObject> MzMLElement(String tagName,
-                                               boolean indexed,
-                                               String xpath,
-                                               boolean idMapped,
-                                               Class<T> clazz,
-                                               boolean autoRefResolving,
-                                               Class refResolverClass) {
+    <T extends MzMLObject> MzMLElement(String tagName,
+                                       boolean indexed,
+                                       String xpath,
+                                       boolean idMapped,
+                                       Class<T> clazz,
+                                       boolean autoRefResolving,
+                                       Class refResolverClass) {
         this.tagName = tagName;
         this.indexed = indexed;
         this.xpath = xpath;

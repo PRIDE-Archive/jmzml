@@ -8,7 +8,6 @@ import uk.ac.ebi.jmzml.xml.io.MzMLMarshaller;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
 
-import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.Arrays;
@@ -103,47 +102,6 @@ public class BinaryDataArrayTest extends TestCase {
          "AsT4C8Arj95p0gFCC3AD6J9aIL+QVxWAqD5BjEVTkgRJ4hzO/kicUhcg3jgG5Iv" +
          "mFIt6UwOUegjGw5Fk9FyDsCgwyOkLuKczoY8ldh1WJXVH6HV9gH57SBqA==";
 
-    // binary test data: uncompressed, base64 encoded, 64 bit precision
-    // extracted from file: MzMLFile_7_uncompressed.mzML (line 74) "m/z array"
-    private final String u64bit = "AAAAAAAAAAD8qfHSTWJQP/yp8dJNYmA/+n5qvH" +
-         "STaD/8qfHSTWJwP3sUrkfhenQ/+n5qvHSTeD956SYxCKx8P/yp8dJNYoA/O99Pj" +
-         "Zdugj97FK5H4XqEP7pJDAIrh4Y/+n5qvHSTiD85tMh2vp+KP3npJjEIrIw/uB6F" +
-         "61G4jj/8qfHSTWKQP5zEILByaJE/O99PjZdukj/b+X5qvHSTP3sUrkfhepQ/Gy/" +
-         "dJAaBlT+6SQwCK4eWP1pkO99PjZc/+n5qvHSTmD+amZmZmZmZPzm0yHa+n5o/2c" +
-         "73U+Olmz956SYxCKycPxkEVg4tsp0/uB6F61G4nj9YObTIdr6fP/yp8dJNYqA/T" +
-         "DeJQWDloD+cxCCwcmihP+xRuB6F66E/O99PjZduoj+LbOf7qfGiP9v5fmq8dKM/" +
-         "K4cW2c73oz97FK5H4XqkP8uhRbbz/aQ/Gy/dJAaBpT9qvHSTGASmP7pJDAIrh6Y" +
-         "/CtejcD0Kpz9aZDvfT42nP6rx0k1iEKg/+n5qvHSTqD9KDAIrhxapP5qZmZmZma" +
-         "k/6SYxCKwcqj85tMh2vp+qP4lBYOXQIqs/2c73U+Olqz8pXI/C9SisP3npJjEIr" +
-         "Kw/yXa+nxovrT8ZBFYOLbKtP2iR7Xw/Na4/uB6F61G4rj8IrBxaZDuvP1g5tMh2" +
-         "vq8/VOOlm8QgsD/8qfHSTWKwP6RwPQrXo7A/TDeJQWDlsD/0/dR46SaxP5zEILB" +
-         "yaLE/RIts5/upsT/sUbgeheuxP5MYBFYOLbI/O99PjZdusj/jpZvEILCyP4ts5/" +
-         "up8bI/MzMzMzMzsz/b+X5qvHSzP4PAyqFFtrM/K4cW2c73sz/TTWIQWDm0P3sUr" +
-         "kfherQ/I9v5fmq8tD/LoUW28/20P3Noke18P7U/Gy/dJAaBtT/D9Shcj8K1P2q8" +
-         "dJMYBLY/EoPAyqFFtj+6SQwCK4e2P2IQWDm0yLY/CtejcD0Ktz+yne+nxku3P1p" +
-         "kO99Pjbc/AiuHFtnOtz+q8dJNYhC4P1K4HoXrUbg/+n5qvHSTuD+iRbbz/dS4P0" +
-         "oMAiuHFrk/";
-
-    // binary test data: compressed, base64 encoded, 32 bit precision
-    // extracted from file: MzMLFile_7_compressed.mzML (line 80) "intensity array"
-    private final String c32bit = "eJwVxCFIQ2EAhdE/GAyGhQXDwoLBYFgwGAa+jQ" +
-         "WDYcFgMCwYDIYFw4LhITLGGGOIyBAZDxkyhsgQkSFDHrJgNC4uGo1Gj5fv3BD+F" +
-         "++6SMQkpCwJpRAy5CkQUaVGnZgWPfokjJgwJeWTLxYs+eaHX0I5hBVWWSNDlnVy" +
-         "5Nlgky0KbLNDkYgKe+xT5YBDjqhxzAmn1DmjwTkxF1zSpEWbDl16XHHNDX1uuWN" +
-         "Awj1DHhgx5pEnJjzzwitT3pjxTsoH8/IfQP5IBA==";
-
-    // binary test data: uncompressed, base64 encoded, 32 bit precision
-    // extracted from file: MzMLFile_7_uncompressed.mzML (line 80) "intensity array"
-    private final String u32bit = "AAAAAAAAgD8AAABAAABAQAAAgEAAAKBAAADAQA" +
-         "AA4EAAAABBAAAQQQAAIEEAADBBAABAQQAAUEEAAGBBAABwQQAAgEEAAIhBAACQQ" +
-         "QAAmEEAAKBBAACoQQAAsEEAALhBAADAQQAAyEEAANBBAADYQQAA4EEAAOhBAADw" +
-         "QQAA+EEAAABCAAAEQgAACEIAAAxCAAAQQgAAFEIAABhCAAAcQgAAIEIAACRCAAA" +
-         "oQgAALEIAADBCAAA0QgAAOEIAADxCAABAQgAAREIAAEhCAABMQgAAUEIAAFRCAA" +
-         "BYQgAAXEIAAGBCAABkQgAAaEIAAGxCAABwQgAAdEIAAHhCAAB8QgAAgEIAAIJCA" +
-         "ACEQgAAhkIAAIhCAACKQgAAjEIAAI5CAACQQgAAkkIAAJRCAACWQgAAmEIAAJpC" +
-         "AACcQgAAnkIAAKBCAACiQgAApEIAAKZCAACoQgAAqkIAAKxCAACuQgAAsEIAALJ" +
-         "CAAC0QgAAtkIAALhCAAC6QgAAvEIAAL5CAADAQgAAwkIAAMRC";
-
     public void setUp() {
         // define the reference CV to use for the CVParams
         cv = new CV();
@@ -183,9 +141,7 @@ public class BinaryDataArrayTest extends TestCase {
         // find the test XML file
         URL url = this.getClass().getClassLoader().getResource("MzMLFile_7_uncompressed.mzML");
 
-        if (VERBOSE) System.out.println("\n----- testUnmarshallingUncompressed64 ------------------------");
         checkFile(url, BinaryDataArray.Precision.FLOAT64BIT);
-        if (VERBOSE) System.out.println("----- testUnmarshallingUncompressed64 end --------------------");
 
     }
 
@@ -193,9 +149,7 @@ public class BinaryDataArrayTest extends TestCase {
         // find the test XML file
         URL url = this.getClass().getClassLoader().getResource("MzMLFile_7_compressed.mzML");
 
-        if (VERBOSE) System.out.println("\n----- testUnmarshallingCompressed64 --------------------------");
         checkFile(url, BinaryDataArray.Precision.FLOAT64BIT);
-        if (VERBOSE) System.out.println("----- testUnmarshallingCompressed64 end ----------------------");
 
     }
 
@@ -203,9 +157,7 @@ public class BinaryDataArrayTest extends TestCase {
         // find the test XML file
         URL url = this.getClass().getClassLoader().getResource("MzMLFile_7_uncompressed.mzML");
 
-        if (VERBOSE) System.out.println("\n----- testUnmarshallingUncompressed32 ------------------------");
         checkFile(url, BinaryDataArray.Precision.FLOAT32BIT);
-        if (VERBOSE) System.out.println("----- testUnmarshallingUncompressed32 end --------------------");
 
     }
 
@@ -213,9 +165,7 @@ public class BinaryDataArrayTest extends TestCase {
         // find the test XML file
         URL url = this.getClass().getClassLoader().getResource("MzMLFile_7_compressed.mzML");
 
-        if (VERBOSE) System.out.println("\n----- testUnmarshallingCompressed32 --------------------------");
         checkFile(url, BinaryDataArray.Precision.FLOAT32BIT);
-        if (VERBOSE) System.out.println("----- testUnmarshallingCompressed32 end ----------------------");
 
     }
 
@@ -241,15 +191,6 @@ public class BinaryDataArrayTest extends TestCase {
 
     private void compareToRefData(Number[] array, BinaryDataArray.Precision prec) {
         Arrays.sort(array); // make sure we have the expected (numeric) order of values
-
-        if (VERBOSE) {
-            // print to see what the data looks like
-            System.out.println("Data as double array:");
-            for (Number anArray : array) {
-                System.out.println("data: " + anArray.doubleValue());
-            }
-            System.out.println("end of double array.");
-        }
 
         switch (prec) {
             case FLOAT64BIT :   // double values
@@ -410,12 +351,6 @@ public class BinaryDataArrayTest extends TestCase {
 
         String c64bitTest = m.marshall(bda);
 
-        if (VERBOSE) {
-            System.out.println("\n----- testMarshaller -----------------------------------------");
-            m.marshall(bda, System.out);
-            System.out.println("----- testMarshaller end -------------------------------------");
-        }
-
         // the BinaryDataArray was created from the String in "c64bit"
         // therefore the marshalled output should contain the same string
         // (in its binary XML tag)
@@ -446,6 +381,24 @@ public class BinaryDataArrayTest extends TestCase {
         // set uncompressed, 64 bit precision data
         // need to decode the base64 encoded string, since the data is stored
         // un-encoded in the object (decoded from XML with JAXB)
+        String u64bit = "AAAAAAAAAAD8qfHSTWJQP/yp8dJNYmA/+n5qvH" +
+                "STaD/8qfHSTWJwP3sUrkfhenQ/+n5qvHSTeD956SYxCKx8P/yp8dJNYoA/O99Pj" +
+                "Zdugj97FK5H4XqEP7pJDAIrh4Y/+n5qvHSTiD85tMh2vp+KP3npJjEIrIw/uB6F" +
+                "61G4jj/8qfHSTWKQP5zEILByaJE/O99PjZdukj/b+X5qvHSTP3sUrkfhepQ/Gy/" +
+                "dJAaBlT+6SQwCK4eWP1pkO99PjZc/+n5qvHSTmD+amZmZmZmZPzm0yHa+n5o/2c" +
+                "73U+Olmz956SYxCKycPxkEVg4tsp0/uB6F61G4nj9YObTIdr6fP/yp8dJNYqA/T" +
+                "DeJQWDloD+cxCCwcmihP+xRuB6F66E/O99PjZduoj+LbOf7qfGiP9v5fmq8dKM/" +
+                "K4cW2c73oz97FK5H4XqkP8uhRbbz/aQ/Gy/dJAaBpT9qvHSTGASmP7pJDAIrh6Y" +
+                "/CtejcD0Kpz9aZDvfT42nP6rx0k1iEKg/+n5qvHSTqD9KDAIrhxapP5qZmZmZma" +
+                "k/6SYxCKwcqj85tMh2vp+qP4lBYOXQIqs/2c73U+Olqz8pXI/C9SisP3npJjEIr" +
+                "Kw/yXa+nxovrT8ZBFYOLbKtP2iR7Xw/Na4/uB6F61G4rj8IrBxaZDuvP1g5tMh2" +
+                "vq8/VOOlm8QgsD/8qfHSTWKwP6RwPQrXo7A/TDeJQWDlsD/0/dR46SaxP5zEILB" +
+                "yaLE/RIts5/upsT/sUbgeheuxP5MYBFYOLbI/O99PjZdusj/jpZvEILCyP4ts5/" +
+                "up8bI/MzMzMzMzsz/b+X5qvHSzP4PAyqFFtrM/K4cW2c73sz/TTWIQWDm0P3sUr" +
+                "kfherQ/I9v5fmq8tD/LoUW28/20P3Noke18P7U/Gy/dJAaBtT/D9Shcj8K1P2q8" +
+                "dJMYBLY/EoPAyqFFtj+6SQwCK4e2P2IQWDm0yLY/CtejcD0Ktz+yne+nxku3P1p" +
+                "kO99Pjbc/AiuHFtnOtz+q8dJNYhC4P1K4HoXrUbg/+n5qvHSTuD+iRbbz/dS4P0" +
+                "oMAiuHFrk/";
         bda.setBinary( Base64.decodeBase64(u64bit.getBytes("ASCII")) );
         // set CVParam for 64 bit precision
         bda.getCvParam().add(prec64bit);
@@ -462,6 +415,11 @@ public class BinaryDataArrayTest extends TestCase {
         // set uncompressed, 32 bit precision data
         // need to decode the base64 encoded string, since the data is stored
         // un-encoded in the object (decoded from XML with JAXB)
+        String c32bit = "eJwVxCFIQ2EAhdE/GAyGhQXDwoLBYFgwGAa+jQ" +
+                "WDYcFgMCwYDIYFw4LhITLGGGOIyBAZDxkyhsgQkSFDHrJgNC4uGo1Gj5fv3BD+F" +
+                "++6SMQkpCwJpRAy5CkQUaVGnZgWPfokjJgwJeWTLxYs+eaHX0I5hBVWWSNDlnVy" +
+                "5Nlgky0KbLNDkYgKe+xT5YBDjqhxzAmn1DmjwTkxF1zSpEWbDl16XHHNDX1uuWN" +
+                "Awj1DHhgx5pEnJjzzwitT3pjxTsoH8/IfQP5IBA==";
         bda.setBinary( Base64.decodeBase64(c32bit.getBytes("ASCII")) );
         // set CVParam for 32 bit precision
         bda.getCvParam().add(prec32bit);
@@ -478,6 +436,15 @@ public class BinaryDataArrayTest extends TestCase {
         // set uncompressed, 32 bit precision data
         // need to decode the base64 encoded string, since the data is stored
         // un-encoded in the object (decoded from XML with JAXB)
+        String u32bit = "AAAAAAAAgD8AAABAAABAQAAAgEAAAKBAAADAQA" +
+                "AA4EAAAABBAAAQQQAAIEEAADBBAABAQQAAUEEAAGBBAABwQQAAgEEAAIhBAACQQ" +
+                "QAAmEEAAKBBAACoQQAAsEEAALhBAADAQQAAyEEAANBBAADYQQAA4EEAAOhBAADw" +
+                "QQAA+EEAAABCAAAEQgAACEIAAAxCAAAQQgAAFEIAABhCAAAcQgAAIEIAACRCAAA" +
+                "oQgAALEIAADBCAAA0QgAAOEIAADxCAABAQgAAREIAAEhCAABMQgAAUEIAAFRCAA" +
+                "BYQgAAXEIAAGBCAABkQgAAaEIAAGxCAABwQgAAdEIAAHhCAAB8QgAAgEIAAIJCA" +
+                "ACEQgAAhkIAAIhCAACKQgAAjEIAAI5CAACQQgAAkkIAAJRCAACWQgAAmEIAAJpC" +
+                "AACcQgAAnkIAAKBCAACiQgAApEIAAKZCAACoQgAAqkIAAKxCAACuQgAAsEIAALJ" +
+                "CAAC0QgAAtkIAALhCAAC6QgAAvEIAAL5CAADAQgAAwkIAAMRC";
         bda.setBinary( Base64.decodeBase64(u32bit.getBytes("ASCII")) );
         // set CVParam for 32 bit precision
         bda.getCvParam().add(prec32bit);

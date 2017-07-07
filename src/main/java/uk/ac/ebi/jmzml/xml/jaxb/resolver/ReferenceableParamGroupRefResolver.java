@@ -1,7 +1,6 @@
 package uk.ac.ebi.jmzml.xml.jaxb.resolver;
 
 import uk.ac.ebi.jmzml.MzMLElement;
-import uk.ac.ebi.jmzml.model.mzml.DataProcessing;
 import uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroup;
 import uk.ac.ebi.jmzml.model.mzml.ReferenceableParamGroupRef;
 import uk.ac.ebi.jmzml.xml.io.MzMLObjectCache;

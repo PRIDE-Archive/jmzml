@@ -1,7 +1,6 @@
 package uk.ac.ebi.jmzml.xml.jaxb.resolver;
 
 import uk.ac.ebi.jmzml.MzMLElement;
-import uk.ac.ebi.jmzml.model.mzml.BinaryDataArray;
 import uk.ac.ebi.jmzml.model.mzml.ChromatogramList;
 import uk.ac.ebi.jmzml.model.mzml.DataProcessing;
 import uk.ac.ebi.jmzml.xml.io.MzMLObjectCache;

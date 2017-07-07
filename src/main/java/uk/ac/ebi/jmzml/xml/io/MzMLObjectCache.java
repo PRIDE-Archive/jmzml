@@ -15,14 +15,14 @@ public interface MzMLObjectCache {
     // ToDo: that would also mean we can not cache CvParams or UserParams, etc
     // that way we make sure that the objects have an ID which identifies them!
 
-    public void putInCache(String id, MzMLObject object);
+    void putInCache(String id, MzMLObject object);
 
-    public void putInCache(MzMLObject element);
+    void putInCache(MzMLObject element);
 
-    public <T extends MzMLObject> T getCachedObject(String id, Class<T> cls);
+    <T extends MzMLObject> T getCachedObject(String id, Class<T> cls);
 
-    public <T extends MzMLObject> boolean hasEntry(Class<T> clazz);
+    <T extends MzMLObject> boolean hasEntry(Class<T> clazz);
 
-    public <T extends MzMLObject> List<T> getEntries(Class<T> clazz);
+    <T extends MzMLObject> List<T> getEntries(Class<T> clazz);
 
 }
