@@ -20,18 +20,7 @@ import org.xml.sax.SAXException;
 
 import junit.framework.TestCase;
 import uk.ac.ebi.jmzml.MzMLElement;
-import uk.ac.ebi.jmzml.model.mzml.AnalyzerComponent;
-import uk.ac.ebi.jmzml.model.mzml.BinaryDataArray;
-import uk.ac.ebi.jmzml.model.mzml.DataProcessing;
-import uk.ac.ebi.jmzml.model.mzml.DetectorComponent;
-import uk.ac.ebi.jmzml.model.mzml.IndexList;
-import uk.ac.ebi.jmzml.model.mzml.IndexedmzML;
-import uk.ac.ebi.jmzml.model.mzml.MzML;
-import uk.ac.ebi.jmzml.model.mzml.MzMLObject;
-import uk.ac.ebi.jmzml.model.mzml.ProcessingMethod;
-import uk.ac.ebi.jmzml.model.mzml.SourceComponent;
-import uk.ac.ebi.jmzml.model.mzml.Spectrum;
-import uk.ac.ebi.jmzml.model.mzml.SpectrumList;
+import uk.ac.ebi.jmzml.model.mzml.*;
 import uk.ac.ebi.jmzml.xml.io.MzMLMarshaller;
 import uk.ac.ebi.jmzml.xml.io.MzMLObjectIterator;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
@@ -102,10 +91,13 @@ public class MzMLUnmarshalMarshalTest extends TestCase {
      */
     public void testComponents() throws MzMLUnmarshallerException {
         assertTrue(isValidMzML(mzMLFile));
-        logger.info("zmML file is valid.");
+        logger.info("mzML file is valid.");
 
         MzMLUnmarshaller um = new MzMLUnmarshaller(mzMLFile);
         assertNotNull(um);
+
+        SoftwareList softwareList = (SoftwareList) um.unmarshalFromXpath("/mzML/softwareList", SoftwareList.class);
+        assertEquals("software count 2", 3, softwareList.getCount().intValue());
 
         int sourceCnt = um.getObjectCountForXpath("/mzML/instrumentConfigurationList/instrumentConfiguration/componentList/source");
         assertEquals("Expected number of 'source' elements.", 1, sourceCnt);

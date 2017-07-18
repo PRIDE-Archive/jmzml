@@ -41,7 +41,6 @@ import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
-import com.ctc.wstx.sax.WstxSAXParserFactory;
 
 import uk.ac.ebi.jmzml.model.mzml.utilities.ModelConstants;
 import uk.ac.ebi.jmzml.xml.io.MzMLObjectCache;
@@ -113,13 +112,13 @@ public class UnmarshallerFactory {
             UnmarshallerHandler uh = unmarshaller.getUnmarshallerHandler();
 
             // Create a new XML parser
-            //SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParserFactory factory = SAXParserFactory.newInstance();
 
 //            WstxInputFactory inputFactory = new WstxInputFactory();
 //            inputFactory.configureForSpeed();
 //            SAXParserFactory factory = new WstxSAXParserFactory(inputFactory);
 
-            SAXParserFactory factory = new WstxSAXParserFactory();
+         //   SAXParserFactory factory = new WstxSAXParserFactory();
 
             factory.setNamespaceAware(true);
             SAXParser parser = factory.newSAXParser();
@@ -133,10 +132,7 @@ public class UnmarshallerFactory {
 
             return unmarshaller;
 
-        } catch (JAXBException | ParserConfigurationException e) {
-            logger.error("UnmarshallerFactory.initializeUnmarshaller", e);
-            throw new IllegalStateException("Could not initialize unmarshaller");
-        } catch (SAXException e) {
+        } catch (JAXBException | SAXException | ParserConfigurationException e) {
             logger.error("UnmarshallerFactory.initializeUnmarshaller", e);
             throw new IllegalStateException("Could not initialize unmarshaller");
         }

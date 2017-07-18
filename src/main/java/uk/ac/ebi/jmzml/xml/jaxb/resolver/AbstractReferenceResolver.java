@@ -43,7 +43,7 @@ public abstract class AbstractReferenceResolver<T extends MzMLObject> extends Un
 
 
     public <R extends MzMLObject> R unmarshal(String refId, Class<R> cls) {
-        R retVal;
+        R retVal = null;
 
         // check if we have a cache to look up, if so see if it contains the referenced object already
 //        if (cache != null) {
@@ -52,6 +52,7 @@ public abstract class AbstractReferenceResolver<T extends MzMLObject> extends Un
 
         // if the referenced object/element is not yet in the cache (or no cache
         // is available) create it from the XML using the index and ID maps
+        if (retVal == null) {
 
         log.debug("AbstractReferenceResolver.unmarshal for id: " + refId);
         // first retrieve the XML snippet representing the referenced object/element
@@ -80,6 +81,7 @@ public abstract class AbstractReferenceResolver<T extends MzMLObject> extends Un
         } catch (JAXBException e) {
             log.error("AbstractReferenceResolver.unmarshal", e);
             throw new IllegalStateException("Could not unmarshall refId: " + refId + " for element type: " + cls);
+        }
         }
 
         // finally return the referenced object

@@ -104,8 +104,7 @@ public class Sample
 
         Sample sample = (Sample) o;
 
-        if (id != null ? !id.equals(sample.id) : sample.id != null) return false;
-        return name != null ? name.equals(sample.name) : sample.name == null;
+        return (id != null ? id.equals(sample.id) : sample.id == null) && (name != null ? name.equals(sample.name) : sample.name == null);
     }
 
 }

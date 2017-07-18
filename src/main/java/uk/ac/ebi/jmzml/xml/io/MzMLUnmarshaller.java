@@ -435,7 +435,7 @@ public class MzMLUnmarshaller {
      * @return the chromatogram corresponding to the provided chromatogram ID, null if no matching chromatogram is found
      * @throws MzMLUnmarshallerException
      */
-    public Chromatogram getChromatogramById(String aID) throws MzMLUnmarshallerException {
+    public Chromatogram getChromatogramById(String aID) throws MzMLUnmarshallerException{
         Chromatogram result;
         String xml = index.getXmlString(aID, Chromatogram.class);
         try {
@@ -816,7 +816,7 @@ public class MzMLUnmarshaller {
      * @return
      * @throws MzMLUnmarshallerException
      */
-    public <T extends MzMLObject> T unmarshalFromIndexElement(IndexElement element, Class cls) throws MzMLUnmarshallerException {
+    public <T extends MzMLObject> T unmarshalFromIndexElement(IndexElement element, Class cls) {
 
         // now that we have the xpath to use for the requested element, check if the xxindex
         // contains an element start position that matches the offset of the desired element

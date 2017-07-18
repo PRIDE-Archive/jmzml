@@ -139,8 +139,7 @@ public class CV
 
         CV cv = (CV) o;
 
-        if (fullName != null ? !fullName.equals(cv.fullName) : cv.fullName != null) return false;
-        return id != null ? id.equals(cv.id) : cv.id == null;
+        return (fullName != null ? fullName.equals(cv.fullName) : cv.fullName == null) && (id != null ? id.equals(cv.id) : cv.id == null);
     }
 
 }
